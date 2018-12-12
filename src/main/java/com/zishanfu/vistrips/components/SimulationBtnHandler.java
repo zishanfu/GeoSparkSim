@@ -27,15 +27,13 @@ public class SimulationBtnHandler implements ActionListener{
 		this.pairs = pairs;
 	}
 
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(pairs == null || pairs.length == 0) {
 			AttentionDialog dialog = new AttentionDialog("Attention", 
 					"Please wait to generate trips!");
 		
 		}else {
-			final Set<MyWaypoint> waypoints = new HashSet<>();
+			final Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
 			for(Pair p: pairs) {
 				if(p == null) {
 					continue;
@@ -49,7 +47,6 @@ public class SimulationBtnHandler implements ActionListener{
 			waypointPainter.setRenderer(new PointRender());
 		
 			Timer timer = new Timer(1000, new ActionListener() {
-	            @Override
 	            public void actionPerformed(ActionEvent e) {
 	                for (MyWaypoint waypoint: waypoints) {
 	                	waypoint.update();

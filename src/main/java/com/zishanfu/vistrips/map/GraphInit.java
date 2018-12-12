@@ -20,7 +20,7 @@ import com.graphhopper.util.shapes.GHPoint;
 
 public class GraphInit {
 	
-	final private String osmLoc = "/home/zishanfu/Downloads/datasets/";
+	final private String osmLoc = System.getProperty("user.home") + "/Downloads/datasets/";
 	private GraphHopper hopper;
 	public final double RADIUS_OF_EARTH = 6371;
 //	euclidean: 0.044644977654619736

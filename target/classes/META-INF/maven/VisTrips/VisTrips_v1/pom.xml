@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>VisTrips</groupId>
+  <artifactId>VisTrips_v1</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>VisTrips_v1</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <repositories>
+   <repository>
+     <id>glg2d-repo</id>
+     <url>http://brandonborkholder.github.com/glg2d/maven2/</url>
+   </repository>
+ </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+<!-- https://mvnrepository.com/artifact/com.graphhopper/graphhopper -->
+<dependency>
+    <groupId>com.graphhopper</groupId>
+    <artifactId>graphhopper</artifactId>
+    <version>0.7.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.graphhopper/map-matching -->
+<dependency>
+    <groupId>com.graphhopper</groupId>
+    <artifactId>map-matching</artifactId>
+    <version>0.4.1</version>
+</dependency>
+
+
+
+<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>1.7.5</version>
+</dependency>
+<dependency>
+  		<groupId>commons-logging</groupId>
+  		<artifactId>commons-logging</artifactId>
+  		<version>1.1.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.jxmapviewer</groupId>
+  		<artifactId>jxmapviewer2</artifactId>
+  		<version>2.4</version>
+  	</dependency>
+  	
+	<dependency>
+    <groupId>com.aparapi</groupId>
+    <artifactId>aparapi</artifactId>
+    <version>1.8.0</version>
+	</dependency>
+	
+	<dependency>
+    <groupId>com.aparapi</groupId>
+    <artifactId>aparapi-jni</artifactId>
+    <version>1.1.2</version>
+	</dependency>
+
+	<dependency>
+     <groupId>org.jogamp.glg2d</groupId>
+     <artifactId>glg2d</artifactId>
+     <version>0.3-SNAPSHOT</version>
+   </dependency>
+   
+   <dependency>
+     <groupId>org.jogamp.gluegen</groupId>
+     <artifactId>gluegen-rt-main</artifactId>
+     <version>2.3.2</version>
+    </dependency>
+    
+    <dependency>
+     <groupId>org.jogamp.jogl</groupId>
+     <artifactId>jogl-all-main</artifactId>
+     <version>2.3.2</version>
+    </dependency>
+    
+     <dependency>
+     <groupId>org.jogamp.gluegen</groupId>
+     <artifactId>gluegen</artifactId>
+     <version>2.3.2</version>
+    </dependency>
+
+
+    
+  </dependencies>
+</project>

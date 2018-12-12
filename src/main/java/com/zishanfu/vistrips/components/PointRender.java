@@ -17,7 +17,6 @@ public class PointRender implements WaypointRenderer<MyWaypoint>{
 	
     public PointRender(){}
 
-    @Override
     public void paintWaypoint(Graphics2D g, JXMapViewer viewer, MyWaypoint obj)
     {
     	if(obj == null) 

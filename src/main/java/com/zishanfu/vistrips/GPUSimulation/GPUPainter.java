@@ -53,7 +53,7 @@ public class GPUPainter {
 	      final JButton startButton = new JButton("Start");
 
 	      startButton.addActionListener(new ActionListener(){
-	         @Override public void actionPerformed(ActionEvent e) {
+	         public void actionPerformed(ActionEvent e) {
 	            running = true;
 	            startButton.setEnabled(false);
 	         }
@@ -97,11 +97,11 @@ public class GPUPainter {
 
 	         private long last = System.currentTimeMillis();
 
-	         @Override public void dispose(GLAutoDrawable drawable) {
+	         public void dispose(GLAutoDrawable drawable) {
 
 	         }
 
-	         @Override public void display(GLAutoDrawable drawable) {
+	         public void display(GLAutoDrawable drawable) {
 
 	            final GL2 gl = drawable.getGL().getGL2();
 	            
@@ -145,7 +145,7 @@ public class GPUPainter {
 
 	         }
 
-	         @Override public void init(GLAutoDrawable drawable) {
+	         public void init(GLAutoDrawable drawable) {
 	            final GL2 gl = drawable.getGL().getGL2();
 
 	            gl.glShadeModel(GLLightingFunc.GL_SMOOTH);
@@ -153,7 +153,7 @@ public class GPUPainter {
 	            gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE);
 	         }
 
-	         @Override public void reshape(GLAutoDrawable drawable, int x, int y, int _width, int _height) {
+	         public void reshape(GLAutoDrawable drawable, int x, int y, int _width, int _height) {
 	            width = _width;
 	            height = _height;
 

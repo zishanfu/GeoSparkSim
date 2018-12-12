@@ -20,7 +20,6 @@ public class SelectionPainter implements Painter<Object>
     }
     
 
-    @Override
     public void paint(Graphics2D g, Object t, int width, int height)
     {   
         

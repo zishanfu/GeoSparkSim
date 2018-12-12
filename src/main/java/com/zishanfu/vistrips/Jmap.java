@@ -125,7 +125,6 @@ public class Jmap {
 
         jXMapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
         {
-            @Override
             public void propertyChange(PropertyChangeEvent evt)
             {
                 updateWindowTitle(frame, jXMapViewer);
@@ -134,7 +133,6 @@ public class Jmap {
 
         jXMapViewer.addPropertyChangeListener("center", new PropertyChangeListener()
         {
-            @Override
             public void propertyChange(PropertyChangeEvent evt)
             {
                 updateWindowTitle(frame, jXMapViewer);

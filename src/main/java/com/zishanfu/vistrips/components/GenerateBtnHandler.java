@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 
 import org.jxmapviewer.viewer.GeoPosition;
 
+import com.zishanfu.vistrips.map.OSMLoader;
 import com.zishanfu.vistrips.map.TripsGeneration;
 import com.zishanfu.vistrips.model.Pair;
 
@@ -50,6 +51,7 @@ public class GenerateBtnHandler implements ActionListener{
 			
 			GeoPosition geo1 = sa.getViewer().convertPointToGeoPosition(pt1);
 			GeoPosition geo2 = sa.getViewer().convertPointToGeoPosition(pt2);
+			OSMLoader osmloader = new OSMLoader(null, geo1, geo2);
 			
 			int nums = Integer.parseInt(num.getText());
 
