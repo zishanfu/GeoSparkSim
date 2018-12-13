@@ -10,19 +10,21 @@ import org.jxmapviewer.JXMapViewer;
 public class SelectionAdapter extends MouseAdapter 
 {
     private JXMapViewer viewer;
-    private int SIZE = 8;
-    private Rectangle2D[] points = { new Rectangle2D.Double(100, 100,SIZE, SIZE), new Rectangle2D.Double(700, 400,SIZE, SIZE) };
-    
-    Rectangle2D r = new Rectangle2D.Double(0,0,SIZE,SIZE);
+    private int SIZE = 10;
+    private Rectangle2D[] points = new Rectangle2D[2];
+
     private int pos = -1;
 
     /**
      * @param viewer the jxmapviewer
      */
-    public SelectionAdapter(JXMapViewer viewer)
+    public SelectionAdapter(JXMapViewer viewer, int width, int height)
     {
         this.viewer = viewer;
+        points[0] = new Rectangle2D.Double(width/4, height/8,SIZE, SIZE);
+        points[1] = new Rectangle2D.Double(width/1.3, height/1.5,SIZE, SIZE);
     }
+ 
     
     public Rectangle2D[] getPoints() {
 		return points;

@@ -1,29 +1,30 @@
-package com.zishanfu.vistrips.map;
+package com.zishanfu.vistrips.map.MapServiceImpl;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
 import org.jxmapviewer.viewer.GeoPosition;
-
 import com.graphhopper.util.PointList;
+import com.zishanfu.vistrips.map.Generator;
 import com.zishanfu.vistrips.model.Pair;
+import com.zishanfu.vistrips.tools.Distance;
 
 /**
  * @author zishanfu
  *
  */
-public class TripsGeneration {
+public class TripsGeneration implements Generator{
 	private double minLat;
 	private double maxLat;
 	private double minLon;
 	private double maxLon;
 	private Random rand = new Random();
-	private GraphInit gi;
 	private long totalNodes;
 	private double minLen = 0.004; //1.9km
 	private double maxLen;
-	private double maxLenharv;
+	//private double maxLenharv;
 	private int longestTrip = 0;
+	private GraphInit gi;
+	//private Distance dist;
 	
 	//1:479km = euclidean: harvsine
 	//Car 4.5m
@@ -35,26 +36,27 @@ public class TripsGeneration {
 	/**
 	 * data-space oriented approach(DSO)
 	 */
-	public String DSO = "DSO";
+	private String DSO = "DSO";
 	/**
 	 * region-based approach(RB)
 	 */
-	public String RB = "RB";
+	private String RB = "RB";
 	/**
 	 * network-based approach(NB)
 	 */
-	public String NB = "NB";
+	private String NB = "NB";
 	
 	
-	public TripsGeneration(GeoPosition topleft, GeoPosition bottomright) {
+	public TripsGeneration(GeoPosition topleft, GeoPosition bottomright, GraphInit gi, double maxLen) {
 		this.minLat = Math.min(topleft.getLatitude(), bottomright.getLatitude());
 		this.maxLat = Math.max(topleft.getLatitude(), bottomright.getLatitude());
 		this.minLon = Math.min(topleft.getLongitude(), bottomright.getLongitude());
 		this.maxLon = Math.max(topleft.getLongitude(), bottomright.getLongitude());
-		this.gi = new GraphInit();
+		this.gi = gi;
 		this.totalNodes = gi.getTotalNodes();
-		this.maxLen = gi.euclideanDist(minLat, maxLat, minLon, maxLon) / 5; //scale the length of trip
-		this.maxLenharv = gi.haversineDist(minLat, minLon, maxLat, maxLon);
+		this.maxLen = maxLen;
+		//this.dist = new Distance();
+		//this.maxLenharv = dist.haversine(minLat, minLon, maxLat, maxLon);
 	}
 	
 
@@ -65,10 +67,6 @@ public class TripsGeneration {
 	private GeoPosition randomNode() {
 		GeoPosition node = new GeoPosition(randomRange(minLat, maxLat), randomRange(minLon, maxLon));
 		return node;
-	}
-	
-	private long randomIdx() {
-		return ThreadLocalRandom.current().nextLong(this.totalNodes);
 	}
 	
 	private double computeLengthOfRoute() {
@@ -124,16 +122,16 @@ public class TripsGeneration {
 	public Pair computeAPair(String type){
 		Pair p = new Pair();
 		double routeLen = computeLengthOfRoute();
-		if(type.equals(DSO)) {
+		if(type.contains(DSO)) {
 			GeoPosition src = randomNode();
 			p.setSource(src);
 			p.setDest(computeDestDSO(src, routeLen));
-		}else if(type.equals(NB)) {
+		}else if(type.contains(NB)) {
 			//GeoPosition src = gi.getCoorById(randomIdx());
 			GeoPosition src = computeSourceNB();
 			p.setSource(src);
 			p.setDest(computeDestinationNB(src, routeLen));
-		}else if(type.equals(RB)) {
+		}else if(type.contains(RB)) {
 			
 		}	
 		PointList route = gi.routeRequest(p.getSource().getLatitude(),
