@@ -22,7 +22,7 @@ public class SelectionAdapter extends MouseAdapter
     {
         this.viewer = viewer;
         points[0] = new Rectangle2D.Double(width/4, height/8,SIZE, SIZE);
-        points[1] = new Rectangle2D.Double(width/1.3, height/1.5,SIZE, SIZE);
+        points[1] = new Rectangle2D.Double(width/1.3, height/1.8,SIZE, SIZE);
     }
  
     

@@ -84,7 +84,7 @@ public class GenerateBtnHandler implements ActionListener{
 		    		sbHandler.setPairs(pairs);
 		    		
 		        	long endTime = System.currentTimeMillis();
-		        	textArea.append("Processed! Total time: " + (endTime - startTime) + " milliseconds\n");
+		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
 		        }     
 		    });
 			

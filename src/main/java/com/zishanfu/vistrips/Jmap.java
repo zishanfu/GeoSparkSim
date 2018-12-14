@@ -39,7 +39,7 @@ import com.zishanfu.vistrips.controller.ControllerImpl.ResultController;
 
 public class Jmap {
 	public static void main(String[] args) {
-		int width = 1100;
+		int width = 1200;
 		int height = 800;
 		CompController cc = new CompController(width, height);
 		final JXMapViewer jXMapViewer = cc.mapViewer;

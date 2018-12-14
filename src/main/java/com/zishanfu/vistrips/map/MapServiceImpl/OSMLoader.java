@@ -65,16 +65,16 @@ public class OSMLoader implements OSM{
 	public String download() {
 		Date now = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-		String time = dateFormat.format(now);
+		String newFileName = fileBase + dateFormat.format(now) + ".osm";
 		
 		try {
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-            FileOutputStream fos = new FileOutputStream(fileBase+time);
+            FileOutputStream fos = new FileOutputStream(newFileName);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             fos.close();
             rbc.close();
-            lastPath = fileBase+time;
-            return fileBase+time;
+            lastPath = newFileName;
+            return newFileName;
         } catch (IOException e) {
         	e.printStackTrace();
         	return null;
