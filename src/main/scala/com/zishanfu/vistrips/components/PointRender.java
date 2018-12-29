@@ -40,7 +40,7 @@ public class PointRender implements WaypointRenderer<MyWaypoint>{
         g.dispose();
 
     }
-    
+     
     
 
 }

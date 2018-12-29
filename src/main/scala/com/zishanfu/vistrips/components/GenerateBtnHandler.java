@@ -64,21 +64,27 @@ public class GenerateBtnHandler implements ActionListener{
 		    		String selectedType = genTypes[genList.getSelectedIndex()];
 		    		double maxLen = new Distance().euclidean(geo1, geo2) / 5; //scale the length of trip
 		    		
+		    		//[33.41281563419366, -111.94192886352539], [33.38816625881332, -111.88845634460449]
+		    		//geo1.lat + maxLen, geo1.lon - maxLen
+		    		//geo2.lat - maxLen, geo2.lon + maxLen
+		    		GeoPosition newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen);
+		    		GeoPosition newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen);
+
 		    		//Download OSM
-		    		OSMLoader osmloader = new OSMLoader(null, geo1, geo2);
+		    		OSMLoader osmloader = new OSMLoader(null, newGeo1, newGeo2);
 		    		textArea.append("Downloading selected OSM data ...\n");
 		    		String path = osmloader.download();
 		    		String size = osmloader.getLastFileSize();
 		    		textArea.append("Finished download! Data " + size + " located in (" + path + ")\n");
 		    		
 		    		//Processing Graph 
-		    		textArea.append("Processing graph");
+		    		textArea.append("Processing graph\n");
 		    		GraphInit gi = new GraphInit(osmloader.lastPath);
 		    		
 		    		
 		    		//Generating Trips
 		    		int nums = Integer.parseInt(numTxt.getText());
-		    		textArea.append("Begin generate " + nums +" trips");
+		    		textArea.append("Begin generate " + nums +" trips\n");
 		    		TripsGeneration tg = new TripsGeneration(geo1, geo2, gi, maxLen);
 		    		Pair[] pairs = tg.computePairs(nums, selectedType);
 		    		sbHandler.setPairs(pairs);
