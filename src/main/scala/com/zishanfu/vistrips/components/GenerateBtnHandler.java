@@ -12,9 +12,9 @@ import javax.swing.JTextArea;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.map.MapServiceImpl.GraphInit;
-import com.zishanfu.vistrips.map.MapServiceImpl.OSMLoader;
 import com.zishanfu.vistrips.map.MapServiceImpl.TripsGeneration;
 import com.zishanfu.vistrips.model.Pair;
+import com.zishanfu.vistrips.osm.OsmParser;
 import com.zishanfu.vistrips.tools.Distance;
 
 
@@ -70,27 +70,24 @@ public class GenerateBtnHandler implements ActionListener{
 		    		GeoPosition newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen);
 		    		GeoPosition newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen);
 
-		    		//Download OSM
-		    		OSMLoader osmloader = new OSMLoader(null, newGeo1, newGeo2);
-		    		textArea.append("Downloading selected OSM data ...\n");
-		    		String path = osmloader.download();
-		    		String size = osmloader.getLastFileSize();
-		    		textArea.append("Finished download! Data " + size + " located in (" + path + ")\n");
+		    		//Plot OSM and save node and way parquet in HDFS
+		    		OsmParser.run(newGeo1, newGeo2);
+		    		textArea.append("Finished osm download and processing!");
 		    		
 		    		//Processing Graph 
 		    		textArea.append("Processing graph\n");
-		    		GraphInit gi = new GraphInit(osmloader.lastPath);
+		    		//GraphInit gi = new GraphInit(osmloader.lastPath);
 		    		
 		    		
 		    		//Generating Trips
-		    		int nums = Integer.parseInt(numTxt.getText());
-		    		textArea.append("Begin generate " + nums +" trips\n");
-		    		TripsGeneration tg = new TripsGeneration(geo1, geo2, gi, maxLen);
-		    		Pair[] pairs = tg.computePairs(nums, selectedType);
-		    		sbHandler.setPairs(pairs);
-		    		
-		        	long endTime = System.currentTimeMillis();
-		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
+//		    		int nums = Integer.parseInt(numTxt.getText());
+//		    		textArea.append("Begin generate " + nums +" trips\n");
+//		    		TripsGeneration tg = new TripsGeneration(geo1, geo2, gi, maxLen);
+//		    		Pair[] pairs = tg.computePairs(nums, selectedType);
+//		    		sbHandler.setPairs(pairs);
+//		    		
+//		        	long endTime = System.currentTimeMillis();
+//		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
 		        }     
 		    });
 			

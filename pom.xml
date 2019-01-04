@@ -15,10 +15,11 @@
   	<maven.compiler.source>1.8</maven.compiler.source>
   	<maven.compiler.target>1.8</maven.compiler.target>
   	<encoding>UTF-8</encoding>
-  	<scala.version>2.11.12</scala.version>
+  	<scala.version>2.11.11</scala.version>
   	<scala.compat.version>2.11</scala.compat.version>
   	<spark.version>2.4.0</spark.version>
   	<slf4j.version>1.7.5</slf4j.version>
+  	<parquet.version>1.10.0</parquet.version>
   	<maven.assembly.plugin.version>3.1.0</maven.assembly.plugin.version>
   </properties>
   
@@ -165,7 +166,56 @@
     	<artifactId>slf4j-simple</artifactId>
     	<version>1.7.5</version>
 	</dependency>
-
+	
+	<dependency>
+         <groupId>org.apache.parquet</groupId>
+         <artifactId>parquet-hadoop</artifactId>
+         <version>${parquet.version}</version>
+    </dependency>
+	
+	<!-- dependencies for geospark -->
+	<dependency>
+            <groupId>org.datasyslab</groupId>
+            <artifactId>JTSplus</artifactId>
+            <version>0.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wololo</groupId>
+            <artifactId>jts2geojson</artifactId>
+            <version>0.10.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vividsolutions</groupId>
+                    <artifactId>jts-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.datasyslab</groupId>
+            <artifactId>sernetcdf</artifactId>
+            <version>0.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.datasyslab/geospark -->
+<dependency>
+    <groupId>org.datasyslab</groupId>
+    <artifactId>geospark</artifactId>
+    <version>1.1.3</version>
+    <scope>provided</scope>
+</dependency>
+        
   </dependencies>
   
 	<build>
