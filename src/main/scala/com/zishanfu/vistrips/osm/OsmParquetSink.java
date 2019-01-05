@@ -27,23 +27,6 @@ public class OsmParquetSink implements Sink {
     
     private ParquetWriter<Node> nodeWriter;
     private ParquetWriter<Way> waysWriter;
-    
-    private Set<String> allowableWays = new HashSet<>(Arrays.asList(  
-			  "motorway",
-			  "motorway_link",
-			  "trunk",
-			  "trunk_link",
-			  "primary",
-			  "primary_link",
-			  "secondary",
-			  "secondary_link",
-			  "tertiary",
-			  "tertiary_link",
-			  "living_street",
-			  "residential",
-			  "road",
-			  "construction",
-			  "motorway_junction"));
 
     public OsmParquetSink(String destinationFolder) {
         this.destinationFolder = destinationFolder;
@@ -69,8 +52,8 @@ public class OsmParquetSink implements Sink {
         	if(entity instanceof Node) {
         		nodeWriter.write((Node) entity);
         	}else if(entity instanceof Way) {
-        		Set<String> tagSet = entity.getTags().stream().map(Tag::getValue).collect(Collectors.toSet());
-    			if(tagSet.retainAll(allowableWays) && tagSet.size() != 0) {
+        		Set<String> tagSet = entity.getTags().stream().map(Tag::getKey).collect(Collectors.toSet());
+    			if(tagSet.contains("highway")) {
     				waysWriter.write((Way) entity);
     	    	}
         	}

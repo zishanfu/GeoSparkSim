@@ -75,42 +75,6 @@
   		<artifactId>jxmapviewer2</artifactId>
   		<version>2.4</version>
   	</dependency>
-  	
-	<dependency>
-    <groupId>com.aparapi</groupId>
-    <artifactId>aparapi</artifactId>
-    <version>1.8.0</version>
-	</dependency>
-	
-	<dependency>
-    <groupId>com.aparapi</groupId>
-    <artifactId>aparapi-jni</artifactId>
-    <version>1.1.2</version>
-	</dependency>
-
-	<dependency>
-     <groupId>org.jogamp.glg2d</groupId>
-     <artifactId>glg2d</artifactId>
-     <version>0.3-SNAPSHOT</version>
-   </dependency>
-   
-   <dependency>
-     <groupId>org.jogamp.gluegen</groupId>
-     <artifactId>gluegen-rt-main</artifactId>
-     <version>2.3.2</version>
-    </dependency>
-    
-    <dependency>
-     <groupId>org.jogamp.jogl</groupId>
-     <artifactId>jogl-all-main</artifactId>
-     <version>2.3.2</version>
-    </dependency>
-    
-     <dependency>
-     <groupId>org.jogamp.gluegen</groupId>
-     <artifactId>gluegen</artifactId>
-     <version>2.3.2</version>
-    </dependency>
 	
 	<dependency>
 		<groupId>org.openstreetmap.osmosis</groupId>
@@ -128,12 +92,6 @@
          <version>0.45</version>
     </dependency>
     
-    <dependency>
-    	<groupId>com.thoughtworks.paranamer</groupId>
-    	<artifactId>paranamer</artifactId>
-    	<version>2.8</version>
-	</dependency>
-
   	<dependency>
         <groupId>org.apache.spark</groupId>
         <artifactId>spark-core_${scala.compat.version}</artifactId>
@@ -222,7 +180,6 @@
         <sourceDirectory>src/main/scala</sourceDirectory>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
-        <!-- see http://davidb.github.com/scala-maven-plugin -->
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>

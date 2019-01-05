@@ -33,9 +33,9 @@ import com.zishanfu.vistrips.components.GenerateBtnHandler;
 import com.zishanfu.vistrips.components.SelectionPainter;
 import com.zishanfu.vistrips.components.SelectionAdapter;
 import com.zishanfu.vistrips.components.SimulationBtnHandler;
-import com.zishanfu.vistrips.controller.ControllerImpl.CompController;
-import com.zishanfu.vistrips.controller.ControllerImpl.InputController;
-import com.zishanfu.vistrips.controller.ControllerImpl.ResultController;
+import com.zishanfu.vistrips.controller.CompController;
+import com.zishanfu.vistrips.controller.InputController;
+import com.zishanfu.vistrips.controller.ResultController;
 
 public class Jmap {
 	public static void main(String[] args) {

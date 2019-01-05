@@ -11,8 +11,8 @@ import javax.swing.JTextArea;
 
 import org.jxmapviewer.viewer.GeoPosition;
 
-import com.zishanfu.vistrips.map.MapServiceImpl.GraphInit;
-import com.zishanfu.vistrips.map.MapServiceImpl.TripsGeneration;
+import com.zishanfu.vistrips.map.GraphInit;
+import com.zishanfu.vistrips.map.TripsGeneration;
 import com.zishanfu.vistrips.model.Pair;
 import com.zishanfu.vistrips.osm.OsmParser;
 import com.zishanfu.vistrips.tools.Distance;
