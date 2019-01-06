@@ -4,6 +4,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 import org.openstreetmap.osmosis.xml.v0_6.XmlDownloader;
 
 import com.zishanfu.vistrips.hdfs.HDFSUtil;
+import com.zishanfu.vistrips.map.SparkManager;
 
 public class OsmParser {
 	public static void run(GeoPosition geo1, GeoPosition geo2) {
@@ -14,5 +15,6 @@ public class OsmParser {
 		XmlDownloader xmlDownloader = new XmlDownloader(geo1.getLongitude(), geo2.getLongitude(), geo1.getLatitude(), geo2.getLatitude(), osmUrl);
 		xmlDownloader.setSink(new OsmParquetSink(tmpPath));
 		xmlDownloader.run();
+		SparkManager.run(tmpPath);
 	}
 }
