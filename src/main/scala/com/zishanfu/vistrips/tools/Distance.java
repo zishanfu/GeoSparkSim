@@ -2,6 +2,8 @@ package com.zishanfu.vistrips.tools;
 
 import org.jxmapviewer.viewer.GeoPosition;
 
+import com.vividsolutions.jts.geom.Point;
+
 public class Distance {
 	
 	public final double RADIUS_OF_EARTH = 6371;
@@ -31,6 +33,11 @@ public class Distance {
 				Math.sin((latitude2 - latitude1)/2) * Math.sin((latitude2 - latitude1)/2) +
 				Math.cos(latitude1) * Math.cos(latitude2) *
 				Math.sin((longitude2 - longitude1)/2) * Math.sin((longitude2 - longitude1) / 2))));
+	}
+	
+	
+	public double harversineMile(Point p1, Point p2) {
+		return haversine(p1.getY(), p1.getX(), p2.getY(), p2.getX())*0.00062137;
 	}
 	
 	

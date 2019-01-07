@@ -5,6 +5,9 @@ import org.apache.spark.SparkConf
 import com.zishanfu.vistrips.map.OsmIndex
 import org.datasyslab.geospark.serde.GeoSparkKryoRegistrator
 import org.apache.spark.serializer.KryoSerializer
+import org.apache.spark.graphx.Graph
+import com.zishanfu.vistrips.network.Link
+import com.vividsolutions.jts.geom.Point
 
 object SparkManager {
   def main(args: Array[String]) : Unit = {
@@ -20,6 +23,6 @@ object SparkManager {
 //    OsmIndex.nodeIndex(sparkSession)
 //    OsmIndex.CountyPolygonIndex(sparkSession)
 //    OsmIndex.PopIndex(sparkSession)
-    OsmConverter.convertToNetwork(sparkSession, path)
+    val graph: Graph[Point, Link] = OsmConverter.convertToNetwork(sparkSession, path)
   }
 }
