@@ -54,7 +54,7 @@ object OsmConverter {
 
         
     val graph = Graph(nodesRDD, edgesRDD)
-    
+    println("graph processed")
     graph
   }
   
@@ -98,11 +98,11 @@ object OsmConverter {
       
       var speed = defaultSpeed
       var maxSpeed = tagsMap.get("maxspeed")
-      if(!maxSpeed.isEmpty) speed = maxSpeed.get.toInt
+      if(!maxSpeed.isEmpty) speed = maxSpeed.get.substring(0, 2).toInt
       
       var isOneWay = tagsMap.getOrElse("oneway", "no") == "yes"
       isOneWay = tagsMap.getOrElse("junction", "default") == "roundabout"
-      val lanes = tagsMap.get("lanes").get.toInt
+      val lanes = if(tagsMap.contains("lanes")) tagsMap.get("lanes").get.toInt else 1
       isOneWay = if(lanes == 1) true else false
 
       val driveDirection = if(isOneWay) 1 else 2
