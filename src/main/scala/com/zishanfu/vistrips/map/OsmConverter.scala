@@ -1,22 +1,45 @@
 package com.zishanfu.vistrips.map
 
-import com.zishanfu.vistrips.tools.Distance;
 import scala.collection.mutable.WrappedArray
 
+import org.apache.spark.graphx.Edge
+import org.apache.spark.graphx.Graph
 import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
+import org.geotools.referencing.CRS
+import org.geotools.referencing.crs.DefaultGeocentricCRS
+import org.geotools.referencing.crs.DefaultGeographicCRS
+import org.opengis.geometry.MismatchedDimensionException
+import org.opengis.referencing.operation.TransformException
 
-import com.zishanfu.vistrips.network.Link
 import com.vividsolutions.jts.geom.Coordinate
 import com.vividsolutions.jts.geom.GeometryFactory
 import com.vividsolutions.jts.geom.Point
-import org.apache.spark.graphx.Graph
-import org.apache.spark.graphx.Edge
+import com.zishanfu.vistrips.network.Link
+import com.zishanfu.vistrips.tools.Distance
+import org.opengis.referencing.FactoryException
+import org.slf4j.LoggerFactory
+import org.opengis.referencing.operation.MathTransform
+import org.geotools.geometry.jts.JTS
+
 
 object OsmConverter {
   
+  private val LOG = LoggerFactory.getLogger(getClass)
+  
   val gf = new GeometryFactory()
-  //openstreetmap EPSG:3857
+  val sourceCRS = DefaultGeographicCRS.WGS84;
+  val targetCRS = DefaultGeocentricCRS.CARTESIAN;
+  var transform : MathTransform = null 
+  
+  try{
+    transform = CRS.findMathTransform(sourceCRS, targetCRS, true)
+  }catch {
+    case e: FactoryException => {
+      LOG.info("Can't find CRS tranform")
+    }
+  }
+  
   
   private def createLink(id : Long, tail :(Int, Long, Double, Double), head : (Int, Long, Double, Double), 
         speed : Int, driveDirection :Int, lanes : Int) :Link = {
@@ -30,6 +53,17 @@ object OsmConverter {
         Link(id, tailCoor, headCoor, dist, speed, driveDirection, lanes)
   }
   
+  private def coorParser(lat : Double, lon: Double) : Coordinate = {
+    var targetCoor : Coordinate = null
+    var sourceCoor = new Coordinate(lon, lat)
+    try{
+      targetCoor = JTS.transform(sourceCoor, null, transform);
+    }catch{
+      case e : MismatchedDimensionException => LOG.info("")
+      case e : TransformException => LOG.info("")
+    }
+    targetCoor
+  }
   
   def convertToNetwork(sparkSession : SparkSession, path : String) : Graph[Point, Link]= {
     val nodesPath = path + "/node.parquet"
@@ -120,7 +154,7 @@ object OsmConverter {
 
         
    var nodeDS = nodesInLinksDF.map((r:Row) =>{
-      val point = gf.createPoint(new Coordinate(r.getDouble(2), r.getDouble(1)))
+      val point = gf.createPoint(coorParser(r.getDouble(1), r.getDouble(2)))
       point.setUserData(r.getLong(0))
       point
    })(PointEncoder)
