@@ -25,8 +25,8 @@ object HDFSUtil {
     ldt.format(dtf)
   }
   
-  def mkdirTemp(): String = {
-    val path = "/" + timestamp()
+  def mkdirTemp(dir : String): String = {
+    val path = dir + "/" + timestamp()
     mkdir(path)
     hdfsUrl + path
   }

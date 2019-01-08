@@ -1,8 +1,11 @@
 package com.zishanfu.vistrips.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jxmapviewer.viewer.GeoPosition;
 
-import com.graphhopper.util.PointList;
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineString;
 
 public class Pair {
@@ -42,6 +45,16 @@ public class Pair {
 
 	public LineString getRoute() {
 		return route;
+	}
+	
+	public List<Double[]> getRouteGeojson() {
+		List<Double[]> res = new ArrayList<>();
+		Coordinate[] coordinates = route.getCoordinates();
+		for(Coordinate coor: coordinates) {
+			Double[] arr = {coor.x, coor.y};
+			res.add(arr);
+		}
+		return res;
 	}
 
 	public void setRoute(LineString route2) {

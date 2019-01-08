@@ -12,6 +12,11 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
@@ -21,15 +26,6 @@
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/zishanfu/.m2/repository/org/apache/spark/spark-sql_2.11/2.4.0/spark-sql_2.11-2.4.0.jar" sourcepath="/home/zishanfu/.m2/repository/org/apache/spark/spark-sql_2.11/2.4.0/spark-sql_2.11-2.4.0-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.apache.spark"/>
-			<attribute name="maven.artifactId" value="spark-sql_2.11"/>
-			<attribute name="maven.version" value="2.4.0"/>
-			<attribute name="maven.scope" value="provided"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>

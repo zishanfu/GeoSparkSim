@@ -13,8 +13,12 @@ import com.vividsolutions.jts.geom.Coordinate
 import org.datasyslab.geospark.enums.IndexType
 import org.jxmapviewer.viewer.GeoPosition
 import com.vividsolutions.jts.geom.LineString
+import com.zishanfu.vistrips.network.Route
+import org.apache.spark.rdd.RDD
+import org.slf4j.LoggerFactory
 
 class OsmGraph (sparkSession: SparkSession, path: String){
+  private val LOG = LoggerFactory.getLogger(getClass);
   
   val gf = new GeometryFactory()
   val graph: Graph[Point, Link] = OsmConverter.convertToNetwork(sparkSession, path)
@@ -22,58 +26,63 @@ class OsmGraph (sparkSession: SparkSession, path: String){
   vertexRDD.buildIndex(IndexType.RTREE, false)
   
   
-  def findNearestByCoor(lon : Double, lat : Double) : Point = {
-    val queryPoint = gf.createPoint(new Coordinate(lat, lon))
+
+  /**
+   * @param lat
+   * @param lon
+   * @return
+   */
+  def findNearestByCoor(lat : Double, lon : Double) : Point = {
+    val queryPoint = gf.createPoint(new Coordinate(lon, lat))
     var result = KNNQuery.SpatialKnnQuery(vertexRDD, queryPoint, 1, true)
     result.get(0)
   }
   
-  //double latFrom, double lonFrom, double latTo, double lonTo
-  def request(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : (Long, Long) = {
+
+  /**
+ * @param Double : latFrom
+ * @param Double : lonFrom
+ * @param Double : latTo
+ * @param Double : lonTo
+ * @return RDD[Route] : all the possible Routes
+ */
+def request(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : RDD[Route] = {
     val source = findNearestByCoor(latFrom, lonFrom)
     val destination = findNearestByCoor(latTo, lonTo)
     val sourceId = source.getUserData.asInstanceOf[Long]
     val destinationId = destination.getUserData.asInstanceOf[Long]
-    (sourceId, destinationId)
-    
-    
+    val result = ShortestPathFactory.runDijkstra(graph, sourceId, destinationId)
+    LOG.info("requested the route from %s to %s".format(source, destination))
+    result.filter(r => (r.legs.size > 0 && r.legs.tail == destination))
   }
   
-  //routeRequest
-  //return a list of point
-  def routeRequest(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : LineString = {
-    val tuple = request(latFrom, lonFrom, latTo, lonTo)
-    val rdd = ShortestPathFactory.runDijkstra(graph, tuple._1, tuple._2)
-    rdd.map(row => {
-      row._2
-    })
+
+  /**
+   * @param Double : latFrom
+   * @param Double : lonFrom
+   * @param Double : latTo
+   * @param Double : lonTo
+   * @return Route : fastest route with minimum time cost
+   */
+  def fatestRouteRequest(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : Route = {
+    request(latFrom, lonFrom, latTo, lonTo).reduce((a, b) => if(a.time < b.time) a else b)
   }
   
-  //routeDistCompute
-  //return distance
-  def routeDistCompute() : Unit = {
-    
-  }
-  
-  //routeCostCompute
-  //return estimate time cost
-  def routeCostCompute() : Unit = {
-    
-  }
-  
-  //totalNodes
+
+  /**
+   * @return Long : total number of vertices
+   */
   def getTotalNodes() : Long = {
     graph.vertices.count()
   }
   
-  //getCoorById
-  def getCoorById() : Unit = {
-    
-  }
-  
-  //getClosestNode
+
+  /**
+   * @param GeoPosition : point
+   * @return GeoPosition : closest point at road network
+   */
   def getClosestNode(point : GeoPosition) : GeoPosition = {
-    val res = findNearestByCoor(point.getLongitude, point.getLatitude)
+    val res = findNearestByCoor(point.getLatitude, point.getLongitude)
     new GeoPosition(res.getCoordinate.y, res.getCoordinate.x)
   }
   

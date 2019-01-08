@@ -8,7 +8,6 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
 import org.geotools.referencing.CRS
 import org.geotools.referencing.crs.DefaultGeocentricCRS
-import org.geotools.referencing.crs.DefaultGeographicCRS
 import org.opengis.geometry.MismatchedDimensionException
 import org.opengis.referencing.operation.TransformException
 
@@ -21,6 +20,7 @@ import org.opengis.referencing.FactoryException
 import org.slf4j.LoggerFactory
 import org.opengis.referencing.operation.MathTransform
 import org.geotools.geometry.jts.JTS
+import org.geotools.referencing.crs.DefaultGeographicCRS
 
 
 object OsmConverter {
@@ -28,34 +28,52 @@ object OsmConverter {
   private val LOG = LoggerFactory.getLogger(getClass)
   
   val gf = new GeometryFactory()
-  val sourceCRS = DefaultGeographicCRS.WGS84;
-  val targetCRS = DefaultGeocentricCRS.CARTESIAN;
-  var transform : MathTransform = null 
-  
-  try{
-    transform = CRS.findMathTransform(sourceCRS, targetCRS, true)
-  }catch {
-    case e: FactoryException => {
-      LOG.info("Can't find CRS tranform")
-    }
-  }
   
   
+    /**
+   * @param id
+   * @param tail
+   * @param head
+   * @param speed
+   * @param driveDirection
+   * @param lanes
+   * @return
+   */
   private def createLink(id : Long, tail :(Int, Long, Double, Double), head : (Int, Long, Double, Double), 
         speed : Int, driveDirection :Int, lanes : Int) :Link = {
-        //openstreetmap <lat, lon>
-        //geotools <lon, lat>
-        val tailCoor = gf.createPoint(new Coordinate(tail._4, tail._3))
+        val tailCoor = gf.createPoint(coorParserByCRS(tail._3, tail._4, DefaultGeographicCRS.WGS84))
         tailCoor.setUserData(tail._2)
-        val headCoor = gf.createPoint(new Coordinate(head._4, head._3))
+        val headCoor = gf.createPoint(coorParserByCRS(head._3, head._4, DefaultGeographicCRS.WGS84))
         headCoor.setUserData(head._2)
         val dist = new Distance().harversineMile(headCoor, tailCoor)
         Link(id, tailCoor, headCoor, dist, speed, driveDirection, lanes)
   }
   
-  private def coorParser(lat : Double, lon: Double) : Coordinate = {
+  
+    /**
+   * @param Double lat
+   * @param Double lon
+   * @param DefaultGeographicCRS crs
+   * @return Coordinate coordinate
+   */
+  
+  def coorParserByCRS(lat : Double, lon: Double, crs: DefaultGeographicCRS) : Coordinate = {
+    val sourceCRS = DefaultGeographicCRS.WGS84;
+    val targetCRS = crs;
+    var transform : MathTransform = null
     var targetCoor : Coordinate = null
     var sourceCoor = new Coordinate(lon, lat)
+    
+    if(sourceCRS == targetCRS) targetCoor
+    
+    try{
+      transform = CRS.findMathTransform(sourceCRS, targetCRS, true)
+    }catch {
+      case e: FactoryException => {
+        LOG.info("Can't find CRS tranform")
+      }
+    }
+    
     try{
       targetCoor = JTS.transform(sourceCoor, null, transform);
     }catch{
@@ -65,6 +83,11 @@ object OsmConverter {
     targetCoor
   }
   
+  /**
+   * @param SparkSession: sparkSession
+   * @param String path
+   * @return Graph[Point, Link] graph
+   */
   def convertToNetwork(sparkSession : SparkSession, path : String) : Graph[Point, Link]= {
     val nodesPath = path + "/node.parquet"
     val waysPath = path + "/way.parquet"
@@ -82,9 +105,8 @@ object OsmConverter {
                 link)
         })
 
-        
     val graph = Graph(nodesRDD, edgesRDD)
-    println("graph processed")
+    LOG.info("Constructed graph with %s vertices %s edges".format(nodesRDD.count(), edgesRDD.count()))
     graph
   }
   
@@ -93,6 +115,12 @@ object OsmConverter {
     nodesDF.select("id", "latitude", "longitude")
   }
   
+  /**
+   * @param SparkSession sparkSession
+   * @param DataFrame nodeDF
+   * @param String waysPath
+   * @return Tuple (Dataset[Point], Dataset[Link])
+   */
   private def convertLinks(sparkSession : SparkSession, nodeDF : DataFrame, waysPath : String) = {
     val linkEncoder = Encoders.kryo[Link]
     val PointEncoder = Encoders.kryo[Point]
@@ -154,7 +182,7 @@ object OsmConverter {
 
         
    var nodeDS = nodesInLinksDF.map((r:Row) =>{
-      val point = gf.createPoint(coorParser(r.getDouble(1), r.getDouble(2)))
+      val point = gf.createPoint(coorParserByCRS(r.getDouble(1), r.getDouble(2), DefaultGeographicCRS.WGS84))
       point.setUserData(r.getLong(0))
       point
    })(PointEncoder)

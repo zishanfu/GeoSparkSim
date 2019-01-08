@@ -7,6 +7,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import com.vividsolutions.jts.geom.LineString;
 import com.zishanfu.vistrips.model.Pair;
+import com.zishanfu.vistrips.network.Route;
 
 /**
  * @author zishanfu
@@ -127,22 +128,22 @@ public class TripsGeneration{
 			p.setSource(src);
 			p.setDest(computeDestDSO(src, routeLen));
 		}else if(type.contains(NB)) {
-			//GeoPosition src = gi.getCoorById(randomIdx());
 			GeoPosition src = computeSourceNB();
 			p.setSource(src);
 			p.setDest(computeDestinationNB(src, routeLen));
 		}else if(type.contains(RB)) {
 			
 		}	
-		LineString route = graph.routeRequest(p.getSource().getLatitude(),
+		
+		Route route = graph.fatestRouteRequest(p.getSource().getLatitude(),
 						p.getSource().getLongitude(),
 						p.getDest().getLatitude(),
 						p.getDest().getLongitude());
-		System.out.println(route);
-		if(route == null) 
+		LineString legs = route.getLegsLineString();
+		if(legs == null) 
 			return null;
-		updateLongestTrip(route.getNumPoints());
-		p.setRoute(route);
+		updateLongestTrip(legs.getNumPoints());
+		p.setRoute(legs);
 		return p;
 	}
 	

@@ -11,7 +11,10 @@ import javax.swing.JTextArea;
 
 import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.zishanfu.vistrips.Jmap;
 import com.zishanfu.vistrips.map.OsmGraph;
 import com.zishanfu.vistrips.map.TripsGeneration;
 import com.zishanfu.vistrips.model.Pair;
@@ -20,7 +23,7 @@ import com.zishanfu.vistrips.tools.Distance;
 
 
 public class GenerateBtnHandler implements ActionListener{
-	
+	private final Logger LOG = LoggerFactory.getLogger(GenerateBtnHandler.class);
 	private SelectionAdapter sa;
 	private SimulationBtnHandler sbHandler;
 	private TextField numTxt;
@@ -72,6 +75,8 @@ public class GenerateBtnHandler implements ActionListener{
 		    		//geo2.lat - maxLen, geo2.lon + maxLen
 		    		GeoPosition newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen);
 		    		GeoPosition newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen);
+		    		System.out.println(String.format("Selected rectangle, p1: %s, p2: %s", newGeo1, newGeo2));
+		    		LOG.info(String.format("Selected rectangle, p1: %s, p2: %s", newGeo1, newGeo2));
 
 		    		//Plot OSM and save node and way parquet in HDFS
 		    		String path = OsmParser.run(newGeo1, newGeo2);

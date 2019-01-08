@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<osm version="0.6" generator="osmconvert 0.8.5" timestamp="2018-12-25T21:14:02Z">
+	<node lon="-111.9389839", lat="33.4074225", id="4347874712"/>
+	<node lon="-111.9385580", lat="33.4074298", id="6058475294" />
+	<node lon="-111.9383137", lat="33.4074352", id="41883108" />
+	<node lon="-111.9383377", lat="33.4071662", id="5662664854" />
+	<node lon="-111.9383463", lat="33.4069101", id="5662664855" />
+	<node lon="-111.9384113", lat="33.4068765", id="5662664858" />
+	<node lon="-111.9384314", lat="33.4064041", id="5662664859" />
+	<node lon="-111.9393425", lat="33.4063666", id="5662664860" />
+	<node lon="-111.9398013", lat="33.4063538", id="5662664861" />
+	<node lon="-111.9398081", lat="33.4067486", id="3983483491" />
+	<way id="436340310" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
+		<nd ref="4347874712"/>
+		<nd ref="6058475294"/>
+		<nd ref="41883108"/>
+		<tag k="highway" v="residential"/>
+		<tag k="lanes" v="4"/>
+		<tag k="maxspeed" v="45"/>
+		<tag k="name" v="Huvandhumaa Higun"/>
+		<tag k="oneway" v="no"/>
+		<tag k="sidewalk" v="both"/>
+		<tag k="source" v="Bing"/>
+		<tag k="surface" v="asphalt"/>
+	</way>
+	<way id="436340311" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
+		<nd ref="41883108"/>
+		<nd ref="5662664854"/>
+		<nd ref="5662664855"/>
+		<tag k="highway" v="residential"/>
+		<tag k="lanes" v="4"/>
+		<tag k="maxspeed" v="30"/>
+		<tag k="name" v="Huvandhumaa Higun"/>
+		<tag k="oneway" v="no"/>
+		<tag k="sidewalk" v="both"/>
+		<tag k="source" v="Bing"/>
+		<tag k="surface" v="asphalt"/>
+	</way>
+		<way id="436340312" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
+		<nd ref="5662664855"/>
+		<nd ref="5662664858"/>
+		<nd ref="5662664859"/>
+		<nd ref="5662664860"/>
+		<nd ref="5662664861"/>
+		<tag k="highway" v="residential"/>
+		<tag k="lanes" v="4"/>
+		<tag k="maxspeed" v="30"/>
+		<tag k="name" v="Huvandhumaa Higun"/>
+		<tag k="oneway" v="no"/>
+		<tag k="sidewalk" v="both"/>
+		<tag k="source" v="Bing"/>
+		<tag k="surface" v="asphalt"/>
+	</way>
+	</way>
+		<way id="436340313" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
+		<nd ref="5662664861"/>
+		<nd ref="3983483491"/>
+		<nd ref="4347874712"/>
+		<tag k="highway" v="residential"/>
+		<tag k="lanes" v="4"/>
+		<tag k="maxspeed" v="30"/>
+		<tag k="name" v="Huvandhumaa Higun"/>
+		<tag k="oneway" v="no"/>
+		<tag k="sidewalk" v="both"/>
+		<tag k="source" v="Bing"/>
+		<tag k="surface" v="asphalt"/>
+	</way>
+	</way>
+		<way id="436340314" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
+		<nd ref="5662664854"/>
+		<nd ref="3983483491"/>
+		<tag k="highway" v="residential"/>
+		<tag k="lanes" v="4"/>
+		<tag k="maxspeed" v="30"/>
+		<tag k="name" v="Huvandhumaa Higun"/>
+		<tag k="oneway" v="no"/>
+		<tag k="sidewalk" v="both"/>
+		<tag k="source" v="Bing"/>
+		<tag k="surface" v="asphalt"/>
+	</way>
+</osm>

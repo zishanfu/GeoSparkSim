@@ -38,7 +38,7 @@ public class SimulationBtnHandler implements ActionListener{
 				if(p == null) {
 					continue;
 				}
-				waypoints.add(new MyWaypoint(Color.black, p.getRoute().toGeoJson()));
+				waypoints.add(new MyWaypoint(Color.black, p.getRouteGeojson()));
 			}
 			
 			final WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();

@@ -16,6 +16,7 @@ import org.apache.spark.sql.Encoders
 import org.apache.spark.graphx.Edge
 import org.apache.spark.graphx.VertexRDD
 import org.apache.spark.rdd.RDD
+import com.zishanfu.vistrips.network.Route
 
 object ShortestPathFactory {
 //Node: (id, lat, lon)
@@ -88,24 +89,25 @@ object ShortestPathFactory {
     //runBuiltin(graph, A.getUserData.asInstanceOf[Long], G.getUserData.asInstanceOf[Long])
     val swapMap = map.map(_.swap)
     
-    result.filter(_._2 contains map.getOrElse("G", null)).map(row => {
-      val cost = row._1
-      val list = row._2
+    result.filter(_.legs contains map.getOrElse("G", null)).map(row => {
+      val cost = row.distance
+      val list = row.legs
       val list2 = list.map(e => swapMap.getOrElse(e, null))
       (cost, list2)
     }).foreach(println)
     println("finished")
   }
   
-  def runDijkstra(graph : Graph[Point, Link],  source : Long , destination : Long) : RDD[(Double, List[Point])] = {
-    val initialMessage : (Double, List[Point]) = (Double.MaxValue, List())
-    val spGraph = graph.mapVertices { (vid, vertex) => if(vid == source) (0.0, List(vertex)) else (Double.MaxValue, List())}
+  def runDijkstra(graph : Graph[Point, Link],  source : Long , destination : Long) : RDD[Route] = {
+    //(distance, time, list of points)
+    val initialMessage : Route = new Route(Double.MaxValue, Double.MaxValue, List())
+    val spGraph = graph.mapVertices { (vid, vertex) => if(vid == source) new Route (0.0, 0.0, List(vertex)) else new Route(Double.MaxValue, Double.MaxValue, List())}
     
-    def vertexProgram(id: Long, vertex: (Double, List[Point]), msg: (Double, List[Point])): (Double, List[Point]) = {
-      if(msg._1 == Double.MaxValue){
+    def vertexProgram(id: Long, vertex: Route, msg: Route): Route = {
+      if(msg.time == Double.MaxValue){
         vertex
       }else{
-        if(vertex._1 < msg._1){
+        if(vertex.time < msg.time){
           vertex
         }else{
           msg
@@ -113,22 +115,24 @@ object ShortestPathFactory {
       }
     }
     
-    def sendMessage(triplet: EdgeTriplet[(Double, List[Point]), Link]): Iterator[(Long, (Double, List[Point]))] = {
+    def sendMessage(triplet: EdgeTriplet[Route, Link]): Iterator[(Long, Route)] = {
       val source = triplet.srcAttr
       val destination = triplet.dstAttr
-      val weight = triplet.attr.distance
-      val cost = source._1 + weight
-      if(cost > destination._1 || source._1 == Double.MaxValue){
+      val attr = triplet.attr
+      val timeWeight = attr.distance / attr.speed
+      val timeCost = source.time + timeWeight
+      val distanceCost = source.distance + attr.distance
+      if(timeCost > destination.time || source.time == Double.MaxValue){
         Iterator.empty
       }else{
-        var list = source._2
+        var list = source.legs
         list = list :+ triplet.attr.getHead()
-        Iterator((triplet.dstId, (cost, list)))
+        Iterator((triplet.dstId, new Route(distanceCost, timeCost, list)))
       }
     }
     
-    def messageCombiner(msg1 : (Double, List[Point]), msg2: (Double, List[Point])) : (Double, List[Point]) = {
-      if(msg1._1 < msg2._1) msg1 else msg2
+    def messageCombiner(msg1 : Route, msg2: Route) : Route = {
+      if(msg1.time < msg2.time) msg1 else msg2
     }
                       
 

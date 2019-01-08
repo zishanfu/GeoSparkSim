@@ -7,12 +7,16 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
 
 import org.jxmapviewer.JXMapViewer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.zishanfu.vistrips.controller.CompController;
 import com.zishanfu.vistrips.controller.InputController;
 import com.zishanfu.vistrips.controller.ResultController;
 
 public class Jmap {
+	private final static Logger LOG = LoggerFactory.getLogger(Jmap.class);
+	
 	public static void main(String[] args) {
 		int width = 1200;
 		int height = 800;
@@ -33,7 +37,7 @@ public class Jmap {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        
+        LOG.info("Jmap Configuration");
         
         jXMapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
         {
