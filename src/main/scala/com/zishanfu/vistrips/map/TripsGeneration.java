@@ -2,10 +2,11 @@ package com.zishanfu.vistrips.map;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
 import org.jxmapviewer.viewer.GeoPosition;
-import com.graphhopper.util.PointList;
+
+import com.vividsolutions.jts.geom.LineString;
 import com.zishanfu.vistrips.model.Pair;
-import com.zishanfu.vistrips.tools.Distance;
 
 /**
  * @author zishanfu
@@ -22,7 +23,7 @@ public class TripsGeneration{
 	private double maxLen;
 	//private double maxLenharv;
 	private int longestTrip = 0;
-	private GraphInit gi;
+	private OsmGraph graph;
 	//private Distance dist;
 	
 	//1:479km = euclidean: harvsine
@@ -46,13 +47,13 @@ public class TripsGeneration{
 	private String NB = "NB";
 	
 	
-	public TripsGeneration(GeoPosition topleft, GeoPosition bottomright, GraphInit gi, double maxLen) {
+	public TripsGeneration(GeoPosition topleft, GeoPosition bottomright, OsmGraph graph, double maxLen) {
 		this.minLat = Math.min(topleft.getLatitude(), bottomright.getLatitude());
 		this.maxLat = Math.max(topleft.getLatitude(), bottomright.getLatitude());
 		this.minLon = Math.min(topleft.getLongitude(), bottomright.getLongitude());
 		this.maxLon = Math.max(topleft.getLongitude(), bottomright.getLongitude());
-		this.gi = gi;
-		this.totalNodes = gi.getTotalNodes();
+		this.graph = graph;
+		this.totalNodes = graph.getTotalNodes();
 		this.maxLen = maxLen;
 		//this.dist = new Distance();
 		//this.maxLenharv = dist.haversine(minLat, minLon, maxLat, maxLon);
@@ -98,12 +99,12 @@ public class TripsGeneration{
 	
 	private GeoPosition computeSourceNB() {
 		GeoPosition src = randomNode();
-		return gi.getClosestNode(src);
+		return graph.getClosestNode(src);
 	}
 	
 	private GeoPosition computeDestinationNB(GeoPosition src, double len) {
 		GeoPosition dest = computeDestDSO(src, len);
-		return gi.getClosestNode(dest);
+		return graph.getClosestNode(dest);
 	}
 	
 	private void updateLongestTrip(int len) {
@@ -133,14 +134,14 @@ public class TripsGeneration{
 		}else if(type.contains(RB)) {
 			
 		}	
-		PointList route = gi.routeRequest(p.getSource().getLatitude(),
+		LineString route = graph.routeRequest(p.getSource().getLatitude(),
 						p.getSource().getLongitude(),
 						p.getDest().getLatitude(),
 						p.getDest().getLongitude());
 		System.out.println(route);
 		if(route == null) 
 			return null;
-		updateLongestTrip(route.size());
+		updateLongestTrip(route.getNumPoints());
 		p.setRoute(route);
 		return p;
 	}

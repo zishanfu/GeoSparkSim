@@ -1,38 +1,13 @@
 package com.zishanfu.vistrips;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
-import java.awt.FlowLayout;
-import java.awt.TextField;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.event.MouseInputListener;
 
 import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.OSMTileFactoryInfo;
-import org.jxmapviewer.cache.FileBasedLocalCache;
-import org.jxmapviewer.input.CenterMapListener;
-import org.jxmapviewer.input.PanKeyListener;
-import org.jxmapviewer.input.PanMouseInputListener;
-import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
-import org.jxmapviewer.viewer.DefaultTileFactory;
-import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.TileFactoryInfo;
 
-import com.zishanfu.vistrips.components.GenerateBtnHandler;
-import com.zishanfu.vistrips.components.SelectionPainter;
-import com.zishanfu.vistrips.components.SelectionAdapter;
-import com.zishanfu.vistrips.components.SimulationBtnHandler;
 import com.zishanfu.vistrips.controller.CompController;
 import com.zishanfu.vistrips.controller.InputController;
 import com.zishanfu.vistrips.controller.ResultController;
@@ -45,6 +20,7 @@ public class Jmap {
 		final JXMapViewer jXMapViewer = cc.mapViewer;
 		ResultController rc = new ResultController();
 		InputController ic = new InputController(cc, rc);
+		System.setProperty("org.geotools.referencing.forceXY", "true");
 		
 
         // Display the viewer in a JFrame

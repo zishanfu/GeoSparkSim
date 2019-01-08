@@ -14,6 +14,8 @@ import com.vividsolutions.jts.geom.GeometryFactory
 import com.vividsolutions.jts.geom.Coordinate
 import org.apache.spark.sql.Encoders
 import org.apache.spark.graphx.Edge
+import org.apache.spark.graphx.VertexRDD
+import org.apache.spark.rdd.RDD
 
 object ShortestPathFactory {
 //Node: (id, lat, lon)
@@ -82,11 +84,20 @@ object ShortestPathFactory {
     val graph = Graph(nodesRDD, edgesRDD)
     val A = map.getOrElse("A", null).asInstanceOf[Point]
     val G = map.getOrElse("G", null).asInstanceOf[Point]
-    runDijkstra(graph, A.getUserData.asInstanceOf[Long], G.getUserData.asInstanceOf[Long])
+    val result = runDijkstra(graph, A.getUserData.asInstanceOf[Long], G.getUserData.asInstanceOf[Long])
+    //runBuiltin(graph, A.getUserData.asInstanceOf[Long], G.getUserData.asInstanceOf[Long])
+    val swapMap = map.map(_.swap)
+    
+    result.filter(_._2 contains map.getOrElse("G", null)).map(row => {
+      val cost = row._1
+      val list = row._2
+      val list2 = list.map(e => swapMap.getOrElse(e, null))
+      (cost, list2)
+    }).foreach(println)
     println("finished")
   }
   
-  def runDijkstra(graph : Graph[Point, Link],  source : Long , destination : Long) : Unit = {
+  def runDijkstra(graph : Graph[Point, Link],  source : Long , destination : Long) : RDD[(Double, List[Point])] = {
     val initialMessage : (Double, List[Point]) = (Double.MaxValue, List())
     val spGraph = graph.mapVertices { (vid, vertex) => if(vid == source) (0.0, List(vertex)) else (Double.MaxValue, List())}
     
@@ -121,18 +132,14 @@ object ShortestPathFactory {
     }
                       
 
-    val pregel = Pregel(spGraph, initialMessage, Integer.MAX_VALUE)(vertexProgram, sendMessage, messageCombiner)
+    val pregel = Pregel(spGraph, initialMessage, spGraph.vertices.count().toInt)(vertexProgram, sendMessage, messageCombiner)
+    pregel.vertices.map(_._2)
   }
   
   def runBuiltin(graph: Graph[Point, Link], sourceId: Long, destinationId: Long) = {
         
         val spResult = ShortestPaths.run(graph, Seq(sourceId, destinationId))
-        val verticesRDD = spResult.vertices
-        val verteicesRowRDD = verticesRDD.map(map => {
-            Row.fromSeq(Seq(map._1, map._2.mkString(" | ")))
-        })
-        
-        verteicesRowRDD.take(10).foreach(println)
-        println("finished")
+        //Map(id: long -> landmarks count)
+        spResult.vertices.map(_._2).collect.foreach(println)
     }
 }

@@ -9,9 +9,10 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 
+import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
 
-import com.zishanfu.vistrips.map.GraphInit;
+import com.zishanfu.vistrips.map.OsmGraph;
 import com.zishanfu.vistrips.map.TripsGeneration;
 import com.zishanfu.vistrips.model.Pair;
 import com.zishanfu.vistrips.osm.OsmParser;
@@ -26,15 +27,17 @@ public class GenerateBtnHandler implements ActionListener{
 	private JTextArea textArea;
 	private String[] genTypes;
 	private JComboBox genList;
+	private SparkSession spark;
 	
 	public GenerateBtnHandler(SelectionAdapter sa, TextField numTxt, SimulationBtnHandler sbHandler, 
-			JTextArea textArea, String[] genTypes, JComboBox genList) {
+			JTextArea textArea, String[] genTypes, JComboBox genList, SparkSession spark) {
 		this.sa = sa;
 		this.numTxt = numTxt;
 		this.sbHandler = sbHandler;
 		this.textArea = textArea;
 		this.genTypes = genTypes;
 		this.genList = genList;
+		this.spark = spark;
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -71,23 +74,24 @@ public class GenerateBtnHandler implements ActionListener{
 		    		GeoPosition newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen);
 
 		    		//Plot OSM and save node and way parquet in HDFS
-		    		OsmParser.run(newGeo1, newGeo2);
+		    		String path = OsmParser.run(newGeo1, newGeo2);
 		    		textArea.append("Finished osm download and processing!");
 		    		
 		    		//Processing Graph 
 		    		textArea.append("Processing graph\n");
 		    		//GraphInit gi = new GraphInit(osmloader.lastPath);
-		    		
+		    		OsmGraph graph = new OsmGraph(spark, path);
+		    		textArea.append("Finished graph construction\n");
 		    		
 		    		//Generating Trips
-//		    		int nums = Integer.parseInt(numTxt.getText());
-//		    		textArea.append("Begin generate " + nums +" trips\n");
-//		    		TripsGeneration tg = new TripsGeneration(geo1, geo2, gi, maxLen);
-//		    		Pair[] pairs = tg.computePairs(nums, selectedType);
-//		    		sbHandler.setPairs(pairs);
-//		    		
-//		        	long endTime = System.currentTimeMillis();
-//		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
+		    		int nums = Integer.parseInt(numTxt.getText());
+		    		textArea.append("Begin generate " + nums +" trips\n");
+		    		TripsGeneration tg = new TripsGeneration(geo1, geo2, graph, maxLen);
+		    		Pair[] pairs = tg.computePairs(nums, selectedType);
+		    		sbHandler.setPairs(pairs);
+		    		
+		        	long endTime = System.currentTimeMillis();
+		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
 		        }     
 		    });
 			

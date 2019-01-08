@@ -11,8 +11,10 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.spark.sql.SparkSession;
 import com.zishanfu.vistrips.components.GenerateBtnHandler;
 import com.zishanfu.vistrips.components.SimulationBtnHandler;
+
 
 public class InputController {
 	
@@ -35,8 +37,17 @@ public class InputController {
         JComboBox genList = new JComboBox(genTypes);
         genList.setSelectedIndex(0);
         
+        SparkSession spark = SparkSession
+		  .builder()
+		  .master("local")
+		  .appName("OSMSpark")
+		  .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+          .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
+		  .getOrCreate();
+        
+
         SimulationBtnHandler sbHandler = new SimulationBtnHandler(cc.mapViewer);
-        GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, sbHandler, rc.textArea, genTypes, genList);
+        GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, sbHandler, rc.textArea, genTypes, genList, spark);
         gBtn.addActionListener(gbHandler);
         sBtn.addActionListener(sbHandler);
 

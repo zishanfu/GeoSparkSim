@@ -32,12 +32,8 @@ object OsmConverter {
   
   
   def convertToNetwork(sparkSession : SparkSession, path : String) : Graph[Point, Link]= {
-//    val nodesPath = path + "/node.parquet"
-//    val waysPath = path + "/way.parquet"
-    val localpath = "/home/zishanfu/Downloads"
-    
-    val nodesPath = localpath + "/node.parquet"
-    val waysPath = localpath + "/way.parquet"
+    val nodesPath = path + "/node.parquet"
+    val waysPath = path + "/way.parquet"
     
     val nodesDF = convertNodes(sparkSession, nodesPath)
     val network = convertLinks(sparkSession, nodesDF, waysPath)

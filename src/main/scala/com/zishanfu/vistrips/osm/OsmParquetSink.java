@@ -22,7 +22,7 @@ import com.zishanfu.vistrips.osm.parquet.ParquetWriterFactory;
 public class OsmParquetSink implements Sink {
 	
     private String destinationFolder;
-    
+
     private ParquetWriter<Node> nodeWriter;
     private ParquetWriter<Way> waysWriter;
 
@@ -32,7 +32,7 @@ public class OsmParquetSink implements Sink {
 
     @Override
     public void initialize(Map<String, Object> metaData) {
-        final String destNode = destinationFolder + "/" + format("%s.parquet", "node");
+    	final String destNode = destinationFolder + "/" + format("%s.parquet", "node");
         final String destWays = destinationFolder + "/" + format("%s.parquet", "way");
     	try {
         	this.nodeWriter = ParquetWriterFactory.buildFor(destNode,EntityType.Node);
