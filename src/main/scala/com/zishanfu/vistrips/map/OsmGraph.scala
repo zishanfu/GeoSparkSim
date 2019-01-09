@@ -18,14 +18,12 @@ import org.apache.spark.rdd.RDD
 import org.slf4j.LoggerFactory
 
 class OsmGraph (sparkSession: SparkSession, path: String){
-  private val LOG = LoggerFactory.getLogger(getClass);
+  private val LOG = LoggerFactory.getLogger(getClass)
   
   val gf = new GeometryFactory()
   val graph: Graph[Point, Link] = OsmConverter.convertToNetwork(sparkSession, path)
   val vertexRDD = new PointRDD(graph.vertices.map(r => r._2))
   vertexRDD.buildIndex(IndexType.RTREE, false)
-  
-  
 
   /**
    * @param lat

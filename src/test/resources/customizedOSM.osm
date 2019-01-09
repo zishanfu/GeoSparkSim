@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <osm version="0.6" generator="osmconvert 0.8.5" timestamp="2018-12-25T21:14:02Z">
-	<node lon="-111.9389839", lat="33.4074225", id="4347874712"/>
-	<node lon="-111.9385580", lat="33.4074298", id="6058475294" />
-	<node lon="-111.9383137", lat="33.4074352", id="41883108" />
-	<node lon="-111.9383377", lat="33.4071662", id="5662664854" />
-	<node lon="-111.9383463", lat="33.4069101", id="5662664855" />
-	<node lon="-111.9384113", lat="33.4068765", id="5662664858" />
-	<node lon="-111.9384314", lat="33.4064041", id="5662664859" />
-	<node lon="-111.9393425", lat="33.4063666", id="5662664860" />
-	<node lon="-111.9398013", lat="33.4063538", id="5662664861" />
-	<node lon="-111.9398081", lat="33.4067486", id="3983483491" />
+	<node id="4347874712" lat="33.4074225" lon="-111.9389839" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0"/>
+	<node id="6058475294" lat="33.4074298" lon="-111.9385580" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
+	<node id="41883108" lat="33.4074352" lon="-111.9383137" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
+	<node id="5662664854" lat="33.4071662" lon="-111.9383377" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
+	<node id="5662664855" lat="33.4069101" lon="-111.9383463" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
+	<node id="5662664858" lat="33.4068765" lon="-111.9384113" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
+	<node id="5662664859" lat="33.4064041" lon="-111.9384314" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
+	<node id="5662664860" lat="33.4063666" lon="-111.9393425" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
+	<node id="5662664861" lat="33.4063538" lon="-111.9398013" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
+	<node id="3983483491" lat="33.4067486" lon="-111.9398081" version="4" timestamp="2017-03-23T18:52:43Z" changeset="0" />
 	<way id="436340310" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
 		<nd ref="4347874712"/>
 		<nd ref="6058475294"/>
@@ -36,7 +36,7 @@
 		<tag k="source" v="Bing"/>
 		<tag k="surface" v="asphalt"/>
 	</way>
-		<way id="436340312" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
+	<way id="436340312" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
 		<nd ref="5662664855"/>
 		<nd ref="5662664858"/>
 		<nd ref="5662664859"/>
@@ -51,8 +51,7 @@
 		<tag k="source" v="Bing"/>
 		<tag k="surface" v="asphalt"/>
 	</way>
-	</way>
-		<way id="436340313" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
+	<way id="436340313" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
 		<nd ref="5662664861"/>
 		<nd ref="3983483491"/>
 		<nd ref="4347874712"/>
@@ -65,8 +64,7 @@
 		<tag k="source" v="Bing"/>
 		<tag k="surface" v="asphalt"/>
 	</way>
-	</way>
-		<way id="436340314" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
+	<way id="436340314" version="6" timestamp="2017-07-19T10:59:54Z" changeset="0">
 		<nd ref="5662664854"/>
 		<nd ref="3983483491"/>
 		<tag k="highway" v="residential"/>
@@ -79,3 +77,4 @@
 		<tag k="surface" v="asphalt"/>
 	</way>
 </osm>
+
