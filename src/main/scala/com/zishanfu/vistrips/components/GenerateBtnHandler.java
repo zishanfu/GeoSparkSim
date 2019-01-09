@@ -14,7 +14,6 @@ import org.jxmapviewer.viewer.GeoPosition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zishanfu.vistrips.Jmap;
 import com.zishanfu.vistrips.map.OsmGraph;
 import com.zishanfu.vistrips.map.TripsGeneration;
 import com.zishanfu.vistrips.model.Pair;

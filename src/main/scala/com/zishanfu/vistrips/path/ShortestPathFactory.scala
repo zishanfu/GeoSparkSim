@@ -57,13 +57,20 @@ object ShortestPathFactory {
                   "J" -> createPoint(-111.9398081, 33.4067486, 3983483491L))
     val nodeRDD = sc.parallelize(map.values.toSeq)
     
-    val linkDS = Seq( Link(1L, map.getOrElse("C", null).asInstanceOf[Point], map.getOrElse("A", null).asInstanceOf[Point] , 10.0, 40, 2, 2), 
-                      Link(2L, map.getOrElse("E", null).asInstanceOf[Point], map.getOrElse("C", null).asInstanceOf[Point] , 5.0, 40, 2, 2), 
-                      Link(3L, map.getOrElse("G", null).asInstanceOf[Point], map.getOrElse("E", null).asInstanceOf[Point] , 8.0, 40, 2, 2), 
-                      Link(4L, map.getOrElse("I", null).asInstanceOf[Point], map.getOrElse("G", null).asInstanceOf[Point] , 4.0, 40, 2, 2), 
-                      Link(5L, map.getOrElse("J", null).asInstanceOf[Point], map.getOrElse("I", null).asInstanceOf[Point] , 1.0, 40, 2, 2),
-                      Link(6L, map.getOrElse("A", null).asInstanceOf[Point], map.getOrElse("J", null).asInstanceOf[Point] , 5.0, 40, 2, 2), 
-                      Link(7L, map.getOrElse("J", null).asInstanceOf[Point], map.getOrElse("D", null).asInstanceOf[Point] , 8.0, 40, 2, 2))
+    val linkDS = Seq( Link(1L, map.getOrElse("C", null).asInstanceOf[Point], 
+                                map.getOrElse("A", null).asInstanceOf[Point] , 0.01958306584828093, 40, 2, 2), //0.1
+                      Link(2L, map.getOrElse("E", null).asInstanceOf[Point], 
+                                map.getOrElse("C", null).asInstanceOf[Point] , 0.050637545877608803, 40, 2, 2), //0.05
+                      Link(3L, map.getOrElse("G", null).asInstanceOf[Point], 
+                                map.getOrElse("E", null).asInstanceOf[Point] , 0.080701717430328744, 40, 2, 2), //0.08
+                      Link(4L, map.getOrElse("I", null).asInstanceOf[Point], 
+                                map.getOrElse("G", null).asInstanceOf[Point] , 0.04440963718096148, 40, 2, 2), //0.04
+                      Link(5L, map.getOrElse("J", null).asInstanceOf[Point], 
+                                map.getOrElse("I", null).asInstanceOf[Point] , 0.01266020623253597, 40, 2, 2),//0.01
+                      Link(6L, map.getOrElse("A", null).asInstanceOf[Point], 
+                                map.getOrElse("J", null).asInstanceOf[Point] , 0.052614319867506025, 40, 2, 2), //0.05
+                      Link(7L, map.getOrElse("J", null).asInstanceOf[Point], 
+                                map.getOrElse("D", null).asInstanceOf[Point] , 0.08456997082524347, 40, 2, 2)) //0.08
     val linkRDD = sc.parallelize(linkDS).flatMap(link => {
      if(link.getDrivingDirection() == 1){
         List(link)
@@ -85,7 +92,14 @@ object ShortestPathFactory {
     val graph = Graph(nodesRDD, edgesRDD)
     val A = map.getOrElse("A", null).asInstanceOf[Point]
     val G = map.getOrElse("G", null).asInstanceOf[Point]
+    println(graph.vertices.count())
+    println(graph.edges.count())
+    println(graph.triplets.count())
+    graph.vertices.foreach(println)
+    graph.edges.foreach(println)
+    graph.triplets.foreach(println)
     val result = runDijkstra(graph, A.getUserData.asInstanceOf[Long], G.getUserData.asInstanceOf[Long])
+    
     //runBuiltin(graph, A.getUserData.asInstanceOf[Long], G.getUserData.asInstanceOf[Long])
     val swapMap = map.map(_.swap)
     
@@ -95,24 +109,15 @@ object ShortestPathFactory {
       val list2 = list.map(e => swapMap.getOrElse(e, null))
       (cost, list2)
     }).foreach(println)
-    println("finished")
+
   }
   
-  def runDijkstra(graph : Graph[Point, Link],  source : Long , destination : Long) : RDD[Route] = {
-    //(distance, time, list of points)
-    val initialMessage : Route = new Route(Double.MaxValue, Double.MaxValue, List())
-    val spGraph = graph.mapVertices { (vid, vertex) => if(vid == source) new Route (0.0, 0.0, List(vertex)) else new Route(Double.MaxValue, Double.MaxValue, List())}
-    
     def vertexProgram(id: Long, vertex: Route, msg: Route): Route = {
-      if(msg.time == Double.MaxValue){
-        vertex
-      }else{
-        if(vertex.time < msg.time){
+      if(vertex.time < msg.time){
           vertex
-        }else{
+       }else{
           msg
-        }
-      }
+       }
     }
     
     def sendMessage(triplet: EdgeTriplet[Route, Link]): Iterator[(Long, Route)] = {
@@ -122,21 +127,28 @@ object ShortestPathFactory {
       val timeWeight = attr.distance / attr.speed
       val timeCost = source.time + timeWeight
       val distanceCost = source.distance + attr.distance
-      if(timeCost > destination.time || source.time == Double.MaxValue){
-        Iterator.empty
-      }else{
+      if(timeCost < destination.time){
         var list = source.legs
         list = list :+ triplet.attr.getHead()
         Iterator((triplet.dstId, new Route(distanceCost, timeCost, list)))
+      }else{
+        Iterator.empty
       }
     }
     
     def messageCombiner(msg1 : Route, msg2: Route) : Route = {
       if(msg1.time < msg2.time) msg1 else msg2
     }
+   
+  
+  def runDijkstra(graph : Graph[Point, Link],  source : Long , destination : Long) : RDD[Route] = {
+    //(distance, time, list of points)
+    val initialMessage : Route = new Route(Double.PositiveInfinity, Double.PositiveInfinity, List())
+    val spGraph = graph.mapVertices { (vid, vertex) => 
+      if(vid == source) new Route (0.0, 0.0, List(vertex)) else new Route(Double.PositiveInfinity, Double.PositiveInfinity, List())}
                       
 
-    val pregel = Pregel(spGraph, initialMessage, spGraph.vertices.count().toInt)(vertexProgram, sendMessage, messageCombiner)
+    val pregel = Pregel(spGraph, initialMessage, spGraph.vertices.count().toInt, EdgeDirection.Out)(vertexProgram, sendMessage, messageCombiner)
     pregel.vertices.map(_._2)
   }
   

@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory
 import org.opengis.referencing.operation.MathTransform
 import org.geotools.geometry.jts.JTS
 import org.geotools.referencing.crs.DefaultGeographicCRS
+import org.apache.spark.storage.StorageLevel
+import org.apache.spark.rdd.RDD
 
 
 object OsmConverter {
@@ -95,15 +97,16 @@ object OsmConverter {
     val nodesDF = convertNodes(sparkSession, nodesPath)
     val network = convertLinks(sparkSession, nodesDF, waysPath)
     
-    val nodeDS = network._1
-    val linkDS = network._2
+    val nodeDS : RDD[Point] = network._1.rdd
+    val linkDS : RDD[Link] = network._2.rdd
     
-    val nodesRDD = nodeDS.rdd.map(node => (node.getUserData.asInstanceOf[Long], node))
-    val edgesRDD = linkDS.rdd.map(link => {
+    val nodesRDD = nodeDS.map(node => (node.getUserData.asInstanceOf[Long], node))
+    val edgesRDD = linkDS.map(link => {
             Edge(link.getTail().getUserData.asInstanceOf[Long],
                 link.getHead().getUserData.asInstanceOf[Long], 
                 link)
         })
+        
 
     val graph = Graph(nodesRDD, edgesRDD)
     LOG.info("Constructed graph with %s vertices %s edges".format(nodesRDD.count(), edgesRDD.count()))

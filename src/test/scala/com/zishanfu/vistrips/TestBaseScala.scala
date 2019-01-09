@@ -16,7 +16,8 @@ trait TestBaseScala extends FunSpec with BeforeAndAfterAll{
   var sparkSession = SparkSession.builder().config("spark.serializer", classOf[KryoSerializer].getName).
     config("spark.kryo.registrator", classOf[GeoSparkKryoRegistrator].getName).
     master("local[*]").appName("geosparksqlScalaTest")
-    .config("spark.sql.warehouse.dir", warehouseLocation).getOrCreate()
+    .config("spark.sql.warehouse.dir", warehouseLocation)
+    .config("spark.local.dir", warehouseLocation + "/tmp/spark-temp").getOrCreate()
 
   val resourceFolder = System.getProperty("user.dir") + "/src/test/resources/"
   val csvData = resourceFolder+"arealm-small.csv"

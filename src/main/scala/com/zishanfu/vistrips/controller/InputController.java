@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.apache.spark.sql.SparkSession;
+
 import com.zishanfu.vistrips.components.GenerateBtnHandler;
 import com.zishanfu.vistrips.components.SimulationBtnHandler;
 

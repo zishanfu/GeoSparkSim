@@ -1,7 +1,6 @@
 package com.zishanfu.vistrips;
 
 import org.apache.spark.graphx.Graph;
-import org.apache.spark.graphx.VertexRDD;
 import org.apache.spark.rdd.RDD;
 import org.apache.spark.sql.SparkSession;
 
