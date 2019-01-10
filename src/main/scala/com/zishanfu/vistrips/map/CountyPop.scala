@@ -18,22 +18,20 @@ import org.apache.spark.serializer.KryoSerializer
 
 
 object CountyPop {
-  
-  def main(args : Array[String]) : Unit = {
-    var sparkSession = SparkSession.builder().config("spark.serializer", classOf[KryoSerializer].getName).
-          config("spark.kryo.registrator", classOf[GeoSparkKryoRegistrator].getName).
-          master("local[*]").appName("CountyPop").getOrCreate()
-    CountyPolygonIndex(sparkSession)
-    PopIndex(sparkSession) 
+ 
+  def run(sparkSession : SparkSession, num : Int) : Unit = {
+    val resourceFolder = System.getProperty("user.dir") + "/src/test/resources"
+    CountyPolygonIndex(sparkSession, resourceFolder)
+    PopIndex(sparkSession, resourceFolder)
   }
   
-  def CountyPolygonIndex(sparkSession : SparkSession) : Unit = {
-    var df1 = sparkSession.read.json("/home/zishanfu/Downloads/datasets/population/popByCounty/gz_2010_us_050_00_500k.json")
+  def CountyPolygonIndex(sparkSession : SparkSession, path : String) : Unit = {
+    var df1 = sparkSession.read.json(path + "/popByCounty/polygon.json")
     df1.createOrReplaceTempView("df1")
     var df2 = df1.select("geometry.coordinates", "properties.COUNTY").filter("coordinates is not null and COUNTY is not null")
     df2.take(10).foreach(println)
     val gf = new GeometryFactory()
-    val PolygonRDDInputLocation = "/home/zishanfu/Downloads/datasets/population/popByCounty/gz_2010_us_050_00_500k.json"
+    val PolygonRDDInputLocation = path + "/popByCounty/polygon.json"
     val PolygonRDDSplitter = FileDataSplitter.GEOJSON
     val PolygonRDDNumPartitions = 5
     val PolygonRDDStartOffset = 0
@@ -42,8 +40,8 @@ object CountyPop {
     
   }
   
-  def PopIndex(sparkSession : SparkSession) : Unit = {
-    var df1 = sparkSession.read.format("csv").option("header", "true").load("/home/zishanfu/Downloads/datasets/population/popByCounty/co-est2017-alldata.csv")
+  def PopIndex(sparkSession : SparkSession, path : String) : Unit = {
+    var df1 = sparkSession.read.format("csv").option("header", "true").load(path + "/popByCounty/popByCounty.csv")
     df1.createOrReplaceTempView("df1")
     var df2 = df1.select("COUNTY", "CENSUS2010POP")
     

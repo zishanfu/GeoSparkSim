@@ -109,7 +109,7 @@ object OsmConverter {
     graph
   }
   
-  private def convertNodes(sparkSession : SparkSession, nodesPath : String) : DataFrame = {
+  def convertNodes(sparkSession : SparkSession, nodesPath : String) : DataFrame = {
     val nodesDF = sparkSession.read.parquet(nodesPath)
     nodesDF.select("id", "latitude", "longitude")
   }
@@ -120,7 +120,7 @@ object OsmConverter {
    * @param String waysPath
    * @return Tuple (Dataset[Point], Dataset[Link])
    */
-  private def convertLinks(sparkSession : SparkSession, nodeDF : DataFrame, waysPath : String) = {
+  def convertLinks(sparkSession : SparkSession, nodeDF : DataFrame, waysPath : String) = {
     val linkEncoder = Encoders.kryo[Link]
     val PointEncoder = Encoders.kryo[Point]
     
@@ -158,8 +158,7 @@ object OsmConverter {
       if(!maxSpeed.isEmpty) speed = maxSpeed.get.substring(0, 2).toInt
       
       var isOneWay = tagsMap.getOrElse("oneway", "no") == "yes"
-      isOneWay = tagsMap.getOrElse("junction", "default") == "roundabout"
-      val lanes = if(tagsMap.contains("lanes")) tagsMap.get("lanes").get.toInt else 1
+      val lanes = if(tagsMap.contains("lanes")) tagsMap.get("lanes").get.toInt else 2
       isOneWay = if(lanes == 1) true else false
 
       val driveDirection = if(isOneWay) 1 else 2

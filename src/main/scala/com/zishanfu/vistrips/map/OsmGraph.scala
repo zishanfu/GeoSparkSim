@@ -63,7 +63,15 @@ def request(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : R
    * @return Route : fastest route with minimum time cost
    */
   def fatestRouteRequest(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : Route = {
-    request(latFrom, lonFrom, latTo, lonTo).reduce((a, b) => if(a.time < b.time) a else b)
+    var route : Route = null
+    try{
+      route = request(latFrom, lonFrom, latTo, lonTo).reduce((a, b) => if(a.time < b.time) a else b)
+    }catch {
+      case e: Exception =>{
+        LOG.error("No Route from node(%s, %s) to node(%s, %s)".format(latFrom, lonFrom, latTo, lonTo))
+      }
+    }
+    route
   }
   
 

@@ -79,7 +79,7 @@ public class GenerateBtnHandler implements ActionListener{
 
 		    		//Plot OSM and save node and way parquet in HDFS
 		    		String path = OsmParser.run(newGeo1, newGeo2);
-		    		textArea.append("Finished osm download and processing!");
+		    		textArea.append("Finished osm download and processing!\n");
 		    		
 		    		//Processing Graph 
 		    		textArea.append("Processing graph\n");

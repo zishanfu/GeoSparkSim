@@ -139,9 +139,9 @@ public class TripsGeneration{
 						p.getSource().getLongitude(),
 						p.getDest().getLatitude(),
 						p.getDest().getLongitude());
-		LineString legs = route.getLegsLineString();
-		if(legs == null) 
+		if(route == null) 
 			return null;
+		LineString legs = route.getLegsLineString();
 		updateLongestTrip(legs.getNumPoints());
 		p.setRoute(legs);
 		return p;
