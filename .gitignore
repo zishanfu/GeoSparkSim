@@ -10,3 +10,5 @@
 /conf/
 /log/
 /site/
+/.cache-main
+/.cache-tests
