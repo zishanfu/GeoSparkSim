@@ -1,28 +1,21 @@
 package com.zishanfu.vistrips.map
 
-import scala.collection.mutable.WrappedArray
-
-import org.apache.spark.graphx.Edge
-import org.apache.spark.graphx.Graph
-import org.apache.spark.sql._
-import org.apache.spark.sql.functions._
-import org.geotools.referencing.CRS
-import org.geotools.referencing.crs.DefaultGeocentricCRS
-import org.opengis.geometry.MismatchedDimensionException
-import org.opengis.referencing.operation.TransformException
-
-import com.vividsolutions.jts.geom.Coordinate
-import com.vividsolutions.jts.geom.GeometryFactory
-import com.vividsolutions.jts.geom.Point
+import com.vividsolutions.jts.geom.{Coordinate, GeometryFactory, Point}
 import com.zishanfu.vistrips.network.Link
 import com.zishanfu.vistrips.tools.Distance
-import org.opengis.referencing.FactoryException
-import org.slf4j.LoggerFactory
-import org.opengis.referencing.operation.MathTransform
-import org.geotools.geometry.jts.JTS
-import org.geotools.referencing.crs.DefaultGeographicCRS
-import org.apache.spark.storage.StorageLevel
+import org.apache.spark.graphx.{Edge, Graph}
 import org.apache.spark.rdd.RDD
+import org.apache.spark.sql._
+import org.apache.spark.sql.functions._
+import org.geotools.geometry.jts.JTS
+import org.geotools.referencing.CRS
+import org.geotools.referencing.crs.DefaultGeographicCRS
+import org.opengis.geometry.MismatchedDimensionException
+import org.opengis.referencing.FactoryException
+import org.opengis.referencing.operation.{MathTransform, TransformException}
+import org.slf4j.LoggerFactory
+
+import scala.collection.mutable.WrappedArray
 
 
 object OsmConverter {
@@ -99,13 +92,16 @@ object OsmConverter {
     
     val nodeDS : RDD[Point] = network._1.rdd
     val linkDS : RDD[Link] = network._2.rdd
-    
-    val nodesRDD = nodeDS.map(node => (node.getUserData.asInstanceOf[Long], node))
+
+    // Set each partition of nodeDS RDD contain 1000 links by default. We may need a smarter choice here to determine the partition size.
+    val partitionNum= math.ceil(nodeDS.count()/1000.0).toInt
+
+    val nodesRDD = nodeDS.map(node => (node.getUserData.asInstanceOf[Long], node)).coalesce(partitionNum, false)
     val edgesRDD = linkDS.map(link => {
             Edge(link.getTail().getUserData.asInstanceOf[Long],
                 link.getHead().getUserData.asInstanceOf[Long], 
                 link)
-        })
+        }).coalesce(partitionNum, false)
         
 
     val graph = Graph(nodesRDD, edgesRDD)
