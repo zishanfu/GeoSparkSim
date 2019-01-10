@@ -51,7 +51,7 @@ def request(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : R
     val destinationId = destination.getUserData.asInstanceOf[Long]
     val result = ShortestPathFactory.runDijkstra(graph, sourceId, destinationId)
     LOG.info("requested the route from %s to %s".format(source, destination))
-    result.filter(r => (r.legs.size > 0 && r.legs.tail == destination))
+    result.filter(r => (r.legs.size > 0 && r.legs.last.getUserData.asInstanceOf[Long] == destinationId))
   }
   
 
@@ -63,9 +63,11 @@ def request(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : R
    * @return Route : fastest route with minimum time cost
    */
   def fatestRouteRequest(latFrom: Double, lonFrom : Double, latTo: Double, lonTo: Double) : Route = {
+    var routes = request(latFrom, lonFrom, latTo, lonTo)
+    if(routes.count().toInt == 1) routes
     var route : Route = null
     try{
-      route = request(latFrom, lonFrom, latTo, lonTo).reduce((a, b) => if(a.time < b.time) a else b)
+      route = routes.reduce((a, b) => if(a.time < b.time) a else b)
     }catch {
       case e: Exception =>{
         LOG.error("No Route from node(%s, %s) to node(%s, %s)".format(latFrom, lonFrom, latTo, lonTo))

@@ -50,16 +50,24 @@ class AppTestScala extends TestBaseScala {
 //    }
     
     it("Map fatest route test"){
-      //33.410065, -111.920412
-      //33.406198, -111.939376
+      //33.410065, -111.920412 2262996384
+      //33.406198, -111.939376 5662664860
       var graph = new OsmGraph(sparkSession, hdfs)
       val from = graph.findNearestByCoor(33.410065, -111.920412)
       val to = graph.findNearestByCoor(33.406198, -111.939376)
-      val route = graph.fatestRouteRequest(33.410065, -111.920412, 33.406198, -111.939376)
-      route.legs.foreach(println)
-
       println(from)
       println(to)
+
+      val route = graph.fatestRouteRequest(33.410065, -111.920412, 33.406198, -111.939376)
+      route.legs.foreach(println)
+      
+//      var graph = OsmConverter.convertToNetwork(sparkSession, hdfs)
+//      val routeRDD = ShortestPathFactory.runDijkstra(graph, 2262996384L, 5662664860L)
+//      println(routeRDD.count())
+//      routeRDD.filter(r => (r.legs.size > 0 && r.legs.last.getUserData.asInstanceOf[Long] == 5662664860L))
+//              .foreach(println) 
+
+      
     }
 //    
 //    it("Read CSV data") {
