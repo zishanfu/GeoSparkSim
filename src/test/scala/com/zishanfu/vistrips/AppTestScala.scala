@@ -18,7 +18,7 @@ class AppTestScala extends TestBaseScala {
       val routeRDD = ShortestPathFactory.runDijkstra(graph, 4347874712L, 5662664861L)
       println(routeRDD.count())
       routeRDD.filter(r => (r.legs.size > 0 && r.legs.last.getUserData.asInstanceOf[Long] == 5662664861L))
-              .foreach(println)
+              .foreach(println) 
     }
     
 //    it("Random Graph"){
