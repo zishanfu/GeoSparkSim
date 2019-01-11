@@ -11,8 +11,13 @@ import com.zishanfu.vistrips.network.Link
 import com.zishanfu.vistrips.map.OsmConverter
 import com.vividsolutions.jts.geom.Point
 import org.apache.spark.graphx.lib.ShortestPaths
+import com.zishanfu.vistrips.map.CountyPop
 
 class AppTestScala extends TestBaseScala {
+  describe("CountyPop"){
+    CountyPop.run(sparkSession, 10)
+  }
+  
   describe("VisTrips Graph") {
 //    it("Test customized graph vertices and edges"){
 //      var graph = OsmConverter.convertToNetwork(sparkSession, resourceFolder)

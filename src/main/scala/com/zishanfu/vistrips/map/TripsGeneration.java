@@ -120,6 +120,10 @@ public class TripsGeneration{
 		}
 	}
 	
+	public void generateNumTripBox(Coordinate coor1, Coordinate coor2, int num) {
+		
+	}
+	
 	
 	/**
 	 * @param type The type for generate data, data-space oriented approach(DSO), 
