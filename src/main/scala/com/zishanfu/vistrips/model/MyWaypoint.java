@@ -25,7 +25,6 @@ public class MyWaypoint extends DefaultWaypoint
         this.color = color;
         this.route = route;
         this.curIdx = 0;
-        //this.curPos = new GeoPosition(route.get(curIdx)[1], route.get(curIdx)[0]);
     }
     
 

@@ -3,7 +3,6 @@ package com.zishanfu.vistrips.map;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -11,13 +10,17 @@ import java.nio.channels.ReadableByteChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
 import org.jxmapviewer.viewer.GeoPosition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OsmLoader{
 	
+	private final Logger LOG = LoggerFactory.getLogger(OsmLoader.class);
 	//"http://overpass-api.de/api/map?bbox=-111.93000,33.41237,-111.92175,33.41732";
 	private String OSM_URL = "http://overpass-api.de/api/map?bbox=";
-	private String fileBase = System.getProperty("user.home");
+	private String pathBase = System.getProperty("user.dir") + "/src/test/resources/vistrips";
 	private URL url;
 	public String lastPath;
 	
@@ -29,26 +32,36 @@ public class OsmLoader{
 	 * @param geo2
 	 * @throws MalformedURLException 
 	 */
-	public OsmLoader(String path, GeoPosition geo1, GeoPosition geo2) {
-		if(geo1.getLongitude() < geo2.getLongitude()) {
-			GeoPosition tmp = geo1;
-			geo1 = geo2;
-			geo2 = tmp;
-		}
+	public OsmLoader(GeoPosition geo1, GeoPosition geo2) {
+		double left = Math.min(geo1.getLongitude(), geo2.getLongitude());
+		double right = Math.max(geo1.getLongitude(), geo2.getLongitude());
+		double top = Math.max(geo1.getLatitude(), geo2.getLatitude());
+		double bottom = Math.min(geo1.getLatitude(), geo2.getLatitude());
 		//"-111.93000,33.41237,-111.92175,33.41732"
-		this.OSM_URL += geo1.getLongitude() + "," + geo1.getLatitude() + "," + 
-						geo2.getLongitude() + "," + geo2.getLatitude();
-		if(path == null || path.length() == 0) {
-			path = "/Downloads/datasets/vistrips/osm_temp/";
-		}
-		this.fileBase += path;
-		this.lastPath = fileBase;
+		this.OSM_URL += left + "," + bottom + "," + 
+						right + "," + top;
+		
+		directoryOps(pathBase);
+
 		try {
 			this.url = new URL(OSM_URL);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void directoryOps(String directory) {
+		try {
+            File f = new File(directory);
+            if(f.isDirectory()) {
+            	FileUtils.cleanDirectory(f); 
+                FileUtils.forceDelete(f); 
+            }
+            FileUtils.forceMkdir(f); 
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
 	}
 	
 	
@@ -59,7 +72,7 @@ public class OsmLoader{
 	public String download() {
 		Date now = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-		String newFileName = fileBase + dateFormat.format(now) + ".osm";
+		String newFileName = pathBase + "/" + dateFormat.format(now) + ".osm";
 		
 		try {
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());
@@ -80,7 +93,6 @@ public class OsmLoader{
 		File osm = new File(lastPath);
 		return osm.length() / (1024 * 1024) + "MB";
 	}
-
 
 	
 }

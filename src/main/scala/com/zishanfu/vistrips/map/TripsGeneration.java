@@ -154,7 +154,7 @@ public class TripsGeneration{
 				p.getSource().getLongitude(),
 				p.getDest().getLatitude(),
 				p.getDest().getLongitude());
-		if(route == null) 
+		if(route == null || route.size() <= 1) 
 			return null;
 		updateLongestTrip(route.size());
 		p.setRoute(PointList2LineString(route));

@@ -32,7 +32,6 @@ public class PointRender implements WaypointRenderer<MyWaypoint>{
 
         int x = (int)point.getX();
         int y = (int)point.getY();
-        System.out.println("x: " + x + ", y: " + y);
         
         g.setColor(obj.getColor());
         g.fillOval(x, y, width, height);

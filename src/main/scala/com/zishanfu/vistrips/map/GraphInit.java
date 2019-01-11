@@ -20,14 +20,11 @@ import com.graphhopper.util.shapes.GHPoint;
 
 public class GraphInit{
 	
-	//final private String osmLoc = System.getProperty("user.home") + "/Downloads/datasets/";
 	private GraphHopper hopper;
 	
 //	euclidean: 0.044644977654619736
 //	harvsine: 21382.936940999596
 
-	
-	///home/zishanfu/Downloads/datasets/arizona-latest.osm.pbf
 	public GraphInit(String osm) {
 		this.hopper = new GraphHopper().forServer();
 		hopper.setOSMFile(osm);

@@ -17,7 +17,7 @@ import com.zishanfu.vistrips.controller.ResultController;
 public class Jmap {
 	private final static Logger LOG = LoggerFactory.getLogger(Jmap.class);
 	
-	public static void main(String[] args) {
+	public void runUI() {
 		int width = 1200;
 		int height = 800;
 		CompController cc = new CompController(width, height);
@@ -58,7 +58,7 @@ public class Jmap {
         updateWindowTitle(frame, jXMapViewer);
     }
 
-    protected static void updateWindowTitle(JFrame frame, JXMapViewer jXMapViewer)
+    protected void updateWindowTitle(JFrame frame, JXMapViewer jXMapViewer)
     {
         double lat = jXMapViewer.getCenterPosition().getLatitude();
         double lon = jXMapViewer.getCenterPosition().getLongitude();

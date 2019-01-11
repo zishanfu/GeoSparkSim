@@ -51,8 +51,6 @@ public class SimulationBtnHandler implements ActionListener{
 	                for (MyWaypoint waypoint: waypoints) {
 	                	waypoint.update();
 	                }
-	                
-	                
 	                mapViewer.repaint();
 	            }
 	        });

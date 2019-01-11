@@ -69,7 +69,8 @@ public class GenerateBtnHandler implements ActionListener{
 		    		//int zoom = sa.getViewer().getZoom();
 		        	
 		    		String selectedType = genTypes[genList.getSelectedIndex()];
-		    		double maxLen = new Distance().euclidean(geo1, geo2) / 5; //scale the length of trip
+		    		//scale the length of trip, same with the scale in trip generation
+		    		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
 		    		
 		    		//[33.41281563419366, -111.94192886352539], [33.38816625881332, -111.88845634460449]
 		    		//geo1.lat + maxLen, geo1.lon - maxLen
@@ -77,11 +78,10 @@ public class GenerateBtnHandler implements ActionListener{
 		    		GeoPosition newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen);
 		    		GeoPosition newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen);
 		    		System.out.println(String.format("Selected rectangle, p1: %s, p2: %s", newGeo1, newGeo2));
-		    		LOG.info(String.format("Selected rectangle, p1: %s, p2: %s", newGeo1, newGeo2));
 
 		    		//String path = OsmParser.run(newGeo1, newGeo2);
 		    		//textArea.append("Finished osm download and processing!\n");
-		    		OsmLoader osmloader = new OsmLoader(null, newGeo1, newGeo2);
+		    		OsmLoader osmloader = new OsmLoader(newGeo1, newGeo2);
 		    		textArea.append("Downloading selected OSM data ...\n");
 		    		String path = osmloader.download();
 		    		String size = osmloader.getLastFileSize();

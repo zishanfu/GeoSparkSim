@@ -13,7 +13,7 @@ import com.vividsolutions.jts.geom.Point
 import org.apache.spark.graphx.lib.ShortestPaths
 
 class AppTestScala extends TestBaseScala {
-  describe("VisTrips test") {
+  describe("VisTrips Graph") {
 //    it("Test customized graph vertices and edges"){
 //      var graph = OsmConverter.convertToNetwork(sparkSession, resourceFolder)
 //      graph = graph.partitionBy(PartitionStrategy.EdgePartition2D)
@@ -50,17 +50,17 @@ class AppTestScala extends TestBaseScala {
 //                link.getHead().getUserData.asInstanceOf[Long] == 2262996383L)).foreach(println)
 //    }
     
-    it("Map fatest route test"){
-      //33.410065, -111.920412 2262996384
-      //33.406198, -111.939376 5662664860
-      var graph = new OsmGraph(sparkSession, hdfs)
-      val from = graph.findNearestByCoor(33.410065, -111.920412)
-      val to = graph.findNearestByCoor(33.406198, -111.939376)
-      println(from)
-      println(to)
-
-      val route = graph.fatestRouteRequest(33.410065, -111.920412, 33.406198, -111.939376)
-      route.legs.foreach(println)
+//    it("Map fatest route test"){
+//      //33.410065, -111.920412 2262996384
+//      //33.406198, -111.939376 5662664860
+//      var graph = new OsmGraph(sparkSession, hdfs)
+//      val from = graph.findNearestByCoor(33.410065, -111.920412)
+//      val to = graph.findNearestByCoor(33.406198, -111.939376)
+//      println(from)
+//      println(to)
+//
+//      val route = graph.fatestRouteRequest(33.410065, -111.920412, 33.406198, -111.939376)
+//      route.legs.foreach(println)
       
 //      var graph = OsmConverter.convertToNetwork(sparkSession, hdfs)
 //      val routeRDD = ShortestPathFactory.runDijkstra(graph, 2262996384L, 5662664860L)
@@ -69,7 +69,7 @@ class AppTestScala extends TestBaseScala {
 //              .foreach(println) 
 
       
-    }
+//    }
     
 //    it("spark graphx build in shortest path"){
 //      var graph = new OsmGraph(sparkSession, hdfs)
@@ -82,10 +82,6 @@ class AppTestScala extends TestBaseScala {
 //      spResult.vertices.map(_._2).collect.foreach(println)
 //    }
   
-//    it("Read CSV data") {
-//      var df = sparkSession.read.format("csv").option("delimiter", "\t").option("header", "false").load(csvData)
-//      df.show()
-//    }
   }
 
 }
