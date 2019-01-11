@@ -1,17 +1,20 @@
 package com.zishanfu.vistrips.map;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.jxmapviewer.viewer.GeoPosition;
 
+import com.graphhopper.PathWrapper;
 import com.graphhopper.util.PointList;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.zishanfu.vistrips.model.Pair;
-import com.zishanfu.vistrips.network.Route;
+import com.zishanfu.vistrips.tools.Distance;
 
 /**
  * @author zishanfu
@@ -32,6 +35,7 @@ public class TripsGeneration{
 	private GraphInit graph;
 	//private Distance dist;
 	private GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
+	private Distance distanceFunc = new Distance();
 	
 	//1:479km = euclidean: harvsine
 	//Car 4.5m
@@ -154,14 +158,20 @@ public class TripsGeneration{
 //		LineString legs = route.getLegsLineString();
 //		updateLongestTrip(legs.getNumPoints());
 //		p.setRoute(legs);
-		PointList route = graph.routeRequest(p.getSource().getLatitude(),
+		PathWrapper path = graph.routeRequest(p.getSource().getLatitude(),
 				p.getSource().getLongitude(),
 				p.getDest().getLatitude(),
 				p.getDest().getLongitude());
+		if(path == null) {
+			return null;
+		}
+		PointList route = path.getPoints();
 		if(route == null || route.size() <= 1) 
 			return null;
 		updateLongestTrip(route.size());
-		p.setRoute(PointList2LineString(route));
+		LineString lsRoute = PointList2LineString(route);
+		LineString routeInSec = routeInterpolate(lsRoute, path.getTime()/1000, path.getDistance());
+		p.setRoute(routeInSec);
 		return p;
 	}
 	
@@ -187,6 +197,39 @@ public class TripsGeneration{
 	public int getLongestTrip() {
 		return longestTrip;
 	}
+	
+	//time in seconds, distance in meters
+	private LineString routeInterpolate(LineString origin, long time, double distance) {
+		double avgSpeed = distance / time; // m/s
+		int num = origin.getNumPoints();
+		
+		if(num < 2) return origin;
+		List<Coordinate> coordinates = new ArrayList<>();
+		coordinates.add(origin.getCoordinateN(0));
+		for(int i = 0; i< num - 1; i++) {
+			Coordinate src = origin.getCoordinateN(i);
+			Coordinate dst = origin.getCoordinateN(i+1);
+			double distStep = distanceFunc.haversine(src.y, src.x, dst.y, dst.x);
+			double stepInSec = distStep / avgSpeed; 
+			if(distStep > distance) {
+				int steps = (int) stepInSec;
+				for(int j = 0; j < steps; j++) {
+					coordinates.add(linearInterpolate(src, dst, distStep, j));
+				}
+			}
+			coordinates.add(dst);
+		}
+		
+		Coordinate[] coorArr = new Coordinate[coordinates.size()];
+		return geometryFactory.createLineString(coordinates.toArray(coorArr));
+	}
+	
+	private Coordinate linearInterpolate(Coordinate src, Coordinate dst, double d, double n) {
+		double x = src.x + n/d * (dst.x - src.x);
+		double y = src.y + n/d * (dst.y - src.y);
+		return new Coordinate(x, y);
+	}
+	
 	
 	private LineString PointList2LineString(PointList pl) {
 		int len = pl.getSize();

@@ -1,7 +1,7 @@
 package com.zishanfu.vistrips.model;
 
 import java.awt.Color;
-import java.util.List;
+import java.io.Serializable;
 
 import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -9,7 +9,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineString;
 
-public class MyWaypoint extends DefaultWaypoint
+public class MyWaypoint extends DefaultWaypoint implements Serializable
 {
     private final Color color;
     private int curIdx;

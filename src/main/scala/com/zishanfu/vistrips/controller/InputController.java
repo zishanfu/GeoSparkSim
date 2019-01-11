@@ -47,7 +47,7 @@ public class InputController {
 		  .getOrCreate();
         
 
-        SimulationBtnHandler sbHandler = new SimulationBtnHandler(cc.mapViewer);
+        SimulationBtnHandler sbHandler = new SimulationBtnHandler(cc.mapViewer, spark);
         GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, sbHandler, rc.textArea, genTypes, genList, spark);
         gBtn.addActionListener(gbHandler);
         sBtn.addActionListener(sbHandler);

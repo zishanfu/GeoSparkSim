@@ -7,6 +7,7 @@ import org.jxmapviewer.viewer.GeoPosition;
 import com.graphhopper.GHRequest;
 import com.graphhopper.GHResponse;
 import com.graphhopper.GraphHopper;
+import com.graphhopper.PathWrapper;
 import com.graphhopper.routing.util.EdgeFilter;
 import com.graphhopper.routing.util.EncodingManager;
 import com.graphhopper.util.PointList;
@@ -34,7 +35,7 @@ public class GraphInit{
 		hopper.importOrLoad();
 	}
 	
-	private GHResponse request(double latFrom, double lonFrom, double latTo, double lonTo) {
+	private PathWrapper requestBest(double latFrom, double lonFrom, double latTo, double lonTo) {
 		GHRequest req = new GHRequest(latFrom, lonFrom, latTo, lonTo).
 				setWeighting("fastest").
 				setVehicle("car").
@@ -48,7 +49,7 @@ public class GraphInit{
 			return null;
 		}
 		
-		return rsp;
+		return rsp.getBest();
 	}
 	
 	
@@ -59,9 +60,9 @@ public class GraphInit{
 	 * @param lonTo, eg -111.930544
 	 * @return String type route waypoints
 	 */
-	public PointList routeRequest(double latFrom, double lonFrom, double latTo, double lonTo) {
-		GHResponse rsp = request(latFrom, lonFrom, latTo, lonTo);
-		return rsp == null? null : rsp.getBest().getPoints();
+	public PathWrapper routeRequest(double latFrom, double lonFrom, double latTo, double lonTo) {
+		PathWrapper rsp = requestBest(latFrom, lonFrom, latTo, lonTo);
+		return rsp == null? null : rsp;
 	}
 	
 //	public double[] routeLegsRequest(double latFrom, double lonFrom, double latTo, double lonTo) {
@@ -78,8 +79,17 @@ public class GraphInit{
 	 * @param des, destination node coordinate
 	 * @return best route distance
 	 */
-	public double routeDistCompute(double[] src, double[] des) {
-		return request(src[0], src[1], des[0], des[1]).getBest().getDistance();
+	public double routeDistance(double[] src, double[] des) {
+		return requestBest(src[0], src[1], des[0], des[1]).getDistance();
+	}
+	
+	public double routeTime(double[] src, double[] des) {
+		return requestBest(src[0], src[1], des[0], des[1]).getTime();
+	}
+	
+	public void printInstruction(double[] src, double[] des) {
+		String ins = requestBest(src[0], src[1], des[0], des[1]).getInstructions().toString();
+		System.out.println("Instruction: " + ins);
 	}
 
 	

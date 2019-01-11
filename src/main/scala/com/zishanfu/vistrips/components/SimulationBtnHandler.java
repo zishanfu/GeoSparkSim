@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.swing.Timer;
 
+import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.WaypointPainter;
 
@@ -18,9 +19,11 @@ public class SimulationBtnHandler implements ActionListener{
 	
 	private JXMapViewer mapViewer;
 	private Pair[] pairs;
+	private SparkSession sparkSession;
 	
-	public SimulationBtnHandler(JXMapViewer mapViewer) {
+	public SimulationBtnHandler(JXMapViewer mapViewer, SparkSession sparkSession) {
 		this.mapViewer = mapViewer;
+		this.sparkSession = sparkSession;
 	}
 
 	public void setPairs(Pair[] pairs) {
@@ -34,6 +37,7 @@ public class SimulationBtnHandler implements ActionListener{
 		
 		}else {
 			final Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
+			
 			for(Pair p: pairs) {
 				if(p == null) {
 					continue;
