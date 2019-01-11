@@ -40,7 +40,7 @@ public class InputController {
         
         SparkSession spark = SparkSession
 		  .builder()
-		  .master("local")
+		  .master("local[*]")
 		  .appName("OSMSpark")
 		  .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
           .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")

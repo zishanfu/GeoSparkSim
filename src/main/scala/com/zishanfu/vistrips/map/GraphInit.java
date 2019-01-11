@@ -27,8 +27,7 @@ public class GraphInit{
 //	harvsine: 21382.936940999596
 
 	
-	//  /home/zishanfu/eclipse-workspace/VisTrips_v1/
-	
+	///home/zishanfu/Downloads/datasets/arizona-latest.osm.pbf
 	public GraphInit(String osm) {
 		this.hopper = new GraphHopper().forServer();
 		hopper.setOSMFile(osm);

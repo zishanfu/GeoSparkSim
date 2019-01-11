@@ -10,6 +10,7 @@ import com.zishanfu.vistrips.map.OsmConverter
 import com.zishanfu.vistrips.network.Link
 import com.zishanfu.vistrips.map.OsmConverter
 import com.vividsolutions.jts.geom.Point
+import org.apache.spark.graphx.lib.ShortestPaths
 
 class AppTestScala extends TestBaseScala {
   describe("VisTrips test") {
@@ -69,10 +70,22 @@ class AppTestScala extends TestBaseScala {
 
       
     }
-//    
+    
+//    it("spark graphx build in shortest path"){
+//      var graph = new OsmGraph(sparkSession, hdfs)
+//      val from = graph.findNearestByCoor(33.410065, -111.920412)
+//      val to = graph.findNearestByCoor(33.406198, -111.939376)
+//      println(from)
+//      println(to)
+//      val spResult = ShortestPaths.run(graph.graph, Seq(from.getUserData.asInstanceOf[Long], to.getUserData.asInstanceOf[Long]))
+//        //Map(id: long -> landmarks count)
+//      spResult.vertices.map(_._2).collect.foreach(println)
+//    }
+  
 //    it("Read CSV data") {
 //      var df = sparkSession.read.format("csv").option("delimiter", "\t").option("header", "false").load(csvData)
 //      df.show()
 //    }
   }
+
 }

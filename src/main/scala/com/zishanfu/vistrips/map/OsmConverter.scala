@@ -140,8 +140,6 @@ object OsmConverter {
         .agg(collect_list(struct(col("indexedNode.index"), col("indexedNode.nodeId"), col("latitude"), col("longitude"))).as("nodes")
         , collect_list(col("linkId")).as("linkIds"))
         
-    
-    
     var linkDS :Dataset[Link] = wayDF.flatMap((row : Row) => { 
       val id = row.getAs[Long](0)
       val tags = row.getAs[WrappedArray[Row]](1)

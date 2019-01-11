@@ -3,8 +3,12 @@ package com.zishanfu.vistrips.map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.jxmapviewer.viewer.GeoPosition;
 
+import com.graphhopper.util.PointList;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.zishanfu.vistrips.model.Pair;
 import com.zishanfu.vistrips.network.Route;
@@ -24,8 +28,10 @@ public class TripsGeneration{
 	private double maxLen;
 	//private double maxLenharv;
 	private int longestTrip = 0;
-	private OsmGraph graph;
+	//private OsmGraph graph;
+	private GraphInit graph;
 	//private Distance dist;
+	private GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 	
 	//1:479km = euclidean: harvsine
 	//Car 4.5m
@@ -47,8 +53,8 @@ public class TripsGeneration{
 	 */
 	private String NB = "NB";
 	
-	
-	public TripsGeneration(GeoPosition topleft, GeoPosition bottomright, OsmGraph graph, double maxLen) {
+	public TripsGeneration(GeoPosition topleft, GeoPosition bottomright, GraphInit graph, double maxLen) {
+	//public TripsGeneration(GeoPosition topleft, GeoPosition bottomright, OsmGraph graph, double maxLen) {
 		this.minLat = Math.min(topleft.getLatitude(), bottomright.getLatitude());
 		this.maxLat = Math.max(topleft.getLatitude(), bottomright.getLatitude());
 		this.minLon = Math.min(topleft.getLongitude(), bottomright.getLongitude());
@@ -134,16 +140,24 @@ public class TripsGeneration{
 		}else if(type.contains(RB)) {
 			
 		}	
-		
-		Route route = graph.fatestRouteRequest(p.getSource().getLatitude(),
-						p.getSource().getLongitude(),
-						p.getDest().getLatitude(),
-						p.getDest().getLongitude());
+
+//		Route route = graph.fatestRouteRequest(p.getSource().getLatitude(),
+//						p.getSource().getLongitude(),
+//						p.getDest().getLatitude(),
+//						p.getDest().getLongitude());
+//		if(route == null) 
+//			return null;
+//		LineString legs = route.getLegsLineString();
+//		updateLongestTrip(legs.getNumPoints());
+//		p.setRoute(legs);
+		PointList route = graph.routeRequest(p.getSource().getLatitude(),
+				p.getSource().getLongitude(),
+				p.getDest().getLatitude(),
+				p.getDest().getLongitude());
 		if(route == null) 
 			return null;
-		LineString legs = route.getLegsLineString();
-		updateLongestTrip(legs.getNumPoints());
-		p.setRoute(legs);
+		updateLongestTrip(route.size());
+		p.setRoute(PointList2LineString(route));
 		return p;
 	}
 	
@@ -170,5 +184,15 @@ public class TripsGeneration{
 		return longestTrip;
 	}
 	
-
+	private LineString PointList2LineString(PointList pl) {
+		int len = pl.getSize();
+		//lon, lat
+		Coordinate[] coordinates = new Coordinate[len];
+		for(int i = 0; i<len; i++) {
+			coordinates[i] = new Coordinate(pl.getLon(i), pl.getLat(i));
+		}
+		return geometryFactory.createLineString(coordinates);
+	}
+	
+	
 }

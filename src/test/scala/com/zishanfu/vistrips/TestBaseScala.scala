@@ -21,7 +21,7 @@ trait TestBaseScala extends FunSpec with BeforeAndAfterAll{
 
   val resourceFolder = System.getProperty("user.dir") + "/src/test/resources/"
   val csvData = resourceFolder+"arealm-small.csv"
-  val hdfs = "hdfs://localhost:9000/vistrips/20190110_124820"
+  val hdfs = "hdfs://localhost:9000/vistrips/20190110_153248"
   val nodesPath = hdfs + "/node.parquet"
   val waysPath = hdfs + "/way.parquet"
 

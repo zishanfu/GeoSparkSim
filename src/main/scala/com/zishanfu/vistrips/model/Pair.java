@@ -1,17 +1,15 @@
 package com.zishanfu.vistrips.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jxmapviewer.viewer.GeoPosition;
 
-import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineString;
 
-public class Pair {
+
+public class Pair{
 	private GeoPosition source;
 	private GeoPosition dest;
 	private LineString route = null;
+	//PointList / LineString
 	
 	public Pair() {}
 	
@@ -26,6 +24,7 @@ public class Pair {
 		dest = new GeoPosition(latTo, lonTo);
 		this.route = route;
 	}
+	
 
 	public GeoPosition getSource() {
 		return source;
@@ -47,18 +46,8 @@ public class Pair {
 		return route;
 	}
 	
-	public List<Double[]> getRouteGeojson() {
-		List<Double[]> res = new ArrayList<>();
-		Coordinate[] coordinates = route.getCoordinates();
-		for(Coordinate coor: coordinates) {
-			Double[] arr = {coor.x, coor.y};
-			res.add(arr);
-		}
-		return res;
-	}
-
-	public void setRoute(LineString route2) {
-		this.route = route2;
+	public void setRoute(LineString route) {
+		this.route = route;
 	}
 
 	

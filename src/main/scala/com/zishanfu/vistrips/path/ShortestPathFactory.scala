@@ -130,7 +130,7 @@ object ShortestPathFactory {
       if(timeCost < destination.time){
         var list = source.legs
         list = list :+ triplet.attr.getHead()
-        Iterator((triplet.dstId, new Route(distanceCost, timeCost, list)))
+        Iterator((triplet.dstId, new Route(destination.getDestination(), distanceCost, timeCost, list)))
       }else{
         Iterator.empty
       }
@@ -143,12 +143,13 @@ object ShortestPathFactory {
   
   def runDijkstra(graph : Graph[Point, Link],  source : Long , destination : Long) : RDD[Route] = {
     //(distance, time, list of points)
-    val initialMessage : Route = new Route(Double.PositiveInfinity, Double.PositiveInfinity, List())
+    val initialMessage : Route = new Route(destination, Double.PositiveInfinity, Double.PositiveInfinity, List())
     val spGraph = graph.mapVertices { (vid, vertex) => 
-      if(vid == source) new Route (0.0, 0.0, List(vertex)) else new Route(Double.PositiveInfinity, Double.PositiveInfinity, List())}
+      if(vid == source) new Route (destination, 0.0, 0.0, List(vertex)) else new Route(destination, Double.PositiveInfinity, Double.PositiveInfinity, List())}
                       
-
-    val pregel = Pregel(spGraph, initialMessage, spGraph.vertices.count().toInt, EdgeDirection.Out)(vertexProgram, sendMessage, messageCombiner)
+    val count = spGraph.vertices.count().toInt
+    println(count)
+    val pregel = Pregel(spGraph, initialMessage, count, EdgeDirection.Out)(vertexProgram, sendMessage, messageCombiner)
     pregel.vertices.map(_._2)
   }
   

@@ -6,18 +6,21 @@ import java.util.List;
 import org.jxmapviewer.viewer.DefaultWaypoint;
 import org.jxmapviewer.viewer.GeoPosition;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.LineString;
+
 public class MyWaypoint extends DefaultWaypoint
 {
     private final Color color;
     private int curIdx;
     private GeoPosition curPos;
-    private List<Double[]> route;
+    private LineString route;
 
     /**
      * @param color the color
      * @param route the route
      */
-    public MyWaypoint(Color color, List<Double[]> route)
+    public MyWaypoint(Color color, LineString route)
     {
         this.color = color;
         this.route = route;
@@ -37,7 +40,7 @@ public class MyWaypoint extends DefaultWaypoint
 
 
 	public int getRouteLength() {
-    	return route.size();
+    	return route.getNumPoints();
     }
 
 	/**
@@ -50,12 +53,13 @@ public class MyWaypoint extends DefaultWaypoint
     
     
     public void update() {
-    	if(curIdx == route.size()) {
+    	if(curIdx == getRouteLength()) {
     		curPos = null;
     		return;
     	}
-    		
-    	curPos = new GeoPosition(route.get(curIdx)[1], route.get(curIdx)[0]);
+    	//lat, lon	
+    	Coordinate coor = route.getCoordinateN(curIdx);
+    	curPos = new GeoPosition(coor.y, coor.x);
     	curIdx++;
     }
 
