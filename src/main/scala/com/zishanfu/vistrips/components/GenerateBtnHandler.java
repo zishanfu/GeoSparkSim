@@ -29,15 +29,17 @@ public class GenerateBtnHandler implements ActionListener{
 	private SimulationBtnHandler sbHandler;
 	private TextField numTxt;
 	private JTextArea textArea;
+	private TextField delayTxt;
 	private String[] genTypes;
 	private JComboBox genList;
 	private SparkSession spark;
 	
-	public GenerateBtnHandler(SelectionAdapter sa, TextField numTxt, SimulationBtnHandler sbHandler, 
+	public GenerateBtnHandler(SelectionAdapter sa, TextField numTxt, TextField delayTxt, SimulationBtnHandler sbHandler, 
 			JTextArea textArea, String[] genTypes, JComboBox genList, SparkSession spark) {
 		this.sa = sa;
 		this.numTxt = numTxt;
 		this.sbHandler = sbHandler;
+		this.delayTxt = delayTxt;
 		this.textArea = textArea;
 		this.genTypes = genTypes;
 		this.genList = genList;
@@ -45,9 +47,11 @@ public class GenerateBtnHandler implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(sa.getViewer().getOverlayPainter() == null || numTxt.getText() == null || numTxt.getText().length() == 0) {
+		if(sa.getViewer().getOverlayPainter() == null || 
+				numTxt.getText() == null || numTxt.getText().length() == 0 ||
+				delayTxt.getText() == null || delayTxt.getText().length() == 0) {
 			AttentionDialog dialog = new AttentionDialog("Attention", 
-					"You must select an area and enter the number of moving objects first!");
+					"You must select an area, enter the number of moving objects and delay time first!");
 		
 		}else {
 			Thread t = new Thread(new Runnable() {
@@ -102,13 +106,17 @@ public class GenerateBtnHandler implements ActionListener{
 //		        	long endTime = System.currentTimeMillis();
 //		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
 		    		int nums = Integer.parseInt(numTxt.getText());
-		    		textArea.append("Begin generate " + nums +" trips\n");
+		    		
+		    		textArea.append("Begin generate " + nums +" trips \n");
 		    		TripsGeneration tg = new TripsGeneration(geo1, geo2, gi, maxLen);
 		    		Pair[] pairs = tg.computePairs(nums, selectedType);
+		    		
+		    		sbHandler.setDelayInSec(Double.parseDouble(delayTxt.getText()));
 		    		sbHandler.setPairs(pairs);
 
 		        	long endTime = System.currentTimeMillis();
 		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
+		        	textArea.append("Real time " + tg.getLongestTripTime() +" in seconds \n");
 		        }     
 		    });
 			

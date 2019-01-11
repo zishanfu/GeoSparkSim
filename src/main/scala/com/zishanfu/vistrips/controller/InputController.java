@@ -36,6 +36,8 @@ public class InputController {
         JButton gBtn = new JButton("Generate Scenario");
         JButton sBtn = new JButton("Begin Simulation");
         JComboBox genList = new JComboBox(genTypes);
+//        JLabel delay = new JLabel("Delay in seconds");
+        TextField delayTxt = new TextField("Delay in seconds");
         genList.setSelectedIndex(0);
         
         SparkSession spark = SparkSession
@@ -48,7 +50,7 @@ public class InputController {
         
 
         SimulationBtnHandler sbHandler = new SimulationBtnHandler(cc.mapViewer, spark);
-        GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, sbHandler, rc.textArea, genTypes, genList, spark);
+        GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, delayTxt, sbHandler, rc.textArea, genTypes, genList, spark);
         gBtn.addActionListener(gbHandler);
         sBtn.addActionListener(sbHandler);
 
@@ -56,6 +58,7 @@ public class InputController {
         topPanel.add(label);
         topPanel.add(chkArea);
         topPanel.add(num);
+        topPanel.add(delayTxt);
         topPanel.add(genList);
         topPanel.add(gBtn);
         topPanel.add(sBtn);

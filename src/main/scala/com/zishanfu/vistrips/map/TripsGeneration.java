@@ -36,6 +36,7 @@ public class TripsGeneration{
 	//private Distance dist;
 	private GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 	private Distance distanceFunc = new Distance();
+	private double longestTripTime = 0;
 	
 	//1:479km = euclidean: harvsine
 	//Car 4.5m
@@ -118,11 +119,15 @@ public class TripsGeneration{
 		return graph.getClosestNode(dest);
 	}
 	
-	private void updateLongestTrip(int len) {
+	private void updateLongestTrip(int len, double time) {
 		if(len > longestTrip) {
 			longestTrip = len;
 		}
+		if(time > longestTripTime) {
+			longestTripTime = time;
+		}
 	}
+
 	
 	public void generateNumTripBox(Coordinate coor1, Coordinate coor2, int num) {
 		
@@ -168,7 +173,7 @@ public class TripsGeneration{
 		PointList route = path.getPoints();
 		if(route == null || route.size() <= 1) 
 			return null;
-		updateLongestTrip(route.size());
+		updateLongestTrip(route.size(), path.getTime()/1000);
 		LineString lsRoute = PointList2LineString(route);
 		LineString routeInSec = routeInterpolate(lsRoute, path.getTime()/1000, path.getDistance());
 		p.setRoute(routeInSec);
@@ -198,6 +203,12 @@ public class TripsGeneration{
 		return longestTrip;
 	}
 	
+	
+	public double getLongestTripTime() {
+		return longestTripTime;
+	}
+
+
 	//time in seconds, distance in meters
 	private LineString routeInterpolate(LineString origin, long time, double distance) {
 		double avgSpeed = distance / time; // m/s

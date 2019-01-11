@@ -1,6 +1,7 @@
 package com.zishanfu.vistrips.components;
 
 import java.awt.Color;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
@@ -20,11 +21,18 @@ public class SimulationBtnHandler implements ActionListener{
 	private JXMapViewer mapViewer;
 	private Pair[] pairs;
 	private SparkSession sparkSession;
+	private double delayInSec;
 	
 	public SimulationBtnHandler(JXMapViewer mapViewer, SparkSession sparkSession) {
 		this.mapViewer = mapViewer;
 		this.sparkSession = sparkSession;
 	}
+	
+	
+	public void setDelayInSec(double delayInSec) {
+		this.delayInSec = delayInSec;
+	}
+
 
 	public void setPairs(Pair[] pairs) {
 		this.pairs = pairs;
@@ -49,8 +57,9 @@ public class SimulationBtnHandler implements ActionListener{
 			waypointPainter.setWaypoints(waypoints);
 			mapViewer.setOverlayPainter(waypointPainter);
 			waypointPainter.setRenderer(new PointRender());
-		
-			Timer timer = new Timer(1000, new ActionListener() {
+			int delay = (int)(Math.round(delayInSec)*1000);
+					
+			Timer timer = new Timer(delay, new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	                for (MyWaypoint waypoint: waypoints) {
 	                	waypoint.update();
