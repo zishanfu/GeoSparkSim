@@ -75,13 +75,14 @@ public class GenerateBtnHandler implements ActionListener{
 		    		String selectedType = genTypes[genList.getSelectedIndex()];
 		    		//scale the length of trip, same with the scale in trip generation
 		    		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
+		    		System.out.println(String.format("Selected rectangle, p1: %s, p2: %s", geo1, geo2));
 		    		
 		    		//[33.41281563419366, -111.94192886352539], [33.38816625881332, -111.88845634460449]
 		    		//geo1.lat + maxLen, geo1.lon - maxLen
 		    		//geo2.lat - maxLen, geo2.lon + maxLen
 		    		GeoPosition newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen);
 		    		GeoPosition newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen);
-		    		System.out.println(String.format("Selected rectangle, p1: %s, p2: %s", newGeo1, newGeo2));
+		    		//System.out.println(String.format("Selected rectangle, p1: %s, p2: %s", newGeo1, newGeo2));
 
 		    		//String path = OsmParser.run(newGeo1, newGeo2);
 		    		//textArea.append("Finished osm download and processing!\n");

@@ -1,10 +1,12 @@
 package com.zishanfu.vistrips.map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.apache.spark.sql.SparkSession;
 import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -20,7 +22,7 @@ import com.zishanfu.vistrips.tools.Distance;
  * @author zishanfu
  *
  */
-public class TripsGeneration{
+public class TripsGeneration implements Serializable{
 	private double minLat;
 	private double maxLat;
 	private double minLon;
@@ -35,8 +37,8 @@ public class TripsGeneration{
 	private GraphInit graph;
 	//private Distance dist;
 	private GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
-	private Distance distanceFunc = new Distance();
 	private double longestTripTime = 0;
+	private SparkSession sparkSession;
 	
 	//1:479km = euclidean: harvsine
 	//Car 4.5m
@@ -163,10 +165,10 @@ public class TripsGeneration{
 //		LineString legs = route.getLegsLineString();
 //		updateLongestTrip(legs.getNumPoints());
 //		p.setRoute(legs);
-		PathWrapper path = graph.routeRequest(p.getSource().getLatitude(),
-				p.getSource().getLongitude(),
-				p.getDest().getLatitude(),
-				p.getDest().getLongitude());
+		PathWrapper path = graph.routeRequest(p.getSourceGeo().getLatitude(),
+				p.getSourceGeo().getLongitude(),
+				p.getDestGeo().getLatitude(),
+				p.getDestGeo().getLongitude());
 		if(path == null) {
 			return null;
 		}
@@ -175,8 +177,11 @@ public class TripsGeneration{
 			return null;
 		updateLongestTrip(route.size(), path.getTime()/1000);
 		LineString lsRoute = PointList2LineString(route);
-		LineString routeInSec = routeInterpolate(lsRoute, path.getTime()/1000, path.getDistance());
-		p.setRoute(routeInSec);
+//		LineString routeInSec = routeInterpolate(lsRoute, path.getTime()/1000, path.getDistance());
+		//p.setRoute(routeInSec);
+		p.setRoute(lsRoute);
+		p.setDistance(path.getDistance());
+		p.setTime(path.getTime()/1000);
 		return p;
 	}
 	
@@ -206,39 +211,6 @@ public class TripsGeneration{
 	
 	public double getLongestTripTime() {
 		return longestTripTime;
-	}
-
-
-	//time in seconds, distance in meters
-	private LineString routeInterpolate(LineString origin, long time, double distance) {
-		double avgSpeed = distance / time; // m/s
-		int num = origin.getNumPoints();
-		
-		if(num < 2) return origin;
-		List<Coordinate> coordinates = new ArrayList<>();
-		coordinates.add(origin.getCoordinateN(0));
-		for(int i = 0; i< num - 1; i++) {
-			Coordinate src = origin.getCoordinateN(i);
-			Coordinate dst = origin.getCoordinateN(i+1);
-			double distStep = distanceFunc.haversine(src.y, src.x, dst.y, dst.x);
-			double stepInSec = distStep / avgSpeed; 
-			if(distStep > distance) {
-				int steps = (int) stepInSec;
-				for(int j = 0; j < steps; j++) {
-					coordinates.add(linearInterpolate(src, dst, distStep, j));
-				}
-			}
-			coordinates.add(dst);
-		}
-		
-		Coordinate[] coorArr = new Coordinate[coordinates.size()];
-		return geometryFactory.createLineString(coordinates.toArray(coorArr));
-	}
-	
-	private Coordinate linearInterpolate(Coordinate src, Coordinate dst, double d, double n) {
-		double x = src.x + n/d * (dst.x - src.x);
-		double y = src.y + n/d * (dst.y - src.y);
-		return new Coordinate(x, y);
 	}
 	
 	

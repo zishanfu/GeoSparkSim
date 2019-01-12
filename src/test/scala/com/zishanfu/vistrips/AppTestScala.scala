@@ -1,24 +1,68 @@
 package com.zishanfu.vistrips
 
-import com.zishanfu.vistrips.map.OsmConverter
-import com.zishanfu.vistrips.path.ShortestPathFactory
-import org.apache.spark.graphx.PartitionStrategy
-import com.zishanfu.vistrips.map.OsmGraph
-import org.apache.spark.sql.Dataset
-import org.apache.spark.rdd.RDD
-import com.zishanfu.vistrips.map.OsmConverter
-import com.zishanfu.vistrips.network.Link
-import com.zishanfu.vistrips.map.OsmConverter
-import com.vividsolutions.jts.geom.Point
-import org.apache.spark.graphx.lib.ShortestPaths
+
+import com.zishanfu.vistrips.tools.FileOps
 import com.zishanfu.vistrips.map.CountyPop
+import com.zishanfu.vistrips.map.GraphInit
+import org.jxmapviewer.viewer.GeoPosition
+import com.zishanfu.vistrips.tools.Distance
+import com.zishanfu.vistrips.map.OsmLoader
+import com.zishanfu.vistrips.map.TripsGeneration
+import org.apache.spark.sql.Row
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.types.DoubleType
+import com.vividsolutions.jts.geom.LineString
+import com.zishanfu.vistrips.tools.Interpolate
 
 class AppTestScala extends TestBaseScala {
-  describe("CountyPop"){
-    CountyPop.run(sparkSession, 10)
+  describe("Routes"){
+    it("generation test"){
+      // p1: [33.414964957503585, -111.94467544555664], p2: [33.39031619194356, -111.89120292663574]
+    	val geo1 = new GeoPosition(33.414964957503585, -111.94467544555664)
+    	val geo2 = new GeoPosition(33.39031619194356, -111.89120292663574)
+    	val selectedType = "DSO"
+    	val maxLen = new Distance().euclidean(geo1, geo2) / 10; 
+    	val newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen)
+		  val newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen)
+		  
+		  val osmloader = new OsmLoader(newGeo1, newGeo2)
+		  val path = osmloader.download()
+    	
+      val graphhopper = new GraphInit(osmloader.lastPath)
+      val nums = 100
+      val tg = new TripsGeneration(geo1, geo2, graphhopper, maxLen)
+      val pairs = tg.computePairs(nums, selectedType)
+      var rdd = sparkSession.sparkContext.parallelize(pairs.toSeq).filter(p => p != null).map(
+          pair => Row(pair.getSourceCoor, pair.getDestCoor, pair.getDistance, pair.getTime, pair.getRoute))
+      for(i <- 1 to 20){
+        rdd = rdd.union(rdd)
+      }
+    	println("rdd count:" + rdd.count())
+    	val newRDD = rdd.map(row => {
+    	  val lsRoute = row.getAs[LineString](4)
+    	  val time = row.getAs[Long](3)
+    	  val distance = row.getAs[Double](2)
+    	  val routeInSec = new Interpolate().routeInterpolate(lsRoute, time, distance);
+    	  routeInSec
+    	})
+    	newRDD.take(10).foreach(println)
+    }
   }
   
-  describe("VisTrips Graph") {
+//  describe("Trajectories"){
+//    it("generation test"){
+//      val f = new FileOps()
+//      f.createDirectory(resourceFolder + "/vistrips/routes")
+//    }
+//  }
+  
+//  describe("CountyPop"){
+//    it("polygon join rectangle"){
+//      CountyPop.run(sparkSession, 10)
+//    }
+//  }
+  
+//  describe("VisTrips Graph") {
 //    it("Test customized graph vertices and edges"){
 //      var graph = OsmConverter.convertToNetwork(sparkSession, resourceFolder)
 //      graph = graph.partitionBy(PartitionStrategy.EdgePartition2D)
@@ -87,6 +131,6 @@ class AppTestScala extends TestBaseScala {
 //      spResult.vertices.map(_._2).collect.foreach(println)
 //    }
   
-  }
+//  }
 
 }

@@ -1,14 +1,19 @@
 package com.zishanfu.vistrips.model;
 
+import java.io.Serializable;
+
 import org.jxmapviewer.viewer.GeoPosition;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineString;
 
 
-public class Pair{
+public class Pair implements Serializable{
 	private GeoPosition source;
 	private GeoPosition dest;
 	private LineString route = null;
+	private long time;
+	private double distance;
 	//PointList / LineString
 	
 	public Pair() {}
@@ -26,16 +31,24 @@ public class Pair{
 	}
 	
 
-	public GeoPosition getSource() {
+	public GeoPosition getSourceGeo() {
 		return source;
+	}
+	
+	public Coordinate getSourceCoor() {
+		return new Coordinate(source.getLongitude(), source.getLatitude());
 	}
 
 	public void setSource(GeoPosition source) {
 		this.source = source;
 	}
 
-	public GeoPosition getDest() {
+	public GeoPosition getDestGeo() {
 		return dest;
+	}
+	
+	public Coordinate getDestCoor() {
+		return new Coordinate(dest.getLongitude(), dest.getLatitude());
 	}
 
 	public void setDest(GeoPosition dest) {
@@ -48,6 +61,22 @@ public class Pair{
 	
 	public void setRoute(LineString route) {
 		this.route = route;
+	}
+
+	public long getTime() {
+		return time;
+	}
+
+	public void setTime(long time) {
+		this.time = time;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
 	}
 
 	

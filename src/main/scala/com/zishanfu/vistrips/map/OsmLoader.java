@@ -15,6 +15,8 @@ import org.jxmapviewer.viewer.GeoPosition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zishanfu.vistrips.tools.FileOps;
+
 public class OsmLoader{
 	
 	private final Logger LOG = LoggerFactory.getLogger(OsmLoader.class);
@@ -41,7 +43,7 @@ public class OsmLoader{
 		this.OSM_URL += left + "," + bottom + "," + 
 						right + "," + top;
 		
-		directoryOps(pathBase);
+		new FileOps().createDirectory(pathBase);
 
 		try {
 			this.url = new URL(OSM_URL);
@@ -49,19 +51,6 @@ public class OsmLoader{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	private void directoryOps(String directory) {
-		try {
-            File f = new File(directory);
-            if(f.isDirectory()) {
-            	FileUtils.cleanDirectory(f); 
-                FileUtils.forceDelete(f); 
-            }
-            FileUtils.forceMkdir(f); 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } 
 	}
 	
 	

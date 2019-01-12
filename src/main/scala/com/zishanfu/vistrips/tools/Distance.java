@@ -1,10 +1,12 @@
 package com.zishanfu.vistrips.tools;
 
+import java.io.Serializable;
+
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.vividsolutions.jts.geom.Point;
 
-public class Distance {
+public class Distance implements Serializable{
 	
 	public final double RADIUS_OF_EARTH = 6371;
 	
