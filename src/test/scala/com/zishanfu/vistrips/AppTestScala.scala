@@ -22,30 +22,35 @@ class AppTestScala extends TestBaseScala {
     	val geo2 = new GeoPosition(33.39031619194356, -111.89120292663574)
     	val selectedType = "DSO"
     	val maxLen = new Distance().euclidean(geo1, geo2) / 10; 
-    	val newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen)
-		  val newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen)
-		  
-		  val osmloader = new OsmLoader(newGeo1, newGeo2)
-		  val path = osmloader.download()
+//    	val newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen)
+//		  val newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen)
+//		  
+//		  val osmloader = new OsmLoader(newGeo1, newGeo2)
+//		  val path = osmloader.download()
     	
-      val graphhopper = new GraphInit(osmloader.lastPath)
-      val nums = 100
+      val graphhopper = new GraphInit(resourceFolder + "/vistrips/2019-01-11T16:52:40Z.osm")
+      val nums = 1000
       val tg = new TripsGeneration(geo1, geo2, graphhopper, maxLen)
       val pairs = tg.computePairs(nums, selectedType)
       var rdd = sparkSession.sparkContext.parallelize(pairs.toSeq).filter(p => p != null).map(
           pair => Row(pair.getSourceCoor, pair.getDestCoor, pair.getDistance, pair.getTime, pair.getRoute))
-      for(i <- 1 to 20){
-        rdd = rdd.union(rdd)
+      var rddCopy = rdd
+      for(i <- 1 until 300){
+        rddCopy = rddCopy.union(rdd)
       }
-    	println("rdd count:" + rdd.count())
-    	val newRDD = rdd.map(row => {
+      val t1 = System.nanoTime
+      
+    	val newRDD = rddCopy.map(row => {
     	  val lsRoute = row.getAs[LineString](4)
     	  val time = row.getAs[Long](3)
     	  val distance = row.getAs[Double](2)
     	  val routeInSec = new Interpolate().routeInterpolate(lsRoute, time, distance);
     	  routeInSec
     	})
-    	newRDD.take(10).foreach(println)
+    	//seconds
+    	val duration = (System.nanoTime - t1) / 1e9d
+    	println(newRDD.count())
+    	println(duration)
     }
   }
   

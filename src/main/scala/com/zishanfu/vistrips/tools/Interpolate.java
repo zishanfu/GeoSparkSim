@@ -11,37 +11,46 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 
 public class Interpolate implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5906318848796881434L;
 	private GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 	
 	//time in seconds, distance in meters
-		public LineString routeInterpolate(LineString origin, long time, double distance) {
-			double avgSpeed = distance / time; // m/s
-			int num = origin.getNumPoints();
+	public LineString routeInterpolate(LineString origin, long time, double distance) {
+		double avgSpeed = distance / time; // m/s
+		int num = origin.getNumPoints();
 			
-			if(num < 2) return origin;
-			List<Coordinate> coordinates = new ArrayList<>();
-			coordinates.add(origin.getCoordinateN(0));
-			for(int i = 0; i< num - 1; i++) {
-				Coordinate src = origin.getCoordinateN(i);
-				Coordinate dst = origin.getCoordinateN(i+1);
-				double distStep = new Distance().haversine(src.y, src.x, dst.y, dst.x);
-				double stepInSec = distStep / avgSpeed; 
-				if(distStep > distance) {
-					int steps = (int) stepInSec;
-					for(int j = 0; j < steps; j++) {
-						coordinates.add(linearInterpolate(src, dst, distStep, j));
-					}
+		if(num < 2) return origin;
+		List<Coordinate> coordinates = new ArrayList<>();
+		coordinates.add(origin.getCoordinateN(0));
+		for(int i = 0; i< num - 1; i++) {
+			Coordinate src = origin.getCoordinateN(i);
+			Coordinate dst = origin.getCoordinateN(i+1);
+			double distStep = new Distance().haversine(src.y, src.x, dst.y, dst.x);
+			double stepInSec = distStep / avgSpeed; 
+			if(distStep > distance) {
+				int steps = (int) stepInSec;
+				for(int j = 0; j < steps; j++) {
+					coordinates.add(linearInterpolate(src, dst, distStep, j));
 				}
-				coordinates.add(dst);
 			}
-			
-			Coordinate[] coorArr = new Coordinate[coordinates.size()];
-			return geometryFactory.createLineString(coordinates.toArray(coorArr));
+			coordinates.add(dst);
 		}
+			
+		Coordinate[] coorArr = new Coordinate[coordinates.size()];
+		return geometryFactory.createLineString(coordinates.toArray(coorArr));
+	}
+	
+	public LineString routeInterpolateBySec(LineString origin, long time, double distance, int sec) {
 		
-		private Coordinate linearInterpolate(Coordinate src, Coordinate dst, double d, double n) {
-			double x = src.x + n/d * (dst.x - src.x);
-			double y = src.y + n/d * (dst.y - src.y);
-			return new Coordinate(x, y);
-		}	
+		return origin;
+	}
+		
+	private Coordinate linearInterpolate(Coordinate src, Coordinate dst, double d, double n) {
+		double x = src.x + n/d * (dst.x - src.x);
+		double y = src.y + n/d * (dst.y - src.y);
+		return new Coordinate(x, y);
+	}	
 }

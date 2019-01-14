@@ -170,11 +170,11 @@ public class TripsGeneration implements Serializable{
 				p.getDestGeo().getLatitude(),
 				p.getDestGeo().getLongitude());
 		if(path == null) {
-			return null;
+			return computeAPair(type);
 		}
 		PointList route = path.getPoints();
 		if(route == null || route.size() <= 1) 
-			return null;
+			return computeAPair(type);
 		updateLongestTrip(route.size(), path.getTime()/1000);
 		LineString lsRoute = PointList2LineString(route);
 //		LineString routeInSec = routeInterpolate(lsRoute, path.getTime()/1000, path.getDistance());

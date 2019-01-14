@@ -44,8 +44,6 @@ public class GraphInit{
 		GHResponse rsp = hopper.route(req);
 		
 		if(rsp.hasErrors()) {
-			System.out.println(latFrom + "," + lonFrom + "," + latTo + "," + lonTo);
-			System.out.println("rsp error:" + rsp.getErrors());
 			return null;
 		}
 		
