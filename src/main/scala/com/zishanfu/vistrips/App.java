@@ -27,6 +27,8 @@ public class App
     	
 //        new Jmap().runUI(spark);
     	LOG.debug("Log4j appender configuration is successful !!");
-    	new JmapConsole().run(resources, spark);
+    	JmapConsole simConsole = new JmapConsole(resources, spark);
+    	simConsole.runGeneration();
+    	simConsole.runSimulation();
     }
 }

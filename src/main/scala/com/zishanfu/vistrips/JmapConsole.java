@@ -17,11 +17,20 @@ import com.zishanfu.vistrips.model.Pair;
 public class JmapConsole {
 	private final static Logger LOG = Logger.getLogger(JmapConsole.class);
 	private final Properties prop = new Properties();
-	String filename = "app.config";
-	InputStream is = null;
+	private String filename = "app.config";
+	private InputStream is = null;
 	private SparkSession spark;
+	private String resources;
+	private Pair[] pairs;
+	private int tripLength;
+	private double tripTime;
 	
-	public void run(String resources, SparkSession spark) {
+	public JmapConsole(String resources, SparkSession spark) {
+		this.spark = spark;
+		this.resources = resources;
+	}
+	
+	public void runGeneration() {
 		try {
 		    is = new FileInputStream(resources + "/config/" + filename);
 		} catch (FileNotFoundException ex) {
@@ -44,16 +53,26 @@ public class JmapConsole {
 		GeoPosition geo2 = new GeoPosition(geo2Lat, geo2Lon);
 		String selectedType = typeParser(prop.getProperty("generation.type"));
 		int total = Integer.parseInt(prop.getProperty("generation.num"));
-		double delay = Double.parseDouble(prop.getProperty("simulation.delay"));
 		
-		LOG.warn(String.format("Geo1 %s, Geo2 %s, SelectedType %s, Total %s, Delay %s.", geo1, geo2, selectedType, total, delay));
 		GenerationImpl gImpl = new GenerationImpl();
-		Pair[] pairs = gImpl.apply(geo1, geo2, selectedType, total);
-		SimulationImpl sImpl = new SimulationImpl(spark);
-		
-		sImpl.apply(pairs, delay, gImpl.getTripLength());
+		pairs = gImpl.apply(geo1, geo2, selectedType, total);
+		tripLength = gImpl.getTripLength();
+		tripTime = gImpl.getLongestTripTime();
 	}
 	
+	public void runSimulation() {
+		double delay = Double.parseDouble(prop.getProperty("simulation.delay"));
+		SimulationImpl sImpl = new SimulationImpl(spark);
+		sImpl.apply(pairs, delay, tripLength);
+	}
+	
+	
+	
+	public double getTripTime() {
+		return tripTime;
+	}
+
+
 	private String typeParser(String type) {
 		switch(type) {
 		case "data-space oriented approach":

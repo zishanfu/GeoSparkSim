@@ -24,10 +24,14 @@ trait TestBaseScala extends FunSpec with BeforeAndAfterAll{
   val hdfs = "hdfs://localhost:9000/vistrips/20190110_153248"
   val nodesPath = hdfs + "/node.parquet"
   val waysPath = hdfs + "/way.parquet"
-
+  val simConsole = new JmapConsole(resourceFolder, sparkSession);
+  simConsole.runGeneration();
+  
   override def beforeAll(): Unit = {
+    
   }
 
   override def afterAll(): Unit = {
+    
   }
 }

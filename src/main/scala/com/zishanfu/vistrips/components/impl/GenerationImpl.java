@@ -10,7 +10,8 @@ import com.zishanfu.vistrips.tools.Distance;
 
 public class GenerationImpl {
 	private final Logger LOG = Logger.getLogger(GenerationImpl.class);
-	private int tripLength = 0;
+	private int tripLength;
+	private double tripTime;
 	
 	public Pair[] apply(GeoPosition geo1, GeoPosition geo2, String selectedType, int total) {
 		//scale the length of trip, same with the scale in trip generation
@@ -49,8 +50,13 @@ public class GenerationImpl {
 		TripsGeneration tg = new TripsGeneration(geo1, geo2, gi, maxLen);
 		Pair[] pairs = tg.computePairs(total, selectedType);
 		this.tripLength = tg.getLongestTrip();
-		LOG.warn(String.format("Finished! Longest trips time %s in second", tg.getLongestTripTime()));
+		this.tripTime = tg.getLongestTripTime();
+		LOG.warn(String.format("Finished! Longest trips time %s in second", tripTime));
 		return pairs;
+	}
+	
+	public double getLongestTripTime() {
+		return tripTime;
 	}
 	
 	public int getTripLength() {

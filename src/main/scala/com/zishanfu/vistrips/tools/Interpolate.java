@@ -18,20 +18,50 @@ public class Interpolate implements Serializable{
 	private GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 	
 	//time in seconds, distance in meters
-	public LineString routeInterpolate(LineString origin, long time, double distance) {
+//	public LineString routeInterpolate(LineString origin, long time, double distance) {
+//		double avgSpeed = distance / time; // m/s
+//		int num = origin.getNumPoints();
+//			
+//		if(num < 2) return origin;
+//		List<Coordinate> coordinates = new ArrayList<>();
+//		coordinates.add(origin.getCoordinateN(0));
+//		for(int i = 0; i< num - 1; i++) {
+//			Coordinate src = origin.getCoordinateN(i);
+//			Coordinate dst = origin.getCoordinateN(i+1);
+//			double distStep = new Distance().haversine(src.y, src.x, dst.y, dst.x);
+//			double stepInSec = distStep / avgSpeed; 
+//			if(distStep > avgSpeed) {
+//				int steps = (int) stepInSec;
+//				for(int j = 0; j < steps; j++) {
+//					coordinates.add(linearInterpolate(src, dst, distStep, j));
+//				}
+//			}
+//			coordinates.add(dst);
+//		}
+//			
+//		Coordinate[] coorArr = new Coordinate[coordinates.size()];
+//		return geometryFactory.createLineString(coordinates.toArray(coorArr));
+//	}
+	
+	public LineString routeInterpolateBySec(LineString origin, long time, double distance, double sec) {
 		double avgSpeed = distance / time; // m/s
+		double stepLength = avgSpeed * sec;
 		int num = origin.getNumPoints();
-			
 		if(num < 2) return origin;
+		
 		List<Coordinate> coordinates = new ArrayList<>();
-		coordinates.add(origin.getCoordinateN(0));
+		
+		
 		for(int i = 0; i< num - 1; i++) {
 			Coordinate src = origin.getCoordinateN(i);
 			Coordinate dst = origin.getCoordinateN(i+1);
 			double distStep = new Distance().haversine(src.y, src.x, dst.y, dst.x);
-			double stepInSec = distStep / avgSpeed; 
-			if(distStep > distance) {
-				int steps = (int) stepInSec;
+			double stepInStep = distStep / stepLength; 
+			
+			coordinates.add(origin.getCoordinateN(i));
+			
+			if(stepInStep > 1.0) {
+				int steps = (int) stepInStep;
 				for(int j = 0; j < steps; j++) {
 					coordinates.add(linearInterpolate(src, dst, distStep, j));
 				}
@@ -41,11 +71,6 @@ public class Interpolate implements Serializable{
 			
 		Coordinate[] coorArr = new Coordinate[coordinates.size()];
 		return geometryFactory.createLineString(coordinates.toArray(coorArr));
-	}
-	
-	public LineString routeInterpolateBySec(LineString origin, long time, double distance, int sec) {
-		
-		return origin;
 	}
 		
 	private Coordinate linearInterpolate(Coordinate src, Coordinate dst, double d, double n) {

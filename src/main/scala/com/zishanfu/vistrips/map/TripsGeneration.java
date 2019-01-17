@@ -19,6 +19,7 @@ import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.geom.PrecisionModel.Type;
 import com.zishanfu.vistrips.model.Pair;
 import com.zishanfu.vistrips.tools.Distance;
+import com.zishanfu.vistrips.tools.Interpolate;
 
 /**
  * @author zishanfu
@@ -184,10 +185,13 @@ public class TripsGeneration implements Serializable{
 			return computeAPair(type);
 		updateLongestTrip(route.size(), path.getTime()/1000);
 		LineString lsRoute = PointList2LineString(route);
-//		LineString routeInSec = routeInterpolate(lsRoute, path.getTime()/1000, path.getDistance());
-		//p.setRoute(routeInSec);
+		LineString routeInStep = new Interpolate().routeInterpolateBySec(lsRoute, path.getTime()/1000, path.getDistance(), 1);
+		
 		Pair p = new Pair(lsRoute.getCoordinates(), precision, 1);
-		p.setRoute(lsRoute);
+		p.setDest(dest);
+		p.setSource(src);
+		//p.setRoute(lsRoute);
+		p.setRoute(routeInStep);
 		p.setDistance(path.getDistance());
 		p.setTime(path.getTime()/1000);
 		return p;

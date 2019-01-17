@@ -16,10 +16,6 @@ import com.zishanfu.vistrips.tools.Interpolate
 
 class AppTestScala extends TestBaseScala {
   
-  describe("partition"){
-    
-  }
-  
   describe("Routes"){
     it("generation test"){
       // p1: [33.414964957503585, -111.94467544555664], p2: [33.39031619194356, -111.89120292663574]
@@ -33,14 +29,14 @@ class AppTestScala extends TestBaseScala {
 //		  val osmloader = new OsmLoader(newGeo1, newGeo2)
 //		  val path = osmloader.download()
     	
-      val graphhopper = new GraphInit(resourceFolder + "/vistrips/2019-01-11T16:52:40Z.osm")
+      val graphhopper = new GraphInit(resourceFolder + "/vistrips/2019-01-16T18:25:01Z.osm")
       val nums = 1000
       val tg = new TripsGeneration(geo1, geo2, graphhopper, maxLen)
       val pairs = tg.computePairs(nums, selectedType)
       var rdd = sparkSession.sparkContext.parallelize(pairs.toSeq).filter(p => p != null).map(
           pair => Row(pair.getSourceCoor, pair.getDestCoor, pair.getDistance, pair.getTime, pair.getRoute))
       var rddCopy = rdd
-      for(i <- 1 until 300){
+      for(i <- 1 until 100){
         rddCopy = rddCopy.union(rdd)
       }
       val t1 = System.nanoTime
@@ -49,7 +45,8 @@ class AppTestScala extends TestBaseScala {
     	  val lsRoute = row.getAs[LineString](4)
     	  val time = row.getAs[Long](3)
     	  val distance = row.getAs[Double](2)
-    	  val routeInSec = new Interpolate().routeInterpolate(lsRoute, time, distance);
+    	  //val routeInSec = new Interpolate().routeInterpolate(lsRoute, time, distance);
+    	  val routeInSec = new Interpolate().routeInterpolateBySec(lsRoute, time, distance, 0.4);
     	  routeInSec
     	})
     	//seconds

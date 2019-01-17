@@ -12,8 +12,6 @@ import org.datasyslab.geospark.enums.GridType;
 import org.datasyslab.geospark.enums.IndexType;
 import org.datasyslab.geospark.spatialRDD.SpatialRDD;
 
-import com.vividsolutions.jts.geom.LineString;
-import com.zishanfu.vistrips.model.MyWaypoint;
 import com.zishanfu.vistrips.model.NewWaypoint;
 import com.zishanfu.vistrips.model.Pair;
 
@@ -40,49 +38,21 @@ public class SimulationImpl {
 		SpatialRDD<NewWaypoint> sRDD = new SpatialRDD();
 		sRDD.setRawSpatialRDD(wRDD);	
 		sRDD.analyze();
+
 		try {
 			sRDD.spatialPartitioning(GridType.QUADTREE, 10);
 			sRDD.buildIndex(IndexType.QUADTREE, false);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		int delay = (int)(delayInSec*1000);
-		Timer timer = new Timer();
-//		TimerTask simTask = new TimerTask(){
-//			boolean stop = true;
-//			private final Logger TLOG = Logger.getLogger(TimerTask.class);
-//			private int round;
-//			
-//		    @Override
-//		    public void run() {
-//		    	TLOG.info("Updated next round!");
-//		    	sRDD.spatialPartitionedRDD.foreach(p -> {
-//		    		p.getCurPosByN(round);
-//		    		//System.out.println(p.getCoordinateN(round));
-//		    	});
-//		    	round++;
-		    	
-//				for (MyWaypoint waypoint: waypoints) {
-//		        	waypoint.update();
-//		        	TLOG.info(waypoint.getCurPos());
-//		        	
-//		        	if(waypoint.getCurPos() != null) {
-//		        		stop = false;
-//		        	}
-//		        }
-//				
-//				if(stop) {
-//	        		timer.cancel();
-//	        	}
-//				
-//		    };
-//		};
-//		
-		timer.schedule(new SimTask(sRDD.spatialPartitionedRDD), 0, delay);
 		
-
+		
+		Timer timer = new Timer();
+	
+		timer.schedule(new SimTask(sRDD.spatialPartitionedRDD, timer, routeLength), 0, delay);
+		
 	}
 
 }
