@@ -15,5 +15,4 @@ case class Link (id: Long, tail: Point, head: Point, distance: Double,
     def getSpeed(): Integer = this.speed
     def getDrivingDirection(): Integer = this.driveDirection
     def getLanes(): Integer = this.lanes
-    
 }

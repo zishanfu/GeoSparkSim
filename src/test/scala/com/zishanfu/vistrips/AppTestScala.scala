@@ -15,6 +15,11 @@ import com.vividsolutions.jts.geom.LineString
 import com.zishanfu.vistrips.tools.Interpolate
 
 class AppTestScala extends TestBaseScala {
+  
+  describe("partition"){
+    
+  }
+  
   describe("Routes"){
     it("generation test"){
       // p1: [33.414964957503585, -111.94467544555664], p2: [33.39031619194356, -111.89120292663574]

@@ -1,14 +1,18 @@
 package com.zishanfu.vistrips.model;
 
-import java.io.Serializable;
-
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.PrecisionModel;
 
 
-public class Pair implements Serializable{
+public class Pair extends LineString{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 766046869879944391L;
+	
 	private GeoPosition source;
 	private GeoPosition dest;
 	private LineString route = null;
@@ -16,21 +20,27 @@ public class Pair implements Serializable{
 	private double distance;
 	//PointList / LineString
 	
-	public Pair() {}
+	public Pair(Coordinate[] points, PrecisionModel precisionModel, int SRID) {
+		super(points, precisionModel, SRID);
+	}
 	
-	public Pair(GeoPosition source, GeoPosition dest, LineString route) {
+	public Pair(Coordinate[] points, PrecisionModel precisionModel, int SRID,
+			GeoPosition source, GeoPosition dest, LineString route) {
+		super(route.getCoordinates(), precisionModel, SRID);
 		this.source = source;
 		this.dest = dest;
 		this.route = route;
 	}
 	
-	public Pair(double latFrom, double lonFrom, double latTo, double lonTo, LineString route) {
+	public Pair(Coordinate[] points, PrecisionModel precisionModel, int SRID,
+			double latFrom, double lonFrom, double latTo, double lonTo, LineString route) {
+		super(route.getCoordinates(), precisionModel, SRID);
 		source = new GeoPosition(latFrom, lonFrom);
 		dest = new GeoPosition(latTo, lonTo);
 		this.route = route;
 	}
 	
-
+	
 	public GeoPosition getSourceGeo() {
 		return source;
 	}

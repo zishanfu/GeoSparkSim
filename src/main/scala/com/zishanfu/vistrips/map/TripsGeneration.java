@@ -15,6 +15,8 @@ import com.graphhopper.util.PointList;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.PrecisionModel;
+import com.vividsolutions.jts.geom.PrecisionModel.Type;
 import com.zishanfu.vistrips.model.Pair;
 import com.zishanfu.vistrips.tools.Distance;
 
@@ -39,6 +41,8 @@ public class TripsGeneration implements Serializable{
 	private GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
 	private double longestTripTime = 0;
 	private SparkSession sparkSession;
+	private PrecisionModel precision = new PrecisionModel();
+	
 	
 	//1:479km = euclidean: harvsine
 	//Car 4.5m
@@ -142,16 +146,22 @@ public class TripsGeneration implements Serializable{
 	 * @return a Pair of node
 	 */
 	public Pair computeAPair(String type){
-		Pair p = new Pair();
+		//Pair p = new Pair();
 		double routeLen = computeLengthOfRoute();
+		GeoPosition src = null;
+		GeoPosition dest = null;
 		if(type.contains(DSO)) {
-			GeoPosition src = randomNode();
-			p.setSource(src);
-			p.setDest(computeDestDSO(src, routeLen));
+//			GeoPosition src = randomNode();
+//			p.setSource(src);
+//			p.setDest(computeDestDSO(src, routeLen));
+			src = randomNode();
+			dest = computeDestDSO(src, routeLen);
 		}else if(type.contains(NB)) {
-			GeoPosition src = computeSourceNB();
-			p.setSource(src);
-			p.setDest(computeDestinationNB(src, routeLen));
+//			GeoPosition src = computeSourceNB();
+//			p.setSource(src);
+//			p.setDest(computeDestinationNB(src, routeLen));
+			src = computeSourceNB();
+			dest = computeDestinationNB(src, routeLen);
 		}else if(type.contains(RB)) {
 			
 		}	
@@ -165,10 +175,7 @@ public class TripsGeneration implements Serializable{
 //		LineString legs = route.getLegsLineString();
 //		updateLongestTrip(legs.getNumPoints());
 //		p.setRoute(legs);
-		PathWrapper path = graph.routeRequest(p.getSourceGeo().getLatitude(),
-				p.getSourceGeo().getLongitude(),
-				p.getDestGeo().getLatitude(),
-				p.getDestGeo().getLongitude());
+		PathWrapper path = graph.routeRequest(src, dest);
 		if(path == null) {
 			return computeAPair(type);
 		}
@@ -179,6 +186,7 @@ public class TripsGeneration implements Serializable{
 		LineString lsRoute = PointList2LineString(route);
 //		LineString routeInSec = routeInterpolate(lsRoute, path.getTime()/1000, path.getDistance());
 		//p.setRoute(routeInSec);
+		Pair p = new Pair(lsRoute.getCoordinates(), precision, 1);
 		p.setRoute(lsRoute);
 		p.setDistance(path.getDistance());
 		p.setTime(path.getTime()/1000);

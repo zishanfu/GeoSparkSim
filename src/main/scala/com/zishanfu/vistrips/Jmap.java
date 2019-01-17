@@ -6,24 +6,26 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
 
+import org.apache.log4j.Logger;
+import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.JXMapViewer;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.impl.Log4jLoggerAdapter;
 
 import com.zishanfu.vistrips.controller.CompController;
 import com.zishanfu.vistrips.controller.InputController;
 import com.zishanfu.vistrips.controller.ResultController;
 
 public class Jmap {
-	private final static Logger LOG = LoggerFactory.getLogger(Jmap.class);
+	private final static Logger LOG = Logger.getLogger(Jmap.class);
 	
-	public void runUI() {
+	public void runUI(SparkSession spark) {
 		int width = 1200;
 		int height = 800;
 		CompController cc = new CompController(width, height);
 		final JXMapViewer jXMapViewer = cc.mapViewer;
 		ResultController rc = new ResultController();
-		InputController ic = new InputController(cc, rc);
+		InputController ic = new InputController(cc, rc, spark);
 		System.setProperty("org.geotools.referencing.forceXY", "true");
 		
 

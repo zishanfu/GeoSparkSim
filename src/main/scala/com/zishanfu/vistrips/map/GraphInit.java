@@ -2,7 +2,11 @@ package com.zishanfu.vistrips.map;
 
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
 import org.jxmapviewer.viewer.GeoPosition;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
+import org.slf4j.impl.Log4jLoggerAdapter;
 
 import com.graphhopper.GHRequest;
 import com.graphhopper.GHResponse;
@@ -10,8 +14,8 @@ import com.graphhopper.GraphHopper;
 import com.graphhopper.PathWrapper;
 import com.graphhopper.routing.util.EdgeFilter;
 import com.graphhopper.routing.util.EncodingManager;
-import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.GHPoint;
+import com.zishanfu.vistrips.JmapConsole;
 
 
 /**
@@ -25,7 +29,8 @@ public class GraphInit{
 	
 //	euclidean: 0.044644977654619736
 //	harvsine: 21382.936940999596
-
+	private final static Logger LOG = Logger.getLogger(GraphInit.class);
+	
 	public GraphInit(String osm) {
 		this.hopper = new GraphHopper().forServer();
 		hopper.setOSMFile(osm);
@@ -50,6 +55,11 @@ public class GraphInit{
 		return rsp.getBest();
 	}
 	
+	
+	public PathWrapper routeRequest(GeoPosition from, GeoPosition to) {
+		PathWrapper rsp = requestBest(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude());
+		return rsp == null? null : rsp;
+	}
 	
 	/**
 	 * @param latFrom, eg 33.409437
