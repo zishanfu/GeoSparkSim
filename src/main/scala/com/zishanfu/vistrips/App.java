@@ -25,7 +25,7 @@ public class App
     	          .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
     			  .getOrCreate();
     	
-//        new Jmap().runUI(spark);
+//        new Jmap().runUI();
     	LOG.debug("Log4j appender configuration is successful !!");
     	JmapConsole simConsole = new JmapConsole(resources, spark);
     	simConsole.runGeneration();

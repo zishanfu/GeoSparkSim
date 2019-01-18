@@ -1,19 +1,14 @@
 package com.zishanfu.vistrips.components.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
+import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import org.datasyslab.geospark.enums.GridType;
-import org.datasyslab.geospark.enums.IndexType;
 import org.datasyslab.geospark.spatialRDD.SpatialRDD;
 
-import com.zishanfu.vistrips.model.NewWaypoint;
-import com.zishanfu.vistrips.model.Pair;
+import com.zishanfu.vistrips.model.Vehicle;
 
 public class SimulationImpl {
 	private final Logger LOG = Logger.getLogger(SimulationImpl.class);
@@ -23,25 +18,15 @@ public class SimulationImpl {
 		this.spark = spark;
 	}
 	
-	public void apply(Pair[] pairs, double delayInSec, int routeLength) {
-		List<NewWaypoint> list = new ArrayList<>();
+	public void apply(JavaRDD<Vehicle> vehicles, double delayInSec, int routeLength) {
 		
-		for(Pair p: pairs) {
-			if(p == null) {
-				continue;
-			}
-			list.add(new NewWaypoint(p.getCoordinates(), p.getPrecisionModel(), p.getSRID()));
-		}
-		JavaSparkContext sc = new JavaSparkContext(spark.sparkContext());
-		
-		JavaRDD<NewWaypoint> wRDD = sc.parallelize(list);
-		SpatialRDD<NewWaypoint> sRDD = new SpatialRDD();
-		sRDD.setRawSpatialRDD(wRDD);	
+		SpatialRDD<Vehicle> sRDD = new SpatialRDD();
+		sRDD.setRawSpatialRDD(vehicles);	
 		sRDD.analyze();
 
 		try {
-			sRDD.spatialPartitioning(GridType.QUADTREE, 10);
-			sRDD.buildIndex(IndexType.QUADTREE, false);
+			sRDD.spatialPartitioning(GridType.QUADTREE, 8);
+			//sRDD.buildIndex(IndexType.QUADTREE, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +36,7 @@ public class SimulationImpl {
 		
 		Timer timer = new Timer();
 	
-		timer.schedule(new SimTask(sRDD.spatialPartitionedRDD, timer, routeLength), 0, delay);
+		//timer.schedule(new SimTask(sRDD.spatialPartitionedRDD, timer, routeLength), 0, delay);
 		
 	}
 

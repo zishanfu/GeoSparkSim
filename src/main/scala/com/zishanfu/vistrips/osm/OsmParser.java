@@ -5,7 +5,8 @@ import org.openstreetmap.osmosis.xml.v0_6.XmlDownloader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zishanfu.vistrips.hdfs.HDFSUtil;
+import com.zishanfu.vistrips.tools.HDFSUtil;
+
 
 public class OsmParser {
 	private static String tmpPath = "";

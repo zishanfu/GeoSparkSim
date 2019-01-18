@@ -1,8 +1,10 @@
 package com.zishanfu.vistrips.map;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
+import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
@@ -14,7 +16,11 @@ import com.graphhopper.GraphHopper;
 import com.graphhopper.PathWrapper;
 import com.graphhopper.routing.util.EdgeFilter;
 import com.graphhopper.routing.util.EncodingManager;
+import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.GHPoint;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
 import com.zishanfu.vistrips.JmapConsole;
 
 
@@ -23,13 +29,14 @@ import com.zishanfu.vistrips.JmapConsole;
  *
  */
 
-public class GraphInit{
+public class GraphInit implements Serializable{
 	
 	private GraphHopper hopper;
 	
 //	euclidean: 0.044644977654619736
 //	harvsine: 21382.936940999596
 	private final static Logger LOG = Logger.getLogger(GraphInit.class);
+
 	
 	public GraphInit(String osm) {
 		this.hopper = new GraphHopper().forServer();
@@ -56,8 +63,8 @@ public class GraphInit{
 	}
 	
 	
-	public PathWrapper routeRequest(GeoPosition from, GeoPosition to) {
-		PathWrapper rsp = requestBest(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude());
+	public PathWrapper routeRequest(Coordinate from, Coordinate to) {
+		PathWrapper rsp = requestBest(from.y, from.x, to.y, to.x);
 		return rsp == null? null : rsp;
 	}
 	
@@ -72,15 +79,6 @@ public class GraphInit{
 		PathWrapper rsp = requestBest(latFrom, lonFrom, latTo, lonTo);
 		return rsp == null? null : rsp;
 	}
-	
-//	public double[] routeLegsRequest(double latFrom, double lonFrom, double latTo, double lonTo) {
-//		PointList route = routeRequest(latFrom , lonFrom, latTo, lonTo);
-//		double[] routeLegs = new double[route.size()];
-//		for(int i = 0; i<route.size(); i++) {
-//			route.get
-//		}
-//	}
-//	
 	
 	/**
 	 * @param src, source node coordinate
@@ -121,14 +119,14 @@ public class GraphInit{
 	}
 	
 	
+
 	/**
-	 * @param lat
-	 * @param lon
-	 * @return double[] coor {lat, lon}
+	 * @param Coordinate node
+	 * @return Coordinate closetNode
 	 */
-	public GeoPosition getClosestNode(GeoPosition node) {
-		GHPoint res = hopper.getLocationIndex().findClosest(node.getLatitude(), node.getLongitude(), EdgeFilter.ALL_EDGES).getQueryPoint();
-		GeoPosition newNode = new GeoPosition(res.getLat(), res.getLon());
+	public Coordinate getClosestNode(Coordinate node) {
+		GHPoint res = hopper.getLocationIndex().findClosest(node.y, node.x, EdgeFilter.ALL_EDGES).getQueryPoint();
+		Coordinate newNode = new Coordinate(res.getLon(), res.getLat());
 		return newNode;
 	}
 	

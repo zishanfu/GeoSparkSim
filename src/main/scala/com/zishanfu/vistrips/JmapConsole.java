@@ -7,12 +7,14 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.components.impl.GenerationImpl;
 import com.zishanfu.vistrips.components.impl.SimulationImpl;
 import com.zishanfu.vistrips.model.Pair;
+import com.zishanfu.vistrips.model.Vehicle;
 
 public class JmapConsole {
 	private final static Logger LOG = Logger.getLogger(JmapConsole.class);
@@ -21,7 +23,7 @@ public class JmapConsole {
 	private InputStream is = null;
 	private SparkSession spark;
 	private String resources;
-	private Pair[] pairs;
+	private JavaRDD<Vehicle> vehicles;
 	private int tripLength;
 	private double tripTime;
 	
@@ -54,24 +56,19 @@ public class JmapConsole {
 		String selectedType = typeParser(prop.getProperty("generation.type"));
 		int total = Integer.parseInt(prop.getProperty("generation.num"));
 		
-		GenerationImpl gImpl = new GenerationImpl();
-		pairs = gImpl.apply(geo1, geo2, selectedType, total);
-		tripLength = gImpl.getTripLength();
-		tripTime = gImpl.getLongestTripTime();
+		GenerationImpl gImpl = new GenerationImpl(spark);
+		vehicles = gImpl.apply(geo1, geo2, selectedType, total);
 	}
 	
 	public void runSimulation() {
 		double delay = Double.parseDouble(prop.getProperty("simulation.delay"));
 		SimulationImpl sImpl = new SimulationImpl(spark);
-		sImpl.apply(pairs, delay, tripLength);
+		sImpl.apply(vehicles, delay, tripLength);
 	}
-	
-	
 	
 	public double getTripTime() {
 		return tripTime;
 	}
-
 
 	private String typeParser(String type) {
 		switch(type) {

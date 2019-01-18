@@ -10,11 +10,14 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.components.impl.GenerationImpl;
 import com.zishanfu.vistrips.model.Pair;
+import com.zishanfu.vistrips.model.Vehicle;
 import com.zishanfu.vistrips.tools.Distance;
 
 
@@ -73,13 +76,15 @@ public class GenerateBtnHandler implements ActionListener{
 		    		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
 		    		LOG.warn(String.format("Selected rectangle, p1: %s, p2: %s", geo1, geo2));
 		    		
-		    		GenerationImpl gImpl = new GenerationImpl();
+		    		
+		    		GenerationImpl gImpl = new GenerationImpl(spark);
 		    		double delay = Double.parseDouble(delayTxt.getText());
 		    		
-		    		Pair[] pairs = gImpl.apply(geo1, geo2, selectedType, total);
+		    		JavaRDD<Vehicle> pairs = gImpl.apply(geo1, geo2, selectedType, total);
 		    				
-		    		sbHandler.setDelayInSec(delay);
-		    		sbHandler.setPairs(pairs);
+//		    		sbHandler.setDelayInSec(delay);
+//		    		sbHandler.setPairs(pairs);
+//		    		sbHandler.setRouteLength(gImpl.getTripLength());
 		    		
 		    		long endTime = System.currentTimeMillis();
 		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");

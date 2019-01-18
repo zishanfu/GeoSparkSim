@@ -18,7 +18,7 @@ trait SimulationTestBase extends FunSpec with BeforeAndAfterAll{
   val warehouseLocation = System.getProperty("user.dir") + "/target/"
   var sparkSession = SparkSession.builder().config("spark.serializer", classOf[KryoSerializer].getName).
     config("spark.kryo.registrator", classOf[GeoSparkKryoRegistrator].getName).
-    master("local[*]").appName("geosparksqlScalaTest")
+    master("local[*]").appName("simulationTest")
     .config("spark.sql.warehouse.dir", warehouseLocation)
     .config("spark.local.dir", warehouseLocation + "/tmp/spark-temp").getOrCreate()
 

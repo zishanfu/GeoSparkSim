@@ -12,6 +12,7 @@ import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.WaypointPainter;
 
+import com.zishanfu.vistrips.components.impl.SimulationImpl;
 import com.zishanfu.vistrips.model.MyWaypoint;
 import com.zishanfu.vistrips.model.Pair;
 
@@ -21,6 +22,7 @@ public class SimulationBtnHandler implements ActionListener{
 	private Pair[] pairs;
 	private SparkSession sparkSession;
 	private double delayInSec;
+	private int routeLength;
 	
 	public SimulationBtnHandler(JXMapViewer mapViewer, SparkSession sparkSession) {
 		this.mapViewer = mapViewer;
@@ -37,12 +39,18 @@ public class SimulationBtnHandler implements ActionListener{
 		this.pairs = pairs;
 	}
 
+	public void setRouteLength(int routeLength) {
+		this.routeLength = routeLength;
+	}
+
+
 	public void actionPerformed(ActionEvent e) {
 		if(pairs == null || pairs.length == 0) {
 			AttentionDialog dialog = new AttentionDialog("Attention", 
 					"Please wait to generate trips!");
 		
 		}else {
+			int delay = (int)(delayInSec*1000);
 			final Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();
 			
 			for(Pair p: pairs) {
@@ -56,8 +64,7 @@ public class SimulationBtnHandler implements ActionListener{
 			waypointPainter.setWaypoints(waypoints);
 			mapViewer.setOverlayPainter(waypointPainter);
 			waypointPainter.setRenderer(new PointRender());
-			int delay = (int)(delayInSec*1000);
-			
+
 			Timer timer = new Timer(delay, new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	                for (MyWaypoint waypoint: waypoints) {

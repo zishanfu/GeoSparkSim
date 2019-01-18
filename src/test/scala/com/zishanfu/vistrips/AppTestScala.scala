@@ -6,13 +6,15 @@ import com.zishanfu.vistrips.map.CountyPop
 import com.zishanfu.vistrips.map.GraphInit
 import org.jxmapviewer.viewer.GeoPosition
 import com.zishanfu.vistrips.tools.Distance
-import com.zishanfu.vistrips.map.OsmLoader
-import com.zishanfu.vistrips.map.TripsGeneration
+import com.zishanfu.vistrips.model.Pair
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.types.DoubleType
 import com.vividsolutions.jts.geom.LineString
 import com.zishanfu.vistrips.tools.Interpolate
+import org.datasyslab.geospark.spatialRDD.SpatialRDD
+import org.datasyslab.geospark.enums.GridType
+
 
 class AppTestScala extends TestBaseScala {
   
@@ -29,30 +31,58 @@ class AppTestScala extends TestBaseScala {
 //		  val osmloader = new OsmLoader(newGeo1, newGeo2)
 //		  val path = osmloader.download()
     	
-      val graphhopper = new GraphInit(resourceFolder + "/vistrips/2019-01-16T18:25:01Z.osm")
+      val graphhopper = new GraphInit(resourceFolder + "/vistrips/2019-01-17T11:01:34Z.osm")
       val nums = 1000
-      val tg = new TripsGeneration(geo1, geo2, graphhopper, maxLen)
-      val pairs = tg.computePairs(nums, selectedType)
-      var rdd = sparkSession.sparkContext.parallelize(pairs.toSeq).filter(p => p != null).map(
-          pair => Row(pair.getSourceCoor, pair.getDestCoor, pair.getDistance, pair.getTime, pair.getRoute))
-      var rddCopy = rdd
-      for(i <- 1 until 100){
-        rddCopy = rddCopy.union(rdd)
-      }
-      val t1 = System.nanoTime
+      //val tg = new TripsGeneration(geo1, geo2, graphhopper, maxLen)
+      //val pairs = tg.computePairs(nums, selectedType)
+//      var rdd = sparkSession.sparkContext.parallelize(pairs.toSeq).filter(p => p != null).map(
+//          pair => Row(pair.getSourceCoor, pair.getDestCoor, pair.getDistance, pair.getTime, pair.getRoute))
+//      var rddCopy = rdd
+//      for(i <- 1 until 100){
+//        rddCopy = rddCopy.union(rdd)
+//      }
+//      
+//      val t1 = System.nanoTime
+//      
+//    	val newRDD = rddCopy.map(row => {
+//    	  val lsRoute = row.getAs[LineString](4)
+//    	  val time = row.getAs[Long](3)
+//    	  val distance = row.getAs[Double](2)
+//    	  //val routeInSec = new Interpolate().routeInterpolate(lsRoute, time, distance);
+//    	  val routeInSec = new Interpolate().routeInterpolateBySec(lsRoute, time, distance, 0.4);
+//    	  routeInSec
+//    	})
       
-    	val newRDD = rddCopy.map(row => {
-    	  val lsRoute = row.getAs[LineString](4)
-    	  val time = row.getAs[Long](3)
-    	  val distance = row.getAs[Double](2)
-    	  //val routeInSec = new Interpolate().routeInterpolate(lsRoute, time, distance);
-    	  val routeInSec = new Interpolate().routeInterpolateBySec(lsRoute, time, distance, 0.4);
-    	  routeInSec
-    	})
+      
+//      val t1 = System.nanoTime
+//      
+//      val slot = 10
+//      val steps = length/slot + 1 //index
+//      
+//    	var pairsRDD = sparkSession.sparkContext.parallelize(pairs.toSeq).filter(p => p != null)
+//    	val srdd = new SpatialRDD[Pair]
+//      
+//    	for(i <- 0 to steps){
+//    	  
+//    	  srdd.setRawSpatialRDD(pairsRDD.map(pr => {
+//    	    new Pair(pr.getCoordinateBySlot(i*slot, slot), pr.getPrecisionModel, pr.getSRID)
+//    	  }))
+//    	  
+//        srdd.analyze()
+//        srdd.spatialPartitioning(GridType.QUADTREE, 10);
+//        srdd.spatialPartitionedRDD.rdd.map(row => {
+//      	  val lsRoute = row.getRoute
+//      	  val time = row.getTime
+//      	  val distance = row.getDistance
+//      	  val routeInSec = new Interpolate().routeInterpolateBySec(lsRoute, time, distance, 1);
+//      	  routeInSec
+//      	})
+//      	//write to file
+//    	}
+
     	//seconds
-    	val duration = (System.nanoTime - t1) / 1e9d
-    	println(newRDD.count())
-    	println(duration)
+//    	val duration = (System.nanoTime - t1) / 1e9d
+//    	println(duration)
     }
   }
   

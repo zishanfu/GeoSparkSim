@@ -6,30 +6,28 @@ import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
-
-import com.zishanfu.vistrips.model.NewWaypoint;
+import com.zishanfu.vistrips.model.Vehicle;
 
 public class SimTask extends TimerTask implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3925924455011898559L;
-	JavaRDD<NewWaypoint> pRDD;
+	JavaRDD<Vehicle> vehicles;
 	private int round;
 	private static Timer timer;
 	private int limit;
 	private final static Logger LOG = Logger.getLogger(SimTask.class);
 	
-	public SimTask(JavaRDD<NewWaypoint> pRDD, Timer timer, int routeLength) {
-		this.pRDD = pRDD;
+	public SimTask(JavaRDD<Vehicle> vehicles, Timer timer, int routeLength) {
+		this.vehicles = vehicles;
 		this.timer = timer;
 		this.limit = routeLength;
 	}
 	
 	@Override
 	public void run() {
-		pRDD.foreach(p -> {
-			LOG.warn(p.getCurPosByN(round));
+		vehicles.foreach(p -> {
     		//System.out.println(p.getCurPosByN(round));
     		//System.out.println(p.getCoordinateN(round));
     	});

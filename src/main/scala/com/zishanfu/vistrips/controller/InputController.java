@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 
 import com.zishanfu.vistrips.components.GenerateBtnHandler;
@@ -20,12 +21,10 @@ import com.zishanfu.vistrips.components.SimulationBtnHandler;
 public class InputController {
 	
 	public JPanel inputPanel;
-	private SparkSession spark;
 	private String[] genTypes = { "Data-space oriented approach(DSO)", "Region-based approach(RB)", "Network-based approach(NB)"};
 	
-	public InputController(CompController cc, ResultController rc, SparkSession spark) {
+	public InputController(CompController cc, ResultController rc) {
 		this.inputPanel = inputPanel(cc, rc);
-		this.spark = spark;
 	}
 	
 	private JPanel inputPanel(final CompController cc, ResultController rc) {
@@ -41,7 +40,15 @@ public class InputController {
 //        JLabel delay = new JLabel("Delay in seconds");
         TextField delayTxt = new TextField("Delay in seconds");
         genList.setSelectedIndex(0);
-
+        
+    	SparkSession spark = SparkSession
+  			  .builder()
+  			  .master("local[*]")
+  			  .appName("App")
+  			  .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+  	          .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
+  			  .getOrCreate();
+        
         SimulationBtnHandler sbHandler = new SimulationBtnHandler(cc.mapViewer, spark);
         GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, delayTxt, sbHandler, rc.textArea, genTypes, genList, spark);
         gBtn.addActionListener(gbHandler);

@@ -40,6 +40,24 @@ public class Pair extends LineString{
 		this.route = route;
 	}
 	
+	public Coordinate[] getCoordinateBySlot(int index, int len) {
+		Coordinate[] coors = new Coordinate[len];
+		int total = this.getNumPoints();
+		//
+		if(index > total) {
+			int newIdx = (index - total) / len;
+			return getCoordinateBySlot(newIdx, len);
+		}
+		
+		//If the last segment is not enough, just take rest of it
+		if(len + index > total) {
+			len = total - index;
+		}
+		for(int i = 0; i<len; i++) {
+			coors[i] = this.getCoordinateN(index + i);
+		}
+		return coors;
+	}
 	
 	public GeoPosition getSourceGeo() {
 		return source;
