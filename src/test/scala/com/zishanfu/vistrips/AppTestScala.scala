@@ -14,25 +14,59 @@ import com.vividsolutions.jts.geom.LineString
 import com.zishanfu.vistrips.tools.Interpolate
 import org.datasyslab.geospark.spatialRDD.SpatialRDD
 import org.datasyslab.geospark.enums.GridType
+import com.zishanfu.vistrips.path.ShortestPathFactory
+import com.zishanfu.vistrips.map.OsmConverter
+import com.zishanfu.vistrips.map.OsmGraph
+import com.zishanfu.vistrips.path.BulkShortestPath
+import org.apache.spark.graphx.lib.ShortestPaths
+import com.zishanfu.vistrips.components.impl.GenerationImpl
 
 
 class AppTestScala extends TestBaseScala {
   
-  describe("Routes"){
-    it("generation test"){
-      // p1: [33.414964957503585, -111.94467544555664], p2: [33.39031619194356, -111.89120292663574]
-    	val geo1 = new GeoPosition(33.414964957503585, -111.94467544555664)
-    	val geo2 = new GeoPosition(33.39031619194356, -111.89120292663574)
-    	val selectedType = "DSO"
-    	val maxLen = new Distance().euclidean(geo1, geo2) / 10; 
+  describe("Graphhopper Test"){
+    it("generate routes"){
+        //initial osm
+        val geo1 = new GeoPosition(33.41870367460316, -111.949276025639)
+        val geo2 = new GeoPosition(33.382278218403826, -111.88402742589909)
+        val maxLen = new Distance().euclidean(geo1, geo2) / 10
+        val newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen)
+		    val newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen)
+        val osmPath = new GenerationImpl(sparkSession).osmDownloader(newGeo1, newGeo2)
+        //graphhopper initail
+        val graph = new GraphInit(osmPath);
+        val src = Array(33.408892, -111.925377)
+        val dest = Array(33.406941, -111.935163)
+        graph.printInstruction(src, dest)
+      }
+    }
+  
+    describe("Generation Test"){
+      it("download osm by app setting in resources/config/app.config, generate source, destination and route of it"){
+        val simConsole = new JmapConsole(resourceFolder, sparkSession);
+        //generate vehicle rdd
+        //graphhopper serializable issue 
+    	  simConsole.runGeneration();
+      }
+    }
+    
+    
+    
+//  describe("Routes"){
+//    it("generation test"){
+//      // p1: [33.414964957503585, -111.94467544555664], p2: [33.39031619194356, -111.89120292663574]
+//    	val geo1 = new GeoPosition(33.414964957503585, -111.94467544555664)
+//    	val geo2 = new GeoPosition(33.39031619194356, -111.89120292663574)
+//    	val selectedType = "DSO"
+//    	val maxLen = new Distance().euclidean(geo1, geo2) / 10; 
 //    	val newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen)
 //		  val newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen)
 //		  
 //		  val osmloader = new OsmLoader(newGeo1, newGeo2)
 //		  val path = osmloader.download()
     	
-      val graphhopper = new GraphInit(resourceFolder + "/vistrips/2019-01-17T11:01:34Z.osm")
-      val nums = 1000
+//      val graphhopper = new GraphInit(resourceFolder + "/vistrips/2019-01-17T11:01:34Z.osm")
+//      val nums = 1000
       //val tg = new TripsGeneration(geo1, geo2, graphhopper, maxLen)
       //val pairs = tg.computePairs(nums, selectedType)
 //      var rdd = sparkSession.sparkContext.parallelize(pairs.toSeq).filter(p => p != null).map(
@@ -83,8 +117,8 @@ class AppTestScala extends TestBaseScala {
     	//seconds
 //    	val duration = (System.nanoTime - t1) / 1e9d
 //    	println(duration)
-    }
-  }
+//    }
+//  }
   
 //  describe("Trajectories"){
 //    it("generation test"){
@@ -137,19 +171,33 @@ class AppTestScala extends TestBaseScala {
 //    }
     
 //    it("Map fatest route test"){
-//      //33.410065, -111.920412 2262996384
-//      //33.406198, -111.939376 5662664860
-//      var graph = new OsmGraph(sparkSession, hdfs)
+      //33.410065, -111.920412 2262996384
+      //33.406198, -111.939376 5662664860
+      
 //      val from = graph.findNearestByCoor(33.410065, -111.920412)
 //      val to = graph.findNearestByCoor(33.406198, -111.939376)
 //      println(from)
 //      println(to)
-//
-//      val route = graph.fatestRouteRequest(33.410065, -111.920412, 33.406198, -111.939376)
+//      case class requests(fromLat: Double, fromLon: Double, toLat : Double, toLon : Double)
+//      val requestRDD = sparkSession.sparkContext.parallelize(Seq(requests(33.410065, -111.920412, 33.406198, -111.939376),
+//                                                requests(33.410065, -111.920412, 33.406198, -111.939376),
+//                                                requests(33.410065, -111.920412, 33.406198, -111.939376)))
+//      requestRDD.foreach(req =>{
+//        graph.fatestRouteRequest(req.fromLat, req.fromLon, req.toLat, req.toLon)
+//      })
+      //val route = graph.fatestRouteRequest(33.410065, -111.920412, 33.406198, -111.939376)
 //      route.legs.foreach(println)
       
+//      val requestRDD = sparkSession.sparkContext.parallelize(Seq((2262996384L, 5662664860L),
+//                                                (2262996384L, 5662664860L),
+//                                                (2262996384L, 5662664860L)))
+//      requestRDD.foreach(req =>{
+//        val route = ShortestPaths.run(graph, Seq(req._1, req._2))
+//      })
+      
+      
 //      var graph = OsmConverter.convertToNetwork(sparkSession, hdfs)
-//      val routeRDD = ShortestPathFactory.runDijkstra(graph, 2262996384L, 5662664860L)
+//      val routeRDD = BulkShortestPath.runDijkstra(graph, 2262996384L, 5662664860L)
 //      println(routeRDD.count())
 //      routeRDD.filter(r => (r.legs.size > 0 && r.legs.last.getUserData.asInstanceOf[Long] == 5662664860L))
 //              .foreach(println) 
@@ -167,7 +215,7 @@ class AppTestScala extends TestBaseScala {
 //        //Map(id: long -> landmarks count)
 //      spResult.vertices.map(_._2).collect.foreach(println)
 //    }
-  
+//  
 //  }
 
 }

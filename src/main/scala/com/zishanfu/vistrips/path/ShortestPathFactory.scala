@@ -18,7 +18,7 @@ import org.apache.spark.graphx.VertexRDD
 import org.apache.spark.rdd.RDD
 import com.zishanfu.vistrips.network.Route
 
-object ShortestPathFactory {
+object ShortestPathFactory{
 //Node: (id, lat, lon)
 //A (4347874712, 33.4074225, -111.9389839)
 //B (6058475294,  33.4074298, -111.9385580)

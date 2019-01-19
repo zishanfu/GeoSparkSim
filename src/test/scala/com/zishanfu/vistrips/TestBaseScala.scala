@@ -5,6 +5,13 @@ import org.apache.spark.serializer.KryoSerializer
 import org.apache.spark.sql.SparkSession
 import org.datasyslab.geospark.serde.GeoSparkKryoRegistrator
 import org.scalatest.{BeforeAndAfterAll, FunSpec}
+import com.zishanfu.vistrips.map.OsmGraph
+import org.apache.spark.rdd.RDD
+import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.Edge
+import com.zishanfu.vistrips.network.Link
+import com.vividsolutions.jts.geom.Point
+import com.zishanfu.vistrips.map.OsmConverter
 
 trait TestBaseScala extends FunSpec with BeforeAndAfterAll{
   Logger.getLogger("org.apache").setLevel(Level.WARN)
@@ -24,8 +31,6 @@ trait TestBaseScala extends FunSpec with BeforeAndAfterAll{
   val hdfs = "hdfs://localhost:9000/vistrips/20190110_153248"
   val nodesPath = hdfs + "/node.parquet"
   val waysPath = hdfs + "/way.parquet"
-  val simConsole = new JmapConsole(resourceFolder, sparkSession);
-  simConsole.runGeneration();
   
   override def beforeAll(): Unit = {
     

@@ -29,9 +29,12 @@ import com.zishanfu.vistrips.tools.SpatialRandom;
 import com.zishanfu.vistrips.tools.Utils;
 
 public class GenerationImpl implements Serializable{
+
 	private final static Logger LOG = Logger.getLogger(GenerationImpl.class);
 	private SparkSession spark;
 	private PrecisionModel precision = new PrecisionModel();
+	
+	//testing
 	
 	public GenerationImpl(SparkSession spark) {
 		this.spark = spark;
@@ -67,7 +70,7 @@ public class GenerationImpl implements Serializable{
 		return vRDD;
 	}
 	
-	private String osmDownloader(GeoPosition geo1, GeoPosition geo2) {
+	public String osmDownloader(GeoPosition geo1, GeoPosition geo2) {
 		String OSM_URL = "http://overpass-api.de/api/map?bbox=";
 		String pathBase = System.getProperty("user.dir") + "/src/test/resources/vistrips";
 		URL url = null;
@@ -118,7 +121,6 @@ public class GenerationImpl implements Serializable{
 		SpatialRandom spatialRand = new SpatialRandom( minLon, minLat, maxLon, maxLat, maxLen, graph);
 		
 		JavaSparkContext sc = new JavaSparkContext(spark.sparkContext());
-		//Numer of partitions
 		int partitions = 8;
 		int recordsPerPartitions = (int) Math.ceil((double)total/partitions);
 		

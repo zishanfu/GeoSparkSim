@@ -62,7 +62,6 @@ public class GraphInit implements Serializable{
 		return rsp.getBest();
 	}
 	
-	
 	public PathWrapper routeRequest(Coordinate from, Coordinate to) {
 		PathWrapper rsp = requestBest(from.y, from.x, to.y, to.x);
 		return rsp == null? null : rsp;
