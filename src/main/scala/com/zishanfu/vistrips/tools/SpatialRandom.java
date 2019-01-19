@@ -61,7 +61,7 @@ public class SpatialRandom implements Serializable{
 		double angle = ThreadLocalRandom.current().nextDouble(360);
 		double lon = src.x + len * Math.sin(angle);
 		double lat = src.y + len * Math.cos(angle);
-		return new Coordinate(lat, lon);
+		return new Coordinate(lon, lat);
 	}
 	
 	public Coordinate computeSourceNB() {

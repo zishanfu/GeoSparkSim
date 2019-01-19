@@ -12,8 +12,8 @@ import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.components.impl.GenerationImpl;
+import com.zishanfu.vistrips.components.impl.GenerationImpl2;
 import com.zishanfu.vistrips.components.impl.SimulationImpl;
-import com.zishanfu.vistrips.model.Pair;
 import com.zishanfu.vistrips.model.Vehicle;
 
 public class JmapConsole {

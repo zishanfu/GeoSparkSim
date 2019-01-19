@@ -9,7 +9,10 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
@@ -28,7 +31,7 @@ import com.zishanfu.vistrips.tools.FileOps;
 import com.zishanfu.vistrips.tools.SpatialRandom;
 import com.zishanfu.vistrips.tools.Utils;
 
-public class GenerationImpl implements Serializable{
+public class GenerationImpl2 implements Serializable{
 
 	private final static Logger LOG = Logger.getLogger(GenerationImpl.class);
 	private SparkSession spark;
@@ -36,7 +39,7 @@ public class GenerationImpl implements Serializable{
 	
 	//testing
 	
-	public GenerationImpl(SparkSession spark) {
+	public GenerationImpl2(SparkSession spark) {
 		this.spark = spark;
 	}
 	
@@ -58,11 +61,9 @@ public class GenerationImpl implements Serializable{
 		GraphInit gi = new GraphInit(osmPath);
 		//OsmGraph graph = new OsmGraph(spark, path);
 		LOG.warn("Finished graph construction");
-
 		
 		LOG.warn(String.format("Begin generate %s trips.", total));
 		JavaRDD<Vehicle> vRDD = vehicleGeneration(geo1, geo2, gi, maxLen, generationType, total);
-		
 		LOG.warn("Finished!");
 		return vRDD;
 	}
@@ -120,17 +121,16 @@ public class GenerationImpl implements Serializable{
 		JavaSparkContext sc = new JavaSparkContext(spark.sparkContext());
 		int partitions = 8;
 		int recordsPerPartitions = (int) Math.ceil((double)total/partitions);
+		Vehicle[] vehicleArr = new Vehicle[total];
 		
-		JavaRDD<Vehicle> vehicles = sc.parallelize(Arrays.asList(new Vehicle[total]), partitions);
+		for(int i = 0; i<total; i++) {
+			vehicleArr[i] = computeVehicle(type, spatialRand);
+		}
 		
-		JavaRDD<Vehicle> vehiclesRDD = vehicles.mapPartitions(vehicle -> {
-										List<Vehicle> list = new ArrayList<Vehicle>();
-										for(int i = 0; i<recordsPerPartitions; i++) {
-											list.add(computeVehicle(type, spatialRand));
-										}
-										return list.iterator();
-									});
-		return vehiclesRDD;
+		JavaRDD<Vehicle> vehicles = sc.parallelize(Arrays.asList(vehicleArr), partitions);
+		
+
+		return vehicles;
 	}
 	
 	private Vehicle computeVehicle(String type, SpatialRandom rand){
