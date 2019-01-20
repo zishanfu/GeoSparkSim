@@ -17,7 +17,6 @@ import org.datasyslab.geospark.enums.GridType
 import com.zishanfu.vistrips.path.ShortestPathFactory
 import com.zishanfu.vistrips.map.OsmConverter
 import com.zishanfu.vistrips.map.OsmGraph
-import com.zishanfu.vistrips.path.BulkShortestPath
 import org.apache.spark.graphx.lib.ShortestPaths
 import com.zishanfu.vistrips.components.impl.GenerationImpl
 

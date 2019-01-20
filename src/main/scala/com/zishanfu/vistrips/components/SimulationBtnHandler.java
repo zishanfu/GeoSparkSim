@@ -77,7 +77,7 @@ public class SimulationBtnHandler implements ActionListener{
 //	        });
 //
 //	        timer.start();
-			new TrafficModelPanel(graph, mapViewer).run();
+			new TrafficModelPanel(graph, vehicles).run();
 		}
 		
 	}

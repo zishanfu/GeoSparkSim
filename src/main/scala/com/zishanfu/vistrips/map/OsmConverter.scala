@@ -183,16 +183,16 @@ object OsmConverter {
       point
    })(PointEncoder)
    
-   linkDS = linkDS.flatMap(link => {
-     if(link.getDrivingDirection() == 1){
-        List(link)
-      }else{
-        List(
-          Link(link.getId(), link.getHead(), link.getTail(), link.getDistance(), link.getSpeed(), 1, link.getLanes()/2),
-          Link(link.getId(), link.getTail(), link.getHead(), link.getDistance(), link.getSpeed(), 1, link.getLanes()/2)
-        )
-      }
-   })(linkEncoder)
+//   linkDS = linkDS.flatMap(link => {
+//     if(link.getDrivingDirection() == 1){
+//        List(link)
+//      }else{
+//        List(
+//          Link(link.getId(), link.getHead(), link.getTail(), link.getDistance(), link.getSpeed(), 1, link.getLanes()/2),
+//          Link(link.getId(), link.getTail(), link.getHead(), link.getDistance(), link.getSpeed(), 1, link.getLanes()/2)
+//        )
+//      }
+//   })(linkEncoder)
         
    
    (nodeDS, linkDS)

@@ -24,6 +24,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.PrecisionModel;
 import com.zishanfu.vistrips.map.GraphInit;
 import com.zishanfu.vistrips.model.Vehicle;
+import com.zishanfu.vistrips.osm.OsmParser;
 import com.zishanfu.vistrips.tools.Distance;
 import com.zishanfu.vistrips.tools.FileOps;
 import com.zishanfu.vistrips.tools.SpatialRandom;
@@ -57,8 +58,11 @@ public class GenerationImpl2 implements Serializable{
 
 		//String path = OsmParser.run(newGeo1, newGeo2);
 		LOG.warn("Downloading selected OSM data ...");
+		//Download osm pn disk 
 		String osmPath = osmDownloader(newGeo1, newGeo2);
-		mapPath = osmPath;
+		
+		//Parser osm to parquet on hdfs
+		mapPath = new OsmParser().run(newGeo1, newGeo2);
 		
 		LOG.warn(String.format("Finished download! Data located in ( %s )", osmPath));
 		

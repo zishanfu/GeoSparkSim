@@ -1,64 +1,48 @@
 package com.zishanfu.vistrips.sim;
 
-import java.awt.BorderLayout;
-import java.awt.geom.Point2D;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.util.List;
-
-import javax.swing.JFrame;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.graphx.EdgeRDD;
 import org.apache.spark.graphx.Graph;
 import org.apache.spark.graphx.VertexRDD;
-import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.viewer.GeoPosition;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Point;
+import com.zishanfu.vistrips.model.Vehicle;
 import com.zishanfu.vistrips.network.Link;
-import com.zishanfu.vistrips.sim.model.Lane;
+import com.zishanfu.vistrips.sim.model.Point;
+import com.zishanfu.vistrips.sim.model.Segment;
+import com.zishanfu.vistrips.sim.ui.MapWindow;
+
 
 public class TrafficModelPanel{
-	private Graph<Point, Link> graph;
-	private JXMapViewer mapViewer;
+	private Graph<com.vividsolutions.jts.geom.Point, Link> graph;
+	private JavaRDD<Vehicle> vehicles;
+	private int laneWidth = 5; //pixel
 	
-	public TrafficModelPanel(Graph<Point, Link> graph, JXMapViewer mapViewer) {
+	public TrafficModelPanel(Graph<com.vividsolutions.jts.geom.Point, Link> graph, JavaRDD<Vehicle> vehicles) {
 		this.graph = graph;
-		this.mapViewer = mapViewer;
+		this.vehicles = vehicles;
 	}
 	
 	public void run() {
-        JFrame frame = new JFrame("GeoSparkSim");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         EdgeRDD<Link> edges = graph.edges();
-        VertexRDD<Point> vertexes = graph.vertices();
         
-        ZoomAndPanCanvas chart = new ZoomAndPanCanvas(linesMapping(edges));
-
-        frame.add(chart, BorderLayout.CENTER);
-        frame.pack();
-        frame.setVisible(true);
-        chart.createBufferStrategy(2);
-    }
-	
-	private java.awt.Point Coordinate2Point(Coordinate coor){
-		GeoPosition geo = new GeoPosition(coor.y, coor.x);
-		Point2D p = mapViewer.getTileFactory().geoToPixel(geo, mapViewer.getZoom());
-		return new java.awt.Point((int)p.getX(), (int)p.getY());
-	}
-	
-	private Lane[] linesMapping(EdgeRDD<Link> edges){
-		List<Link> links = edges.toJavaRDD().map(edge ->{
+        MapWindow window = new MapWindow();
+        window.setVisible(true);
+        List<Link> links = edges.toJavaRDD().map(edge ->{
 			return edge.attr;
 		}).collect();
-		Lane[] lanes = new Lane[links.size()];
-		for(int i = 0; i<lanes.length; i++) {
+
+		for(int i = 0; i<links.size(); i++) {
 			Link l = links.get(i);
-			lanes[i] = new Lane(Coordinate2Point(l.getHead().getCoordinate()), 
-					Coordinate2Point(l.getTail().getCoordinate()));
+			Point head = new Point(l.getHead().getCoordinate().y, l.getHead().getCoordinate().x);
+			Point tail = new Point(l.getTail().getCoordinate().y, l.getTail().getCoordinate().x);
+			int stroke = l.getLanes() * laneWidth;
+			window.addSegment(new Segment(head, tail, Color.GRAY, new BasicStroke(stroke)));
 		}
-        return lanes;
-	}
+    }
 	
 	private java.awt.Point[] pointsMapping(VertexRDD<Point> vertexes){
 		java.awt.Point[] points = {
