@@ -1,14 +1,12 @@
 package com.zishanfu.vistrips.components.impl;
 
-import java.util.*;
-
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.SparkSession;
 import org.datasyslab.geospark.enums.GridType;
 import org.datasyslab.geospark.spatialRDD.SpatialRDD;
-
 import com.zishanfu.vistrips.model.Vehicle;
+
 
 public class SimulationImpl {
 	private final Logger LOG = Logger.getLogger(SimulationImpl.class);
@@ -18,7 +16,7 @@ public class SimulationImpl {
 		this.spark = spark;
 	}
 	
-	public void apply(JavaRDD<Vehicle> vehicles, double delayInSec, int routeLength) {
+	public void apply(JavaRDD<Vehicle> vehicles, double delayInSec, double simTime) {
 		
 		SpatialRDD<Vehicle> sRDD = new SpatialRDD();
 		sRDD.setRawSpatialRDD(vehicles);	
@@ -30,13 +28,9 @@ public class SimulationImpl {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		int delay = (int)(delayInSec*1000);
 		
 		
-		Timer timer = new Timer();
 	
-		//timer.schedule(new SimTask(sRDD.spatialPartitionedRDD, timer, routeLength), 0, delay);
 		
 	}
 

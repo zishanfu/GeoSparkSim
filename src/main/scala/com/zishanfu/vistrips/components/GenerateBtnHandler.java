@@ -16,8 +16,11 @@ import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.components.impl.GenerationImpl;
+import com.zishanfu.vistrips.components.impl.GenerationImpl2;
+import com.zishanfu.vistrips.map.OsmGraph;
 import com.zishanfu.vistrips.model.Pair;
 import com.zishanfu.vistrips.model.Vehicle;
+import com.zishanfu.vistrips.sim.TrafficModelPanel;
 import com.zishanfu.vistrips.tools.Distance;
 
 
@@ -68,6 +71,8 @@ public class GenerateBtnHandler implements ActionListener{
 		    		
 		    		GeoPosition geo1 = sa.getViewer().convertPointToGeoPosition(pt1);
 		    		GeoPosition geo2 = sa.getViewer().convertPointToGeoPosition(pt2);
+		    		System.out.println(String.format("pt1 %s, pt2 %s, geo1 %s, geo2 %s, zoom %s", pt1, pt2, geo1, geo2, sa.getViewer().getZoom()));
+
 		    		//int zoom = sa.getViewer().getZoom();
 		        	
 		    		String selectedType = genTypes[genList.getSelectedIndex()];
@@ -77,14 +82,16 @@ public class GenerateBtnHandler implements ActionListener{
 		    		LOG.warn(String.format("Selected rectangle, p1: %s, p2: %s", geo1, geo2));
 		    		
 		    		
-		    		GenerationImpl gImpl = new GenerationImpl(spark);
+		    		GenerationImpl2 gImpl = new GenerationImpl2(spark);
 		    		double delay = Double.parseDouble(delayTxt.getText());
 		    		
-		    		JavaRDD<Vehicle> pairs = gImpl.apply(geo1, geo2, selectedType, total);
-		    				
+		    		JavaRDD<Vehicle> vehicles = gImpl.apply(geo1, geo2, selectedType, total);
+		    		OsmGraph graph = new OsmGraph(spark, gImpl.getMapPath());
+		    		
 //		    		sbHandler.setDelayInSec(delay);
-//		    		sbHandler.setPairs(pairs);
 //		    		sbHandler.setRouteLength(gImpl.getTripLength());
+		    		sbHandler.setVehicles(vehicles);
+		    		sbHandler.setGraph(graph.graph());
 		    		
 		    		long endTime = System.currentTimeMillis();
 		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");

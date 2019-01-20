@@ -39,7 +39,7 @@ public class Jmap {
         frame.add(rc.resultPanel, BorderLayout.SOUTH);
         frame.setSize(width, height);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
         LOG.info("Jmap Configuration");
         

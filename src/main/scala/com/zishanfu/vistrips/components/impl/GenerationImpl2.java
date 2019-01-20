@@ -9,10 +9,8 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
@@ -36,6 +34,7 @@ public class GenerationImpl2 implements Serializable{
 	private final static Logger LOG = Logger.getLogger(GenerationImpl.class);
 	private SparkSession spark;
 	private PrecisionModel precision = new PrecisionModel();
+	private String mapPath;
 	
 	//testing
 	
@@ -43,6 +42,10 @@ public class GenerationImpl2 implements Serializable{
 		this.spark = spark;
 	}
 	
+	public String getMapPath() {
+		return mapPath;
+	}
+
 	public JavaRDD<Vehicle> apply(GeoPosition geo1, GeoPosition geo2, String generationType, int total) {
 		//scale the length of trip, same with the scale in trip generation
 		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
@@ -55,6 +58,8 @@ public class GenerationImpl2 implements Serializable{
 		//String path = OsmParser.run(newGeo1, newGeo2);
 		LOG.warn("Downloading selected OSM data ...");
 		String osmPath = osmDownloader(newGeo1, newGeo2);
+		mapPath = osmPath;
+		
 		LOG.warn(String.format("Finished download! Data located in ( %s )", osmPath));
 		
 		LOG.warn("Processing graph ...");

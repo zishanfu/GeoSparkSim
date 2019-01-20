@@ -24,7 +24,6 @@ public class JmapConsole {
 	private SparkSession spark;
 	private String resources;
 	private JavaRDD<Vehicle> vehicles;
-	private int tripLength;
 	private double tripTime;
 	
 	public JmapConsole(String resources, SparkSession spark) {
@@ -56,19 +55,17 @@ public class JmapConsole {
 		String selectedType = typeParser(prop.getProperty("generation.type"));
 		int total = Integer.parseInt(prop.getProperty("generation.num"));
 		
-		GenerationImpl gImpl = new GenerationImpl(spark);
+		GenerationImpl2 gImpl = new GenerationImpl2(spark);
 		vehicles = gImpl.apply(geo1, geo2, selectedType, total);
 	}
 	
 	public void runSimulation() {
-		double delay = Double.parseDouble(prop.getProperty("simulation.delay"));
+		double timestamp = Double.parseDouble(prop.getProperty("simulation.timestamp"));
+		double simTime = Double.parseDouble(prop.getProperty("simulation.minutes"));
 		SimulationImpl sImpl = new SimulationImpl(spark);
-		sImpl.apply(vehicles, delay, tripLength);
+		sImpl.apply(vehicles, timestamp, simTime);
 	}
-	
-	public double getTripTime() {
-		return tripTime;
-	}
+
 
 	private String typeParser(String type) {
 		switch(type) {
