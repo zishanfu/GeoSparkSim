@@ -1,4 +1,4 @@
-package com.zishanfu.vistrips.map;
+package com.zishanfu.vistrips.osm;
 
 import java.io.Serializable;
 import java.util.Locale;

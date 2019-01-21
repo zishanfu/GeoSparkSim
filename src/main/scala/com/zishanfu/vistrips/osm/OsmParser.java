@@ -12,7 +12,7 @@ public class OsmParser {
 	private static String tmpPath = "";
 	private static final Logger LOG = LoggerFactory.getLogger(OsmParser.class);
 	
-	public static String run(GeoPosition geo1, GeoPosition geo2) {
+	public static String runInHDFS(GeoPosition geo1, GeoPosition geo2) {
 		String destPath= "/vistrips";
 		HDFSUtil.deleteDir(destPath);
 		HDFSUtil.mkdir(destPath);
@@ -25,5 +25,16 @@ public class OsmParser {
 		xmlDownloader.run();
 		LOG.info(String.format("Sinked openstreetmap data"));
 		return tmpPath;
+	}
+	
+	public static String runInLocal(GeoPosition geo1, GeoPosition geo2) {
+		String resources = System.getProperty("user.dir") + "/src/test/resources";
+		String destPath= resources + "/vistrips";
+		String osmUrl = "http://overpass-api.de/api";
+		XmlDownloader xmlDownloader = new XmlDownloader(geo1.getLongitude(), geo2.getLongitude(), geo1.getLatitude(), geo2.getLatitude(), osmUrl);
+		xmlDownloader.setSink(new OsmParquetSink(destPath));
+		xmlDownloader.run();
+		LOG.info(String.format("Sinked openstreetmap data"));
+		return destPath;
 	}
 }

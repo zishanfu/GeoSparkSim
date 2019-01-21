@@ -5,7 +5,7 @@ import org.apache.spark.graphx.lib.ShortestPaths
 import org.apache.spark.sql.Row
 
 import com.vividsolutions.jts.geom.Point
-import com.zishanfu.vistrips.network.Link
+import com.zishanfu.vistrips.model.Link
 import org.apache.spark.graphx.Pregel
 import org.apache.spark.graphx.EdgeDirection
 import org.apache.spark.graphx.EdgeTriplet
@@ -16,7 +16,7 @@ import org.apache.spark.sql.Encoders
 import org.apache.spark.graphx.Edge
 import org.apache.spark.graphx.VertexRDD
 import org.apache.spark.rdd.RDD
-import com.zishanfu.vistrips.network.Route
+import com.zishanfu.vistrips.model.Route
 
 object ShortestPathFactory{
 //Node: (id, lat, lon)

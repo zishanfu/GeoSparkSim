@@ -1,7 +1,7 @@
-package com.zishanfu.vistrips.map
+package com.zishanfu.vistrips.osm
 
 import com.vividsolutions.jts.geom.{Coordinate, GeometryFactory, Point}
-import com.zishanfu.vistrips.network.Link
+import com.zishanfu.vistrips.model.Link
 import com.zishanfu.vistrips.tools.Distance
 import org.apache.spark.graphx.{Edge, Graph}
 import org.apache.spark.rdd.RDD
@@ -14,16 +14,15 @@ import org.opengis.geometry.MismatchedDimensionException
 import org.opengis.referencing.FactoryException
 import org.opengis.referencing.operation.{MathTransform, TransformException}
 import org.slf4j.LoggerFactory
-
 import scala.collection.mutable.WrappedArray
-
 
 object OsmConverter {
   
   private val LOG = LoggerFactory.getLogger(getClass)
-  
   val gf = new GeometryFactory()
-  
+  val PointEncoder = Encoders.kryo[Point]
+  var uncontrollIntersect: RDD[Point] = _
+  var lightIntersect:RDD[Point] = _
   
     /**
    * @param id
@@ -84,6 +83,7 @@ object OsmConverter {
    * @return Graph[Point, Link] graph
    */
   def convertToNetwork(sparkSession : SparkSession, path : String) : Graph[Point, Link]= {
+    println(path)
     val nodesPath = path + "/node.parquet"
     val waysPath = path + "/way.parquet"
     
@@ -110,7 +110,21 @@ object OsmConverter {
   }
   
   def convertNodes(sparkSession : SparkSession, nodesPath : String) : DataFrame = {
-    val nodesDF = sparkSession.read.parquet(nodesPath)
+    var nodesDF = sparkSession.read.parquet(nodesPath)
+    //nodesDF.select("id", "latitude", "longitude")
+    nodesDF = nodesDF.select("id", "latitude", "longitude", "tags")
+    val filteredLights = nodesDF.filter(row => {
+      val tags = row.getAs[WrappedArray[Row]](3)
+      var tagsMap = Map.empty[String, String]
+      tagsMap = tags.map(r => new String(r.getAs[Array[Byte]]("key")) -> new String(r.getAs[Array[Byte]]("value"))).toMap
+      val highWay = tagsMap.get("highway")
+      if(highWay != None) highWay.get == "traffic_signals" else false
+    }).map(row =>{
+      val point = gf.createPoint(coorParserByCRS(row.getDouble(1), row.getDouble(2), DefaultGeographicCRS.WGS84))
+      point.setUserData(row.getLong(0))
+      point
+   })(PointEncoder)
+   lightIntersect = filteredLights.rdd
     nodesDF.select("id", "latitude", "longitude")
   }
   
@@ -122,18 +136,26 @@ object OsmConverter {
    */
   def convertLinks(sparkSession : SparkSession, nodeDF : DataFrame, waysPath : String) = {
     val linkEncoder = Encoders.kryo[Link]
-    val PointEncoder = Encoders.kryo[Point]
-    
+   
     val defaultSpeed = 40 //40mph
     val waysDF = sparkSession.read.parquet(waysPath).toDF("id", "tags", "nodes")
 
     val wayNodesDF = waysDF.select(col("id").as("wayId"), col("tags"), explode(col("nodes")).as("indexedNode"))
         .withColumn("linkId", monotonically_increasing_id())
-        
             
     var nodeLinkJoinDF = nodeDF.join(wayNodesDF, col("indexedNode.nodeId") === nodeDF("id"))
         nodeLinkJoinDF.cache()
-        
+    val nodeCount = nodeLinkJoinDF.groupBy(col("indexedNode.nodeId").as("id"), col("latitude"), col("longitude")).count()
+    val intersectNode = nodeCount.withColumnRenamed("count", "n")
+                        .filter("n >= 2").select(col("id"), col("latitude"), col("longitude"))
+                        .dropDuplicates()
+                        .map(row =>{
+                          val point = gf.createPoint(coorParserByCRS(row.getDouble(1), row.getDouble(2), DefaultGeographicCRS.WGS84))
+                          point.setUserData(row.getLong(0))
+                          point
+                          })(PointEncoder)
+    uncontrollIntersect = intersectNode.rdd
+    
     var nodesInLinksDF = nodeLinkJoinDF.select(col("indexedNode.nodeId").as("id"), col("latitude"), col("longitude")).dropDuplicates()
             
     val wayDF = nodeLinkJoinDF.groupBy(col("wayId"), col("tags"))
@@ -155,7 +177,8 @@ object OsmConverter {
       var maxSpeed = tagsMap.get("maxspeed")
       if(!maxSpeed.isEmpty) speed = maxSpeed.get.substring(0, 2).toInt
       
-      var isOneWay = tagsMap.getOrElse("oneway", "no") == "yes"
+      val oneWay = tagsMap.get("oneway")
+      var isOneWay = if(oneWay != None) oneWay.get == "yes" else false
       val lanes = if(tagsMap.contains("lanes")) tagsMap.get("lanes").get.toInt else 2
       isOneWay = if(lanes == 1) true else false
 

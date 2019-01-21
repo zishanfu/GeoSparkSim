@@ -3,14 +3,17 @@ package com.zishanfu.vistrips.sim.model;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Stroke;
+import java.util.List;
 
 
 public class Segment {
 	private final static Stroke BASIC_STROKE = new BasicStroke();
+	private int laneWidth = 5; //pixel
 	
 	private final Point pointA, pointB;
 	private final Color color;
 	private final Stroke stroke;
+	private final List<Lane> landList;
 	
 	/**
 	 * Creates a new segment.
@@ -23,11 +26,12 @@ public class Segment {
 		this(pointA, pointB, color, BASIC_STROKE);
 	}
 	
-	public Segment(Point pointA, Point pointB, Color color, Stroke stroke) {
+	public Segment(Point pointA, Point pointB, Color color, int lanes) {
+		int stroke = lanes * laneWidth;
 		this.pointA = pointA;
 		this.pointB = pointB;
 		this.color = color;
-		this.stroke = stroke;
+		this.stroke = new BasicStroke(stroke);
 	}
 
 	/**

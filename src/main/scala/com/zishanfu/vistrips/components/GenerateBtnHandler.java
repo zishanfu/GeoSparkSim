@@ -17,10 +17,8 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.components.impl.GenerationImpl;
 import com.zishanfu.vistrips.components.impl.GenerationImpl2;
-import com.zishanfu.vistrips.map.OsmGraph;
-import com.zishanfu.vistrips.model.Pair;
+import com.zishanfu.vistrips.osm.OsmGraph;
 import com.zishanfu.vistrips.model.Vehicle;
-import com.zishanfu.vistrips.sim.TrafficModelPanel;
 import com.zishanfu.vistrips.tools.Distance;
 
 
@@ -92,6 +90,8 @@ public class GenerateBtnHandler implements ActionListener{
 //		    		sbHandler.setRouteLength(gImpl.getTripLength());
 		    		sbHandler.setVehicles(vehicles);
 		    		sbHandler.setGraph(graph.graph());
+		    		sbHandler.setLightIntersect(graph.lightIntersect());
+		    		sbHandler.setUncontrollIntersect(graph.uncontrollIntersect());
 		    		
 		    		long endTime = System.currentTimeMillis();
 		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");

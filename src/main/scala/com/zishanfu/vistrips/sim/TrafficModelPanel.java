@@ -8,9 +8,10 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.graphx.EdgeRDD;
 import org.apache.spark.graphx.Graph;
 import org.apache.spark.graphx.VertexRDD;
+import org.apache.spark.rdd.RDD;
 
 import com.zishanfu.vistrips.model.Vehicle;
-import com.zishanfu.vistrips.network.Link;
+import com.zishanfu.vistrips.model.Link;
 import com.zishanfu.vistrips.sim.model.Point;
 import com.zishanfu.vistrips.sim.model.Segment;
 import com.zishanfu.vistrips.sim.ui.MapWindow;
@@ -19,11 +20,17 @@ import com.zishanfu.vistrips.sim.ui.MapWindow;
 public class TrafficModelPanel{
 	private Graph<com.vividsolutions.jts.geom.Point, Link> graph;
 	private JavaRDD<Vehicle> vehicles;
-	private int laneWidth = 5; //pixel
+	private private RDD<com.vividsolutions.jts.geom.Point> uncontrollIntersect;
+	private RDD<com.vividsolutions.jts.geom.Point> lightIntersect;
 	
-	public TrafficModelPanel(Graph<com.vividsolutions.jts.geom.Point, Link> graph, JavaRDD<Vehicle> vehicles) {
+	public TrafficModelPanel(Graph<com.vividsolutions.jts.geom.Point, Link> graph, 
+							JavaRDD<Vehicle> vehicles,
+							RDD<com.vividsolutions.jts.geom.Point> uncontrollIntersect,
+							RDD<com.vividsolutions.jts.geom.Point> lightIntersect) {
 		this.graph = graph;
 		this.vehicles = vehicles;
+		this.uncontrollIntersect = uncontrollIntersect;
+		this.lightIntersect = lightIntersect;
 	}
 	
 	public void run() {
@@ -39,8 +46,7 @@ public class TrafficModelPanel{
 			Link l = links.get(i);
 			Point head = new Point(l.getHead().getCoordinate().y, l.getHead().getCoordinate().x);
 			Point tail = new Point(l.getTail().getCoordinate().y, l.getTail().getCoordinate().x);
-			int stroke = l.getLanes() * laneWidth;
-			window.addSegment(new Segment(head, tail, Color.GRAY, new BasicStroke(stroke)));
+			window.addSegment(new Segment(head, tail, Color.GRAY, l.getLanes()));
 		}
     }
 	

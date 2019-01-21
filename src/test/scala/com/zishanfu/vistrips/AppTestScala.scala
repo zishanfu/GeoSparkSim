@@ -2,8 +2,8 @@ package com.zishanfu.vistrips
 
 
 import com.zishanfu.vistrips.tools.FileOps
-import com.zishanfu.vistrips.map.CountyPop
-import com.zishanfu.vistrips.map.GraphInit
+import com.zishanfu.vistrips.osm.CountyPop
+import com.zishanfu.vistrips.osm.GraphInit
 import org.jxmapviewer.viewer.GeoPosition
 import com.zishanfu.vistrips.tools.Distance
 import com.zishanfu.vistrips.model.Pair
@@ -15,39 +15,47 @@ import com.zishanfu.vistrips.tools.Interpolate
 import org.datasyslab.geospark.spatialRDD.SpatialRDD
 import org.datasyslab.geospark.enums.GridType
 import com.zishanfu.vistrips.path.ShortestPathFactory
-import com.zishanfu.vistrips.map.OsmConverter
-import com.zishanfu.vistrips.map.OsmGraph
+import com.zishanfu.vistrips.osm.OsmConverter
+import com.zishanfu.vistrips.osm.OsmGraph
 import org.apache.spark.graphx.lib.ShortestPaths
 import com.zishanfu.vistrips.components.impl.GenerationImpl
 
 
 class AppTestScala extends TestBaseScala {
   
-  describe("Graphhopper Test"){
-    it("generate routes"){
-        //initial osm
-        val geo1 = new GeoPosition(33.41870367460316, -111.949276025639)
-        val geo2 = new GeoPosition(33.382278218403826, -111.88402742589909)
-        val maxLen = new Distance().euclidean(geo1, geo2) / 10
-        val newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen)
-		    val newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen)
-        val osmPath = new GenerationImpl(sparkSession).osmDownloader(newGeo1, newGeo2)
-        //graphhopper initail
-        val graph = new GraphInit(osmPath);
-        val src = Array(33.408892, -111.925377)
-        val dest = Array(33.406941, -111.935163)
-        graph.printInstruction(src, dest)
-      }
+  describe("Intersection"){
+    it("Traffic Light Intersection"){
+      val vistrips = resourceFolder + "vistrips"
+      val path = vistrips
+      OsmConverter.convertToNetwork(sparkSession, path)
     }
+  }
   
-    describe("Generation Test"){
-      it("download osm by app setting in resources/config/app.config, generate source, destination and route of it"){
-        val simConsole = new JmapConsole(resourceFolder, sparkSession);
-        //generate vehicle rdd
-        //graphhopper serializable issue 
-    	  simConsole.runGeneration();
-      }
-    }
+//  describe("Graphhopper Test"){
+//    it("generate routes"){
+//        //initial osm
+//        val geo1 = new GeoPosition(33.41870367460316, -111.949276025639)
+//        val geo2 = new GeoPosition(33.382278218403826, -111.88402742589909)
+//        val maxLen = new Distance().euclidean(geo1, geo2) / 10
+//        val newGeo1 = new GeoPosition(geo1.getLatitude() + maxLen, geo1.getLongitude() - maxLen)
+//		    val newGeo2 = new GeoPosition(geo2.getLatitude() - maxLen, geo2.getLongitude() + maxLen)
+//        val osmPath = new GenerationImpl(sparkSession).osmDownloader(newGeo1, newGeo2)
+//        //graphhopper initail
+//        val graph = new GraphInit(osmPath);
+//        val src = Array(33.408892, -111.925377)
+//        val dest = Array(33.406941, -111.935163)
+//        graph.printInstruction(src, dest)
+//      }
+//    }
+//  
+//    describe("Generation Test"){
+//      it("download osm by app setting in resources/config/app.config, generate source, destination and route of it"){
+//        val simConsole = new JmapConsole(resourceFolder, sparkSession);
+//        //generate vehicle rdd
+//        //graphhopper serializable issue 
+//    	  simConsole.runGeneration();
+//      }
+//    }
     
     
     

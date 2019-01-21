@@ -1,7 +1,6 @@
-package com.zishanfu.vistrips.network
+package com.zishanfu.vistrips.model
 
 import com.vividsolutions.jts.geom.Point
-import com.vividsolutions.jts.geom.Coordinate
 
 case class Link (id: Long, tail: Point, head: Point, distance: Double, 
     speed: Int, driveDirection: Int, lanes: Int) extends Serializable{

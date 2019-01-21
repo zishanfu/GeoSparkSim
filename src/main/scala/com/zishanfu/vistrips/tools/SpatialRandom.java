@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.graphhopper.PathWrapper;
 import com.vividsolutions.jts.geom.Coordinate;
-import com.zishanfu.vistrips.map.GraphInit;
+import com.zishanfu.vistrips.osm.GraphInit;
 
 public class SpatialRandom implements Serializable{
 	private Random rand = new Random();

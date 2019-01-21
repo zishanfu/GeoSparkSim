@@ -1,16 +1,17 @@
-package com.zishanfu.vistrips.map
+package com.zishanfu.vistrips.osm
 
 import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
 import com.vividsolutions.jts.geom.Coordinate
 import scala.collection.mutable.WrappedArray
 import org.datasyslab.geospark.spatialRDD.PolygonRDD
-import org.datasyslab.geospark.enums.FileDataSplitter
 import com.vividsolutions.jts.geom.GeometryFactory
 import com.vividsolutions.jts.geom.Polygon
 import org.datasyslab.geospark.enums.GridType
 import org.datasyslab.geospark.spatialOperator.JoinQuery
 import com.vividsolutions.jts.geom.Point
+import org.apache.spark.api.java.JavaRDD.fromRDD
+import scala.collection.Seq
 
 
 object CountyPop {

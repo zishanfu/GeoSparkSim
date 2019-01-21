@@ -5,13 +5,13 @@ import org.apache.spark.serializer.KryoSerializer
 import org.apache.spark.sql.SparkSession
 import org.datasyslab.geospark.serde.GeoSparkKryoRegistrator
 import org.scalatest.{BeforeAndAfterAll, FunSpec}
-import com.zishanfu.vistrips.map.OsmGraph
+import com.zishanfu.vistrips.osm.OsmGraph
 import org.apache.spark.rdd.RDD
 import org.apache.spark.graphx.Graph
 import org.apache.spark.graphx.Edge
-import com.zishanfu.vistrips.network.Link
+import com.zishanfu.vistrips.model.Link
 import com.vividsolutions.jts.geom.Point
-import com.zishanfu.vistrips.map.OsmConverter
+import com.zishanfu.vistrips.osm.OsmConverter
 
 trait TestBaseScala extends FunSpec with BeforeAndAfterAll{
   Logger.getLogger("org.apache").setLevel(Level.WARN)

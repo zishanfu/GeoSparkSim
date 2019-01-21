@@ -5,12 +5,13 @@ import java.awt.event.ActionListener;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.graphx.Graph;
+import org.apache.spark.rdd.RDD;
 import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.JXMapViewer;
 
 import com.vividsolutions.jts.geom.Point;
 import com.zishanfu.vistrips.model.Vehicle;
-import com.zishanfu.vistrips.network.Link;
+import com.zishanfu.vistrips.model.Link;
 import com.zishanfu.vistrips.sim.TrafficModelPanel;
 
 public class SimulationBtnHandler implements ActionListener{
@@ -21,6 +22,8 @@ public class SimulationBtnHandler implements ActionListener{
 	private double delayInSec;
 	private int routeLength;
 	private Graph<Point, Link> graph;
+	private RDD<Point> uncontrollIntersect;
+	private RDD<Point> lightIntersect;
 	
 	public SimulationBtnHandler(JXMapViewer mapViewer, SparkSession sparkSession) {
 		this.mapViewer = mapViewer;
@@ -43,6 +46,14 @@ public class SimulationBtnHandler implements ActionListener{
 
 	public void setGraph(Graph<Point, Link> graph) {
 		this.graph = graph;
+	}
+
+	public void setUncontrollIntersect(RDD<Point> uncontrollIntersect) {
+		this.uncontrollIntersect = uncontrollIntersect;
+	}
+
+	public void setLightIntersect(RDD<Point> lightIntersect) {
+		this.lightIntersect = lightIntersect;
 	}
 
 
@@ -77,8 +88,8 @@ public class SimulationBtnHandler implements ActionListener{
 //	        });
 //
 //	        timer.start();
-			new TrafficModelPanel(graph, vehicles).run();
-		}
+			new TrafficModelPanel(graph, vehicles, uncontrollIntersect, lightIntersect).run();
+		} 
 		
 	}
 
