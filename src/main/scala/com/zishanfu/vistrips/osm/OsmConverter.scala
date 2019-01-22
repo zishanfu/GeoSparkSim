@@ -23,6 +23,7 @@ object OsmConverter {
   val PointEncoder = Encoders.kryo[Point]
   var uncontrollIntersect: RDD[Point] = _
   var lightIntersect:RDD[Point] = _
+  var signals:Array[Point] = _
   
     /**
    * @param id
@@ -121,10 +122,11 @@ object OsmConverter {
       if(highWay != None) highWay.get == "traffic_signals" else false
     }).map(row =>{
       val point = gf.createPoint(coorParserByCRS(row.getDouble(1), row.getDouble(2), DefaultGeographicCRS.WGS84))
-      point.setUserData(row.getLong(0))
+      point.setUserData(4)
       point
    })(PointEncoder)
    lightIntersect = filteredLights.rdd
+   signals = lightIntersect.collect()
     nodesDF.select("id", "latitude", "longitude")
   }
   
@@ -147,14 +149,16 @@ object OsmConverter {
         nodeLinkJoinDF.cache()
     val nodeCount = nodeLinkJoinDF.groupBy(col("indexedNode.nodeId").as("id"), col("latitude"), col("longitude")).count()
     val intersectNode = nodeCount.withColumnRenamed("count", "n")
-                        .filter("n >= 2").select(col("id"), col("latitude"), col("longitude"))
+                        .filter("n > 2").select(col("id"), col("latitude"), col("longitude"), col("n"))
                         .dropDuplicates()
                         .map(row =>{
                           val point = gf.createPoint(coorParserByCRS(row.getDouble(1), row.getDouble(2), DefaultGeographicCRS.WGS84))
-                          point.setUserData(row.getLong(0))
+                          point.setUserData(row.getInt(3))
                           point
                           })(PointEncoder)
-    uncontrollIntersect = intersectNode.rdd
+                          
+    val lightSet = lightIntersect.collect().toSet
+    uncontrollIntersect = intersectNode.rdd.filter(node => lightSet.contains(node))
     
     var nodesInLinksDF = nodeLinkJoinDF.select(col("indexedNode.nodeId").as("id"), col("latitude"), col("longitude")).dropDuplicates()
             

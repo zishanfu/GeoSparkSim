@@ -1,43 +1,42 @@
 package com.zishanfu.vistrips.sim;
 
-import java.awt.BasicStroke;
+
 import java.awt.Color;
 import java.util.List;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.graphx.EdgeRDD;
-import org.apache.spark.graphx.Graph;
-import org.apache.spark.graphx.VertexRDD;
-import org.apache.spark.rdd.RDD;
 
-import com.zishanfu.vistrips.model.Vehicle;
+import com.vividsolutions.jts.geom.Coordinate;
 import com.zishanfu.vistrips.model.Link;
+import com.zishanfu.vistrips.model.Vehicle;
+import com.zishanfu.vistrips.osm.OsmGraph;
+import com.zishanfu.vistrips.sim.model.GeoPoint;
 import com.zishanfu.vistrips.sim.model.Point;
 import com.zishanfu.vistrips.sim.model.Segment;
 import com.zishanfu.vistrips.sim.ui.MapWindow;
 
 
 public class TrafficModelPanel{
-	private Graph<com.vividsolutions.jts.geom.Point, Link> graph;
-	private JavaRDD<Vehicle> vehicles;
-	private private RDD<com.vividsolutions.jts.geom.Point> uncontrollIntersect;
-	private RDD<com.vividsolutions.jts.geom.Point> lightIntersect;
+	private World world;
+	private JavaRDD<Vehicle> lastVehicles;
 	
-	public TrafficModelPanel(Graph<com.vividsolutions.jts.geom.Point, Link> graph, 
-							JavaRDD<Vehicle> vehicles,
-							RDD<com.vividsolutions.jts.geom.Point> uncontrollIntersect,
-							RDD<com.vividsolutions.jts.geom.Point> lightIntersect) {
-		this.graph = graph;
-		this.vehicles = vehicles;
-		this.uncontrollIntersect = uncontrollIntersect;
-		this.lightIntersect = lightIntersect;
+	public TrafficModelPanel(World world) {
+		this.world = world;
 	}
 	
-	public void run() {
-        EdgeRDD<Link> edges = graph.edges();
+	public void run(int seconds) {
+		OsmGraph osmGraph = world.getGraph();
+        EdgeRDD<Link> edges = osmGraph.graph().edges();
+        lastVehicles = world.getVehicles();
         
         MapWindow window = new MapWindow();
         window.setVisible(true);
+        
+        //need to join link and vehicle
+        //get linestring with link information
+        
+        //paint streets
         List<Link> links = edges.toJavaRDD().map(edge ->{
 			return edge.attr;
 		}).collect();
@@ -48,15 +47,57 @@ public class TrafficModelPanel{
 			Point tail = new Point(l.getTail().getCoordinate().y, l.getTail().getCoordinate().x);
 			window.addSegment(new Segment(head, tail, Color.GRAY, l.getLanes()));
 		}
+		
+		//paint signals
+		window.addSignals(osmGraph.getSignals());
+		
+		int iterations = (int) (seconds / 0.2);
+		
+		
+		
+		vehicleIterator(lastVehicles);
+
+		//repartition at certain time
+//		for(int i = 0; i<iterations; i++) {
+//			
+//			JavaRDD<Vehicle> newVRDD = vehicleIterator(lastVehicles);
+//			
+//			//sample or run in GPU
+//			List<Vehicle> vehicles = newVRDD.collect();
+//			for(Vehicle v: vehicles) {
+//				Coordinate coor = v.getCurCoordinate();
+//				window.addPOI(new GeoPoint(coor.y, coor.x));
+//			}
+//			
+//			lastVehicles = newVRDD;
+//		}
     }
 	
-	private java.awt.Point[] pointsMapping(VertexRDD<Point> vertexes){
-		java.awt.Point[] points = {
-                new java.awt.Point(-100, -100),
-                new java.awt.Point(-100, 100),
-                new java.awt.Point(100, -100),
-                new java.awt.Point(100, 100)
-        };
-		return points;
+	//0.2 seconds
+	private JavaRDD<Vehicle> vehicleIterator(JavaRDD<Vehicle> vehicles) {
+		//intersection map update lights
+		
+		//vehicle update
+		//check if the point is in intersection
+		//if traffic signal intersect
+		//red -> keep same location, green -> move forward
+		//if uncontrol intersect 
+		//queue the first arrive car, others keep same
+		//if no in intersect 
+		//check buffer car 
+		//IDM direction
+		
+		//create circle RDD from current vehicles with buffer
+		//join circle rdd and vehicle rdd
+		//return vehicle rdd
+		
+		
+//		vehicles = vehicles.map(veh -> {
+//			veh.setCurCoordinate(veh.getNext());
+//			return veh;
+//		});
+		
+		return vehicles;
 	}
+	
 }

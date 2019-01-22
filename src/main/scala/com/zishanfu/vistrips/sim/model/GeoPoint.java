@@ -4,6 +4,11 @@ package com.zishanfu.vistrips.sim.model;
 public class GeoPoint extends Point {
 	private final String label;
 	
+	public GeoPoint(double latitude, double longitude) {
+		super(latitude, longitude);
+		label = "";
+	}
+	
 	public GeoPoint(double latitude, double longitude, String label) {
 		super(latitude, longitude);
 		this.label = label;

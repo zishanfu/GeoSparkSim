@@ -32,7 +32,6 @@ public class GenerationImpl implements Serializable{
 
 	private final static Logger LOG = Logger.getLogger(GenerationImpl.class);
 	private SparkSession spark;
-	private PrecisionModel precision = new PrecisionModel();
 	
 	//testing
 	
@@ -161,7 +160,7 @@ public class GenerationImpl implements Serializable{
 		Coordinate[] routeCoordinates = new Utils().toCoordinates(route);
 		//LineString routeInStep = new Interpolate().routeInterpolateBySec(lsRoute, path.getTime()/1000, path.getDistance(), 1.0);
 		
-		Vehicle vehicle = new Vehicle(routeCoordinates, precision, 1);
+		Vehicle vehicle = new Vehicle(routeCoordinates);
 		vehicle.apply(src, dest, path.getDistance(), path.getTime()/1000);
 
 		return vehicle;		

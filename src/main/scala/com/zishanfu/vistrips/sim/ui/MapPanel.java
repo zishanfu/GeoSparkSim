@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -23,10 +25,23 @@ import com.zishanfu.vistrips.sim.model.Segment;
 @SuppressWarnings("serial")
 class MapPanel extends JPanel {
 	private final List<Segment> segments = new ArrayList<Segment>();
-	private final List<GeoPoint> pois = new ArrayList<GeoPoint>();
+	private final List<GeoPoint> vehicles = new ArrayList<GeoPoint>();
+	private final List<GeoPoint> signals = new ArrayList<GeoPoint>();
 	private double minEasting, maxEasting, minNorthing, maxNorthing;
 	private double oEasting, oNorthing;		// coordinates of the origin
 	private double scale = -1;
+	private final double US_LANE_WIDTH = 0.0037; //3.7m
+	private final double VEHICLE_WIDTH = 0.002;
+	private final double LIGHT_WIDTH = 0.002;
+	
+	private final ActionListener listener = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            update();
+        }
+    };
+
 	
 	public MapPanel() {
 		setMinimumSize(new Dimension(400, 300));
@@ -59,25 +74,17 @@ class MapPanel extends JPanel {
 		if(segments.size() == 0) return;
 		if(this.scale == -1) scale();
 		
-		for(Segment seg : segments) {
-			Point pA = seg.getPointA();
-			Point pB = seg.getPointB();
-			
-			g.setColor(seg.getColor());
-			g.setStroke(seg.getStroke());
-			
-			g.drawLine(
-					convertX(pA.getEasting()), convertY(pA.getNorthing(), h),
-					convertX(pB.getEasting()), convertY(pB.getNorthing(), h));
-		}
+		drawSegments(g, h);
+		drawSignals(g, h);
 		
 		g.setColor(Color.BLACK);
+		int vehicleSize = scaleVehicle();
 		
-		for(GeoPoint poi : pois) {
-			int x = convertX(poi.getEasting());
-			int y = convertY(poi.getNorthing(), h);
-			g.fillOval(x-1, y-1, 3, 3);
-			g.drawString(poi.getLabel(), x, y);
+		for(GeoPoint veh : vehicles) {
+			int x = convertX(veh.getEasting());
+			int y = convertY(veh.getNorthing(), h);
+			g.fillOval(x-1, y-1, vehicleSize, vehicleSize);
+			g.drawString(veh.getLabel(), x, y);
 		}
 		
 		// unit is the unit of the scale. It must be a power of ten, such that unit * scale in [25, 250]
@@ -92,9 +99,57 @@ class MapPanel extends JPanel {
 		}
 	}
 	
+	public void update() {
+		this.repaint();
+    }
+	
+	private void drawSegments(Graphics2D g, int h) {
+		for(Segment seg : segments) {
+			Point pA = seg.getPointA();
+			Point pB = seg.getPointB();
+			
+			g.setColor(seg.getColor());
+			//g.setStroke(seg.getStroke());
+			//scale lane width
+			seg.setStroke(convertLaneWidth());
+			g.setStroke(seg.getStroke());
+			
+			g.drawLine(
+					convertX(pA.getEasting()), convertY(pA.getNorthing(), h),
+					convertX(pB.getEasting()), convertY(pB.getNorthing(), h));
+		}
+	}
+	
+	private void drawSignals(Graphics2D g, int h) {
+		int flip = 0;
+		int size = scaleLight();
+		for(GeoPoint signal : signals) {
+			int x = convertX(signal.getEasting());
+			int y = convertY(signal.getNorthing(), h);
+			int[] dx = {0, 1, 0, -1};
+			int[] dy = {1, 0, -1, 0};
+			for(int i = 0; i<4; i++) {
+				flip ^= 1;
+				if(flip == 0) {
+					g.setColor(Color.GREEN);
+				}else {
+					g.setColor(Color.RED);
+				}
+				int newX = x + dx[i]*convertLaneWidth();
+				int newY = y + dy[i]*convertLaneWidth();
+				g.fillOval(newX-1, newY-1, size, size);
+				//g.drawString(signal.getLabel(), newX, newY);
+			}
+		}
+	}
+	
+	public synchronized void clearVehicle() {
+		this.vehicles.clear();
+	}
+	
 	public synchronized void clear() {
 		this.segments.clear();
-		this.pois.clear();
+		this.vehicles.clear();
 		
 		resetMinMaxEastingNorthing();
 	}
@@ -110,9 +165,12 @@ class MapPanel extends JPanel {
 		for(Segment seg : segments) addSegment(seg);
 	}
 	
+	public void addSignal(GeoPoint signal) {
+		this.signals.add(signal);
+	}
+	
 	public synchronized void addPOI(GeoPoint poi) {
-		this.pois.add(poi);
-		
+		this.vehicles.add(poi);
 		updateMinMaxEastingNorthing(poi);
 	}
 	
@@ -157,6 +215,18 @@ class MapPanel extends JPanel {
 	
 	private int convertY(double northing, int height) {
 		return height - applyScale(northing - oNorthing);
+	}
+	
+	private int convertLaneWidth() {
+		return applyScale(US_LANE_WIDTH);
+	}
+	
+	private int scaleVehicle() {
+		return applyScale(VEHICLE_WIDTH);
+	}
+	
+	private int scaleLight() {
+		return applyScale(LIGHT_WIDTH);
 	}
 	
 	class MouseWheelZoomer implements MouseWheelListener {

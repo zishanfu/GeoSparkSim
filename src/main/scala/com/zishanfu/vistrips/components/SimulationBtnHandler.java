@@ -11,8 +11,10 @@ import org.jxmapviewer.JXMapViewer;
 
 import com.vividsolutions.jts.geom.Point;
 import com.zishanfu.vistrips.model.Vehicle;
+import com.zishanfu.vistrips.osm.OsmGraph;
 import com.zishanfu.vistrips.model.Link;
 import com.zishanfu.vistrips.sim.TrafficModelPanel;
+import com.zishanfu.vistrips.sim.World;
 
 public class SimulationBtnHandler implements ActionListener{
 
@@ -21,15 +23,12 @@ public class SimulationBtnHandler implements ActionListener{
 	private SparkSession sparkSession;
 	private double delayInSec;
 	private int routeLength;
-	private Graph<Point, Link> graph;
-	private RDD<Point> uncontrollIntersect;
-	private RDD<Point> lightIntersect;
+	private OsmGraph graph;
 	
 	public SimulationBtnHandler(JXMapViewer mapViewer, SparkSession sparkSession) {
 		this.mapViewer = mapViewer;
 		this.sparkSession = sparkSession;
 	}
-	
 	
 	public void setDelayInSec(double delayInSec) {
 		this.delayInSec = delayInSec;
@@ -40,20 +39,8 @@ public class SimulationBtnHandler implements ActionListener{
 	}
 
 
-	public void setRouteLength(int routeLength) {
-		this.routeLength = routeLength;
-	}
-
-	public void setGraph(Graph<Point, Link> graph) {
+	public void setGraph(OsmGraph graph) {
 		this.graph = graph;
-	}
-
-	public void setUncontrollIntersect(RDD<Point> uncontrollIntersect) {
-		this.uncontrollIntersect = uncontrollIntersect;
-	}
-
-	public void setLightIntersect(RDD<Point> lightIntersect) {
-		this.lightIntersect = lightIntersect;
 	}
 
 
@@ -88,7 +75,10 @@ public class SimulationBtnHandler implements ActionListener{
 //	        });
 //
 //	        timer.start();
-			new TrafficModelPanel(graph, vehicles, uncontrollIntersect, lightIntersect).run();
+			World world = new World(graph, vehicles);
+			
+			//set simulation time
+			new TrafficModelPanel(world).run(10);
 		} 
 		
 	}

@@ -7,13 +7,14 @@ import java.util.List;
 
 
 public class Segment {
-	private final static Stroke BASIC_STROKE = new BasicStroke();
+	private final static int DEFAULT_LANE = 1;
 	private int laneWidth = 5; //pixel
 	
 	private final Point pointA, pointB;
 	private final Color color;
-	private final Stroke stroke;
-	private final List<Lane> landList;
+	private Stroke stroke;
+	private final int lanes;
+//	private final List<Lane> landList;
 	
 	/**
 	 * Creates a new segment.
@@ -23,15 +24,14 @@ public class Segment {
 	 * @param color the color of the segment
 	 */
 	public Segment(Point pointA, Point pointB, Color color) {
-		this(pointA, pointB, color, BASIC_STROKE);
+		this(pointA, pointB, color, DEFAULT_LANE);
 	}
 	
 	public Segment(Point pointA, Point pointB, Color color, int lanes) {
-		int stroke = lanes * laneWidth;
 		this.pointA = pointA;
 		this.pointB = pointB;
 		this.color = color;
-		this.stroke = new BasicStroke(stroke);
+		this.lanes = lanes;
 	}
 
 	/**
@@ -61,7 +61,16 @@ public class Segment {
 		return color;
 	}
 	
+	public void setStroke(int width) {
+		int w = lanes * width;
+		stroke = new BasicStroke(w);
+	}
+
 	public Stroke getStroke() {
 		return stroke;
-	}	
+	}
+
+	
+	
+		
 }

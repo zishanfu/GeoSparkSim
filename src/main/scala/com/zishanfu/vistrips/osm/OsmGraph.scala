@@ -28,6 +28,10 @@ class OsmGraph (sparkSession: SparkSession, path: String){
   
   val uncontrollIntersect: RDD[Point] = OsmConverter.uncontrollIntersect
   val lightIntersect:RDD[Point] = OsmConverter.lightIntersect
+  
+  def getSignals():Array[Point] = {
+    OsmConverter.signals
+  }
 
   /**
    * @param lat

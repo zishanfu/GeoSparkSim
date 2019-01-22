@@ -28,17 +28,15 @@ public class GenerateBtnHandler implements ActionListener{
 	private SimulationBtnHandler sbHandler;
 	private TextField numTxt;
 	private JTextArea textArea;
-	private TextField delayTxt;
 	private String[] genTypes;
 	private JComboBox genList;
 	private SparkSession spark;
 	
-	public GenerateBtnHandler(SelectionAdapter sa, TextField numTxt, TextField delayTxt, SimulationBtnHandler sbHandler, 
+	public GenerateBtnHandler(SelectionAdapter sa, TextField numTxt, SimulationBtnHandler sbHandler, 
 			JTextArea textArea, String[] genTypes, JComboBox genList, SparkSession spark) {
 		this.sa = sa;
 		this.numTxt = numTxt;
 		this.sbHandler = sbHandler;
-		this.delayTxt = delayTxt;
 		this.textArea = textArea;
 		this.genTypes = genTypes;
 		this.genList = genList;
@@ -47,8 +45,7 @@ public class GenerateBtnHandler implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		if(sa.getViewer().getOverlayPainter() == null || 
-				numTxt.getText() == null || numTxt.getText().length() == 0 ||
-				delayTxt.getText() == null || delayTxt.getText().length() == 0) {
+				numTxt.getText() == null || numTxt.getText().length() == 0 ) {
 			AttentionDialog dialog = new AttentionDialog("Attention", 
 					"You must select an area, enter the number of moving objects and delay time first!");
 		
@@ -79,9 +76,7 @@ public class GenerateBtnHandler implements ActionListener{
 		    		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
 		    		LOG.warn(String.format("Selected rectangle, p1: %s, p2: %s", geo1, geo2));
 		    		
-		    		
 		    		GenerationImpl2 gImpl = new GenerationImpl2(spark);
-		    		double delay = Double.parseDouble(delayTxt.getText());
 		    		
 		    		JavaRDD<Vehicle> vehicles = gImpl.apply(geo1, geo2, selectedType, total);
 		    		OsmGraph graph = new OsmGraph(spark, gImpl.getMapPath());
@@ -89,10 +84,8 @@ public class GenerateBtnHandler implements ActionListener{
 //		    		sbHandler.setDelayInSec(delay);
 //		    		sbHandler.setRouteLength(gImpl.getTripLength());
 		    		sbHandler.setVehicles(vehicles);
-		    		sbHandler.setGraph(graph.graph());
-		    		sbHandler.setLightIntersect(graph.lightIntersect());
-		    		sbHandler.setUncontrollIntersect(graph.uncontrollIntersect());
-		    		
+		    		sbHandler.setGraph(graph);
+
 		    		long endTime = System.currentTimeMillis();
 		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
 		        }     
