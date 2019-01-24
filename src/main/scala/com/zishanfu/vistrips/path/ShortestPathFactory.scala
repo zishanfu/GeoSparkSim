@@ -1,21 +1,18 @@
 package com.zishanfu.vistrips.path
 
-import org.apache.spark.graphx.Graph
-import org.apache.spark.graphx.lib.ShortestPaths
-import org.apache.spark.sql.Row
-
-import com.vividsolutions.jts.geom.Point
-import com.zishanfu.vistrips.model.Link
-import org.apache.spark.graphx.Pregel
+import org.apache.spark.graphx.Edge
 import org.apache.spark.graphx.EdgeDirection
 import org.apache.spark.graphx.EdgeTriplet
-import org.apache.spark.sql.SparkSession
-import com.vividsolutions.jts.geom.GeometryFactory
-import com.vividsolutions.jts.geom.Coordinate
-import org.apache.spark.sql.Encoders
-import org.apache.spark.graphx.Edge
-import org.apache.spark.graphx.VertexRDD
+import org.apache.spark.graphx.Graph
+import org.apache.spark.graphx.Pregel
+import org.apache.spark.graphx.lib.ShortestPaths
 import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.SparkSession
+
+import com.vividsolutions.jts.geom.Coordinate
+import com.vividsolutions.jts.geom.GeometryFactory
+import com.vividsolutions.jts.geom.Point
+import com.zishanfu.vistrips.model.Link
 import com.zishanfu.vistrips.model.Route
 
 object ShortestPathFactory{

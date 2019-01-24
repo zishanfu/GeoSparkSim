@@ -11,7 +11,6 @@ import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -80,8 +79,6 @@ public class GenerateBtnHandler implements ActionListener{
 		    		JavaRDD<IDMVehicle> vehicles = gImpl.apply(geo1, geo2, selectedType, total);
 		    		OsmGraph graph = new OsmGraph(spark, gImpl.getMapPath());
 		    		
-//		    		sbHandler.setDelayInSec(delay);
-//		    		sbHandler.setRouteLength(gImpl.getTripLength());
 		    		sbHandler.setVehicles(vehicles);
 		    		sbHandler.setGraph(graph);
 

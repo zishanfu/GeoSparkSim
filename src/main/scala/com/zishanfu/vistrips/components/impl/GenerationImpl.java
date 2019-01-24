@@ -75,6 +75,7 @@ public class GenerationImpl implements Serializable{
 		
 		LOG.warn(String.format("Begin generate %s trips.", total));
 		JavaRDD<IDMVehicle> vRDD = vehicleGeneration(geo1, geo2, gi, maxLen, generationType, total);
+		
 		LOG.warn("Finished!");
 		return vRDD;
 	}
@@ -121,6 +122,7 @@ public class GenerationImpl implements Serializable{
         }
 	}
 	
+	@SuppressWarnings("resource")
 	private JavaRDD<IDMVehicle> vehicleGeneration(GeoPosition topleft, GeoPosition bottomright, GraphInit graph, double maxLen, String type, int total) {
 		double minLat = Math.min(topleft.getLatitude(), bottomright.getLatitude());
 		double maxLat = Math.max(topleft.getLatitude(), bottomright.getLatitude());
@@ -140,7 +142,6 @@ public class GenerationImpl implements Serializable{
 		
 		JavaRDD<IDMVehicle> vehicles = sc.parallelize(Arrays.asList(vehicleArr), partitions);
 		
-
 		return vehicles;
 	}
 	

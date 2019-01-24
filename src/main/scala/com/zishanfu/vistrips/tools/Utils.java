@@ -28,7 +28,8 @@ public class Utils {
 		int len = pl.getSize();
 		Coordinate[] coordinates = new Coordinate[len];
 		for(int i = 0; i<len; i++) {
-			coordinates[i] = new Coordinate(pl.getLon(i), pl.getLat(i));
+			//coordinates[i] = new Coordinate(pl.getLon(i), pl.getLat(i));
+			coordinates[i] = new Coordinate(pl.getLat(i), pl.getLon(i));
 		}
 		return coordinates;
 	}

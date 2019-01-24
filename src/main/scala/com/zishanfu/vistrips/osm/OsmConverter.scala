@@ -1,20 +1,34 @@
 package com.zishanfu.vistrips.osm
 
-import com.vividsolutions.jts.geom.{Coordinate, GeometryFactory, Point}
-import com.zishanfu.vistrips.model.Link
-import com.zishanfu.vistrips.tools.Distance
-import org.apache.spark.graphx.{Edge, Graph}
+import scala.collection.mutable.WrappedArray
+
+import org.apache.spark.graphx.Edge
+import org.apache.spark.graphx.Graph
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql._
-import org.apache.spark.sql.functions._
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.Dataset
+import org.apache.spark.sql.Encoders
+import org.apache.spark.sql.Row
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.col
+import org.apache.spark.sql.functions.collect_list
+import org.apache.spark.sql.functions.explode
+import org.apache.spark.sql.functions.monotonically_increasing_id
+import org.apache.spark.sql.functions.struct
 import org.geotools.geometry.jts.JTS
 import org.geotools.referencing.CRS
 import org.geotools.referencing.crs.DefaultGeographicCRS
 import org.opengis.geometry.MismatchedDimensionException
 import org.opengis.referencing.FactoryException
-import org.opengis.referencing.operation.{MathTransform, TransformException}
+import org.opengis.referencing.operation.MathTransform
+import org.opengis.referencing.operation.TransformException
 import org.slf4j.LoggerFactory
-import scala.collection.mutable.WrappedArray
+
+import com.vividsolutions.jts.geom.Coordinate
+import com.vividsolutions.jts.geom.GeometryFactory
+import com.vividsolutions.jts.geom.Point
+import com.zishanfu.vistrips.model.Link
+import com.zishanfu.vistrips.tools.Distance
 
 object OsmConverter {
   

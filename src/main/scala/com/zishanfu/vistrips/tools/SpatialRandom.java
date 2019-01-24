@@ -1,6 +1,5 @@
 package com.zishanfu.vistrips.tools;
 
-import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -8,7 +7,8 @@ import com.graphhopper.PathWrapper;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.zishanfu.vistrips.osm.GraphInit;
 
-public class SpatialRandom implements Serializable{
+public class SpatialRandom{
+
 	private Random rand = new Random();
 	private double minLon;
 	private double minLat;

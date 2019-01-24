@@ -7,6 +7,10 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.zishanfu.vistrips.model.Link;
 
 public class VirtualGPS implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3511171255267476909L;
 	private Link[] segments;
 	private Set<Coordinate> lights;
 	private Set<Coordinate> intersects;

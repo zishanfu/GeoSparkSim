@@ -2,34 +2,33 @@ package com.zishanfu.vistrips.components.impl;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.sql.SparkSession;
-import org.datasyslab.geospark.enums.GridType;
-import org.datasyslab.geospark.spatialRDD.SpatialRDD;
-import com.zishanfu.vistrips.model.Vehicle;
+
+import com.zishanfu.vistrips.osm.OsmGraph;
+import com.zishanfu.vistrips.sim.TrafficModelPanel;
+import com.zishanfu.vistrips.sim.World;
+import com.zishanfu.vistrips.sim.model.IDMVehicle;
 
 
 public class SimulationImpl {
 	private final Logger LOG = Logger.getLogger(SimulationImpl.class);
-	private SparkSession spark;
+	private JavaRDD<IDMVehicle> vehicles;
+	private OsmGraph graph;
 	
-	public SimulationImpl(SparkSession spark) {
-		this.spark = spark;
+	public SimulationImpl(JavaRDD<IDMVehicle> vehicles, OsmGraph graph) {
+		this.vehicles = vehicles;
+		this.graph = graph;
 	}
 	
-	public void apply(JavaRDD<Vehicle> vehicles, double delayInSec, double simTime) {
+	public void apply(double simTime) {
+		World world = new World(graph, vehicles.rdd());
 		
-		SpatialRDD<Vehicle> sRDD = new SpatialRDD();
-		sRDD.setRawSpatialRDD(vehicles);	
-		sRDD.analyze();
-
+		//set simulation time
 		try {
-			sRDD.spatialPartitioning(GridType.QUADTREE, 8);
-			//sRDD.buildIndex(IndexType.QUADTREE, false);
-		} catch (Exception e) {
-			e.printStackTrace();
+			//1min
+			new TrafficModelPanel(world).run(simTime);
+		}catch(Exception ex) {
+			ex.printStackTrace();
 		}
-		
-		
 	
 		
 	}

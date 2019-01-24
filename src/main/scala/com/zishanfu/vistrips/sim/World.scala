@@ -1,9 +1,9 @@
 package com.zishanfu.vistrips.sim
 
+import org.apache.spark.rdd.RDD
+
 import com.zishanfu.vistrips.osm.OsmGraph
 import com.zishanfu.vistrips.sim.model.IDMVehicle
-import org.apache.spark.rdd.RDD
-import com.vividsolutions.jts.geom.Coordinate
 
 
 case class World (graph: OsmGraph, vehicle: RDD[IDMVehicle]){

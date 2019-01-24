@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.swing.JFrame;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Point;
 import com.zishanfu.vistrips.sim.model.GeoPoint;
 import com.zishanfu.vistrips.sim.model.Segment;
 

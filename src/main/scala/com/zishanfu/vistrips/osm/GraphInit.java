@@ -4,11 +4,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
-import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.slf4j.LoggerFactory;
-import org.slf4j.event.Level;
-import org.slf4j.impl.Log4jLoggerAdapter;
 
 import com.graphhopper.GHRequest;
 import com.graphhopper.GHResponse;
@@ -16,12 +12,8 @@ import com.graphhopper.GraphHopper;
 import com.graphhopper.PathWrapper;
 import com.graphhopper.routing.util.EdgeFilter;
 import com.graphhopper.routing.util.EncodingManager;
-import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.GHPoint;
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LineString;
-import com.zishanfu.vistrips.JmapConsole;
 
 
 /**

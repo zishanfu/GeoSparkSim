@@ -5,6 +5,10 @@ import java.io.Serializable;
 import com.vividsolutions.jts.geom.Coordinate;
 
 public class Report implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1806477329173858692L;
 	private int id;
 	private Coordinate location;
 	private double speed;

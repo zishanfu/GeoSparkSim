@@ -1,11 +1,17 @@
-package com.zishanfu.vistrips.tools;
+package com.zishanfu.vistrips.sim.model;
 
 import com.vividsolutions.jts.algorithm.Angle;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 
-public class VehicleBuffer {
+import scala.Serializable;
+
+public class VehicleBuffer implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 702405736549341549L;
 	private Coordinate location;
 	private Coordinate next;
 	private double headAngle;

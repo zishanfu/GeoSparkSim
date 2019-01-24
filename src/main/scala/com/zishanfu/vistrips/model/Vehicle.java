@@ -7,9 +7,9 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.PrecisionModel;
 import com.zishanfu.vistrips.sim.model.IDMVehicle;
+import com.zishanfu.vistrips.sim.model.VehicleBuffer;
 import com.zishanfu.vistrips.sim.model.VirtualGPS;
 import com.zishanfu.vistrips.tools.Distance;
-import com.zishanfu.vistrips.tools.VehicleBuffer;
 
 public class Vehicle extends LineString{
 
@@ -57,14 +57,15 @@ public class Vehicle extends LineString{
 		return time;
 	}
 
+	
+	public int getNextIdx() {
+		return nextIdx;
+	}
+
 	public Coordinate getNext() {
 		return next;
 	}
 
-
-	public void setNext(Coordinate next) {
-		this.next = next;
-	}
 	
 	public double getAvgSpeed() {
 		return avgSpeed;
@@ -74,11 +75,15 @@ public class Vehicle extends LineString{
 		return location;
 	}
 
-	public void setLocation(Coordinate location) {
+	public void setLocation(Coordinate location, int idx) {
 		this.location = location;
 		if(location == route[nextIdx] || location.distance(route[nextIdx]) <= 0.000005) {
 			this.nextIdx++;
 			this.next = route[this.nextIdx];
+			this.vBuffer = new VehicleBuffer(location, this.next);
+		}else {
+			this.nextIdx = idx;
+			this.next = route[idx];
 			this.vBuffer = new VehicleBuffer(location, this.next);
 		}
 	}

@@ -13,7 +13,8 @@ import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.components.impl.GenerationImpl;
 import com.zishanfu.vistrips.components.impl.SimulationImpl;
-import com.zishanfu.vistrips.model.Vehicle;
+import com.zishanfu.vistrips.osm.OsmGraph;
+import com.zishanfu.vistrips.sim.model.IDMVehicle;
 
 public class JmapConsole {
 	private final static Logger LOG = Logger.getLogger(JmapConsole.class);
@@ -22,8 +23,8 @@ public class JmapConsole {
 	private InputStream is = null;
 	private SparkSession spark;
 	private String resources;
-	private JavaRDD<Vehicle> vehicles;
-	private double tripTime;
+	private JavaRDD<IDMVehicle> vehicles;
+	private OsmGraph graph;
 	
 	public JmapConsole(String resources, SparkSession spark) {
 		this.spark = spark;
@@ -55,14 +56,15 @@ public class JmapConsole {
 		int total = Integer.parseInt(prop.getProperty("generation.num"));
 		
 		GenerationImpl gImpl = new GenerationImpl(spark);
-//		vehicles = gImpl.apply(geo1, geo2, selectedType, total);
+		this.vehicles = gImpl.apply(geo1, geo2, selectedType, total);
+		this.graph = new OsmGraph(spark, gImpl.getMapPath());
 	}
 	
 	public void runSimulation() {
 		double timestamp = Double.parseDouble(prop.getProperty("simulation.timestamp"));
 		double simTime = Double.parseDouble(prop.getProperty("simulation.minutes"));
-		SimulationImpl sImpl = new SimulationImpl(spark);
-		sImpl.apply(vehicles, timestamp, simTime);
+		SimulationImpl sImpl = new SimulationImpl(vehicles, graph);
+		sImpl.apply(simTime);
 	}
 
 

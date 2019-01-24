@@ -4,32 +4,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.JXMapViewer;
 
-import com.zishanfu.vistrips.sim.model.IDMVehicle;
 import com.zishanfu.vistrips.osm.OsmGraph;
 import com.zishanfu.vistrips.sim.TrafficModelPanel;
 import com.zishanfu.vistrips.sim.World;
+import com.zishanfu.vistrips.sim.model.IDMVehicle;
 
 public class SimulationBtnHandler implements ActionListener{
 
 	private JXMapViewer mapViewer;
 	private JavaRDD<IDMVehicle> vehicles;
-	private SparkSession sparkSession;
-	private double delayInSec;
-	private int routeLength;
 	private OsmGraph graph;
 	
-	public SimulationBtnHandler(JXMapViewer mapViewer, SparkSession sparkSession) {
+	public SimulationBtnHandler(JXMapViewer mapViewer) {
 		this.mapViewer = mapViewer;
-		this.sparkSession = sparkSession;
 	}
 	
-	public void setDelayInSec(double delayInSec) {
-		this.delayInSec = delayInSec;
-	}
-
 	public void setVehicles(JavaRDD<IDMVehicle> vehicles) {
 		this.vehicles = vehicles;
 	}
@@ -42,7 +33,6 @@ public class SimulationBtnHandler implements ActionListener{
 		if(vehicles == null || vehicles.count() == 0) {
 			AttentionDialog dialog = new AttentionDialog("Attention", 
 					"Please wait to generate trips!");
-		
 		}else {
 //			int delay = (int)(delayInSec*1000);
 //			final Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>();

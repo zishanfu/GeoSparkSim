@@ -3,7 +3,6 @@ package com.zishanfu.vistrips.sim.model;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Stroke;
-import java.util.List;
 
 
 public class Segment {

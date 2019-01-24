@@ -11,7 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 
 import com.zishanfu.vistrips.components.GenerateBtnHandler;
@@ -47,7 +46,7 @@ public class InputController {
   	          .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
   			  .getOrCreate();
         
-        SimulationBtnHandler sbHandler = new SimulationBtnHandler(cc.mapViewer, spark);
+        SimulationBtnHandler sbHandler = new SimulationBtnHandler(cc.mapViewer);
         GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, sbHandler, rc.textArea, genTypes, genList, spark);
         gBtn.addActionListener(gbHandler);
         sBtn.addActionListener(sbHandler);
