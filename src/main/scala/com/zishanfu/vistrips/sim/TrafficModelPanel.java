@@ -2,41 +2,52 @@ package com.zishanfu.vistrips.sim;
 
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.graphx.EdgeRDD;
+import org.datasyslab.geospark.enums.GridType;
+import org.datasyslab.geospark.enums.IndexType;
+import org.datasyslab.geospark.spatialOperator.JoinQuery;
+import org.datasyslab.geospark.spatialRDD.PolygonRDD;
+import org.datasyslab.geospark.spatialRDD.SpatialRDD;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Polygon;
 import com.zishanfu.vistrips.model.Link;
-import com.zishanfu.vistrips.model.Vehicle;
+import com.zishanfu.vistrips.sim.model.IDMVehicle;
 import com.zishanfu.vistrips.osm.OsmGraph;
-import com.zishanfu.vistrips.sim.model.GeoPoint;
 import com.zishanfu.vistrips.sim.model.Point;
 import com.zishanfu.vistrips.sim.model.Segment;
 import com.zishanfu.vistrips.sim.ui.MapWindow;
 
+import scala.Tuple2;
+
 
 public class TrafficModelPanel{
 	private World world;
-	private JavaRDD<Vehicle> lastVehicles;
+	private final Logger LOG = Logger.getLogger(TrafficModelPanel.class);
+	final static GeometryFactory gf = new GeometryFactory();
+	private static List<List<Coordinate>> trajectories = new ArrayList<>();
+	private static int iterations = 1;
 	
 	public TrafficModelPanel(World world) {
 		this.world = world;
 	}
 	
-	public void run(int seconds) {
-		OsmGraph osmGraph = world.getGraph();
+	public void run(int minutes) throws Exception {
+		OsmGraph osmGraph = world.graph();
         EdgeRDD<Link> edges = osmGraph.graph().edges();
-        lastVehicles = world.getVehicles();
+        
         
         MapWindow window = new MapWindow();
         window.setVisible(true);
-        
-        //need to join link and vehicle
-        //get linestring with link information
-        
-        //paint streets
+
         List<Link> links = edges.toJavaRDD().map(edge ->{
 			return edge.attr;
 		}).collect();
@@ -47,57 +58,99 @@ public class TrafficModelPanel{
 			Point tail = new Point(l.getTail().getCoordinate().y, l.getTail().getCoordinate().x);
 			window.addSegment(new Segment(head, tail, Color.GRAY, l.getLanes()));
 		}
-		
+
 		//paint signals
+		System.out.println(osmGraph.getSignals().length);
 		window.addSignals(osmGraph.getSignals());
 		
-		int iterations = (int) (seconds / 0.2);
-		
-		
-		
-		vehicleIterator(lastVehicles);
+		iterations = (int) (minutes*60 / 2);
 
-		//repartition at certain time
-//		for(int i = 0; i<iterations; i++) {
-//			
-//			JavaRDD<Vehicle> newVRDD = vehicleIterator(lastVehicles);
-//			
-//			//sample or run in GPU
-//			List<Vehicle> vehicles = newVRDD.collect();
-//			for(Vehicle v: vehicles) {
-//				Coordinate coor = v.getCurCoordinate();
-//				window.addPOI(new GeoPoint(coor.y, coor.x));
-//			}
-//			
-//			lastVehicles = newVRDD;
-//		}
+		int shuffleSlot = 2 * 60; //10minutes
+		JavaRDD<IDMVehicle> rawVehicles = world.roadVehicles().toJavaRDD();
+		
+		if(shuffleSlot < minutes*60) {
+			//caculate initial shuffle
+			JavaRDD<IDMVehicle> shuffledVehicles = rawVehicles.map(vehicle -> {
+				long time = vehicle.getTime();
+				if(time < shuffleSlot) {
+					return vehicle;
+				}else {
+					Coordinate[] coordinates = vehicle.initialShuffle(shuffleSlot);
+					IDMVehicle veh = new IDMVehicle(coordinates, vehicle.getSRID(), time, vehicle.getDistance());
+					return veh;
+				}
+			});
+		}
+
+		SpatialRDD<IDMVehicle> vehicleRDD = new SpatialRDD<IDMVehicle>();
+		vehicleRDD.setRawSpatialRDD(rawVehicles);
+		vehicleRDD.analyze();
+		vehicleRDD.spatialPartitioning(GridType.QUADTREE, 8);
+		vehicleRDD.buildIndex(IndexType.QUADTREE, true);
+		
+		vehicleIterator(vehicleRDD, 0);
+		System.out.print(trajectories.get(0).get(0));
+		for(List<Coordinate> trajectory: trajectories) {
+			for(Coordinate coordinate: trajectory) {
+				System.out.print(coordinate + ",");
+			}
+			System.out.print("---");
+		}
+		
     }
 	
-	//0.2 seconds
-	private JavaRDD<Vehicle> vehicleIterator(JavaRDD<Vehicle> vehicles) {
-		//intersection map update lights
+	//2 seconds
+	private static void vehicleIterator(SpatialRDD<IDMVehicle> vehicles, int i) throws Exception {
+		if(i >= iterations) return;
 		
-		//vehicle update
-		//check if the point is in intersection
-		//if traffic signal intersect
-		//red -> keep same location, green -> move forward
-		//if uncontrol intersect 
-		//queue the first arrive car, others keep same
-		//if no in intersect 
-		//check buffer car 
-		//IDM direction
+		//join buffer
+		boolean considerBoundaryIntersection = false;
+		boolean usingIndex = true;
+		JavaRDD<Polygon> buffers = vehicles.rawSpatialRDD.map(veh -> {
+			Polygon poly = null;
+			if(veh.getvBuffer() == null) {
+				poly = veh.getSelf();
+			}else {
+				poly = veh.getvBuffer().getHead();
+			}
+			poly.setUserData(veh);
+			return poly;
+		});
 		
-		//create circle RDD from current vehicles with buffer
-		//join circle rdd and vehicle rdd
-		//return vehicle rdd
+		PolygonRDD windows = new PolygonRDD(buffers);
+		windows.analyze();
+		windows.spatialPartitioning(vehicles.getPartitioner());
 		
+		JavaPairRDD<Polygon, HashSet<IDMVehicle>> results = JoinQuery.SpatialJoinQuery(vehicles, windows, usingIndex, considerBoundaryIntersection);
+		JavaPairRDD<Polygon, HashSet<IDMVehicle>> filteredResults = results.mapToPair(tuple -> {
+			Polygon p = tuple._1;
+			HashSet<IDMVehicle> set = tuple._2;
+			for(IDMVehicle veh: set) {
+				Coordinate curMove = veh.getLocation();
+				com.vividsolutions.jts.geom.Point curPoint = gf.createPoint(curMove);
+				if(!curPoint.within(p)) {
+					set.remove(veh);
+				}
+			}
+			set.remove((IDMVehicle)p.getUserData());
+			return new Tuple2<Polygon, HashSet<IDMVehicle>>(p,set);
+		});
 		
-//		vehicles = vehicles.map(veh -> {
-//			veh.setCurCoordinate(veh.getNext());
-//			return veh;
-//		});
-		
-		return vehicles;
+		JavaRDD<IDMVehicle> detectedVehicles = filteredResults.map(tuple -> {
+			IDMVehicle veh = (IDMVehicle) tuple._1.getUserData();
+			veh.setAheadVehicles(tuple._2);
+			return veh;
+		});
+		List<Coordinate> list = new ArrayList<>();
+		JavaRDD<IDMVehicle> movedVehicle = detectedVehicles.map(veh -> {
+			Coordinate next = veh.moveNext();
+			list.add(next);
+			veh.setLocation(next);
+			return veh;
+		});
+		trajectories.add(list);
+		vehicles.setRawSpatialRDD(movedVehicle);
+		vehicleIterator(vehicles, i+1);
 	}
 	
 }

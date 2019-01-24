@@ -1,138 +1,143 @@
 package com.zishanfu.vistrips.model;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.util.Random;
+import java.util.*;
 
-import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
-import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
-
-import com.vividsolutions.jts.algorithm.Angle;
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.PrecisionModel;
+import com.zishanfu.vistrips.sim.model.IDMVehicle;
+import com.zishanfu.vistrips.sim.model.VirtualGPS;
+import com.zishanfu.vistrips.tools.Distance;
+import com.zishanfu.vistrips.tools.VehicleBuffer;
 
 public class Vehicle extends LineString{
-	
-	private Coordinate source;
-	private Coordinate destination;
+
+	private static PrecisionModel precision = new PrecisionModel();
+	private double avgSpeed;
 	private long time;
 	private double distance;
-	
-	//JTS Orientation
-	public static final int COUNTER_CLOCKWISE = 1; //Left
-	public static final int STRAIGHT = 0; 
-	public static final int CLOCKWISE = -1; //Right
-	
-	private static final Color BRAKE_COLOR = Color.RED;
-	private static final Color FREE_COLOR = Color.GREEN;
-	private static final Color FROZEN_COLOR = Color.BLUE;
-	
-	//Reference : https://copradar.com/chapts/references/acceleration.html
-	private static final double SPEED = 40.0; //mph
-	private static final double ACC = 18.6; //18.6mph/s
-	private static final double DEC = 18.6; //18.6mph/s
-	
-	private static final double POLITE = 0.3;
-	private static final double MAX_SAFE_DEC = 18.6;
-	private static final double THRESHOLD_ACC = 18.6;
-	
-	LinearInterpolator interp = new LinearInterpolator();
-	PolynomialSplineFunction f;
-	GeometryFactory gf=new GeometryFactory();
-	private Angle angle;
-	private static PrecisionModel precision = new PrecisionModel();
-	private static int SRID = new Random().nextInt()*Integer.MAX_VALUE;
-
 	private Coordinate[] route;
-	private double[] x;
-	private double[] y;
-	private Coordinate curCoordinate;
-//	private Polygon buffer;
-
-	private double speed = 0;
-	private double dt = 0.2; //0.2 seconds per move
+	private VirtualGPS gps = new VirtualGPS();
+	public static final Distance distanceTo = new Distance();
 	
 	//create a looking ahead rectangle and looking back rectangle by current position
-	private Coordinate[] closestAhead;
-	private Coordinate[] closetsBack;
+	private HashSet<IDMVehicle> aheadVehicles;
+	private VehicleBuffer vBuffer;
+	private Polygon self;
+	private Coordinate location;
+	private Coordinate next;
+	private int nextIdx;
 	
-	private Polygon aheadRect;
-	private Polygon backRect;
-	private double aheadWidth;
-	private double backWidth;
-	private double lookLength;
-	
-	public Vehicle(Coordinate[] points) {
-		super(points, precision, SRID);
-		setCurCoordinate(points[0]);
+	//time in seconds
+	public Vehicle(Coordinate[] points, int sid, long time, double distance) {
+		super(points, precision, sid);
 		this.route = points;
-		
-		//initial interpolator
-		int len = points.length;
-		this.x = new double[len];
-		this.y = new double[len];
-		for(int i = 0; i<len; i++) {
-			this.x[i] = points[i].x;
-			this.y[i] = points[i].y;
-		}
-		f = interp.interpolate(this.x, this.y);
-		
-		//initial angle list
-		
-		
-	}
-	
-	public void apply(Coordinate source, Coordinate destination, double distance, long time) {
-		this.source = source;
-		this.destination = destination;
-		this.distance = distance;
+		this.avgSpeed = distance / time;
 		this.time = time;
-	}
-	
-	public Coordinate getCurCoordinate() {
-		return curCoordinate;
+		this.location = points[0];
+		this.next = points[1];
+		this.nextIdx = 1;
+		this.vBuffer = new VehicleBuffer(points[0], points[1]);
 	}
 
-	//need check buffer distance
-	public void setCurCoordinate(Coordinate coor) {
-		this.curCoordinate = coor;
-		//buffer = (Polygon) gf.createPoint(curCoordinate).buffer(1.0);
+	public double getDistance() {
+		return distance;
+	}
+
+	public Coordinate[] getRoute() {
+		return route;
+	}
+
+	public void setRoute(Coordinate[] route) {
+		this.route = route;
+	}
+
+	public long getTime() {
+		return time;
+	}
+
+	public Coordinate getNext() {
+		return next;
+	}
+
+
+	public void setNext(Coordinate next) {
+		this.next = next;
 	}
 	
+	public double getAvgSpeed() {
+		return avgSpeed;
+	}
 
-	public Coordinate getCoordinateN(int index) {
-		int total = route.length;
-		
-		if(index >= total) {
-			int newIdx = index % total;
-			return route[newIdx];
-		}else {
-			return route[index];
+	public Coordinate getLocation() {
+		return location;
+	}
+
+	public void setLocation(Coordinate location) {
+		this.location = location;
+		if(location == route[nextIdx] || location.distance(route[nextIdx]) <= 0.000005) {
+			this.nextIdx++;
+			this.next = route[this.nextIdx];
+			this.vBuffer = new VehicleBuffer(location, this.next);
 		}
 	}
-	
-	//0.2
-//	public Coordinate getNext() {
-//		
-//	}
-	
-	private void move(Coordinate a, Coordinate b, double dt) {
-		double heading = angle.angle(a, b);
-		double dx = Math.cos(heading) * speed * dt;
-		double dy = Math.sin(heading) * speed * dt;
-		//current + dx
-		//current + dy
+
+	public Polygon getSelf() {
+		return self;
 	}
 
-	private void moderateSpeed(double dt) {
-			
+	public void setSelf(Polygon self) {
+		this.self = self;
+	}
+
+	public VehicleBuffer getvBuffer() {
+		return vBuffer;
+	}
+
+	public VirtualGPS getGps() {
+		return gps;
+	}
+
+	public void setGps(VirtualGPS gps) {
+		this.gps = gps;
+	}
+
+	public HashSet<IDMVehicle> getAheadVehicles() {
+		return aheadVehicles;
+	}
+
+	public void setAheadVehicles(HashSet<IDMVehicle> aheadVehicles) {
+		this.aheadVehicles = aheadVehicles;
 	}
 	
-	public Color getColor(boolean showTrueColor) {
-		return FREE_COLOR;
+	public Coordinate[] initialShuffle(long time) {
+		Coordinate[] coordinates = this.getRoute();
+		double cost = 0;
+		List<Coordinate> result = new ArrayList<>();
+		int i = 0;
+		for(;i<coordinates.length-1; i++) {
+			cost += distanceTo.harversineMeter(coordinates[i], coordinates[i+1])/avgSpeed;
+			if(cost >= time) break;
+			result.add(coordinates[i]);
+		}
+		result.add(coordinates[i]);
+		return result.toArray(new Coordinate[result.size()]);
+	}
+	
+	public Coordinate[] shuffleLast(long time, Coordinate last) {
+		Coordinate[] coordinates = this.getRoute();
+		List<Coordinate> result = new ArrayList<>();
+		int i = this.nextIdx;
+		double cost = distanceTo.harversineMeter(last, coordinates[i])/avgSpeed;
+		result.add(last);
+		for(;i<coordinates.length - 1; i++) {
+			cost += distanceTo.harversineMeter(coordinates[i], coordinates[i+1])/avgSpeed;
+			if(cost >= time) break;
+			result.add(coordinates[i]);
+		}
+		result.add(coordinates[i]);
+		return result.toArray(new Coordinate[result.size()]);
 	}
 	
 }

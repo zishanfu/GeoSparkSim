@@ -26,11 +26,11 @@ trait TestBaseScala extends FunSpec with BeforeAndAfterAll{
     .config("spark.sql.warehouse.dir", warehouseLocation)
     .config("spark.local.dir", warehouseLocation + "/tmp/spark-temp").getOrCreate()
 
-  val resourceFolder = System.getProperty("user.dir") + "/src/test/resources/"
-  val csvData = resourceFolder+"arealm-small.csv"
-  val hdfs = "hdfs://localhost:9000/vistrips/20190110_153248"
-  val nodesPath = hdfs + "/node.parquet"
-  val waysPath = hdfs + "/way.parquet"
+//  val resourceFolder = System.getProperty("user.dir") + "/src/test/resources/"
+//  val csvData = resourceFolder+"arealm-small.csv"
+//  val hdfs = "hdfs://localhost:9000/vistrips/20190110_153248"
+//  val nodesPath = hdfs + "/node.parquet"
+//  val waysPath = hdfs + "/way.parquet"
   
   override def beforeAll(): Unit = {
     

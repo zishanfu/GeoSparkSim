@@ -4,22 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.graphx.Graph;
-import org.apache.spark.rdd.RDD;
 import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.JXMapViewer;
 
-import com.vividsolutions.jts.geom.Point;
-import com.zishanfu.vistrips.model.Vehicle;
+import com.zishanfu.vistrips.sim.model.IDMVehicle;
 import com.zishanfu.vistrips.osm.OsmGraph;
-import com.zishanfu.vistrips.model.Link;
 import com.zishanfu.vistrips.sim.TrafficModelPanel;
 import com.zishanfu.vistrips.sim.World;
 
 public class SimulationBtnHandler implements ActionListener{
 
 	private JXMapViewer mapViewer;
-	private JavaRDD<Vehicle> vehicles;
+	private JavaRDD<IDMVehicle> vehicles;
 	private SparkSession sparkSession;
 	private double delayInSec;
 	private int routeLength;
@@ -34,15 +30,13 @@ public class SimulationBtnHandler implements ActionListener{
 		this.delayInSec = delayInSec;
 	}
 
-	public void setVehicles(JavaRDD<Vehicle> vehicles) {
+	public void setVehicles(JavaRDD<IDMVehicle> vehicles) {
 		this.vehicles = vehicles;
 	}
-
 
 	public void setGraph(OsmGraph graph) {
 		this.graph = graph;
 	}
-
 
 	public void actionPerformed(ActionEvent e) {
 		if(vehicles == null || vehicles.count() == 0) {
@@ -75,10 +69,15 @@ public class SimulationBtnHandler implements ActionListener{
 //	        });
 //
 //	        timer.start();
-			World world = new World(graph, vehicles);
+			World world = new World(graph, vehicles.rdd());
 			
 			//set simulation time
-			new TrafficModelPanel(world).run(10);
+			try {
+				new TrafficModelPanel(world).run(1);
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			}
+			
 		} 
 		
 	}

@@ -1,22 +1,21 @@
 package com.zishanfu.vistrips.osm
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.api.java.JavaRDD.fromRDD
 import org.apache.spark.graphx.Graph
-import com.zishanfu.vistrips.model.Link
-import com.vividsolutions.jts.geom.Point
-import com.zishanfu.vistrips.path.ShortestPathFactory
+import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.SparkSession
+import org.datasyslab.geospark.enums.IndexType
 import org.datasyslab.geospark.spatialOperator.KNNQuery
 import org.datasyslab.geospark.spatialRDD.PointRDD
-import com.vividsolutions.jts.geom.GeometryFactory
-import com.vividsolutions.jts.geom.Coordinate
-import org.datasyslab.geospark.enums.IndexType
 import org.jxmapviewer.viewer.GeoPosition
-import com.zishanfu.vistrips.model.Route
-import org.apache.spark.rdd.RDD
 import org.slf4j.LoggerFactory
-import com.zishanfu.vistrips.osm.OsmConverter
-import org.apache.spark.api.java.JavaRDD.fromRDD
-import com.zishanfu.vistrips.osm.OsmConverter
+
+import com.vividsolutions.jts.geom.Coordinate
+import com.vividsolutions.jts.geom.GeometryFactory
+import com.vividsolutions.jts.geom.Point
+import com.zishanfu.vistrips.model.Link
+import com.zishanfu.vistrips.model.Route
+import com.zishanfu.vistrips.path.ShortestPathFactory
 
 class OsmGraph (sparkSession: SparkSession, path: String){
   private val LOG = LoggerFactory.getLogger(getClass)
@@ -26,12 +25,23 @@ class OsmGraph (sparkSession: SparkSession, path: String){
   val vertexRDD = new PointRDD(graph.vertices.map(r => r._2))
   vertexRDD.buildIndex(IndexType.RTREE, false)
   
-  val uncontrollIntersect: RDD[Point] = OsmConverter.uncontrollIntersect
-  val lightIntersect:RDD[Point] = OsmConverter.lightIntersect
-  
-  def getSignals():Array[Point] = {
+  def getSignals():Array[Coordinate] = {
     OsmConverter.signals
   }
+  
+  def getIntersects(): Array[Coordinate] = {
+    OsmConverter.intersects
+  }
+  
+  def getSignalsSet():Set[Coordinate] = {
+    OsmConverter.signals.toSet
+  }
+  
+  def getIntersectsSet():Set[Coordinate] = {
+    OsmConverter.intersects.toSet
+  }
+  
+  
 
   /**
    * @param lat

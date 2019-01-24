@@ -16,9 +16,8 @@ import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.components.impl.GenerationImpl;
-import com.zishanfu.vistrips.components.impl.GenerationImpl2;
 import com.zishanfu.vistrips.osm.OsmGraph;
-import com.zishanfu.vistrips.model.Vehicle;
+import com.zishanfu.vistrips.sim.model.IDMVehicle;
 import com.zishanfu.vistrips.tools.Distance;
 
 
@@ -76,9 +75,9 @@ public class GenerateBtnHandler implements ActionListener{
 		    		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
 		    		LOG.warn(String.format("Selected rectangle, p1: %s, p2: %s", geo1, geo2));
 		    		
-		    		GenerationImpl2 gImpl = new GenerationImpl2(spark);
+		    		GenerationImpl gImpl = new GenerationImpl(spark);
 		    		
-		    		JavaRDD<Vehicle> vehicles = gImpl.apply(geo1, geo2, selectedType, total);
+		    		JavaRDD<IDMVehicle> vehicles = gImpl.apply(geo1, geo2, selectedType, total);
 		    		OsmGraph graph = new OsmGraph(spark, gImpl.getMapPath());
 		    		
 //		    		sbHandler.setDelayInSec(delay);

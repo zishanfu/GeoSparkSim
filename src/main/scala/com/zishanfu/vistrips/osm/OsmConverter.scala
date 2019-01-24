@@ -21,9 +21,10 @@ object OsmConverter {
   private val LOG = LoggerFactory.getLogger(getClass)
   val gf = new GeometryFactory()
   val PointEncoder = Encoders.kryo[Point]
-  var uncontrollIntersect: RDD[Point] = _
-  var lightIntersect:RDD[Point] = _
-  var signals:Array[Point] = _
+  val CoordinateEncoder = Encoders.kryo[Coordinate]
+  var lightIntersect:RDD[Coordinate] = _
+  var signals:Array[Coordinate] = _
+  var intersects:Array[Coordinate] = _
   
     /**
    * @param id
@@ -121,12 +122,9 @@ object OsmConverter {
       val highWay = tagsMap.get("highway")
       if(highWay != None) highWay.get == "traffic_signals" else false
     }).map(row =>{
-      val point = gf.createPoint(coorParserByCRS(row.getDouble(1), row.getDouble(2), DefaultGeographicCRS.WGS84))
-      point.setUserData(4)
-      point
-   })(PointEncoder)
-   lightIntersect = filteredLights.rdd
-   signals = lightIntersect.collect()
+      new Coordinate(row.getDouble(1), row.getDouble(2))
+   })(CoordinateEncoder)
+   signals = filteredLights.rdd.collect()
     nodesDF.select("id", "latitude", "longitude")
   }
   
@@ -152,13 +150,12 @@ object OsmConverter {
                         .filter("n > 2").select(col("id"), col("latitude"), col("longitude"), col("n"))
                         .dropDuplicates()
                         .map(row =>{
-                          val point = gf.createPoint(coorParserByCRS(row.getDouble(1), row.getDouble(2), DefaultGeographicCRS.WGS84))
-                          point.setUserData(row.getInt(3))
-                          point
-                          })(PointEncoder)
+                          val coordinate = new Coordinate(row.getDouble(1), row.getDouble(2))
+                          coordinate
+                          })(CoordinateEncoder)
                           
-    val lightSet = lightIntersect.collect().toSet
-    uncontrollIntersect = intersectNode.rdd.filter(node => lightSet.contains(node))
+    val lightSet = signals.toSet
+    intersects = intersectNode.rdd.filter(node => lightSet.contains(node)).collect()
     
     var nodesInLinksDF = nodeLinkJoinDF.select(col("indexedNode.nodeId").as("id"), col("latitude"), col("longitude")).dropDuplicates()
             

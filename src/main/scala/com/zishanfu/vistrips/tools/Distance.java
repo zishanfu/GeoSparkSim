@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.jxmapviewer.viewer.GeoPosition;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Point;
 
 public class Distance implements Serializable{
@@ -35,6 +36,11 @@ public class Distance implements Serializable{
 				Math.sin((latitude2 - latitude1)/2) * Math.sin((latitude2 - latitude1)/2) +
 				Math.cos(latitude1) * Math.cos(latitude2) *
 				Math.sin((longitude2 - longitude1)/2) * Math.sin((longitude2 - longitude1) / 2))));
+	}
+	
+	
+	public double harversineMeter(Coordinate p, Coordinate q) {
+		return haversine(p.y, p.x, q.y, q.x);
 	}
 	
 	

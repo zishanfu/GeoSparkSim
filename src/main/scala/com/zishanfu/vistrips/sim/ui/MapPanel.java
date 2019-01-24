@@ -169,9 +169,9 @@ class MapPanel extends JPanel {
 		this.signals.add(signal);
 	}
 	
-	public synchronized void addPOI(GeoPoint poi) {
-		this.vehicles.add(poi);
-		updateMinMaxEastingNorthing(poi);
+	public synchronized void addVehicle(GeoPoint veh) {
+		this.vehicles.add(veh);
+		updateMinMaxEastingNorthing(veh);
 	}
 	
 	private synchronized void updateMinMaxEastingNorthing(Point point) {

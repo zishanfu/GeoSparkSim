@@ -1,0 +1,27 @@
+package com.zishanfu.vistrips.sim.model;
+
+import java.io.Serializable;
+
+import com.vividsolutions.jts.geom.Coordinate;
+
+public class Report implements Serializable{
+	private int id;
+	private Coordinate location;
+	private double speed;
+	private double acceleration;
+	public Report(int id, Coordinate location, double speed, double acceleration) {
+		this.id = id;
+		this.location = location;
+		this.speed = speed;
+		this.acceleration = acceleration;
+	}
+	
+	public Coordinate getLocation() {
+		return location;
+	}
+
+
+	public String toString() {
+		return String.format("%s,%s,%s,%s", id, location, speed, acceleration);
+	}
+}

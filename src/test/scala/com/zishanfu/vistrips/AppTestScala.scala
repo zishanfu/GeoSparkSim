@@ -1,35 +1,166 @@
 package com.zishanfu.vistrips
 
-
-import com.zishanfu.vistrips.tools.FileOps
-import com.zishanfu.vistrips.osm.CountyPop
-import com.zishanfu.vistrips.osm.GraphInit
-import org.jxmapviewer.viewer.GeoPosition
-import com.zishanfu.vistrips.tools.Distance
-import com.zishanfu.vistrips.model.Pair
-import org.apache.spark.sql.Row
-import org.apache.spark.sql.SQLContext
-import org.apache.spark.sql.types.DoubleType
-import com.vividsolutions.jts.geom.LineString
-import com.zishanfu.vistrips.tools.Interpolate
+import com.vividsolutions.jts.geom.Coordinate
+import com.zishanfu.vistrips.sim.model.IDMVehicle
 import org.datasyslab.geospark.spatialRDD.SpatialRDD
+import com.vividsolutions.jts.geom.Polygon
+import org.apache.spark.rdd.RDD
+import org.datasyslab.geospark.spatialRDD.PolygonRDD
+import org.datasyslab.geospark.spatialOperator.JoinQuery
 import org.datasyslab.geospark.enums.GridType
-import com.zishanfu.vistrips.path.ShortestPathFactory
-import com.zishanfu.vistrips.osm.OsmConverter
-import com.zishanfu.vistrips.osm.OsmGraph
-import org.apache.spark.graphx.lib.ShortestPaths
-import com.zishanfu.vistrips.components.impl.GenerationImpl
 
 
 class AppTestScala extends TestBaseScala {
-  
-  describe("Intersection"){
-    it("Traffic Light Intersection"){
-      val vistrips = resourceFolder + "vistrips"
-      val path = vistrips
-      OsmConverter.convertToNetwork(sparkSession, path)
+//  describe("Headway Test"){
+//    it("Spatial Join"){
+//      val c1 = new Coordinate(33.4148172, -111.9262878);
+//      val c11 = new Coordinate(33.41482,-111.92638);
+//      val c2 = new Coordinate(33.4148230, -111.9264849);
+//      val c3 = new Coordinate(33.4148076, -111.9273659);
+//      val route1 : Array[Coordinate] = Array(c1, c2, c3);
+//      val route2 : Array[Coordinate] = Array(c2, c3); 
+//      val route3 : Array[Coordinate] = Array(c3, c3); 
+//      val vehicle1 = new IDMVehicle(route1, 1, 10, 10)
+//      val vehicle2 = new IDMVehicle(route2, 2, 10, 10) 
+//      val vehicle3 = new IDMVehicle(route3, 3, 10, 10)
+//      val vrdd = new SpatialRDD[IDMVehicle]
+//      val raw = sparkSession.sparkContext.parallelize(Seq(vehicle1, vehicle2, vehicle3))
+//      vrdd.setRawSpatialRDD(raw)
+//      vrdd.analyze();
+//      vrdd.spatialPartitioning(GridType.QUADTREE, 1);
+//      val buffers : RDD[Polygon] = raw.map(veh => {
+//        var poly:Polygon = null
+//			  if(veh.getvBuffer() == null) {
+//				  poly = veh.getSelf()
+//			  }else {
+//				  poly = veh.getvBuffer().getHead()
+//			  }
+//        poly.setUserData(veh)
+//        poly
+//      })
+//      val windows = new PolygonRDD(buffers);
+//      windows.analyze();
+//      windows.spatialPartitioning(vrdd.getPartitioner());
+//      val result = JoinQuery.SpatialJoinQuery(vrdd, windows, false, true);
+//      result.rdd.foreach(println)
+//    }
+//  }
+  describe("IDM"){
+    it("Simulation Test"){
+      val c1 = new Coordinate(33.4148172, -111.9262878);
+      val c11 = new Coordinate(33.41482,-111.92638);
+      val c2 = new Coordinate(33.4148230, -111.9264849);
+      val c3 = new Coordinate(33.4148076, -111.9273659);
+      val route1 : Array[Coordinate] = Array(c1, c2, c3);
+      val route2 : Array[Coordinate] = Array(c2, c3);
+
+      val vehicle1 = new IDMVehicle(route1, 1, 10, 10)
+      val vehicle2 = new IDMVehicle(route2, 2, 10, 10)
+      import scala.collection.JavaConverters._
+      val javaSet = new java.util.HashSet[IDMVehicle]()
+      
+      print(c1.distance(c11)/0.0000021)
+      javaSet.add(vehicle2)
+      println(vehicle1.getReport.toString())
+      vehicle1.setAheadVehicles(javaSet)
+      vehicle1.moveNext()
+      println(vehicle1.getReport.toString())
+      vehicle1.moveNext()
+      println(vehicle1.getReport.toString())
+      
     }
   }
+  
+  
+  //1:479km = euclidean: harvsine
+	//Car 4.5m
+	//safe distance 2m
+	//11m
+	//1/x = 479000/11
+	//x = 0.000023
+  //0.00000772 -> 3.7m lane width
+//  describe("Angle Test"){
+//    it("two coordinates"){
+//      //33.4148230, -111.9264849,tail
+//      //33.4148172, -111.9262878,head
+//      val p = new Coordinate(33.4148230, -111.9264849)
+//      val q = new Coordinate(33.4148172, -111.9262878)
+//      val length = 0.00005
+//      val headWidth = 0.00000772
+//      //0.000023
+//      //0.000002
+//      val backWidth = 0.00002317
+//      println(p.x + "," + p.y + ", tail")
+//      
+//      //10m
+//      val headAngle = Angle.angle(p, q) //p -> q
+//      val dx = Math.cos(headAngle)*length
+//      val dy = Math.sin(headAngle)*length
+//      val x = dx + p.x
+//      val y = dy + p.y
+//      val p1 = new Coordinate(x, y)
+//      println(x + "," + y + ", head")
+//      
+//      if(dx < dy){
+//        val p11 = new Coordinate(p1.x + headWidth, p1.y);
+//        val p12 = new Coordinate(p1.x - headWidth, p1.y);
+//        val p21 = new Coordinate(p.x + headWidth, p.y);
+//        val p22 = new Coordinate(p.x - headWidth, p.y);
+//        System.out.println(p11 + ", head1");
+//        System.out.println(p12 + ", head2");
+//        System.out.println(p21 + ", head3");
+//        System.out.println(p22 + ", head4");
+//      }else{
+//        val p11 = new Coordinate(p1.x, p1.y + headWidth);
+//        val p12 = new Coordinate(p1.x, p1.y - headWidth);
+//        val p21 = new Coordinate(p.x, p.y + headWidth);
+//        val p22 = new Coordinate(p.x, p.y - headWidth);
+//        System.out.println(p11 + ", head1");
+//        System.out.println(p12 + ", head2");
+//        System.out.println(p21 + ", head3");
+//        System.out.println(p22 + ", head4");
+//      }
+//      
+//      
+//      val backAngle = Angle.angle(q, p) //q -> p
+//      val dx1 = Math.cos(backAngle)*length
+//      val dy1 = Math.sin(backAngle)*length
+//      val x1 = dx1 + p.x
+//      val y1 = dy1 + p.y
+//      val p2 = new Coordinate(x1, y1);
+//      println(x1 + "," + y1 + ", back")
+//      
+//      if(dx1 > dy1){
+//        val p11 = new Coordinate(p2.x + backWidth, p2.y);
+//        val p12 = new Coordinate(p2.x - backWidth, p2.y);
+//        val p21 = new Coordinate(p.x + backWidth, p.y);
+//        val p22 = new Coordinate(p.x - backWidth, p.y);
+//        System.out.println(p11 + ", back1");
+//        System.out.println(p12 + ", back2");
+//        System.out.println(p21 + ", back3");
+//        System.out.println(p22 + ", back4");
+//      }else{
+//        val p11 = new Coordinate(p2.x, p2.y + backWidth);
+//        val p12 = new Coordinate(p2.x, p2.y - backWidth);
+//        val p21 = new Coordinate(p.x, p.y + backWidth);
+//        val p22 = new Coordinate(p.x, p.y - backWidth);
+//        System.out.println(p11 + ", back1");
+//        System.out.println(p12 + ", back2");
+//        System.out.println(p21 + ", back3");
+//        System.out.println(p22 + ", back4");
+//      }
+//      
+//      
+//    }
+//  }
+  
+//  describe("Intersection"){
+//    it("Traffic Light Intersection"){
+//      val vistrips = resourceFolder + "vistrips"
+//      val path = vistrips
+//      OsmConverter.convertToNetwork(sparkSession, path)
+//    }
+//  }
   
 //  describe("Graphhopper Test"){
 //    it("generate routes"){

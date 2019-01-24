@@ -11,7 +11,6 @@ import com.vividsolutions.jts.geom.LineString;
 
 public class Utils {
 	private GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
-	private Angle angle;
 	
 	/**
 	 * @param PointList pl
@@ -35,14 +34,14 @@ public class Utils {
 	}
 	
 	public double heading(Coordinate p0, Coordinate p1) {
-		return angle.angle(p0, p1);
+		return Angle.angle(p0, p1);
 	}
 	
 	public double angleDiff(double ang1, double ang2) {
-		return angle.diff(ang1, ang2);
+		return Angle.diff(ang1, ang2);
 	}
 	
 	public int getTurn(double ang1, double ang2) {
-		return angle.getTurn(ang1, ang2);
+		return Angle.getTurn(ang1, ang2);
 	}
 }

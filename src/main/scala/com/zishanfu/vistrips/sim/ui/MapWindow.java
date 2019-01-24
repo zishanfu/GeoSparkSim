@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.swing.JFrame;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Point;
 import com.zishanfu.vistrips.sim.model.GeoPoint;
 import com.zishanfu.vistrips.sim.model.Segment;
@@ -58,18 +59,15 @@ public class MapWindow extends JFrame {
 		map.addSegments(segments);
 	}
 	
-	/**
-	 * Adds a point of interest (POI) to the list of POIs to display. 
-	 * @param poi the POI to add
-	 */
-	public void addPOI(GeoPoint poi) {
-		map.addPOI(poi);
+	
+	public void addVehicles(Coordinate veh) {
+		map.addVehicle(new GeoPoint(veh.x, veh.y));
 	}
 	
-	public void addSignals(Point[] points) {
-		for(int i = 0; i<points.length; i++) {
-			Point p = points[i];
-			map.addSignal(new GeoPoint(p.getY(), p.getX(), Long.toString((int) p.getUserData())));
+	public void addSignals(Coordinate[] coordinates) {
+		for(int i = 0; i<coordinates.length; i++) {
+			Coordinate p = coordinates[i];
+			map.addSignal(new GeoPoint(p.y, p.x));
 		}
 	}
 

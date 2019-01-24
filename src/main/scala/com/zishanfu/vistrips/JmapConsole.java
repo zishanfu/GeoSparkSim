@@ -12,7 +12,6 @@ import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import com.zishanfu.vistrips.components.impl.GenerationImpl;
-import com.zishanfu.vistrips.components.impl.GenerationImpl2;
 import com.zishanfu.vistrips.components.impl.SimulationImpl;
 import com.zishanfu.vistrips.model.Vehicle;
 
@@ -55,8 +54,8 @@ public class JmapConsole {
 		String selectedType = typeParser(prop.getProperty("generation.type"));
 		int total = Integer.parseInt(prop.getProperty("generation.num"));
 		
-		GenerationImpl2 gImpl = new GenerationImpl2(spark);
-		vehicles = gImpl.apply(geo1, geo2, selectedType, total);
+		GenerationImpl gImpl = new GenerationImpl(spark);
+//		vehicles = gImpl.apply(geo1, geo2, selectedType, total);
 	}
 	
 	public void runSimulation() {
