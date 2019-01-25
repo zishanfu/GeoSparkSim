@@ -9,5 +9,5 @@ timestamp=1
 simulation=10
 partition=5
 
-$sparkcommand number timestamp simulation partition hdfs_path osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path osm_path
 sleep $sleepinterval
