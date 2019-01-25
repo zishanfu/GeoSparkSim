@@ -54,7 +54,7 @@ public class GenerationImpl implements Serializable{
 	}
 
 
-	public JavaRDD<IDMVehicle> apply(GeoPosition geo1, GeoPosition geo2, String generationType, int total) {
+	public JavaRDD<IDMVehicle> apply(GeoPosition geo1, GeoPosition geo2, String generationType, int total, String local) {
 		long t1 = System.currentTimeMillis();
 		//scale the length of trip, same with the scale in trip generation
 		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
@@ -72,7 +72,7 @@ public class GenerationImpl implements Serializable{
 		path = new OsmParser(hdfs).runInHDFS(newGeo1, newGeo2);
 		
 		//Download osm pn disk 
-		String local = osmDownloader(newGeo1, newGeo2);
+		//String local = osmDownloader(newGeo1, newGeo2);
 		long t2 = System.currentTimeMillis();
 		
 		//String osmPath = HDFSUtil.uploadLocalFile2HDFS(local, hdfs);

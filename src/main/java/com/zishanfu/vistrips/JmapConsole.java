@@ -23,10 +23,12 @@ public class JmapConsole {
 	private JavaRDD<IDMVehicle> vehicles;
 	private OsmGraph graph;
 	private HDFSUtil hdfs;
+	private String osm;
 	
-	public JmapConsole(SparkSession spark, HDFSUtil hdfs) {
+	public JmapConsole(SparkSession spark, HDFSUtil hdfs, String osm) {
 		this.spark = spark;
 		this.hdfs = hdfs;
+		this.osm = osm;
 	}
 	
 	public void runGeneration(int total) {
@@ -61,7 +63,7 @@ public class JmapConsole {
 //		int total = Integer.parseInt(prop.getProperty("generation.num"));
 		
 		GenerationImpl gImpl = new GenerationImpl(spark, hdfs);
-		this.vehicles = gImpl.apply(geo1, geo2, selectedType, total);
+		this.vehicles = gImpl.apply(geo1, geo2, selectedType, total, osm);
 		
 		long t1 = System.currentTimeMillis();
 		this.graph = new OsmGraph(spark, gImpl.getPath());

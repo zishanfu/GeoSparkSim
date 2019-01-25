@@ -34,11 +34,12 @@ public class App
     	int simTime = Integer.parseInt(args[2]);
     	int parTime = Integer.parseInt(args[3]);
     	String str = args[4];
+    	String osm = args[5];
     	LOG.warn(String.format("Total: %s, timestamp: %s, simulation time: %s, partition time: %s", total, timestamp, simTime, parTime, str));
 //        new Jmap().runUI();
     	LOG.debug("Log4j appender configuration is successful !!");
     	HDFSUtil hdfs = new HDFSUtil(str);
-    	JmapConsole simConsole = new JmapConsole(spark, hdfs);
+    	JmapConsole simConsole = new JmapConsole(spark, hdfs, osm);
     	simConsole.runGeneration(total);
     	//run simulation in certain time period(minutes)
     	simConsole.runSimulation(timestamp, simTime, parTime);

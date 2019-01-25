@@ -7,4 +7,4 @@ spark-2.3.2-bin-hadoop2.6/bin
 
 ./spark-submit --class com.zishanfu.vistrips.App /hdd2/code/zishanfu/GeoSparkSim/target/VisTrips_v1-0.0.1-SNAPSHOT.jar 10000 1 10 5 hdfs://en4119507l.cidse.dhcp.asu.edu:54310
 
-../../spark-2.3.2-bin-hadoop2.6/bin/spark-submit --class com.zishanfu.vistrips.App /hdd2/code/zishanfu/GeoSparkSim/target/VisTrips_v1-0.0.1-SNAPSHOT-jar-with-dependencies.jar 10000 1 10 5 hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+../../spark-2.3.2-bin-hadoop2.6/bin/spark-submit --master spark://en4119507l.cidse.dhcp.asu.edu:7077 --class com.zishanfu.vistrips.App /hdd2/code/zishanfu/GeoSparkSim/target/VisTrips_v1-0.0.1-SNAPSHOT-jar-with-dependencies.jar 10000 1 10 5 hdfs://en4119507l.cidse.dhcp.asu.edu:54310 
