@@ -28,7 +28,7 @@ import com.vividsolutions.jts.geom.Coordinate
 import com.vividsolutions.jts.geom.GeometryFactory
 import com.vividsolutions.jts.geom.Point
 import com.zishanfu.vistrips.model.Link
-import com.zishanfu.vistrips.path.Haversine
+import com.zishanfu.vistrips.Haversine
 
 object OsmConverter {
   

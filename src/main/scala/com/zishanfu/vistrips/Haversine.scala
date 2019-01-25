@@ -1,4 +1,4 @@
-package com.zishanfu.vistrips.path
+package com.zishanfu.vistrips
 
 import com.vividsolutions.jts.geom.Point
 
