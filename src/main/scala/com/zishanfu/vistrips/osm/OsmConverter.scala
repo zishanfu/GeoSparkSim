@@ -28,7 +28,7 @@ import com.vividsolutions.jts.geom.Coordinate
 import com.vividsolutions.jts.geom.GeometryFactory
 import com.vividsolutions.jts.geom.Point
 import com.zishanfu.vistrips.model.Link
-import com.zishanfu.vistrips.tools.Distance
+import com.zishanfu.vistrips.path.Haversine
 
 object OsmConverter {
   
@@ -55,7 +55,7 @@ object OsmConverter {
         tailCoor.setUserData(tail._2)
         val headCoor = gf.createPoint(coorParserByCRS(head._3, head._4, DefaultGeographicCRS.WGS84))
         headCoor.setUserData(head._2)
-        val dist = new Distance().harversineMile(headCoor, tailCoor)
+        val dist = Haversine.harversineMile(headCoor, tailCoor)
         Link(id, tailCoor, headCoor, dist, speed, driveDirection, lanes)
   }
   

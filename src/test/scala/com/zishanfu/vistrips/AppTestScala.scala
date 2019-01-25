@@ -1,13 +1,6 @@
 package com.zishanfu.vistrips
 
-import com.vividsolutions.jts.geom.Coordinate
-import com.zishanfu.vistrips.sim.model.IDMVehicle
-import org.datasyslab.geospark.spatialRDD.SpatialRDD
-import com.vividsolutions.jts.geom.Polygon
-import org.apache.spark.rdd.RDD
-import org.datasyslab.geospark.spatialRDD.PolygonRDD
-import org.datasyslab.geospark.spatialOperator.JoinQuery
-import org.datasyslab.geospark.enums.GridType
+
 
 
 class AppTestScala extends TestBaseScala {
@@ -45,31 +38,31 @@ class AppTestScala extends TestBaseScala {
 //      result.rdd.foreach(println)
 //    }
 //  }
-  describe("IDM"){
-    it("Simulation Test"){
-      val c1 = new Coordinate(33.4148172, -111.9262878);
-      val c11 = new Coordinate(33.41482,-111.92638);
-      val c2 = new Coordinate(33.4148230, -111.9264849);
-      val c3 = new Coordinate(33.4148076, -111.9273659);
-      val route1 : Array[Coordinate] = Array(c1, c2, c3);
-      val route2 : Array[Coordinate] = Array(c2, c3);
-
-      val vehicle1 = new IDMVehicle(route1, 1, 10, 10)
-      val vehicle2 = new IDMVehicle(route2, 2, 10, 10)
-      import scala.collection.JavaConverters._
-      val javaSet = new java.util.HashSet[IDMVehicle]()
-      
-      print(c1.distance(c11)/0.0000021)
-      javaSet.add(vehicle2)
-      println(vehicle1.getReport.toString())
-      vehicle1.setAheadVehicles(javaSet)
-      vehicle1.moveNext()
-      println(vehicle1.getReport.toString())
-      vehicle1.moveNext()
-      println(vehicle1.getReport.toString())
-      
-    }
-  }
+//  describe("IDM"){
+//    it("Simulation Test"){
+//      val c1 = new Coordinate(33.4148172, -111.9262878);
+//      val c11 = new Coordinate(33.41482,-111.92638);
+//      val c2 = new Coordinate(33.4148230, -111.9264849);
+//      val c3 = new Coordinate(33.4148076, -111.9273659);
+//      val route1 : Array[Coordinate] = Array(c1, c2, c3);
+//      val route2 : Array[Coordinate] = Array(c2, c3);
+//
+//      val vehicle1 = new IDMVehicle(route1, 1, 10, 10)
+//      val vehicle2 = new IDMVehicle(route2, 2, 10, 10)
+//      import scala.collection.JavaConverters._
+//      val javaSet = new java.util.HashSet[IDMVehicle]()
+//      
+//      print(c1.distance(c11)/0.0000021)
+//      javaSet.add(vehicle2)
+//      println(vehicle1.getReport.toString())
+//      vehicle1.setAheadVehicles(javaSet)
+//      vehicle1.moveNext()
+//      println(vehicle1.getReport.toString())
+//      vehicle1.moveNext()
+//      println(vehicle1.getReport.toString())
+//      
+//    }
+//  }
   
   
   //1:479km = euclidean: harvsine
