@@ -1,10 +1,8 @@
 package com.zishanfu.vistrips.sim.model;
 
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.graphx.EdgeRDD;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.zishanfu.vistrips.model.Link;
 import com.zishanfu.vistrips.osm.OsmGraph;
 
 import scala.collection.immutable.Set;
@@ -29,14 +27,14 @@ public class World {
 	private JavaRDD<IDMVehicle> roadDigesting(){
 		Set<Coordinate> signals = graph.getIntersectsSet();
 		Set<Coordinate> intersects = graph.getSignalsSet();
-		EdgeRDD<Link> edge = graph.graph().edges();
+//		EdgeRDD<Link> edge = graph.graph().edges();
 		JavaRDD<IDMVehicle> landedVehicles = vehicle.map(veh -> {
 			Coordinate[] coordinates = veh.getCoordinates();
 			VirtualGPS gps = veh.getGps();
 			for(Coordinate coor: coordinates) {
 				if(signals.contains(coor)) {
 					gps.addLights(coor);
-				}else {
+				}else if(intersects.contains(coor)){
 					gps.addIntersects(coor);
 				}
 			}

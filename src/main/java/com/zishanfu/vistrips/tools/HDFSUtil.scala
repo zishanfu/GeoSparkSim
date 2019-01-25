@@ -14,6 +14,8 @@ import org.apache.zookeeper.common.IOUtils
 class HDFSUtil (hdfsUrl: String){
 //  var hdfsUrl = "hdfs://localhost:9000"
   var targetUrl = ""
+  val config = new Configuration()
+  config.setBoolean("fs.hdfs.impl.disable.cache", true)
   
   def getHDFSUrl() : String = hdfsUrl
   
@@ -34,7 +36,7 @@ class HDFSUtil (hdfsUrl: String){
     var result = false
     if (StringUtils.isNoneBlank(dir)) {
       targetUrl = hdfsUrl + dir
-      val config = new Configuration()
+      
       val fs = FileSystem.get(URI.create(targetUrl), config)
       if (!fs.exists(new Path(targetUrl))) {
         fs.mkdirs(new Path(targetUrl))
@@ -49,7 +51,6 @@ class HDFSUtil (hdfsUrl: String){
     var result = false
     if (StringUtils.isNoneBlank(dir)) {
       targetUrl = hdfsUrl + dir
-      val config = new Configuration()
       val fs = FileSystem.get(URI.create(targetUrl), config)
       fs.delete(new Path(targetUrl), true)
       fs.close()
@@ -62,7 +63,6 @@ class HDFSUtil (hdfsUrl: String){
   def uploadLocalFile2HDFS(localFile : String, hdfsFile : String) : String = {
     if (StringUtils.isNoneBlank(localFile) && StringUtils.isNoneBlank(hdfsFile)) {
       targetUrl = hdfsUrl + hdfsFile
-      val config = new Configuration()
       val hdfs = FileSystem.get(URI.create(hdfsUrl), config)
       val src = new Path(localFile)
       val dst = new Path(targetUrl)
@@ -77,7 +77,6 @@ class HDFSUtil (hdfsUrl: String){
     var result = false
     if (StringUtils.isNoneBlank(newFile) && null != content) {
       targetUrl = hdfsUrl + newFile
-      val config = new Configuration()
       val hdfs = FileSystem.get(URI.create(targetUrl), config)
       val os = hdfs.create(new Path(targetUrl))
       os.write(content.getBytes("UTF-8"))
@@ -92,7 +91,6 @@ class HDFSUtil (hdfsUrl: String){
     var result = false
     if (StringUtils.isNoneBlank(hdfsFile)) {
       targetUrl = hdfsUrl + hdfsFile
-      val config = new Configuration()
       val hdfs = FileSystem.get(URI.create(targetUrl), config)
       val path = new Path(targetUrl)
       val isDeleted = hdfs.delete(path, true)
@@ -106,7 +104,6 @@ class HDFSUtil (hdfsUrl: String){
     var result =  new Array[Byte](0)
     if (StringUtils.isNoneBlank(hdfsFile)) {
       targetUrl = hdfsUrl + hdfsFile
-      val config = new Configuration()
       val hdfs = FileSystem.get(URI.create(targetUrl), config)
       val path = new Path(targetUrl)
       if (hdfs.exists(path)) {
