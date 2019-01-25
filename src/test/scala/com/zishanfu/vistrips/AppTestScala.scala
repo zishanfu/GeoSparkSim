@@ -5,7 +5,11 @@ import com.vividsolutions.jts.algorithm.Angle
 
 
 class AppTestScala extends TestBaseScala {
-  
+  describe("dummy"){
+    it("haversine"){
+       println(Haversine.RADIUS_OF_EARTH)
+    }
+  }
 //  describe("IDM"){
 //    it("Simulation Test"){
 //      val c1 = new Coordinate(33.4148172, -111.9262878);
