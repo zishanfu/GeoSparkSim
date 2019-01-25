@@ -1,8 +1,5 @@
 package com.zishanfu.vistrips;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -23,39 +20,44 @@ public class JmapConsole {
 	private String filename = "app.config";
 	private InputStream is = null;
 	private SparkSession spark;
-	private String resources;
 	private JavaRDD<IDMVehicle> vehicles;
 	private OsmGraph graph;
 	private HDFSUtil hdfs;
 	
-	public JmapConsole(String resources, SparkSession spark, HDFSUtil hdfs) {
+	public JmapConsole(SparkSession spark, HDFSUtil hdfs) {
 		this.spark = spark;
-		this.resources = resources;
 		this.hdfs = hdfs;
 	}
 	
 	public void runGeneration(int total) {
-		try {
-		    is = new FileInputStream(resources + "/config/" + filename);
-		} catch (FileNotFoundException ex) {
-		    LOG.error("app.config file can't be found");
-		}
-		try {
-		    prop.load(is);
-		} catch (IOException ex) {
-			LOG.error("app.config file can't be load");
-		}
+//		try {
+//		    is = new FileInputStream(resources + "/config/" + filename);
+//		} catch (FileNotFoundException ex) {
+//		    LOG.error("app.config file can't be found");
+//		}
+//		try {
+//		    prop.load(is);
+//		} catch (IOException ex) {
+//			LOG.error("app.config file can't be load");
+//		}
 
-		String appName = prop.getProperty("app.name");
-		String appVersion = prop.getProperty("app.version");
-		double geo1Lat = Double.parseDouble(prop.getProperty("geo1.lat"));
-		double geo1Lon = Double.parseDouble(prop.getProperty("geo1.lon"));
-		double geo2Lat = Double.parseDouble(prop.getProperty("geo2.lat"));
-		double geo2Lon = Double.parseDouble(prop.getProperty("geo2.lon"));
+//		String appName = prop.getProperty("app.name");
+//		String appVersion = prop.getProperty("app.version");
+//		double geo1Lat = Double.parseDouble(prop.getProperty("geo1.lat"));
+//		double geo1Lon = Double.parseDouble(prop.getProperty("geo1.lon"));
+//		double geo2Lat = Double.parseDouble(prop.getProperty("geo2.lat"));
+//		double geo2Lon = Double.parseDouble(prop.getProperty("geo2.lon"));
+		
+		double geo1Lat = 33.48998;
+		double geo1Lon = -112.10964;
+		double geo2Lat = 33.38827;
+		double geo2Lon = -111.79722;
+		
 		LOG.info("");
 		GeoPosition geo1 = new GeoPosition(geo1Lat, geo1Lon);
 		GeoPosition geo2 = new GeoPosition(geo2Lat, geo2Lon);
-		String selectedType = typeParser(prop.getProperty("generation.type"));
+		//String selectedType = typeParser(prop.getProperty("generation.type"));
+		String selectedType = "DSO";
 //		int total = Integer.parseInt(prop.getProperty("generation.num"));
 		
 		GenerationImpl gImpl = new GenerationImpl(spark, hdfs);

@@ -12,7 +12,8 @@ import com.zishanfu.vistrips.tools.HDFSUtil;
 public class App 
 {
 	private static Logger LOG = Logger.getLogger(App.class);
-	static String resources = System.getProperty("user.dir") + "/src/test/resources";
+	//static String resources = System.getProperty("user.dir") + "/src/test/resources";
+	//static String resources = System.getProperty("user.dir") + "/src/test/resources";
 	
 	//number
 	//timestamp
@@ -37,7 +38,7 @@ public class App
 //        new Jmap().runUI();
     	LOG.debug("Log4j appender configuration is successful !!");
     	HDFSUtil hdfs = new HDFSUtil(str);
-    	JmapConsole simConsole = new JmapConsole(resources, spark, hdfs);
+    	JmapConsole simConsole = new JmapConsole(spark, hdfs);
     	simConsole.runGeneration(total);
     	//run simulation in certain time period(minutes)
     	simConsole.runSimulation(timestamp, simTime, parTime);

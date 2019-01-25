@@ -30,14 +30,6 @@
  
 
   <dependencies>
-    
-    <!-- https://mvnrepository.com/artifact/org.scala-lang.modules/scala-swing -->
-    <dependency>
-        <groupId>org.scala-lang.modules</groupId>
-        <artifactId>scala-swing_2.11</artifactId>
-        <version>1.0.1</version>
-    </dependency>
-    
     <!-- https://mvnrepository.com/artifact/com.graphhopper/graphhopper -->
     <dependency>
         <groupId>com.graphhopper</groupId>

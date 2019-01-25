@@ -1,0 +1,7 @@
+10000 1 10 5 hdfs://localhost:9000
+
+
+spark-submit --class com.zishanfu.vistrips.App /home/zishanfu/eclipse-workspace/VisTrips/target/VisTrips_v1-0.0.1-SNAPSHOT.jar 10000 1 10 5 hdfs://localhost:9000
+
+
+./spark-submit --class com.zishanfu.vistrips.App /hdd2/code/zishanfu/GeoSparkSim/target/VisTrips_v1-0.0.1-SNAPSHOT.jar 10000 1 10 5 hdfs://en4119507l.cidse.dhcp.asu.edu:54310
