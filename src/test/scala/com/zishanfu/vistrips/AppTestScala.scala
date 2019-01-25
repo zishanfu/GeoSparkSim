@@ -1,8 +1,6 @@
 package com.zishanfu.vistrips
 
 
-
-
 class AppTestScala extends TestBaseScala {
 //  describe("Headway Test"){
 //    it("Spatial Join"){
