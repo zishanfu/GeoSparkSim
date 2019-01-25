@@ -26,6 +26,7 @@ import com.zishanfu.vistrips.osm.OsmParser;
 import com.zishanfu.vistrips.sim.model.IDMVehicle;
 import com.zishanfu.vistrips.tools.Distance;
 import com.zishanfu.vistrips.tools.FileOps;
+import com.zishanfu.vistrips.tools.HDFSUtil;
 import com.zishanfu.vistrips.tools.SpatialRandom;
 import com.zishanfu.vistrips.tools.Utils;
 
@@ -37,19 +38,24 @@ public class GenerationImpl implements Serializable{
 	private static final long serialVersionUID = -3340548967515954862L;
 	private final static Logger LOG = Logger.getLogger(GenerationImpl.class);
 	private SparkSession spark;
-	private String mapPath;
+	private String path;
+	private HDFSUtil hdfs;
 	
 	//testing
 	
-	public GenerationImpl(SparkSession spark) {
+	public GenerationImpl(SparkSession spark, HDFSUtil hdfs) {
 		this.spark = spark;
+		this.hdfs = hdfs;
 	}
 	
-	public String getMapPath() {
-		return mapPath;
+
+	public String getPath() {
+		return path;
 	}
 
+
 	public JavaRDD<IDMVehicle> apply(GeoPosition geo1, GeoPosition geo2, String generationType, int total) {
+		long t1 = System.currentTimeMillis();
 		//scale the length of trip, same with the scale in trip generation
 		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
 		
@@ -60,29 +66,36 @@ public class GenerationImpl implements Serializable{
 
 		//String path = OsmParser.run(newGeo1, newGeo2);
 		LOG.warn("Downloading selected OSM data ...");
-		//Download osm pn disk 
-		String osmPath = osmDownloader(newGeo1, newGeo2);
 		
 		//Parser osm to parquet on hdfs
-		mapPath = new OsmParser().runInLocal(newGeo1, newGeo2);
+		//mapPath = new OsmParser().runInLocal(newGeo1, newGeo2);
+		path = new OsmParser(hdfs).runInHDFS(newGeo1, newGeo2);
 		
-		LOG.warn(String.format("Finished download! Data located in ( %s )", osmPath));
+		//Download osm pn disk 
+		String local = osmDownloader(newGeo1, newGeo2);
+		long t2 = System.currentTimeMillis();
 		
-		LOG.warn("Processing graph ...");
-		GraphInit gi = new GraphInit(osmPath);
+		//String osmPath = HDFSUtil.uploadLocalFile2HDFS(local, hdfs);
+		
+		LOG.warn(String.format("Finished download! Time: %s . Processing graph ...", (t2-t1) / 1000));
+		
+		GraphInit gi = new GraphInit(local);
 		//OsmGraph graph = new OsmGraph(spark, path);
-		LOG.warn("Finished graph construction");
+		long t3 = System.currentTimeMillis();
+		LOG.warn(String.format("Finished graphhopper construction. Time: %s.", (t3-t2) / 1000));
 		
 		LOG.warn(String.format("Begin generate %s trips.", total));
 		JavaRDD<IDMVehicle> vRDD = vehicleGeneration(geo1, geo2, gi, maxLen, generationType, total);
 		
-		LOG.warn("Finished!");
+		long t4 = System.currentTimeMillis();
+		LOG.warn(String.format("Finished Generation! Time: %s seconds", (t4-t3) / 1000));
 		return vRDD;
 	}
 	
-	public String osmDownloader(GeoPosition geo1, GeoPosition geo2) {
+	private String osmDownloader(GeoPosition geo1, GeoPosition geo2) {
 		String OSM_URL = "http://overpass-api.de/api/map?bbox=";
 		String pathBase = System.getProperty("user.dir") + "/src/test/resources/vistrips";
+//		String pathBase = HDFSUtil.hdfsUrl() + "/vistrips";
 		URL url = null;
 		
 		double left = Math.min(geo1.getLongitude(), geo2.getLongitude());
@@ -103,7 +116,7 @@ public class GenerationImpl implements Serializable{
 		}
 		
 		Date now = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm_ss'Z'");
 		String newFileName = String.format("%s/%s.osm", pathBase, dateFormat.format(now));
 		
 		try {
@@ -132,17 +145,27 @@ public class GenerationImpl implements Serializable{
 		SpatialRandom spatialRand = new SpatialRandom( minLon, minLat, maxLon, maxLat, maxLen, graph);
 		
 		JavaSparkContext sc = new JavaSparkContext(spark.sparkContext());
-		int partitions = 8;
-		int recordsPerPartitions = (int) Math.ceil((double)total/partitions);
-		IDMVehicle[] vehicleArr = new IDMVehicle[total];
+		int partitions = 4;
+
+		IDMVehicle[] vehicleArr = new IDMVehicle[10000];
 		
-		for(int i = 0; i<total; i++) {
+		for(int i = 0; i<10000; i++) {
 			vehicleArr[i] = computeVehicle(type, spatialRand, i);
 		}
 		
+		int union = total/10000;
+		
 		JavaRDD<IDMVehicle> vehicles = sc.parallelize(Arrays.asList(vehicleArr), partitions);
 		
-		return vehicles;
+		JavaRDD<IDMVehicle> totalVehicles = vehicles;
+				
+		for(int i = 0; i<union-1; i++){
+			totalVehicles = totalVehicles.union(vehicles);
+	    }
+		
+		LOG.error(String.format("Vehicle numbers: %s", totalVehicles.count()));
+		
+		return totalVehicles;
 	}
 	
 	private IDMVehicle computeVehicle(String type, SpatialRandom rand, int sid){

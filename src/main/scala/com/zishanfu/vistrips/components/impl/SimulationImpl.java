@@ -7,6 +7,7 @@ import com.zishanfu.vistrips.osm.OsmGraph;
 import com.zishanfu.vistrips.sim.TrafficModelPanel;
 import com.zishanfu.vistrips.sim.World;
 import com.zishanfu.vistrips.sim.model.IDMVehicle;
+import com.zishanfu.vistrips.tools.HDFSUtil;
 
 
 public class SimulationImpl {
@@ -19,13 +20,13 @@ public class SimulationImpl {
 		this.graph = graph;
 	}
 	
-	public void apply(double simTime) {
+	public void apply(double simTime, double partitionTime, double timestamp, HDFSUtil hdfs) {
 		World world = new World(graph, vehicles.rdd());
 		
 		//set simulation time
 		try {
 			//1min
-			new TrafficModelPanel(world).run(simTime);
+			new TrafficModelPanel(world, hdfs).run(simTime, partitionTime, timestamp);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}

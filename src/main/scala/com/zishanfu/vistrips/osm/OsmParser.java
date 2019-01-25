@@ -11,12 +11,17 @@ import com.zishanfu.vistrips.tools.HDFSUtil;
 public class OsmParser {
 	private static String tmpPath = "";
 	private static final Logger LOG = LoggerFactory.getLogger(OsmParser.class);
+	private HDFSUtil hdfs;
 	
-	public static String runInHDFS(GeoPosition geo1, GeoPosition geo2) {
+	public OsmParser(HDFSUtil hdfs) {
+		this.hdfs = hdfs;
+	}
+	
+	public String runInHDFS(GeoPosition geo1, GeoPosition geo2) {
 		String destPath= "/vistrips";
-		HDFSUtil.deleteDir(destPath);
-		HDFSUtil.mkdir(destPath);
-		tmpPath = HDFSUtil.mkdirTemp(destPath);
+		hdfs.deleteDir(destPath);
+		hdfs.mkdir(destPath);
+		tmpPath = hdfs.mkdirTemp(destPath);
 		LOG.info(String.format("Created a folder in HDFS located in %s", tmpPath));
 		
 		String osmUrl = "http://overpass-api.de/api";
@@ -24,6 +29,7 @@ public class OsmParser {
 		xmlDownloader.setSink(new OsmParquetSink(tmpPath));
 		xmlDownloader.run();
 		LOG.info(String.format("Sinked openstreetmap data"));
+		//return tmpPath.substring(tmpPath.indexOf("s/") + 1);
 		return tmpPath;
 	}
 	

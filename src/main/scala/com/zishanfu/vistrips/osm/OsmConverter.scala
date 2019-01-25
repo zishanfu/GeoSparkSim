@@ -190,7 +190,12 @@ object OsmConverter {
       
       var speed = defaultSpeed
       var maxSpeed = tagsMap.get("maxspeed")
-      if(!maxSpeed.isEmpty) speed = maxSpeed.get.substring(0, 2).toInt
+      
+      try{
+        if(!maxSpeed.isEmpty && maxSpeed.get.length() > 2) speed = maxSpeed.get.substring(0, 2).toInt
+      }catch{
+        case ex: NumberFormatException => speed = defaultSpeed
+      }
       
       val oneWay = tagsMap.get("oneway")
       var isOneWay = if(oneWay != None) oneWay.get == "yes" else false

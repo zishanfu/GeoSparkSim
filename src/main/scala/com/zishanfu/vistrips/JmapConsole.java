@@ -15,6 +15,7 @@ import com.zishanfu.vistrips.components.impl.GenerationImpl;
 import com.zishanfu.vistrips.components.impl.SimulationImpl;
 import com.zishanfu.vistrips.osm.OsmGraph;
 import com.zishanfu.vistrips.sim.model.IDMVehicle;
+import com.zishanfu.vistrips.tools.HDFSUtil;
 
 public class JmapConsole {
 	private final static Logger LOG = Logger.getLogger(JmapConsole.class);
@@ -25,13 +26,15 @@ public class JmapConsole {
 	private String resources;
 	private JavaRDD<IDMVehicle> vehicles;
 	private OsmGraph graph;
+	private HDFSUtil hdfs;
 	
-	public JmapConsole(String resources, SparkSession spark) {
+	public JmapConsole(String resources, SparkSession spark, HDFSUtil hdfs) {
 		this.spark = spark;
 		this.resources = resources;
+		this.hdfs = hdfs;
 	}
 	
-	public void runGeneration() {
+	public void runGeneration(int total) {
 		try {
 		    is = new FileInputStream(resources + "/config/" + filename);
 		} catch (FileNotFoundException ex) {
@@ -53,20 +56,24 @@ public class JmapConsole {
 		GeoPosition geo1 = new GeoPosition(geo1Lat, geo1Lon);
 		GeoPosition geo2 = new GeoPosition(geo2Lat, geo2Lon);
 		String selectedType = typeParser(prop.getProperty("generation.type"));
-		int total = Integer.parseInt(prop.getProperty("generation.num"));
+//		int total = Integer.parseInt(prop.getProperty("generation.num"));
 		
-		GenerationImpl gImpl = new GenerationImpl(spark);
+		GenerationImpl gImpl = new GenerationImpl(spark, hdfs);
 		this.vehicles = gImpl.apply(geo1, geo2, selectedType, total);
-		this.graph = new OsmGraph(spark, gImpl.getMapPath());
+		
+		long t1 = System.currentTimeMillis();
+		this.graph = new OsmGraph(spark, gImpl.getPath());
+		long t2 = System.currentTimeMillis();
+		LOG.warn(String.format("Road Network Construction! Time: %s seconds", (t2-t1) / 1000));
 	}
 	
-	public void runSimulation() {
-		double timestamp = Double.parseDouble(prop.getProperty("simulation.timestamp"));
-		double simTime = Double.parseDouble(prop.getProperty("simulation.minutes"));
+	public void runSimulation(double timestamp, double simTime, double partitionTime) {
+//		double timestamp = Double.parseDouble(prop.getProperty("simulation.timestamp"));
+//		double simTime = Double.parseDouble(prop.getProperty("simulation.minutes"));
+//		double partitionTime = Double.parseDouble(prop.getProperty("simulation.partitiontime"));
 		SimulationImpl sImpl = new SimulationImpl(vehicles, graph);
-		sImpl.apply(simTime);
+		sImpl.apply(simTime, partitionTime, timestamp, hdfs);
 	}
-
 
 	private String typeParser(String type) {
 		switch(type) {

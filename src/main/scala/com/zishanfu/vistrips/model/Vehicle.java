@@ -22,7 +22,7 @@ public class Vehicle extends LineString{
 	public static final Distance distanceTo = new Distance();
 	
 	//create a looking ahead rectangle and looking back rectangle by current position
-	private HashSet<IDMVehicle> aheadVehicles;
+	private Set<IDMVehicle> aheadVehicles;
 	private VehicleBuffer vBuffer;
 	private Polygon self;
 	private Coordinate location;
@@ -75,9 +75,11 @@ public class Vehicle extends LineString{
 		return location;
 	}
 
-	public void setLocation(Coordinate location, int idx) {
+	public boolean setLocation(Coordinate location, int idx) {
 		this.location = location;
-		if(location == route[nextIdx] || location.distance(route[nextIdx]) <= 0.000005) {
+		if(nextIdx == route.length - 1) {
+			return false;
+		}else if(location == route[nextIdx] || location.distance(route[nextIdx]) <= 0.000005) {
 			this.nextIdx++;
 			this.next = route[this.nextIdx];
 			this.vBuffer = new VehicleBuffer(location, this.next);
@@ -86,6 +88,7 @@ public class Vehicle extends LineString{
 			this.next = route[idx];
 			this.vBuffer = new VehicleBuffer(location, this.next);
 		}
+		return true;
 	}
 
 	public Polygon getSelf() {
@@ -108,12 +111,12 @@ public class Vehicle extends LineString{
 		this.gps = gps;
 	}
 
-	public HashSet<IDMVehicle> getAheadVehicles() {
+	public Set<IDMVehicle> getAheadVehicles() {
 		return aheadVehicles;
 	}
 
-	public void setAheadVehicles(HashSet<IDMVehicle> aheadVehicles) {
-		this.aheadVehicles = aheadVehicles;
+	public void setAheadVehicles(Set<IDMVehicle> set) {
+		this.aheadVehicles = set;
 	}
 	
 	public Coordinate[] initialShuffle(long time) {
@@ -127,10 +130,10 @@ public class Vehicle extends LineString{
 			result.add(coordinates[i]);
 		}
 		result.add(coordinates[i]);
-		return result.toArray(new Coordinate[result.size()]);
+		return result.size() >= 2? result.toArray(new Coordinate[result.size()]): coordinates;
 	}
 	
-	public Coordinate[] shuffleLast(long time, Coordinate last) {
+	public Coordinate[] nextShuffle(long time, Coordinate last) {
 		Coordinate[] coordinates = this.getRoute();
 		List<Coordinate> result = new ArrayList<>();
 		int i = this.nextIdx;

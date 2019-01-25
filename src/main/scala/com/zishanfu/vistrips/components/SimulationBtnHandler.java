@@ -59,14 +59,14 @@ public class SimulationBtnHandler implements ActionListener{
 //	        });
 //
 //	        timer.start();
-			World world = new World(graph, vehicles.rdd());
+//			World world = new World(graph, vehicles.rdd());
 			
 			//set simulation time
-			try {
-				new TrafficModelPanel(world).run(1);
-			}catch(Exception ex) {
-				ex.printStackTrace();
-			}
+//			try {
+//				new TrafficModelPanel(world).run(10, 5);
+//			}catch(Exception ex) {
+//				ex.printStackTrace();
+//			}
 			
 		} 
 		

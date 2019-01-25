@@ -64,7 +64,7 @@ public class GenerateBtnHandler implements ActionListener{
 		    		
 		    		GeoPosition geo1 = sa.getViewer().convertPointToGeoPosition(pt1);
 		    		GeoPosition geo2 = sa.getViewer().convertPointToGeoPosition(pt2);
-		    		System.out.println(String.format("pt1 %s, pt2 %s, geo1 %s, geo2 %s, zoom %s", pt1, pt2, geo1, geo2, sa.getViewer().getZoom()));
+//		    		System.out.println(String.format("pt1 %s, pt2 %s, geo1 %s, geo2 %s, zoom %s", pt1, pt2, geo1, geo2, sa.getViewer().getZoom()));
 
 		    		//int zoom = sa.getViewer().getZoom();
 		        	
@@ -74,13 +74,13 @@ public class GenerateBtnHandler implements ActionListener{
 		    		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
 		    		LOG.warn(String.format("Selected rectangle, p1: %s, p2: %s", geo1, geo2));
 		    		
-		    		GenerationImpl gImpl = new GenerationImpl(spark);
-		    		
-		    		JavaRDD<IDMVehicle> vehicles = gImpl.apply(geo1, geo2, selectedType, total);
-		    		OsmGraph graph = new OsmGraph(spark, gImpl.getMapPath());
-		    		
-		    		sbHandler.setVehicles(vehicles);
-		    		sbHandler.setGraph(graph);
+//		    		GenerationImpl gImpl = new GenerationImpl(spark);
+//		    		
+//		    		JavaRDD<IDMVehicle> vehicles = gImpl.apply(geo1, geo2, selectedType, total);
+//		    		OsmGraph graph = new OsmGraph(spark, gImpl.getHdfs());
+//		    		
+//		    		sbHandler.setVehicles(vehicles);
+//		    		sbHandler.setGraph(graph);
 
 		    		long endTime = System.currentTimeMillis();
 		        	textArea.append("Processed! Total time: " + (endTime - startTime)/1000 + " seconds\n");
