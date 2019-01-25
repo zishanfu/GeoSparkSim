@@ -1,41 +1,11 @@
 package com.zishanfu.vistrips
 
+import com.vividsolutions.jts.geom.Coordinate
+import com.vividsolutions.jts.algorithm.Angle
+
 
 class AppTestScala extends TestBaseScala {
-//  describe("Headway Test"){
-//    it("Spatial Join"){
-//      val c1 = new Coordinate(33.4148172, -111.9262878);
-//      val c11 = new Coordinate(33.41482,-111.92638);
-//      val c2 = new Coordinate(33.4148230, -111.9264849);
-//      val c3 = new Coordinate(33.4148076, -111.9273659);
-//      val route1 : Array[Coordinate] = Array(c1, c2, c3);
-//      val route2 : Array[Coordinate] = Array(c2, c3); 
-//      val route3 : Array[Coordinate] = Array(c3, c3); 
-//      val vehicle1 = new IDMVehicle(route1, 1, 10, 10)
-//      val vehicle2 = new IDMVehicle(route2, 2, 10, 10) 
-//      val vehicle3 = new IDMVehicle(route3, 3, 10, 10)
-//      val vrdd = new SpatialRDD[IDMVehicle]
-//      val raw = sparkSession.sparkContext.parallelize(Seq(vehicle1, vehicle2, vehicle3))
-//      vrdd.setRawSpatialRDD(raw)
-//      vrdd.analyze();
-//      vrdd.spatialPartitioning(GridType.QUADTREE, 1);
-//      val buffers : RDD[Polygon] = raw.map(veh => {
-//        var poly:Polygon = null
-//			  if(veh.getvBuffer() == null) {
-//				  poly = veh.getSelf()
-//			  }else {
-//				  poly = veh.getvBuffer().getHead()
-//			  }
-//        poly.setUserData(veh)
-//        poly
-//      })
-//      val windows = new PolygonRDD(buffers);
-//      windows.analyze();
-//      windows.spatialPartitioning(vrdd.getPartitioner());
-//      val result = JoinQuery.SpatialJoinQuery(vrdd, windows, false, true);
-//      result.rdd.foreach(println)
-//    }
-//  }
+  
 //  describe("IDM"){
 //    it("Simulation Test"){
 //      val c1 = new Coordinate(33.4148172, -111.9262878);
@@ -70,47 +40,48 @@ class AppTestScala extends TestBaseScala {
 	//1/x = 479000/11
 	//x = 0.000023
   //0.00000772 -> 3.7m lane width
-//  describe("Angle Test"){
-//    it("two coordinates"){
-//      //33.4148230, -111.9264849,tail
-//      //33.4148172, -111.9262878,head
-//      val p = new Coordinate(33.4148230, -111.9264849)
-//      val q = new Coordinate(33.4148172, -111.9262878)
-//      val length = 0.00005
-//      val headWidth = 0.00000772
-//      //0.000023
-//      //0.000002
-//      val backWidth = 0.00002317
-//      println(p.x + "," + p.y + ", tail")
-//      
-//      //10m
-//      val headAngle = Angle.angle(p, q) //p -> q
-//      val dx = Math.cos(headAngle)*length
-//      val dy = Math.sin(headAngle)*length
-//      val x = dx + p.x
-//      val y = dy + p.y
-//      val p1 = new Coordinate(x, y)
-//      println(x + "," + y + ", head")
-//      
-//      if(dx < dy){
-//        val p11 = new Coordinate(p1.x + headWidth, p1.y);
-//        val p12 = new Coordinate(p1.x - headWidth, p1.y);
-//        val p21 = new Coordinate(p.x + headWidth, p.y);
-//        val p22 = new Coordinate(p.x - headWidth, p.y);
-//        System.out.println(p11 + ", head1");
-//        System.out.println(p12 + ", head2");
-//        System.out.println(p21 + ", head3");
-//        System.out.println(p22 + ", head4");
-//      }else{
-//        val p11 = new Coordinate(p1.x, p1.y + headWidth);
-//        val p12 = new Coordinate(p1.x, p1.y - headWidth);
-//        val p21 = new Coordinate(p.x, p.y + headWidth);
-//        val p22 = new Coordinate(p.x, p.y - headWidth);
-//        System.out.println(p11 + ", head1");
-//        System.out.println(p12 + ", head2");
-//        System.out.println(p21 + ", head3");
-//        System.out.println(p22 + ", head4");
-//      }
+  describe("Angle Test"){
+    it("two coordinates"){
+      //33.4148230, -111.9264849,tail
+      //33.4148172, -111.9262878,head
+      val p = new Coordinate(33.4148230, -111.9264849)
+      val q = new Coordinate(33.4148172, -111.9262878)
+      val length = 0.00005
+      val headWidth = 0.00000772
+      //0.000023
+      //0.000002
+      val backWidth = 0.00002317
+      println(p.x + "," + p.y + ", tail")
+      
+      //10m
+      val headAngle = Angle.angle(p, q) //p -> q
+      val dx = Math.cos(headAngle)*length
+      val dy = Math.sin(headAngle)*length
+      val x = dx + p.x
+      val y = dy + p.y
+      val p1 = new Coordinate(x, y)
+      println(x + "," + y + ", head")
+      
+      if(dx < dy){
+        val p11 = new Coordinate(p1.x + headWidth, p1.y);
+        val p12 = new Coordinate(p1.x - headWidth, p1.y);
+        val p21 = new Coordinate(p.x + headWidth, p.y);
+        val p22 = new Coordinate(p.x - headWidth, p.y);
+        System.out.println(p11 + ", head1");
+        System.out.println(p12 + ", head2");
+        System.out.println(p21 + ", head3");
+        System.out.println(p22 + ", head4");
+      }else{
+        val p11 = new Coordinate(p1.x, p1.y + headWidth);
+        val p12 = new Coordinate(p1.x, p1.y - headWidth);
+        val p21 = new Coordinate(p.x, p.y + headWidth);
+        val p22 = new Coordinate(p.x, p.y - headWidth);
+        System.out.println(p11 + ", head1");
+        System.out.println(p12 + ", head2");
+        System.out.println(p21 + ", head3");
+        System.out.println(p22 + ", head4");
+      }
+    }
 //      
 //      
 //      val backAngle = Angle.angle(q, p) //q -> p
@@ -345,6 +316,6 @@ class AppTestScala extends TestBaseScala {
 //      spResult.vertices.map(_._2).collect.foreach(println)
 //    }
 //  
-//  }
+  }
 
 }
