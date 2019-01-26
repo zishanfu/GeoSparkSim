@@ -65,7 +65,7 @@ public class GenerationImpl implements Serializable{
 		//System.out.println(String.format("Selected rectangle, p1: %s, p2: %s", newGeo1, newGeo2));
 
 		//String path = OsmParser.run(newGeo1, newGeo2);
-		LOG.warn("Downloading selected OSM data ...");
+		LOG.warn("Processing OSM data in GraphX");
 		
 		//Parser osm to parquet on hdfs
 		//mapPath = new OsmParser().runInLocal(newGeo1, newGeo2);
@@ -77,7 +77,7 @@ public class GenerationImpl implements Serializable{
 		
 		//String osmPath = HDFSUtil.uploadLocalFile2HDFS(local, hdfs);
 		
-		LOG.warn(String.format("Finished download! Time: %s . Processing graph ...", (t2-t1) / 1000));
+		LOG.warn(String.format("Finished OSM graph construction! Time: %s . Processing graphhopper ...", (t2-t1) / 1000));
 		
 		GraphInit gi = new GraphInit(local);
 		//OsmGraph graph = new OsmGraph(spark, path);
@@ -163,7 +163,7 @@ public class GenerationImpl implements Serializable{
 			totalVehicles = totalVehicles.union(vehicles);
 	    }
 		
-		LOG.error(String.format("Vehicle numbers: %s", totalVehicles.count()));
+		totalVehicles.repartition(partitions);
 		
 		return totalVehicles;
 	}

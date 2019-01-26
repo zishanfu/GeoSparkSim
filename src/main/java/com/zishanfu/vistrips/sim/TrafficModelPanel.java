@@ -145,10 +145,10 @@ public class TrafficModelPanel{
 			});
 			
 			long t2 = System.currentTimeMillis();
-			LOG.warn(String.format("Before Read File! Time: %s seconds", (t2-t1) / 1000));
+			LOG.warn(String.format("Before Write File! Time: %s seconds", (t2-t1) / 1000));
 			reportRDD.saveAsTextFile(hdfs.getHDFSUrl() + "/vistrips/reports_" + part);
 			long t3 = System.currentTimeMillis();
-			LOG.warn(String.format("Finished Simulation! Time: %s seconds", (t3-t2) / 1000));
+			LOG.warn(String.format("Finished Partition %s Simulation! Time: %s seconds", part, (t3-t2) / 1000));
 		}
 		
 		

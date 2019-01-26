@@ -55,7 +55,6 @@ public class JmapConsole {
 		double geo2Lat = 33.38827;
 		double geo2Lon = -111.79722;
 		
-		LOG.info("");
 		GeoPosition geo1 = new GeoPosition(geo1Lat, geo1Lon);
 		GeoPosition geo2 = new GeoPosition(geo2Lat, geo2Lon);
 		//String selectedType = typeParser(prop.getProperty("generation.type"));
