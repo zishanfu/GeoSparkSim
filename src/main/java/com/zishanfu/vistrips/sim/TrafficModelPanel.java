@@ -108,7 +108,7 @@ public class TrafficModelPanel{
 				List<Report> reports = new ArrayList<>();
 				Iterator<IDMVehicle> iterator = vehicles;
 				
-				LOG.warn("Begin iteration" + (shuffleSlot/timestamp));
+//				LOG.warn("Begin iteration" + (shuffleSlot/timestamp));
 				
 				for(int i = 0; i<shuffleSlot/timestamp; i++) {
 					
@@ -126,7 +126,7 @@ public class TrafficModelPanel{
 					}
 					List<IDMVehicle> bufferedVehicles = new ArrayList<>();
 					
-					LOG.warn("Created Vehicles and Vehicle Buffers. Begin check...");
+//					LOG.warn("Created Vehicles and Vehicle Buffers. Begin check...");
 					
 					for(Polygon buffer: vBuffers) {
 						Set<IDMVehicle> set = new HashSet<>();
@@ -149,7 +149,7 @@ public class TrafficModelPanel{
 						}
 						bufferedVehicles.add(bVeh);
 					}
-					LOG.warn("Finished all vehicle checks and move forward...");
+//					LOG.warn("Finished all vehicle checks and move forward...");
 					iterator = bufferedVehicles.iterator();
 				}
 				return reports.iterator();
