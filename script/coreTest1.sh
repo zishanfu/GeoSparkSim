@@ -8,33 +8,54 @@ osm_path="/hdd2/code/zishanfu/map.osm"
 sleepinterval=60
 
 number=300000
-timestamp=0.2
+timestamp=1
 simulation=10
 partition=5
+cores=20
+
+echo "Spark cores "$cores" #####################################"
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+
+cores=40
+echo "Spark cores "$cores" #####################################"
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+
 cores=60
-
-echo "vehicle timestamp "$timestamp" seconds #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
- 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-timestamp=0.4
-echo "vehicle timestamp "$timestamp" seconds #####################################"
+echo "Spark cores "$cores" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
@@ -53,25 +74,3 @@ $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
-
-timestamp=0.6
-echo "vehicle timestamp "$timestamp" seconds #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-

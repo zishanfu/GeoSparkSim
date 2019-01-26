@@ -36,7 +36,7 @@ public class App
     	String str = args[4];
     	String osm = args[5];
     	int cores = Integer.parseInt(args[6]);
-    	LOG.warn(String.format("Total: %s, timestamp: %s, simulation time: %s, partition time: %s, cores used: %s", total, timestamp, simTime, parTime, str, cores));
+    	LOG.warn(String.format("Total: %s, timestamp: %s, simulation time: %s, partition time: %s, cores used: %s", total, timestamp, simTime, parTime, cores));
 //        new Jmap().runUI();
     	LOG.debug("Log4j appender configuration is successful !!");
     	HDFSUtil hdfs = new HDFSUtil(str);

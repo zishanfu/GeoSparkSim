@@ -11,22 +11,23 @@ number=300000
 timestamp=1
 simulation=10
 partition=5
+cores=60
 
 echo "vehicle number "$number" #####################################"
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
@@ -35,19 +36,19 @@ sh restart-spark.sh
 number=400000
 echo "vehicle number "$number" #####################################"
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
@@ -56,19 +57,19 @@ sh restart-spark.sh
 number=500000
 echo "vehicle number "$number" #####################################"
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 

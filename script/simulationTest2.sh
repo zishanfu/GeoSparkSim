@@ -8,12 +8,12 @@ osm_path="/hdd2/code/zishanfu/map.osm"
 sleepinterval=60
 
 number=300000
-timestamp=0.2
-simulation=10
+timestamp=1
+simulation=90
 partition=5
 cores=60
 
-echo "vehicle timestamp "$timestamp" seconds #####################################"
+echo "vehicle simulation "$simulation" minutes #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
 $checksize
@@ -33,8 +33,8 @@ sleep $sleepinterval
 
 sh restart-spark.sh
 
-timestamp=0.4
-echo "vehicle timestamp "$timestamp" seconds #####################################"
+simulation=120
+echo "vehicle simulation "$simulation" minutes #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
@@ -54,8 +54,8 @@ sleep $sleepinterval
 
 sh restart-spark.sh
 
-timestamp=0.6
-echo "vehicle timestamp "$timestamp" seconds #####################################"
+simulation=150
+echo "vehicle simulation "$simulation" minutes #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize

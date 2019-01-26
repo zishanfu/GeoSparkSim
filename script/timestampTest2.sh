@@ -11,22 +11,23 @@ number=300000
 timestamp=0.8
 simulation=10
 partition=5
+cores=60
 
 echo "vehicle timestamp "$timestamp" #####################################"
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
 $checksize
 sleep $sleepinterval
 
@@ -35,19 +36,19 @@ sh restart-spark.sh
 timestamp=1
 echo "vehicle timestamp "$timestamp" #####################################"
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
 

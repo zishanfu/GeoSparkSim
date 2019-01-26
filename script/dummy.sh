@@ -11,7 +11,7 @@ number=100000
 timestamp=1
 simulation=10
 partition=5
-cores=20
+cores=60
 
 echo "vehicle number "$number" #####################################"
 
