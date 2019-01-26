@@ -11,66 +11,34 @@ number=600000
 timestamp=1
 simulation=10
 partition=5
-cores=60
+cores=120
 
 echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
 
 number=700000
 echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
 
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
 
 number=800000
 echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
 
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
+number=900000
+echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
 
-sh restart-spark.sh
+number=1000000
+echo "vehicle number "$number" #####################################"
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
+$checksize

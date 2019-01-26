@@ -11,66 +11,16 @@ number=300000
 timestamp=1
 simulation=10
 partition=5
-cores=80
+cores=150
 
 echo "Spark cores "$cores" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
 
-sh restart-spark.sh
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-cores=100
+cores=180
 echo "Spark cores "$cores" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-cores=120
-echo "Spark cores "$cores" #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh

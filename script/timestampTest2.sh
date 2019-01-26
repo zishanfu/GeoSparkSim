@@ -17,41 +17,12 @@ echo "vehicle timestamp "$timestamp" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
 
 timestamp=1
 echo "vehicle timestamp "$timestamp" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
 
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
 
 

@@ -71,6 +71,8 @@ public class TrafficModelPanel{
 		vehicleRDD.analyze();
 		vehicleRDD.spatialPartitioning(GridType.QUADTREE, cores);
 		
+		LOG.warn("Partition iteration begin...");
+		
 		for(int part = 0; part < repartition; part++) {
 			
 			JavaRDD<IDMVehicle> shuffledVehicles = part == 0?
@@ -94,7 +96,10 @@ public class TrafficModelPanel{
 				}
 			});
 			
+			
 			//repartition
+			LOG.warn("Finished redefine linestring coordinates and repartition...shuffledVehicles " + shuffledVehicles.count());
+			
 			vehicleRDD.setRawSpatialRDD(shuffledVehicles);
 			vehicleRDD.analyze();
 			vehicleRDD.spatialPartitioning(GridType.QUADTREE, cores);
@@ -103,7 +108,9 @@ public class TrafficModelPanel{
 				List<Report> reports = new ArrayList<>();
 				Iterator<IDMVehicle> iterator = vehicles;
 				
-				for(int i = 0; i<shuffleSlot/2; i++) {
+				LOG.warn("Begin iteration" + (shuffleSlot/timestamp));
+				
+				for(int i = 0; i<shuffleSlot/timestamp; i++) {
 					
 					List<Polygon> vBuffers = new ArrayList<>();
 					List<com.vividsolutions.jts.geom.Point> curVehicles = new ArrayList<>();
@@ -118,6 +125,8 @@ public class TrafficModelPanel{
 						curVehicles.add(location);
 					}
 					List<IDMVehicle> bufferedVehicles = new ArrayList<>();
+					
+					LOG.warn("Created Vehicles and Vehicle Buffers. Begin check...");
 					
 					for(Polygon buffer: vBuffers) {
 						Set<IDMVehicle> set = new HashSet<>();
@@ -140,7 +149,7 @@ public class TrafficModelPanel{
 						}
 						bufferedVehicles.add(bVeh);
 					}
-					
+					LOG.warn("Finished all vehicle checks and move forward...");
 					iterator = bufferedVehicles.iterator();
 				}
 				return reports.iterator();

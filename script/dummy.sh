@@ -17,4 +17,3 @@ echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval

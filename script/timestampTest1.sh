@@ -17,61 +17,19 @@ echo "vehicle timestamp "$timestamp" seconds ###################################
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
 $checksize
-sleep $sleepinterval
 
-sh restart-spark.sh
- 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
 
 timestamp=0.4
 echo "vehicle timestamp "$timestamp" seconds #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
 
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
 
 timestamp=0.6
 echo "vehicle timestamp "$timestamp" seconds #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-sleep $sleepinterval
 
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
 
