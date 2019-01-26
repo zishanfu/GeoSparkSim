@@ -1,4 +1,5 @@
 /target/
+/script/src/test/resources/
 /src/test/resources/vistrips/
 /.idea
 /*.iml
