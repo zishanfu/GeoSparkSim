@@ -17,16 +17,18 @@ echo "Spark cores "$cores" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
-
+sleep $sleepinterval
 
 cores=90
 echo "Spark cores "$cores" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval
 
 cores=120
 echo "Spark cores "$cores" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval

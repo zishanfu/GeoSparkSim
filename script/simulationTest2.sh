@@ -17,13 +17,14 @@ echo "vehicle simulation "$simulation" minutes #################################
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $cores
 $checksize
-
+sleep $sleepinterval
 
 simulation=120
 echo "vehicle simulation "$simulation" minutes #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval
 
 
 simulation=150
@@ -31,5 +32,6 @@ echo "vehicle simulation "$simulation" minutes #################################
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval
 
 

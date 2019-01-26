@@ -17,6 +17,7 @@ echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval
 
 
 number=400000
@@ -24,6 +25,7 @@ echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval
 
 
 number=500000
@@ -31,3 +33,4 @@ echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval

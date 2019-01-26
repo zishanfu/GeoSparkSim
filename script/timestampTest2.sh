@@ -17,12 +17,14 @@ echo "vehicle timestamp "$timestamp" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval
 
 timestamp=1
 echo "vehicle timestamp "$timestamp" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
+sleep $sleepinterval
 
 
 
