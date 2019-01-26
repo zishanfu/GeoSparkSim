@@ -24,11 +24,13 @@ public class JmapConsole {
 	private OsmGraph graph;
 	private HDFSUtil hdfs;
 	private String osm;
+	private int cores;
 	
-	public JmapConsole(SparkSession spark, HDFSUtil hdfs, String osm) {
+	public JmapConsole(SparkSession spark, HDFSUtil hdfs, String osm, int cores) {
 		this.spark = spark;
 		this.hdfs = hdfs;
 		this.osm = osm;
+		this.cores = cores;
 	}
 	
 	public void runGeneration(int total) {
@@ -61,7 +63,7 @@ public class JmapConsole {
 		String selectedType = "DSO";
 //		int total = Integer.parseInt(prop.getProperty("generation.num"));
 		
-		GenerationImpl gImpl = new GenerationImpl(spark, hdfs);
+		GenerationImpl gImpl = new GenerationImpl(spark, hdfs, cores);
 		this.vehicles = gImpl.apply(geo1, geo2, selectedType, total, osm);
 		
 		long t1 = System.currentTimeMillis();
@@ -74,7 +76,7 @@ public class JmapConsole {
 //		double timestamp = Double.parseDouble(prop.getProperty("simulation.timestamp"));
 //		double simTime = Double.parseDouble(prop.getProperty("simulation.minutes"));
 //		double partitionTime = Double.parseDouble(prop.getProperty("simulation.partitiontime"));
-		SimulationImpl sImpl = new SimulationImpl(vehicles, graph);
+		SimulationImpl sImpl = new SimulationImpl(vehicles, graph, cores);
 		sImpl.apply(simTime, partitionTime, timestamp, hdfs);
 	}
 

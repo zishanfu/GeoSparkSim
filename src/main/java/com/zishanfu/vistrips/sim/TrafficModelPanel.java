@@ -28,10 +28,12 @@ public class TrafficModelPanel{
 	private static int iterations = 1;
 	private static final String resources = System.getProperty("user.dir") + "/src/test/resources";
 	private HDFSUtil hdfs;
+	private int cores;
 	
-	public TrafficModelPanel(World world, HDFSUtil hdfs) {
+	public TrafficModelPanel(World world, HDFSUtil hdfs, int cores) {
 		this.world = world;
 		this.hdfs = hdfs;
+		this.cores = cores;
 	}
 	
 	public void run(double simTime, double partitionTime, double timestamp) throws Exception {
@@ -67,7 +69,7 @@ public class TrafficModelPanel{
 		SpatialRDD<IDMVehicle> vehicleRDD = new SpatialRDD<IDMVehicle>();
 		vehicleRDD.setRawSpatialRDD(rawVehicles);
 		vehicleRDD.analyze();
-		vehicleRDD.spatialPartitioning(GridType.QUADTREE, 4);
+		vehicleRDD.spatialPartitioning(GridType.QUADTREE, cores);
 		
 		for(int part = 0; part < repartition; part++) {
 			
@@ -95,7 +97,7 @@ public class TrafficModelPanel{
 			//repartition
 			vehicleRDD.setRawSpatialRDD(shuffledVehicles);
 			vehicleRDD.analyze();
-			vehicleRDD.spatialPartitioning(GridType.QUADTREE, 8);
+			vehicleRDD.spatialPartitioning(GridType.QUADTREE, cores);
 			
 			JavaRDD<Report> reportRDD = vehicleRDD.spatialPartitionedRDD.mapPartitions(vehicles -> {
 				List<Report> reports = new ArrayList<>();

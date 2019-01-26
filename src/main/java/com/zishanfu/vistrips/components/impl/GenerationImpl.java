@@ -40,12 +40,14 @@ public class GenerationImpl implements Serializable{
 	private SparkSession spark;
 	private String path;
 	private HDFSUtil hdfs;
+	private int cores;
 	
 	//testing
 	
-	public GenerationImpl(SparkSession spark, HDFSUtil hdfs) {
+	public GenerationImpl(SparkSession spark, HDFSUtil hdfs, int cores) {
 		this.spark = spark;
 		this.hdfs = hdfs;
+		this.cores = cores;
 	}
 	
 
@@ -145,7 +147,6 @@ public class GenerationImpl implements Serializable{
 		SpatialRandom spatialRand = new SpatialRandom( minLon, minLat, maxLon, maxLat, maxLen, graph);
 		
 		JavaSparkContext sc = new JavaSparkContext(spark.sparkContext());
-		int partitions = 4;
 
 		IDMVehicle[] vehicleArr = new IDMVehicle[10000];
 		
@@ -155,7 +156,7 @@ public class GenerationImpl implements Serializable{
 		
 		int union = total/10000;
 		
-		JavaRDD<IDMVehicle> vehicles = sc.parallelize(Arrays.asList(vehicleArr), partitions);
+		JavaRDD<IDMVehicle> vehicles = sc.parallelize(Arrays.asList(vehicleArr), cores);
 		
 		JavaRDD<IDMVehicle> totalVehicles = vehicles;
 				
@@ -163,7 +164,7 @@ public class GenerationImpl implements Serializable{
 			totalVehicles = totalVehicles.union(vehicles);
 	    }
 		
-		totalVehicles.repartition(partitions);
+		totalVehicles.repartition(cores);
 		
 		return totalVehicles;
 	}

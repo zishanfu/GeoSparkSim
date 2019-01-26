@@ -11,9 +11,10 @@ number=100000
 timestamp=1
 simulation=10
 partition=5
+cores=20
 
 echo "vehicle number "$number" #####################################"
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $cores
 $checksize
 sleep $sleepinterval
