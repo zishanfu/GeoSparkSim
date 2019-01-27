@@ -148,13 +148,13 @@ public class GenerationImpl implements Serializable{
 		
 		JavaSparkContext sc = new JavaSparkContext(spark.sparkContext());
 
-		IDMVehicle[] vehicleArr = new IDMVehicle[10000];
+		IDMVehicle[] vehicleArr = new IDMVehicle[100000];
 		
-		for(int i = 0; i<10000; i++) {
+		for(int i = 0; i<100000; i++) {
 			vehicleArr[i] = computeVehicle(type, spatialRand, i);
 		}
 		
-		int union = total/10000;
+		int union = total/100000;
 		
 		JavaRDD<IDMVehicle> vehicles = sc.parallelize(Arrays.asList(vehicleArr), partition);
 		
