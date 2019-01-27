@@ -1,0 +1,103 @@
+##################################### number test #####################################
+vehicle number 300000 #####################################
+19/01/27 00:03:40 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 00:03:43 WARN App: Total: 300000, timestamp: 1.0, simulation time: 10, partition time: 5, cores used: 1000
+19/01/27 00:03:43 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 00:04:05 WARN GenerationImpl: Finished OSM graph construction! Time: 22 . Processing graphhopper ...
+19/01/27 00:04:05 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 00:04:05 WARN GenerationImpl: Begin generate 300000 trips.
+19/01/27 00:04:37 WARN GenerationImpl: Finished Generation! Time: 31 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_000343
+19/01/27 00:04:57 WARN JmapConsole: Road Network Construction! Time: 20 seconds
+19/01/27 00:04:57 WARN TrafficModelPanel: Simulation begin...
+19/01/27 00:06:13 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 00:06:48 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 300000
+19/01/27 00:08:00 WARN TrafficModelPanel: Before Write File! Time: 182 seconds
+19/01/27 01:00:20 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 3140 seconds
+19/01/27 01:00:56 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 300000
+19/01/27 01:02:06 WARN TrafficModelPanel: Before Write File! Time: 3428 seconds
+19/01/27 01:25:42 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 1415 seconds
+29.6 G  /vistrips/reports_0
+26.1 G  /vistrips/reports_1
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/01/27 01:27:26 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 01:27:27 WARN App: Total: 300000, timestamp: 1.0, simulation time: 10, partition time: 5, cores used: 1000
+19/01/27 01:27:27 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 01:27:48 WARN GenerationImpl: Finished OSM graph construction! Time: 20 . Processing graphhopper ...
+19/01/27 01:27:48 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 01:27:48 WARN GenerationImpl: Begin generate 300000 trips.
+19/01/27 01:28:20 WARN GenerationImpl: Finished Generation! Time: 31 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_012728
+19/01/27 01:28:41 WARN JmapConsole: Road Network Construction! Time: 21 seconds
+19/01/27 01:28:41 WARN TrafficModelPanel: Simulation begin...
+19/01/27 01:29:57 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 01:30:32 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 300000
+19/01/27 01:31:43 WARN TrafficModelPanel: Before Write File! Time: 182 seconds
+19/01/27 03:41:58 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 7814 seconds
+19/01/27 03:42:34 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 300000
+19/01/27 03:43:45 WARN TrafficModelPanel: Before Write File! Time: 8104 seconds
+19/01/27 04:11:03 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 1637 seconds
+30.0 G  /vistrips/reports_0
+26.0 G  /vistrips/reports_1
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+19/01/27 04:12:56 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 04:12:59 WARN App: Total: 300000, timestamp: 1.0, simulation time: 10, partition time: 5, cores used: 1000
+19/01/27 04:12:59 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 04:13:33 WARN GenerationImpl: Finished OSM graph construction! Time: 33 . Processing graphhopper ...
+19/01/27 04:13:33 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 04:13:33 WARN GenerationImpl: Begin generate 300000 trips.
+19/01/27 04:14:02 WARN GenerationImpl: Finished Generation! Time: 29 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_041259
+19/01/27 04:14:22 WARN JmapConsole: Road Network Construction! Time: 19 seconds
+19/01/27 04:14:22 WARN TrafficModelPanel: Simulation begin...
+19/01/27 04:15:39 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 04:16:15 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 300000
+19/01/27 04:17:26 WARN TrafficModelPanel: Before Write File! Time: 183 seconds
+19/01/27 05:12:59 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 3332 seconds
+19/01/27 05:13:34 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 300000
+19/01/27 05:14:45 WARN TrafficModelPanel: Before Write File! Time: 3623 seconds
+19/01/27 05:36:34 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 1308 seconds
+30.1 G  /vistrips/reports_0
+26.3 G  /vistrips/reports_1
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+vehicle number 400000 #####################################
+19/01/27 05:38:18 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 05:38:21 WARN App: Total: 400000, timestamp: 1.0, simulation time: 10, partition time: 5, cores used: 1000
+19/01/27 05:38:21 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 05:38:43 WARN GenerationImpl: Finished OSM graph construction! Time: 22 . Processing graphhopper ...
+19/01/27 05:38:43 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 05:38:43 WARN GenerationImpl: Begin generate 400000 trips.
+19/01/27 05:39:15 WARN GenerationImpl: Finished Generation! Time: 31 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_053821
+19/01/27 05:39:35 WARN JmapConsole: Road Network Construction! Time: 20 seconds
+19/01/27 05:39:35 WARN TrafficModelPanel: Simulation begin...
+19/01/27 05:41:24 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 05:42:15 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 400000
+19/01/27 05:43:59 WARN TrafficModelPanel: Before Write File! Time: 264 seconds
