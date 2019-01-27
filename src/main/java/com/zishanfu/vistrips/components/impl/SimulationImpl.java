@@ -14,12 +14,12 @@ public class SimulationImpl {
 	private final Logger LOG = Logger.getLogger(SimulationImpl.class);
 	private JavaRDD<IDMVehicle> vehicles;
 	private OsmGraph graph;
-	private int cores;
+	private int partition;
 	
-	public SimulationImpl(JavaRDD<IDMVehicle> vehicles, OsmGraph graph, int cores) {
+	public SimulationImpl(JavaRDD<IDMVehicle> vehicles, OsmGraph graph, int partition) {
 		this.vehicles = vehicles;
 		this.graph = graph;
-		this.cores = cores;
+		this.partition = partition;
 	}
 	
 	public void apply(double simTime, double partitionTime, double timestamp, HDFSUtil hdfs) {
@@ -28,7 +28,7 @@ public class SimulationImpl {
 		//set simulation time
 		try {
 			//1min
-			new TrafficModelPanel(world, hdfs, cores).run(simTime, partitionTime, timestamp);
+			new TrafficModelPanel(world, hdfs, partition).run(simTime, partitionTime, timestamp);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}

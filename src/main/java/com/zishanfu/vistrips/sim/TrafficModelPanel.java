@@ -28,12 +28,12 @@ public class TrafficModelPanel{
 	private static int iterations = 1;
 	private static final String resources = System.getProperty("user.dir") + "/src/test/resources";
 	private HDFSUtil hdfs;
-	private int cores;
+	private int partition;
 	
-	public TrafficModelPanel(World world, HDFSUtil hdfs, int cores) {
+	public TrafficModelPanel(World world, HDFSUtil hdfs, int partition) {
 		this.world = world;
 		this.hdfs = hdfs;
-		this.cores = cores;
+		this.partition = partition;
 	}
 	
 	public void run(double simTime, double partitionTime, double timestamp) throws Exception {
@@ -69,7 +69,7 @@ public class TrafficModelPanel{
 		SpatialRDD<IDMVehicle> vehicleRDD = new SpatialRDD<IDMVehicle>();
 		vehicleRDD.setRawSpatialRDD(rawVehicles);
 		vehicleRDD.analyze();
-		vehicleRDD.spatialPartitioning(GridType.QUADTREE, cores);
+		vehicleRDD.spatialPartitioning(GridType.QUADTREE, partition);
 		
 		LOG.warn("Partition iteration begin...");
 		
@@ -102,7 +102,7 @@ public class TrafficModelPanel{
 			
 			vehicleRDD.setRawSpatialRDD(shuffledVehicles);
 			vehicleRDD.analyze();
-			vehicleRDD.spatialPartitioning(GridType.QUADTREE, cores);
+			vehicleRDD.spatialPartitioning(GridType.QUADTREE, partition);
 			
 			JavaRDD<Report> reportRDD = vehicleRDD.spatialPartitionedRDD.mapPartitions(vehicles -> {
 				List<Report> reports = new ArrayList<>();
