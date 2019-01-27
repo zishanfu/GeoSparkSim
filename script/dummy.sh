@@ -19,19 +19,19 @@ $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $pa
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10

@@ -15,25 +15,25 @@ partitionNum=1000
 
 echo "vehicle simulation "$simulation" minutes #####################################"
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $partitionNum
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $partitionNum
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $$osm_path $partitionNum
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 simulation=30
@@ -43,21 +43,21 @@ $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $pa
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 simulation=60
@@ -67,21 +67,21 @@ $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $pa
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 

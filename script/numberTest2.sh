@@ -19,21 +19,21 @@ $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $pa
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 number=700000
@@ -43,21 +43,21 @@ $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $pa
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 number=800000
@@ -67,21 +67,21 @@ $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $pa
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 number=900000
@@ -91,21 +91,21 @@ $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $pa
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 number=1000000
@@ -115,19 +115,19 @@ $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $pa
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
-./restart-spark.sh
+sh restart-spark.sh
 sleep 10
