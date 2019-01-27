@@ -7,37 +7,13 @@ osm_path="/hdd2/code/zishanfu/map.osm"
 
 sleepinterval=60
 
-number=600000
+number=300000
 timestamp=1
 simulation=10
 partition=5
-partitionNum=1000
+partitionNum=300
 
-echo "vehicle number "$number" #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-./restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-./restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-./restart-spark.sh
-sleep 10
-
-number=700000
-echo "vehicle number "$number" #####################################"
+echo "Spark partitionNum "$partitionNum" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
@@ -60,8 +36,8 @@ sleep $sleepinterval
 ./restart-spark.sh
 sleep 10
 
-number=800000
-echo "vehicle number "$number" #####################################"
+partitionNum=500
+echo "Spark partitionNum "$partitionNum" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
@@ -84,32 +60,8 @@ sleep $sleepinterval
 ./restart-spark.sh
 sleep 10
 
-number=900000
-echo "vehicle number "$number" #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-./restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-./restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-./restart-spark.sh
-sleep 10
-
-number=1000000
-echo "vehicle number "$number" #####################################"
+partitionNum=700
+echo "Spark partitionNum "$partitionNum" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize

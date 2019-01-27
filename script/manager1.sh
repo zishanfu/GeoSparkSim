@@ -20,8 +20,8 @@ nohup sh simulationTest1.sh > simulationTest1.out
 echo "simulationTest2.sh #####################################"
 nohup sh simulationTest2.sh > simulationTest2.out
 
-echo "coreTest1.sh #####################################"
-nohup sh coreTest1.sh > coreTest1.out
+echo "partitionNumTest2.sh #####################################"
+nohup sh partitionNumTest1.sh > partitionNumTest1.out
 
-echo "coreTest2.sh #####################################"
-nohup sh coreTest2.sh > coreTest2.out
+echo "partitionNumTest2.sh #####################################"
+nohup sh partitionNumTest2.sh > partitionNumTest2.out
