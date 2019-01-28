@@ -1,0 +1,471 @@
+vehicle number 50000 #####################################
+19/01/27 18:53:06 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 18:53:07 WARN StandaloneAppClient$ClientEndpoint: Failed to connect to master en4119507l.cidse.dhcp.asu.edu:7077
+org.apache.spark.SparkException: Exception thrown in awaitResult: 
+	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:205)
+	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+	at org.apache.spark.rpc.RpcEnv.setupEndpointRefByURI(RpcEnv.scala:101)
+	at org.apache.spark.rpc.RpcEnv.setupEndpointRef(RpcEnv.scala:109)
+	at org.apache.spark.deploy.client.StandaloneAppClient$ClientEndpoint$$anonfun$tryRegisterAllMasters$1$$anon$1.run(StandaloneAppClient.scala:106)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: Failed to connect to en4119507l.cidse.dhcp.asu.edu/10.218.106.186:7077
+	at org.apache.spark.network.client.TransportClientFactory.createClient(TransportClientFactory.java:245)
+	at org.apache.spark.network.client.TransportClientFactory.createClient(TransportClientFactory.java:187)
+	at org.apache.spark.rpc.netty.NettyRpcEnv.createClient(NettyRpcEnv.scala:198)
+	at org.apache.spark.rpc.netty.Outbox$$anon$1.call(Outbox.scala:194)
+	at org.apache.spark.rpc.netty.Outbox$$anon$1.call(Outbox.scala:190)
+	... 4 more
+Caused by: io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: en4119507l.cidse.dhcp.asu.edu/10.218.106.186:7077
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:717)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:323)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:340)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:633)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:580)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:497)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:459)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+	... 1 more
+Caused by: java.net.ConnectException: Connection refused
+	... 11 more
+19/01/27 18:53:27 WARN StandaloneAppClient$ClientEndpoint: Failed to connect to master en4119507l.cidse.dhcp.asu.edu:7077
+org.apache.spark.SparkException: Exception thrown in awaitResult: 
+	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:205)
+	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+	at org.apache.spark.rpc.RpcEnv.setupEndpointRefByURI(RpcEnv.scala:101)
+	at org.apache.spark.rpc.RpcEnv.setupEndpointRef(RpcEnv.scala:109)
+	at org.apache.spark.deploy.client.StandaloneAppClient$ClientEndpoint$$anonfun$tryRegisterAllMasters$1$$anon$1.run(StandaloneAppClient.scala:106)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: Failed to connect to en4119507l.cidse.dhcp.asu.edu/10.218.106.186:7077
+	at org.apache.spark.network.client.TransportClientFactory.createClient(TransportClientFactory.java:245)
+	at org.apache.spark.network.client.TransportClientFactory.createClient(TransportClientFactory.java:187)
+	at org.apache.spark.rpc.netty.NettyRpcEnv.createClient(NettyRpcEnv.scala:198)
+	at org.apache.spark.rpc.netty.Outbox$$anon$1.call(Outbox.scala:194)
+	at org.apache.spark.rpc.netty.Outbox$$anon$1.call(Outbox.scala:190)
+	... 4 more
+Caused by: io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: en4119507l.cidse.dhcp.asu.edu/10.218.106.186:7077
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:717)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:323)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:340)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:633)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:580)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:497)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:459)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+	... 1 more
+Caused by: java.net.ConnectException: Connection refused
+	... 11 more
+19/01/27 18:53:47 WARN StandaloneAppClient$ClientEndpoint: Failed to connect to master en4119507l.cidse.dhcp.asu.edu:7077
+org.apache.spark.SparkException: Exception thrown in awaitResult: 
+	at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:205)
+	at org.apache.spark.rpc.RpcTimeout.awaitResult(RpcTimeout.scala:75)
+	at org.apache.spark.rpc.RpcEnv.setupEndpointRefByURI(RpcEnv.scala:101)
+	at org.apache.spark.rpc.RpcEnv.setupEndpointRef(RpcEnv.scala:109)
+	at org.apache.spark.deploy.client.StandaloneAppClient$ClientEndpoint$$anonfun$tryRegisterAllMasters$1$$anon$1.run(StandaloneAppClient.scala:106)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: Failed to connect to en4119507l.cidse.dhcp.asu.edu/10.218.106.186:7077
+	at org.apache.spark.network.client.TransportClientFactory.createClient(TransportClientFactory.java:245)
+	at org.apache.spark.network.client.TransportClientFactory.createClient(TransportClientFactory.java:187)
+	at org.apache.spark.rpc.netty.NettyRpcEnv.createClient(NettyRpcEnv.scala:198)
+	at org.apache.spark.rpc.netty.Outbox$$anon$1.call(Outbox.scala:194)
+	at org.apache.spark.rpc.netty.Outbox$$anon$1.call(Outbox.scala:190)
+	... 4 more
+Caused by: io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: en4119507l.cidse.dhcp.asu.edu/10.218.106.186:7077
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:717)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:323)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:340)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:633)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:580)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:497)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:459)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:858)
+	at io.netty.util.concurrent.DefaultThreadFactory$DefaultRunnableDecorator.run(DefaultThreadFactory.java:138)
+	... 1 more
+Caused by: java.net.ConnectException: Connection refused
+	... 11 more
+19/01/27 18:54:07 ERROR StandaloneSchedulerBackend: Application has been killed. Reason: All masters are unresponsive! Giving up.
+19/01/27 18:54:07 WARN StandaloneSchedulerBackend: Application ID is not initialized yet.
+19/01/27 18:54:07 WARN StandaloneAppClient$ClientEndpoint: Drop UnregisterApplication(null) because has not yet connected to master
+19/01/27 18:54:07 ERROR SparkContext: Error initializing SparkContext.
+java.lang.IllegalArgumentException: requirement failed: Can only call getServletHandlers on a running MetricsSystem
+	at scala.Predef$.require(Predef.scala:224)
+	at org.apache.spark.metrics.MetricsSystem.getServletHandlers(MetricsSystem.scala:91)
+	at org.apache.spark.SparkContext.<init>(SparkContext.scala:515)
+	at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2493)
+	at org.apache.spark.sql.SparkSession$Builder$$anonfun$7.apply(SparkSession.scala:934)
+	at org.apache.spark.sql.SparkSession$Builder$$anonfun$7.apply(SparkSession.scala:925)
+	at scala.Option.getOrElse(Option.scala:121)
+	at org.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:925)
+	at com.zishanfu.vistrips.App.main(App.java:31)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)
+	at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:894)
+	at org.apache.spark.deploy.SparkSubmit$.doRunMain$1(SparkSubmit.scala:198)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:228)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+Exception in thread "main" java.lang.IllegalArgumentException: requirement failed: Can only call getServletHandlers on a running MetricsSystem
+	at scala.Predef$.require(Predef.scala:224)
+	at org.apache.spark.metrics.MetricsSystem.getServletHandlers(MetricsSystem.scala:91)
+	at org.apache.spark.SparkContext.<init>(SparkContext.scala:515)
+	at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2493)
+	at org.apache.spark.sql.SparkSession$Builder$$anonfun$7.apply(SparkSession.scala:934)
+	at org.apache.spark.sql.SparkSession$Builder$$anonfun$7.apply(SparkSession.scala:925)
+	at scala.Option.getOrElse(Option.scala:121)
+	at org.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:925)
+	at com.zishanfu.vistrips.App.main(App.java:31)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)
+	at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:894)
+	at org.apache.spark.deploy.SparkSubmit$.doRunMain$1(SparkSubmit.scala:198)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:228)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+13.6 G  /vistrips/reports_0
+11.2 G  /vistrips/reports_1
+en4119509l.cidse.dhcp.asu.edu: no org.apache.spark.deploy.worker.Worker to stop
+en4119510l.cidse.dhcp.asu.edu: no org.apache.spark.deploy.worker.Worker to stop
+en4119508l.cidse.dhcp.asu.edu: no org.apache.spark.deploy.worker.Worker to stop
+en4119507l.cidse.dhcp.asu.edu: no org.apache.spark.deploy.worker.Worker to stop
+no org.apache.spark.deploy.master.Master to stop
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+19/01/27 18:55:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 18:56:01 WARN App: Total: 50000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 18:56:01 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 18:56:19 WARN GenerationImpl: Finished OSM graph construction! Time: 18 . Processing graphhopper ...
+19/01/27 18:56:19 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 18:56:19 WARN GenerationImpl: Begin generate 50000 trips.
+19/01/27 19:01:10 WARN GenerationImpl: Finished Generation! Time: 290 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_185601
+19/01/27 19:01:35 WARN JmapConsole: Road Network Construction! Time: 24 seconds
+19/01/27 19:01:35 WARN TrafficModelPanel: Simulation begin...
+19/01/27 19:01:35 WARN TaskSetManager: Stage 13 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:01:38 WARN TaskSetManager: Stage 14 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:01:41 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 19:01:41 WARN TaskSetManager: Stage 15 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:01:44 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 19:01:44 WARN TaskSetManager: Stage 16 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:01:46 WARN TaskSetManager: Stage 17 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:01:49 WARN TrafficModelPanel: Before Write File! Time: 14 seconds
+19/01/27 19:01:49 WARN TaskSetManager: Stage 18 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:09:14 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 445 seconds
+19/01/27 19:09:14 WARN TaskSetManager: Stage 20 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:09:16 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 19:09:16 WARN TaskSetManager: Stage 21 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:09:19 WARN TaskSetManager: Stage 22 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:09:21 WARN TrafficModelPanel: Before Write File! Time: 466 seconds
+19/01/27 19:09:21 WARN TaskSetManager: Stage 23 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:11:20 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 118 seconds
+11.0 G  /vistrips/reports_0
+8.7 G  /vistrips/reports_1
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/01/27 19:13:11 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 19:13:14 WARN App: Total: 50000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 19:13:14 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 19:13:39 WARN GenerationImpl: Finished OSM graph construction! Time: 24 . Processing graphhopper ...
+19/01/27 19:13:39 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 19:13:39 WARN GenerationImpl: Begin generate 50000 trips.
+19/01/27 19:18:31 WARN GenerationImpl: Finished Generation! Time: 292 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_191314
+19/01/27 19:18:52 WARN JmapConsole: Road Network Construction! Time: 20 seconds
+19/01/27 19:18:52 WARN TrafficModelPanel: Simulation begin...
+19/01/27 19:18:52 WARN TaskSetManager: Stage 13 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:18:55 WARN TaskSetManager: Stage 14 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:18:58 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 19:18:58 WARN TaskSetManager: Stage 15 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:19:01 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 19:19:01 WARN TaskSetManager: Stage 16 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:19:03 WARN TaskSetManager: Stage 17 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:19:06 WARN TrafficModelPanel: Before Write File! Time: 13 seconds
+19/01/27 19:19:06 WARN TaskSetManager: Stage 18 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:25:27 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 380 seconds
+19/01/27 19:25:27 WARN TaskSetManager: Stage 20 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:25:29 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 19:25:29 WARN TaskSetManager: Stage 21 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:25:31 WARN TaskSetManager: Stage 22 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:25:34 WARN TrafficModelPanel: Before Write File! Time: 402 seconds
+19/01/27 19:25:34 WARN TaskSetManager: Stage 23 contains a task of very large size (147 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:27:30 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 116 seconds
+10.4 G  /vistrips/reports_0
+8.5 G  /vistrips/reports_1
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+vehicle number 100000 #####################################
+19/01/27 19:29:14 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 19:29:16 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 19:29:16 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 19:29:35 WARN GenerationImpl: Finished OSM graph construction! Time: 19 . Processing graphhopper ...
+19/01/27 19:29:35 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 19:29:35 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 19:34:23 WARN GenerationImpl: Finished Generation! Time: 287 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_192916
+19/01/27 19:34:46 WARN JmapConsole: Road Network Construction! Time: 22 seconds
+19/01/27 19:34:46 WARN TrafficModelPanel: Simulation begin...
+19/01/27 19:34:46 WARN TaskSetManager: Stage 13 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:34:49 WARN TaskSetManager: Stage 14 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:34:52 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 19:34:52 WARN TaskSetManager: Stage 15 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:34:55 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 19:34:55 WARN TaskSetManager: Stage 16 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:34:57 WARN TaskSetManager: Stage 17 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:35:00 WARN TrafficModelPanel: Before Write File! Time: 13 seconds
+19/01/27 19:35:00 WARN TaskSetManager: Stage 18 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:41:57 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 417 seconds
+19/01/27 19:41:57 WARN TaskSetManager: Stage 20 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:42:00 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 19:42:00 WARN TaskSetManager: Stage 21 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:42:02 WARN TaskSetManager: Stage 22 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:42:05 WARN TrafficModelPanel: Before Write File! Time: 438 seconds
+19/01/27 19:42:05 WARN TaskSetManager: Stage 23 contains a task of very large size (146 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:44:06 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 121 seconds
+10.5 G  /vistrips/reports_0
+8.7 G  /vistrips/reports_1
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+19/01/27 19:45:47 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 19:45:50 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 19:45:50 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 19:46:14 WARN GenerationImpl: Finished OSM graph construction! Time: 23 . Processing graphhopper ...
+19/01/27 19:46:14 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 19:46:14 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 19:51:01 WARN GenerationImpl: Finished Generation! Time: 286 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_194551
+19/01/27 19:51:27 WARN JmapConsole: Road Network Construction! Time: 26 seconds
+19/01/27 19:51:27 WARN TrafficModelPanel: Simulation begin...
+19/01/27 19:51:27 WARN TaskSetManager: Stage 13 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:51:31 WARN TaskSetManager: Stage 14 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:51:33 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 19:51:33 WARN TaskSetManager: Stage 15 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:51:36 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 19:51:36 WARN TaskSetManager: Stage 16 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:51:38 WARN TaskSetManager: Stage 17 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:51:40 WARN TrafficModelPanel: Before Write File! Time: 13 seconds
+19/01/27 19:51:40 WARN TaskSetManager: Stage 18 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:57:00 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 319 seconds
+19/01/27 19:57:00 WARN TaskSetManager: Stage 20 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:57:02 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 19:57:02 WARN TaskSetManager: Stage 21 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:57:05 WARN TaskSetManager: Stage 22 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:57:07 WARN TrafficModelPanel: Before Write File! Time: 339 seconds
+19/01/27 19:57:07 WARN TaskSetManager: Stage 23 contains a task of very large size (154 KB). The maximum recommended task size is 100 KB.
+19/01/27 19:59:00 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 112 seconds
+10.6 G  /vistrips/reports_0
+9.0 G  /vistrips/reports_1
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/01/27 20:00:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 20:00:54 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 20:00:54 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 20:01:12 WARN GenerationImpl: Finished OSM graph construction! Time: 17 . Processing graphhopper ...
+19/01/27 20:01:13 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 20:01:13 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 20:05:52 WARN GenerationImpl: Finished Generation! Time: 279 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_200055
+19/01/27 20:06:14 WARN JmapConsole: Road Network Construction! Time: 22 seconds
+19/01/27 20:06:14 WARN TrafficModelPanel: Simulation begin...
+19/01/27 20:06:14 WARN TaskSetManager: Stage 13 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:06:18 WARN TaskSetManager: Stage 14 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:06:21 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 20:06:21 WARN TaskSetManager: Stage 15 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:06:23 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 20:06:23 WARN TaskSetManager: Stage 16 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:06:25 WARN TaskSetManager: Stage 17 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:06:28 WARN TrafficModelPanel: Before Write File! Time: 13 seconds
+19/01/27 20:06:28 WARN TaskSetManager: Stage 18 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:12:50 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 382 seconds
+19/01/27 20:12:50 WARN TaskSetManager: Stage 20 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:12:53 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 20:12:53 WARN TaskSetManager: Stage 21 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:12:55 WARN TaskSetManager: Stage 22 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:12:58 WARN TrafficModelPanel: Before Write File! Time: 403 seconds
+19/01/27 20:12:58 WARN TaskSetManager: Stage 23 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:15:01 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 123 seconds
+11.1 G  /vistrips/reports_0
+9.3 G  /vistrips/reports_1
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+vehicle number 200000 #####################################
+19/01/27 20:16:48 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 20:16:51 WARN App: Total: 200000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 20:16:51 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 20:17:10 WARN GenerationImpl: Finished OSM graph construction! Time: 19 . Processing graphhopper ...
+19/01/27 20:17:10 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 20:17:10 WARN GenerationImpl: Begin generate 200000 trips.
+19/01/27 20:21:53 WARN GenerationImpl: Finished Generation! Time: 282 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_201651
+19/01/27 20:22:13 WARN JmapConsole: Road Network Construction! Time: 20 seconds
+19/01/27 20:22:13 WARN TrafficModelPanel: Simulation begin...
+19/01/27 20:22:13 WARN TaskSetManager: Stage 13 contains a task of very large size (151 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:22:20 WARN TaskSetManager: Stage 14 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:22:24 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 20:22:25 WARN TaskSetManager: Stage 15 contains a task of very large size (151 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:22:29 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 200000
+19/01/27 20:22:29 WARN TaskSetManager: Stage 16 contains a task of very large size (151 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:22:34 WARN TaskSetManager: Stage 17 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:22:38 WARN TrafficModelPanel: Before Write File! Time: 24 seconds
+19/01/27 20:22:38 WARN TaskSetManager: Stage 18 contains a task of very large size (151 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:34:05 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 686 seconds
+19/01/27 20:34:05 WARN TaskSetManager: Stage 20 contains a task of very large size (151 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:34:09 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 200000
+19/01/27 20:34:09 WARN TaskSetManager: Stage 21 contains a task of very large size (151 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:34:14 WARN TaskSetManager: Stage 22 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:34:19 WARN TrafficModelPanel: Before Write File! Time: 725 seconds
+19/01/27 20:34:19 WARN TaskSetManager: Stage 23 contains a task of very large size (151 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:37:39 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 199 seconds
+19.9 G  /vistrips/reports_0
+17.1 G  /vistrips/reports_1
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+19/01/27 20:39:24 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 20:39:26 WARN App: Total: 200000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 20:39:26 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 20:39:51 WARN GenerationImpl: Finished OSM graph construction! Time: 25 . Processing graphhopper ...
+19/01/27 20:39:51 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 20:39:51 WARN GenerationImpl: Begin generate 200000 trips.
+19/01/27 20:44:37 WARN GenerationImpl: Finished Generation! Time: 285 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_203926
+19/01/27 20:45:00 WARN JmapConsole: Road Network Construction! Time: 23 seconds
+19/01/27 20:45:00 WARN TrafficModelPanel: Simulation begin...
+19/01/27 20:45:00 WARN TaskSetManager: Stage 13 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:45:06 WARN TaskSetManager: Stage 14 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:45:11 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 20:45:11 WARN TaskSetManager: Stage 15 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:45:16 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 200000
+19/01/27 20:45:16 WARN TaskSetManager: Stage 16 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:45:21 WARN TaskSetManager: Stage 17 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:45:26 WARN TrafficModelPanel: Before Write File! Time: 25 seconds
+19/01/27 20:45:26 WARN TaskSetManager: Stage 18 contains a task of very large size (156 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:56:54 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 688 seconds
+19/01/27 20:56:54 WARN TaskSetManager: Stage 20 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:56:59 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 200000
+19/01/27 20:56:59 WARN TaskSetManager: Stage 21 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:57:04 WARN TaskSetManager: Stage 22 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 20:57:09 WARN TrafficModelPanel: Before Write File! Time: 728 seconds
+19/01/27 20:57:09 WARN TaskSetManager: Stage 23 contains a task of very large size (156 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:00:28 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 199 seconds
+21.2 G  /vistrips/reports_0
+17.4 G  /vistrips/reports_1
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+19/01/27 21:02:10 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 21:02:12 WARN App: Total: 200000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 21:02:12 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 21:02:32 WARN GenerationImpl: Finished OSM graph construction! Time: 19 . Processing graphhopper ...
+19/01/27 21:02:32 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 21:02:32 WARN GenerationImpl: Begin generate 200000 trips.
+19/01/27 21:07:18 WARN GenerationImpl: Finished Generation! Time: 286 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_210212
+19/01/27 21:07:41 WARN JmapConsole: Road Network Construction! Time: 22 seconds
+19/01/27 21:07:41 WARN TrafficModelPanel: Simulation begin...
+19/01/27 21:07:41 WARN TaskSetManager: Stage 13 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:07:48 WARN TaskSetManager: Stage 14 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:07:52 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 21:07:53 WARN TaskSetManager: Stage 15 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:07:57 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 200000
+19/01/27 21:07:57 WARN TaskSetManager: Stage 16 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:08:02 WARN TaskSetManager: Stage 17 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:08:07 WARN TrafficModelPanel: Before Write File! Time: 26 seconds
+19/01/27 21:08:07 WARN TaskSetManager: Stage 18 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:19:41 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 693 seconds
+19/01/27 21:19:41 WARN TaskSetManager: Stage 20 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:19:46 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 200000
+19/01/27 21:19:46 WARN TaskSetManager: Stage 21 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:19:51 WARN TaskSetManager: Stage 22 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:19:55 WARN TrafficModelPanel: Before Write File! Time: 734 seconds
+19/01/27 21:19:55 WARN TaskSetManager: Stage 23 contains a task of very large size (153 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:23:13 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 198 seconds
+22.4 G  /vistrips/reports_0
+18.0 G  /vistrips/reports_1
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out

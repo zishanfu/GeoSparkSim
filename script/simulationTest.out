@@ -1,0 +1,341 @@
+vehicle simulation 10 minutes #####################################
+19/01/27 12:38:45 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 12:38:48 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 12:38:48 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 12:39:07 WARN GenerationImpl: Finished OSM graph construction! Time: 18 . Processing graphhopper ...
+19/01/27 12:39:07 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 12:39:07 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 12:43:53 WARN GenerationImpl: Finished Generation! Time: 286 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_123848
+19/01/27 12:44:14 WARN JmapConsole: Road Network Construction! Time: 21 seconds
+19/01/27 12:44:14 WARN TrafficModelPanel: Simulation begin...
+19/01/27 12:44:15 WARN TaskSetManager: Stage 13 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:44:18 WARN TaskSetManager: Stage 14 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:44:21 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 12:44:21 WARN TaskSetManager: Stage 15 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:44:23 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 12:44:23 WARN TaskSetManager: Stage 16 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:44:26 WARN TaskSetManager: Stage 17 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:44:28 WARN TrafficModelPanel: Before Write File! Time: 13 seconds
+19/01/27 12:44:28 WARN TaskSetManager: Stage 18 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:52:00 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 451 seconds
+19/01/27 12:52:00 WARN TaskSetManager: Stage 20 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:52:03 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 12:52:03 WARN TaskSetManager: Stage 21 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:52:05 WARN TaskSetManager: Stage 22 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:52:08 WARN TrafficModelPanel: Before Write File! Time: 473 seconds
+19/01/27 12:52:08 WARN TaskSetManager: Stage 23 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 12:54:13 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 124 seconds
+10.0 G  /vistrips/reports_0
+9.1 G  /vistrips/reports_1
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+19/01/27 12:55:57 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 12:56:00 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 12:56:00 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 12:56:30 WARN GenerationImpl: Finished OSM graph construction! Time: 30 . Processing graphhopper ...
+19/01/27 12:56:30 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 12:56:30 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 13:01:09 WARN GenerationImpl: Finished Generation! Time: 279 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_125600
+19/01/27 13:01:33 WARN JmapConsole: Road Network Construction! Time: 24 seconds
+19/01/27 13:01:33 WARN TrafficModelPanel: Simulation begin...
+19/01/27 13:01:34 WARN TaskSetManager: Stage 13 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:01:37 WARN TaskSetManager: Stage 14 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:01:40 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 13:01:40 WARN TaskSetManager: Stage 15 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:01:43 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 13:01:43 WARN TaskSetManager: Stage 16 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:01:45 WARN TaskSetManager: Stage 17 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:01:48 WARN TrafficModelPanel: Before Write File! Time: 14 seconds
+19/01/27 13:01:48 WARN TaskSetManager: Stage 18 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:08:31 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 403 seconds
+19/01/27 13:08:31 WARN TaskSetManager: Stage 20 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:08:33 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 13:08:34 WARN TaskSetManager: Stage 21 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:08:36 WARN TaskSetManager: Stage 22 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:08:38 WARN TrafficModelPanel: Before Write File! Time: 424 seconds
+19/01/27 13:08:38 WARN TaskSetManager: Stage 23 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:10:38 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 119 seconds
+10.7 G  /vistrips/reports_0
+9.1 G  /vistrips/reports_1
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+19/01/27 13:12:23 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 13:12:26 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
+19/01/27 13:12:26 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 13:12:46 WARN GenerationImpl: Finished OSM graph construction! Time: 19 . Processing graphhopper ...
+19/01/27 13:12:46 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 13:12:46 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 13:17:28 WARN GenerationImpl: Finished Generation! Time: 282 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_131226
+19/01/27 13:17:53 WARN JmapConsole: Road Network Construction! Time: 24 seconds
+19/01/27 13:17:53 WARN TrafficModelPanel: Simulation begin...
+19/01/27 13:17:54 WARN TaskSetManager: Stage 13 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:17:57 WARN TaskSetManager: Stage 14 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:18:00 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 13:18:00 WARN TaskSetManager: Stage 15 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:18:02 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 13:18:02 WARN TaskSetManager: Stage 16 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:18:04 WARN TaskSetManager: Stage 17 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:18:07 WARN TrafficModelPanel: Before Write File! Time: 13 seconds
+19/01/27 13:18:07 WARN TaskSetManager: Stage 18 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:21:44 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 217 seconds
+19/01/27 13:21:44 WARN TaskSetManager: Stage 20 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:21:47 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
+19/01/27 13:21:47 WARN TaskSetManager: Stage 21 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:21:49 WARN TaskSetManager: Stage 22 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:21:52 WARN TrafficModelPanel: Before Write File! Time: 238 seconds
+19/01/27 13:21:52 WARN TaskSetManager: Stage 23 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 13:23:49 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 116 seconds
+du: failure to login
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
+  
+  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
+  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
+  	at java.security.AccessController.doPrivileged(Native Method)
+  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
+  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
+  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
+  	... 10 more
+full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+vehicle simulation 20 minutes #####################################
+Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
+	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
+	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
+	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
+	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
+	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
+	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
+	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
+	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+du: failure to login
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+no org.apache.spark.deploy.master.Master to stop
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
+  
+  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
+  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
+  	at java.security.AccessController.doPrivileged(Native Method)
+  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
+  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
+  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
+  	... 10 more
+full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
+	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
+	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
+	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
+	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
+	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
+	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
+	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
+	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+du: failure to login
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+no org.apache.spark.deploy.master.Master to stop
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
+  
+  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
+  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
+  	at java.security.AccessController.doPrivileged(Native Method)
+  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
+  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
+  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
+  	... 10 more
+full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
+	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
+	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
+	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
+	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
+	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
+	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
+	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
+	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+du: failure to login
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+no org.apache.spark.deploy.master.Master to stop
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
+  
+  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
+  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
+  	at java.security.AccessController.doPrivileged(Native Method)
+  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
+  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
+  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
+  	... 10 more
+full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+vehicle simulation 30 minutes #####################################
+Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
+	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
+	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
+	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
+	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
+	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
+	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
+	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
+	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+du: failure to login
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+no org.apache.spark.deploy.master.Master to stop
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
+  
+  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
+  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
+  	at java.security.AccessController.doPrivileged(Native Method)
+  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
+  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
+  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
+  	... 10 more
+full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
+	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
+	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
+	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
+	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
+	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
+	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
+	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
+	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+du: failure to login
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+no org.apache.spark.deploy.master.Master to stop
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
+  
+  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
+  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
+  	at java.security.AccessController.doPrivileged(Native Method)
+  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
+  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
+  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
+  	... 10 more
+full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
+	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
+	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
+	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
+	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
+	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
+	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
+	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
+	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
+	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
+	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
+	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+du: failure to login
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+no org.apache.spark.deploy.master.Master to stop
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
+  
+  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
+  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
+  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
+  	at java.security.AccessController.doPrivileged(Native Method)
+  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
+  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
+  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
+  	... 10 more
+full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
