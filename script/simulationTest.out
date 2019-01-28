@@ -1,341 +1,351 @@
-vehicle simulation 10 minutes #####################################
-19/01/27 12:38:45 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-19/01/27 12:38:48 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
-19/01/27 12:38:48 WARN GenerationImpl: Processing OSM data in GraphX
-19/01/27 12:39:07 WARN GenerationImpl: Finished OSM graph construction! Time: 18 . Processing graphhopper ...
-19/01/27 12:39:07 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
-19/01/27 12:39:07 WARN GenerationImpl: Begin generate 100000 trips.
-19/01/27 12:43:53 WARN GenerationImpl: Finished Generation! Time: 286 seconds
-hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_123848
-19/01/27 12:44:14 WARN JmapConsole: Road Network Construction! Time: 21 seconds
-19/01/27 12:44:14 WARN TrafficModelPanel: Simulation begin...
-19/01/27 12:44:15 WARN TaskSetManager: Stage 13 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:44:18 WARN TaskSetManager: Stage 14 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:44:21 WARN TrafficModelPanel: Partition iteration begin...
-19/01/27 12:44:21 WARN TaskSetManager: Stage 15 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:44:23 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
-19/01/27 12:44:23 WARN TaskSetManager: Stage 16 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:44:26 WARN TaskSetManager: Stage 17 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:44:28 WARN TrafficModelPanel: Before Write File! Time: 13 seconds
-19/01/27 12:44:28 WARN TaskSetManager: Stage 18 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:52:00 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 451 seconds
-19/01/27 12:52:00 WARN TaskSetManager: Stage 20 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:52:03 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
-19/01/27 12:52:03 WARN TaskSetManager: Stage 21 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:52:05 WARN TaskSetManager: Stage 22 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:52:08 WARN TrafficModelPanel: Before Write File! Time: 473 seconds
-19/01/27 12:52:08 WARN TaskSetManager: Stage 23 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 12:54:13 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 124 seconds
-10.0 G  /vistrips/reports_0
-9.1 G  /vistrips/reports_1
-en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
-en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
-en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
-en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
-stopping org.apache.spark.deploy.master.Master
-starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
-en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
-en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
-en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
-19/01/27 12:55:57 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-19/01/27 12:56:00 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
-19/01/27 12:56:00 WARN GenerationImpl: Processing OSM data in GraphX
-19/01/27 12:56:30 WARN GenerationImpl: Finished OSM graph construction! Time: 30 . Processing graphhopper ...
-19/01/27 12:56:30 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
-19/01/27 12:56:30 WARN GenerationImpl: Begin generate 100000 trips.
-19/01/27 13:01:09 WARN GenerationImpl: Finished Generation! Time: 279 seconds
-hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_125600
-19/01/27 13:01:33 WARN JmapConsole: Road Network Construction! Time: 24 seconds
-19/01/27 13:01:33 WARN TrafficModelPanel: Simulation begin...
-19/01/27 13:01:34 WARN TaskSetManager: Stage 13 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:01:37 WARN TaskSetManager: Stage 14 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:01:40 WARN TrafficModelPanel: Partition iteration begin...
-19/01/27 13:01:40 WARN TaskSetManager: Stage 15 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:01:43 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
-19/01/27 13:01:43 WARN TaskSetManager: Stage 16 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:01:45 WARN TaskSetManager: Stage 17 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:01:48 WARN TrafficModelPanel: Before Write File! Time: 14 seconds
-19/01/27 13:01:48 WARN TaskSetManager: Stage 18 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:08:31 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 403 seconds
-19/01/27 13:08:31 WARN TaskSetManager: Stage 20 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:08:33 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
-19/01/27 13:08:34 WARN TaskSetManager: Stage 21 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:08:36 WARN TaskSetManager: Stage 22 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:08:38 WARN TrafficModelPanel: Before Write File! Time: 424 seconds
-19/01/27 13:08:38 WARN TaskSetManager: Stage 23 contains a task of very large size (143 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:10:38 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 119 seconds
-10.7 G  /vistrips/reports_0
-9.1 G  /vistrips/reports_1
-en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
-en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
-en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
-en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
-stopping org.apache.spark.deploy.master.Master
-starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
-en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
-en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
-en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
-19/01/27 13:12:23 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-19/01/27 13:12:26 WARN App: Total: 100000, timestamp: 1.0, simulation time: 10, partition time: 5, partition used: 1000
-19/01/27 13:12:26 WARN GenerationImpl: Processing OSM data in GraphX
-19/01/27 13:12:46 WARN GenerationImpl: Finished OSM graph construction! Time: 19 . Processing graphhopper ...
-19/01/27 13:12:46 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
-19/01/27 13:12:46 WARN GenerationImpl: Begin generate 100000 trips.
-19/01/27 13:17:28 WARN GenerationImpl: Finished Generation! Time: 282 seconds
-hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_131226
-19/01/27 13:17:53 WARN JmapConsole: Road Network Construction! Time: 24 seconds
-19/01/27 13:17:53 WARN TrafficModelPanel: Simulation begin...
-19/01/27 13:17:54 WARN TaskSetManager: Stage 13 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:17:57 WARN TaskSetManager: Stage 14 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:18:00 WARN TrafficModelPanel: Partition iteration begin...
-19/01/27 13:18:00 WARN TaskSetManager: Stage 15 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:18:02 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
-19/01/27 13:18:02 WARN TaskSetManager: Stage 16 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:18:04 WARN TaskSetManager: Stage 17 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:18:07 WARN TrafficModelPanel: Before Write File! Time: 13 seconds
-19/01/27 13:18:07 WARN TaskSetManager: Stage 18 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:21:44 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 217 seconds
-19/01/27 13:21:44 WARN TaskSetManager: Stage 20 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:21:47 WARN TrafficModelPanel: Finished redefine linestring coordinates and repartition...shuffledVehicles 100000
-19/01/27 13:21:47 WARN TaskSetManager: Stage 21 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:21:49 WARN TaskSetManager: Stage 22 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:21:52 WARN TrafficModelPanel: Before Write File! Time: 238 seconds
-19/01/27 13:21:52 WARN TaskSetManager: Stage 23 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
-19/01/27 13:23:49 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 116 seconds
-du: failure to login
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-stopping org.apache.spark.deploy.master.Master
-starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
-  
-  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
-  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
-  	at java.security.AccessController.doPrivileged(Native Method)
-  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
-  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
-  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
-  	... 10 more
-full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
 vehicle simulation 20 minutes #####################################
-Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
-	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
-	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
-	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
-	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
-	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
-	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
-	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
-	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
-	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
-	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
-	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
-du: failure to login
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-no org.apache.spark.deploy.master.Master to stop
+19/01/27 21:47:42 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 21:47:45 WARN App: Total: 100000, timestamp: 1.0, simulation time: 20, partition time: 5, partition used: 1000
+19/01/27 21:47:45 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 21:48:08 WARN GenerationImpl: Finished OSM graph construction! Time: 22 . Processing graphhopper ...
+19/01/27 21:48:08 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 21:48:08 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 21:52:56 WARN GenerationImpl: Finished Generation! Time: 287 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_214746
+19/01/27 21:53:19 WARN JmapConsole: Road Network Construction! Time: 22 seconds
+19/01/27 21:53:19 WARN TrafficModelPanel: Simulation begin...
+19/01/27 21:53:19 WARN TaskSetManager: Stage 13 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:53:22 WARN TaskSetManager: Stage 14 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:53:25 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 21:53:25 WARN TaskSetManager: Stage 15 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:53:28 WARN TaskSetManager: Stage 16 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:53:30 WARN TaskSetManager: Stage 17 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:53:33 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 7
+19/01/27 21:53:33 WARN TaskSetManager: Stage 18 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:56:56 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 203 seconds
+19/01/27 21:56:56 WARN TaskSetManager: Stage 20 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:56:59 WARN TaskSetManager: Stage 21 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:57:01 WARN TaskSetManager: Stage 22 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:57:03 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 218
+19/01/27 21:57:03 WARN TaskSetManager: Stage 23 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:59:05 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 122 seconds
+19/01/27 21:59:06 WARN TaskSetManager: Stage 25 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:59:08 WARN TaskSetManager: Stage 26 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:59:11 WARN TaskSetManager: Stage 27 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 21:59:13 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 347
+19/01/27 21:59:13 WARN TaskSetManager: Stage 28 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:01:03 WARN TrafficModelPanel: Finished Partition 2 Simulation! Time: 109 seconds
+19/01/27 22:01:03 WARN TaskSetManager: Stage 30 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:01:05 WARN TaskSetManager: Stage 31 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:01:08 WARN TaskSetManager: Stage 32 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:01:10 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 464
+19/01/27 22:01:10 WARN TaskSetManager: Stage 33 contains a task of very large size (149 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:03:14 WARN TrafficModelPanel: Finished Partition 3 Simulation! Time: 124 seconds
+10.4 G  /vistrips/reports_0
+9.0 G  /vistrips/reports_1
+8.9 G  /vistrips/reports_2
+9.0 G  /vistrips/reports_3
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
 starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
-  
-  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
-  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
-  	at java.security.AccessController.doPrivileged(Native Method)
-  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
-  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
-  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
-  	... 10 more
-full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
-	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
-	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
-	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
-	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
-	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
-	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
-	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
-	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
-	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
-	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
-	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
-du: failure to login
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-no org.apache.spark.deploy.master.Master to stop
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+19/01/27 22:04:58 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 22:05:00 WARN App: Total: 100000, timestamp: 1.0, simulation time: 20, partition time: 5, partition used: 1000
+19/01/27 22:05:00 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 22:05:18 WARN GenerationImpl: Finished OSM graph construction! Time: 18 . Processing graphhopper ...
+19/01/27 22:05:18 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 22:05:18 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 22:10:03 WARN GenerationImpl: Finished Generation! Time: 285 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_220500
+19/01/27 22:10:26 WARN JmapConsole: Road Network Construction! Time: 22 seconds
+19/01/27 22:10:26 WARN TrafficModelPanel: Simulation begin...
+19/01/27 22:10:26 WARN TaskSetManager: Stage 13 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:10:30 WARN TaskSetManager: Stage 14 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:10:33 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 22:10:33 WARN TaskSetManager: Stage 15 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:10:36 WARN TaskSetManager: Stage 16 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:10:38 WARN TaskSetManager: Stage 17 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:10:41 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 7
+19/01/27 22:10:41 WARN TaskSetManager: Stage 18 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:14:14 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 212 seconds
+19/01/27 22:14:14 WARN TaskSetManager: Stage 20 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:14:16 WARN TaskSetManager: Stage 21 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:14:19 WARN TaskSetManager: Stage 22 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:14:21 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 228
+19/01/27 22:14:21 WARN TaskSetManager: Stage 23 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:16:31 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 130 seconds
+19/01/27 22:16:31 WARN TaskSetManager: Stage 25 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:16:34 WARN TaskSetManager: Stage 26 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:16:36 WARN TaskSetManager: Stage 27 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:16:39 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 365
+19/01/27 22:16:39 WARN TaskSetManager: Stage 28 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:18:31 WARN TrafficModelPanel: Finished Partition 2 Simulation! Time: 111 seconds
+19/01/27 22:18:31 WARN TaskSetManager: Stage 30 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:18:33 WARN TaskSetManager: Stage 31 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:18:36 WARN TaskSetManager: Stage 32 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:18:38 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 485
+19/01/27 22:18:38 WARN TaskSetManager: Stage 33 contains a task of very large size (152 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:20:34 WARN TrafficModelPanel: Finished Partition 3 Simulation! Time: 115 seconds
+10.4 G  /vistrips/reports_0
+9.0 G  /vistrips/reports_1
+8.6 G  /vistrips/reports_2
+8.9 G  /vistrips/reports_3
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
 starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
-  
-  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
-  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
-  	at java.security.AccessController.doPrivileged(Native Method)
-  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
-  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
-  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
-  	... 10 more
-full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
-	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
-	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
-	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
-	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
-	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
-	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
-	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
-	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
-	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
-	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
-	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
-du: failure to login
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-no org.apache.spark.deploy.master.Master to stop
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+19/01/27 22:22:29 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 22:22:31 WARN App: Total: 100000, timestamp: 1.0, simulation time: 20, partition time: 5, partition used: 1000
+19/01/27 22:22:31 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 22:22:58 WARN GenerationImpl: Finished OSM graph construction! Time: 26 . Processing graphhopper ...
+19/01/27 22:22:58 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 22:22:58 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 22:27:45 WARN GenerationImpl: Finished Generation! Time: 287 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_222231
+19/01/27 22:28:09 WARN JmapConsole: Road Network Construction! Time: 23 seconds
+19/01/27 22:28:09 WARN TrafficModelPanel: Simulation begin...
+19/01/27 22:28:09 WARN TaskSetManager: Stage 13 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:28:13 WARN TaskSetManager: Stage 14 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:28:15 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 22:28:15 WARN TaskSetManager: Stage 15 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:28:18 WARN TaskSetManager: Stage 16 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:28:20 WARN TaskSetManager: Stage 17 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:28:22 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 7
+19/01/27 22:28:23 WARN TaskSetManager: Stage 18 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:31:56 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 213 seconds
+19/01/27 22:31:56 WARN TaskSetManager: Stage 20 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:31:58 WARN TaskSetManager: Stage 21 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:32:00 WARN TaskSetManager: Stage 22 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:32:03 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 227
+19/01/27 22:32:03 WARN TaskSetManager: Stage 23 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:33:56 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 112 seconds
+19/01/27 22:33:56 WARN TaskSetManager: Stage 25 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:33:58 WARN TaskSetManager: Stage 26 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:34:00 WARN TaskSetManager: Stage 27 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:34:02 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 347
+19/01/27 22:34:03 WARN TaskSetManager: Stage 28 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:35:51 WARN TrafficModelPanel: Finished Partition 2 Simulation! Time: 109 seconds
+19/01/27 22:35:52 WARN TaskSetManager: Stage 30 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:35:54 WARN TaskSetManager: Stage 31 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:35:56 WARN TaskSetManager: Stage 32 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:35:59 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 463
+19/01/27 22:35:59 WARN TaskSetManager: Stage 33 contains a task of very large size (144 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:37:57 WARN TrafficModelPanel: Finished Partition 3 Simulation! Time: 118 seconds
+11.3 G  /vistrips/reports_0
+8.6 G  /vistrips/reports_1
+9.0 G  /vistrips/reports_2
+9.0 G  /vistrips/reports_3
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
 starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
-  
-  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
-  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
-  	at java.security.AccessController.doPrivileged(Native Method)
-  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
-  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
-  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
-  	... 10 more
-full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
 vehicle simulation 30 minutes #####################################
-Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
-	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
-	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
-	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
-	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
-	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
-	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
-	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
-	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
-	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
-	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
-	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
-du: failure to login
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-no org.apache.spark.deploy.master.Master to stop
+19/01/27 22:39:44 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 22:39:46 WARN App: Total: 100000, timestamp: 1.0, simulation time: 30, partition time: 5, partition used: 1000
+19/01/27 22:39:46 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 22:40:13 WARN GenerationImpl: Finished OSM graph construction! Time: 27 . Processing graphhopper ...
+19/01/27 22:40:13 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 22:40:13 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 22:44:53 WARN GenerationImpl: Finished Generation! Time: 280 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_223946
+19/01/27 22:45:16 WARN JmapConsole: Road Network Construction! Time: 22 seconds
+19/01/27 22:45:16 WARN TrafficModelPanel: Simulation begin...
+19/01/27 22:45:16 WARN TaskSetManager: Stage 13 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:45:20 WARN TaskSetManager: Stage 14 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:45:23 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 22:45:23 WARN TaskSetManager: Stage 15 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:45:25 WARN TaskSetManager: Stage 16 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:45:28 WARN TaskSetManager: Stage 17 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:45:30 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 7
+19/01/27 22:45:30 WARN TaskSetManager: Stage 18 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:51:44 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 374 seconds
+19/01/27 22:51:44 WARN TaskSetManager: Stage 20 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:51:47 WARN TaskSetManager: Stage 21 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:51:49 WARN TaskSetManager: Stage 22 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:51:52 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 389
+19/01/27 22:51:52 WARN TaskSetManager: Stage 23 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:53:47 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 115 seconds
+19/01/27 22:53:47 WARN TaskSetManager: Stage 25 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:53:50 WARN TaskSetManager: Stage 26 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:53:52 WARN TaskSetManager: Stage 27 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:53:54 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 511
+19/01/27 22:53:54 WARN TaskSetManager: Stage 28 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:55:47 WARN TrafficModelPanel: Finished Partition 2 Simulation! Time: 112 seconds
+19/01/27 22:55:47 WARN TaskSetManager: Stage 30 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:55:49 WARN TaskSetManager: Stage 31 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:55:52 WARN TaskSetManager: Stage 32 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:55:54 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 631
+19/01/27 22:55:54 WARN TaskSetManager: Stage 33 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:57:48 WARN TrafficModelPanel: Finished Partition 3 Simulation! Time: 113 seconds
+19/01/27 22:57:48 WARN TaskSetManager: Stage 35 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:57:50 WARN TaskSetManager: Stage 36 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:57:52 WARN TaskSetManager: Stage 37 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:57:55 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 752
+19/01/27 22:57:55 WARN TaskSetManager: Stage 38 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:59:39 WARN TrafficModelPanel: Finished Partition 4 Simulation! Time: 104 seconds
+19/01/27 22:59:39 WARN TaskSetManager: Stage 40 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:59:41 WARN TaskSetManager: Stage 41 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:59:44 WARN TaskSetManager: Stage 42 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 22:59:46 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 863
+19/01/27 22:59:46 WARN TaskSetManager: Stage 43 contains a task of very large size (140 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:01:33 WARN TrafficModelPanel: Finished Partition 5 Simulation! Time: 106 seconds
+10.4 G  /vistrips/reports_0
+8.7 G  /vistrips/reports_1
+8.9 G  /vistrips/reports_2
+8.4 G  /vistrips/reports_3
+8.5 G  /vistrips/reports_4
+8.7 G  /vistrips/reports_5
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
 starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
-  
-  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
-  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
-  	at java.security.AccessController.doPrivileged(Native Method)
-  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
-  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
-  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
-  	... 10 more
-full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
-	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
-	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
-	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
-	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
-	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
-	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
-	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
-	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
-	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
-	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
-	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
-du: failure to login
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-no org.apache.spark.deploy.master.Master to stop
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/01/27 23:03:19 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 23:03:21 WARN App: Total: 100000, timestamp: 1.0, simulation time: 30, partition time: 5, partition used: 1000
+19/01/27 23:03:21 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 23:03:40 WARN GenerationImpl: Finished OSM graph construction! Time: 19 . Processing graphhopper ...
+19/01/27 23:03:40 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 23:03:40 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 23:08:24 WARN GenerationImpl: Finished Generation! Time: 284 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_230321
+19/01/27 23:08:49 WARN JmapConsole: Road Network Construction! Time: 24 seconds
+19/01/27 23:08:49 WARN TrafficModelPanel: Simulation begin...
+19/01/27 23:08:49 WARN TaskSetManager: Stage 13 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:08:53 WARN TaskSetManager: Stage 14 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:08:55 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 23:08:55 WARN TaskSetManager: Stage 15 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:08:58 WARN TaskSetManager: Stage 16 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:09:00 WARN TaskSetManager: Stage 17 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:09:03 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 7
+19/01/27 23:09:03 WARN TaskSetManager: Stage 18 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:16:42 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 459 seconds
+19/01/27 23:16:42 WARN TaskSetManager: Stage 20 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:16:45 WARN TaskSetManager: Stage 21 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:16:47 WARN TaskSetManager: Stage 22 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:16:49 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 474
+19/01/27 23:16:49 WARN TaskSetManager: Stage 23 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:18:50 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 120 seconds
+19/01/27 23:18:50 WARN TaskSetManager: Stage 25 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:18:52 WARN TaskSetManager: Stage 26 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:18:55 WARN TaskSetManager: Stage 27 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:18:57 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 602
+19/01/27 23:18:57 WARN TaskSetManager: Stage 28 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:20:59 WARN TrafficModelPanel: Finished Partition 2 Simulation! Time: 121 seconds
+19/01/27 23:20:59 WARN TaskSetManager: Stage 30 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:21:01 WARN TaskSetManager: Stage 31 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:21:03 WARN TaskSetManager: Stage 32 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:21:05 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 730
+19/01/27 23:21:05 WARN TaskSetManager: Stage 33 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:23:02 WARN TrafficModelPanel: Finished Partition 3 Simulation! Time: 116 seconds
+19/01/27 23:23:02 WARN TaskSetManager: Stage 35 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:23:05 WARN TaskSetManager: Stage 36 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:23:07 WARN TaskSetManager: Stage 37 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:23:09 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 854
+19/01/27 23:23:09 WARN TaskSetManager: Stage 38 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:25:01 WARN TrafficModelPanel: Finished Partition 4 Simulation! Time: 111 seconds
+19/01/27 23:25:01 WARN TaskSetManager: Stage 40 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:25:03 WARN TaskSetManager: Stage 41 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:25:06 WARN TaskSetManager: Stage 42 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:25:08 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 973
+19/01/27 23:25:08 WARN TaskSetManager: Stage 43 contains a task of very large size (139 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:27:01 WARN TrafficModelPanel: Finished Partition 5 Simulation! Time: 113 seconds
+11.1 G  /vistrips/reports_0
+8.9 G  /vistrips/reports_1
+9.1 G  /vistrips/reports_2
+8.9 G  /vistrips/reports_3
+8.9 G  /vistrips/reports_4
+9.1 G  /vistrips/reports_5
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
 starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
-  
-  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
-  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
-  	at java.security.AccessController.doPrivileged(Native Method)
-  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
-  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
-  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
-  	... 10 more
-full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-Exception in thread "main" java.lang.IllegalArgumentException: basedir must be absolute: ?/.ivy2/local
-	at org.apache.ivy.util.Checks.checkAbsolute(Checks.java:48)
-	at org.apache.ivy.plugins.repository.file.FileRepository.setBaseDir(FileRepository.java:135)
-	at org.apache.ivy.plugins.repository.file.FileRepository.<init>(FileRepository.java:44)
-	at org.apache.spark.deploy.SparkSubmitUtils$.createRepoResolvers(SparkSubmit.scala:1057)
-	at org.apache.spark.deploy.SparkSubmitUtils$.buildIvySettings(SparkSubmit.scala:1143)
-	at org.apache.spark.deploy.DependencyUtils$.resolveMavenDependencies(DependencyUtils.scala:50)
-	at org.apache.spark.deploy.SparkSubmit$.doPrepareSubmitEnvironment(SparkSubmit.scala:364)
-	at org.apache.spark.deploy.SparkSubmit$.prepareSubmitEnvironment(SparkSubmit.scala:250)
-	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:171)
-	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:137)
-	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
-du: failure to login
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-no org.apache.spark.deploy.master.Master to stop
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/01/27 23:28:52 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/01/27 23:28:55 WARN App: Total: 100000, timestamp: 1.0, simulation time: 30, partition time: 5, partition used: 1000
+19/01/27 23:28:55 WARN GenerationImpl: Processing OSM data in GraphX
+19/01/27 23:29:18 WARN GenerationImpl: Finished OSM graph construction! Time: 23 . Processing graphhopper ...
+19/01/27 23:29:18 WARN GenerationImpl: Finished graphhopper construction. Time: 0.
+19/01/27 23:29:18 WARN GenerationImpl: Begin generate 100000 trips.
+19/01/27 23:34:08 WARN GenerationImpl: Finished Generation! Time: 289 seconds
+hdfs://en4119507l.cidse.dhcp.asu.edu:54310/vistrips/20190127_232855
+19/01/27 23:34:30 WARN JmapConsole: Road Network Construction! Time: 21 seconds
+19/01/27 23:34:30 WARN TrafficModelPanel: Simulation begin...
+19/01/27 23:34:30 WARN TaskSetManager: Stage 13 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:34:34 WARN TaskSetManager: Stage 14 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:34:36 WARN TrafficModelPanel: Partition iteration begin...
+19/01/27 23:34:36 WARN TaskSetManager: Stage 15 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:34:39 WARN TaskSetManager: Stage 16 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:34:42 WARN TaskSetManager: Stage 17 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:34:45 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 8
+19/01/27 23:34:45 WARN TaskSetManager: Stage 18 contains a task of very large size (156 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:36:30 WARN DFSClient: Slow ReadProcessor read fields took 30003ms (threshold=30000ms); ack: seqno: 328 status: SUCCESS status: SUCCESS status: SUCCESS downstreamAckTimeNanos: 34873785, targets: [10.218.106.186:50010, 10.218.107.240:50010, 10.218.106.137:50010]
+19/01/27 23:40:59 WARN TrafficModelPanel: Finished Partition 0 Simulation! Time: 374 seconds
+19/01/27 23:40:59 WARN TaskSetManager: Stage 20 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:41:02 WARN TaskSetManager: Stage 21 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:41:04 WARN TaskSetManager: Stage 22 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:41:07 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 390
+19/01/27 23:41:07 WARN TaskSetManager: Stage 23 contains a task of very large size (156 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:43:01 WARN TrafficModelPanel: Finished Partition 1 Simulation! Time: 114 seconds
+19/01/27 23:43:01 WARN TaskSetManager: Stage 25 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:43:04 WARN TaskSetManager: Stage 26 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:43:06 WARN TaskSetManager: Stage 27 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:43:08 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 512
+19/01/27 23:43:08 WARN TaskSetManager: Stage 28 contains a task of very large size (156 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:45:03 WARN TrafficModelPanel: Finished Partition 2 Simulation! Time: 114 seconds
+19/01/27 23:45:03 WARN TaskSetManager: Stage 30 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:45:06 WARN TaskSetManager: Stage 31 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:45:08 WARN TaskSetManager: Stage 32 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:45:10 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 634
+19/01/27 23:45:11 WARN TaskSetManager: Stage 33 contains a task of very large size (156 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:47:01 WARN TrafficModelPanel: Finished Partition 3 Simulation! Time: 110 seconds
+19/01/27 23:47:01 WARN TaskSetManager: Stage 35 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:47:03 WARN TaskSetManager: Stage 36 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:47:05 WARN TaskSetManager: Stage 37 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:47:08 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 751
+19/01/27 23:47:08 WARN TaskSetManager: Stage 38 contains a task of very large size (156 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:48:51 WARN TrafficModelPanel: Finished Partition 4 Simulation! Time: 103 seconds
+19/01/27 23:48:51 WARN TaskSetManager: Stage 40 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:48:54 WARN TaskSetManager: Stage 41 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:48:57 WARN TaskSetManager: Stage 42 contains a task of very large size (157 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:48:59 WARN TrafficModelPanel: Repartition shuffledVehicles 100000 Time: 862
+19/01/27 23:48:59 WARN TaskSetManager: Stage 43 contains a task of very large size (156 KB). The maximum recommended task size is 100 KB.
+19/01/27 23:50:52 WARN TrafficModelPanel: Finished Partition 5 Simulation! Time: 113 seconds
+10.7 G  /vistrips/reports_0
+8.6 G  /vistrips/reports_1
+8.8 G  /vistrips/reports_2
+8.5 G  /vistrips/reports_3
+8.4 G  /vistrips/reports_4
+9.2 G  /vistrips/reports_5
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
 starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-failed to launch: nice -n 0 /hdd2/code/spark-2.3.2-bin-hadoop2.6/bin/spark-class org.apache.spark.deploy.master.Master --host en4119507l.cidse.dhcp.asu.edu --port 7077 --webui-port 8080
-  
-  	at javax.security.auth.login.LoginContext.invoke(LoginContext.java:856)
-  	at javax.security.auth.login.LoginContext.access$000(LoginContext.java:195)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:682)
-  	at javax.security.auth.login.LoginContext$4.run(LoginContext.java:680)
-  	at java.security.AccessController.doPrivileged(Native Method)
-  	at javax.security.auth.login.LoginContext.invokePriv(LoginContext.java:680)
-  	at javax.security.auth.login.LoginContext.login(LoginContext.java:587)
-  	at org.apache.hadoop.security.UserGroupInformation.loginUserFromSubject(UserGroupInformation.java:797)
-  	... 10 more
-full log in /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
-en4119507l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119509l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119508l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
-en4119510l.cidse.dhcp.asu.edu: No user exists for uid 1940958126
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-ASUAD\zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
