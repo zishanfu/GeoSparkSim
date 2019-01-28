@@ -71,6 +71,7 @@ public class TrafficModelPanel{
 		vehicleRDD.analyze();
 		vehicleRDD.spatialPartitioning(GridType.QUADTREE, partition);
 		
+		long t2 = System.currentTimeMillis();
 		LOG.warn("Partition iteration begin...");
 		
 		for(int part = 0; part < repartition; part++) {
@@ -95,14 +96,16 @@ public class TrafficModelPanel{
 					return veh;
 				}
 			});
-			
-			
-			//repartition
-			LOG.warn("Finished redefine linestring coordinates and repartition...shuffledVehicles " + shuffledVehicles.count());
-			
+
 			vehicleRDD.setRawSpatialRDD(shuffledVehicles);
 			vehicleRDD.analyze();
 			vehicleRDD.spatialPartitioning(GridType.QUADTREE, partition);
+			
+			long scount = shuffledVehicles.count();
+			long t3 = System.currentTimeMillis();
+			//repartition
+			LOG.warn("Repartition shuffledVehicles " + scount + " Time: " + (t3-t2) / 1000);
+
 			
 			JavaRDD<Report> reportRDD = vehicleRDD.spatialPartitionedRDD.mapPartitions(vehicles -> {
 				List<Report> reports = new ArrayList<>();
@@ -154,12 +157,10 @@ public class TrafficModelPanel{
 				}
 				return reports.iterator();
 			});
-			
-			long t2 = System.currentTimeMillis();
-			LOG.warn(String.format("Before Write File! Time: %s seconds", (t2-t1) / 1000));
+
 			reportRDD.saveAsTextFile(hdfs.getHDFSUrl() + "/vistrips/reports_" + part);
-			long t3 = System.currentTimeMillis();
-			LOG.warn(String.format("Finished Partition %s Simulation! Time: %s seconds", part, (t3-t2) / 1000));
+			long t4 = System.currentTimeMillis();
+			LOG.warn(String.format("Finished Partition %s Simulation! Time: %s seconds", part, (t4-t3) / 1000));
 		}
 		
 		
