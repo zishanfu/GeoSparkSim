@@ -1,9 +1,14 @@
 package com.zishanfu.vistrips.sim.model;
 
+import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.graphx.EdgeRDD;
+import org.apache.spark.graphx.VertexRDD;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.zishanfu.vistrips.model.Link;
 import com.zishanfu.vistrips.osm.OsmGraph;
+import com.zishanfu.vistrips.sim.TrafficModelPanel;
 
 import scala.collection.immutable.Set;
 
@@ -13,6 +18,7 @@ public class World {
 	private OsmGraph graph;
 	private JavaRDD<IDMVehicle> vehicle;
 	private JavaRDD<IDMVehicle> roadVehicles;
+	private final Logger LOG = Logger.getLogger(TrafficModelPanel.class);
 	
 	public World(OsmGraph graph, JavaRDD<IDMVehicle> vehicle) {
 		this.graph = graph;
@@ -34,7 +40,10 @@ public class World {
 	private JavaRDD<IDMVehicle> roadDigesting(){
 		Set<Coordinate> signals = graph.getIntersectsSet();
 		Set<Coordinate> intersects = graph.getSignalsSet();
-//		EdgeRDD<Link> edge = graph.graph().edges();
+		EdgeRDD<Link> edges = graph.graph().edges();
+		VertexRDD<com.vividsolutions.jts.geom.Point> vertex = graph.graph().vertices();
+		LOG.warn("edges and vertices: " + edges.count() +", " + vertex.count());
+		
 		JavaRDD<IDMVehicle> landedVehicles = vehicle.map(veh -> {
 			Coordinate[] coordinates = veh.getCoordinates();
 			VirtualGPS gps = veh.getGps();
