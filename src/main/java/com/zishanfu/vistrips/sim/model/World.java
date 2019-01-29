@@ -19,6 +19,13 @@ public class World {
 		this.vehicle = vehicle;
 		this.roadVehicles = roadDigesting();
 	}
+	
+	
+
+	public OsmGraph getGraph() {
+		return graph;
+	}
+
 
 	public JavaRDD<IDMVehicle> getRoadVehicles() {
 		return roadVehicles;
