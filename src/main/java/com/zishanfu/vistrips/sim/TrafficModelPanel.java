@@ -162,64 +162,7 @@ public class TrafficModelPanel{
 			long t4 = System.currentTimeMillis();
 			LOG.warn(String.format("Finished Partition %s Simulation! Time: %s seconds", part, (t4-t3) / 1000));
 		}
-		
-		
-//		for(int i = 0; i<iterations; i++) {
-//			//join buffer
-//			PolygonRDD windows = new PolygonRDD(
-//					vehicleRDD.spatialPartitionedRDD.map(veh -> {
-//						Polygon poly = null;
-//						if(veh.getvBuffer() == null) {
-//							poly = veh.getSelf();
-//						}else {
-//							poly = veh.getvBuffer().getHead();
-//						}
-//						poly.setUserData(veh);
-//						return poly;
-//					}));
-//			
-//			windows.analyze();
-//			windows.spatialPartitioning(vehicleRDD.getPartitioner());
-//			
-//			JavaPairRDD<Polygon, HashSet<IDMVehicle>> tmp = JoinQuery
-//					.SpatialJoinQuery(vehicleRDD, windows, usingIndex, considerBoundaryIntersection);
-//			
-//			JavaPairRDD<Polygon, HashSet<IDMVehicle>> results = tmp
-//					.mapToPair(tuple -> {
-//						Polygon p = tuple._1;
-//						HashSet<IDMVehicle> set = new HashSet<>();
-//						for(IDMVehicle veh: tuple._2) {
-//							Coordinate curMove = veh.getLocation();
-//							com.vividsolutions.jts.geom.Point curPoint = gf.createPoint(curMove);
-//							if(curPoint.within(p)) {
-//								set.add(veh);
-//							}
-//						}
-//						set.remove((IDMVehicle)p.getUserData());
-//						return new Tuple2<Polygon, HashSet<IDMVehicle>>(p,set);
-//					});
-//
-//			JavaRDD<IDMVehicle> movedVehicle = results.map(tuple -> {
-//									IDMVehicle veh = (IDMVehicle) tuple._1.getUserData();
-//									veh.setAheadVehicles(tuple._2);
-//									return veh;
-//								}).map(veh -> {
-//									Coordinate next = veh.moveNext();
-//									veh.setLocation(next, veh.getNextIdx());
-//									return veh;
-//								});
-//			
-//			vehicleRDD.setRawSpatialRDD(movedVehicle);
-//		}
-		
-		
-		
-//		for(List<Coordinate> trajectory: trajectories) {
-//			for(Coordinate coordinate: trajectory) {
-//				System.out.print(coordinate + ",");
-//			}
-//			System.out.print("---");
-//		}
+
 		
     }
 

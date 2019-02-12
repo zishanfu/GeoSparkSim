@@ -19,12 +19,14 @@ public class App
 	//timestamp
 	//simulation time
 	//partition time
-	//hdfs location
+	//hdfs path 10.218.111.177
+	//osm path /home/zishanfu/Downloads/datasets/map.osm
+	//partition num
     public static void main( String[] args )
     {	
     	SparkSession spark = SparkSession
     			  .builder()
-    			  //.master("local[*]")
+    			  .master("local[*]")
     			  .appName("App")
     			  .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
     	          .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
