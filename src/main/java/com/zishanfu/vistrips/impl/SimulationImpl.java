@@ -1,4 +1,4 @@
-package com.zishanfu.vistrips.components.impl;
+package com.zishanfu.vistrips.impl;
 
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
@@ -13,17 +13,15 @@ import com.zishanfu.vistrips.tools.HDFSUtil;
 public class SimulationImpl {
 	private final Logger LOG = Logger.getLogger(SimulationImpl.class);
 	private JavaRDD<IDMVehicle> vehicles;
-	private OsmGraph graph;
 	private int partition;
 	
-	public SimulationImpl(JavaRDD<IDMVehicle> vehicles, OsmGraph graph, int partition) {
+	public SimulationImpl(JavaRDD<IDMVehicle> vehicles, int partition) {
 		this.vehicles = vehicles;
-		this.graph = graph;
 		this.partition = partition;
 	}
 	
 	public void apply(double simTime, double partitionTime, double timestamp, HDFSUtil hdfs) {
-		World world = new World(graph, vehicles);
+		World world = new World(vehicles);
 		
 		//set simulation time
 		try {
