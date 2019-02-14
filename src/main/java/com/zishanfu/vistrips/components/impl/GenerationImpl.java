@@ -147,14 +147,16 @@ public class GenerationImpl implements Serializable{
 		SpatialRandom spatialRand = new SpatialRandom( minLon, minLat, maxLon, maxLat, maxLen, graph);
 		
 		JavaSparkContext sc = new JavaSparkContext(spark.sparkContext());
-
-		IDMVehicle[] vehicleArr = new IDMVehicle[100000];
 		
-		for(int i = 0; i<100000; i++) {
+		int number = total < 100000? total : 100000;
+
+		IDMVehicle[] vehicleArr = new IDMVehicle[number];
+		
+		for(int i = 0; i<number; i++) {
 			vehicleArr[i] = computeVehicle(type, spatialRand, i);
 		}
 		
-		int union = total/100000;
+		int union = total/number;
 		
 		JavaRDD<IDMVehicle> vehicles = sc.parallelize(Arrays.asList(vehicleArr), partition);
 		
