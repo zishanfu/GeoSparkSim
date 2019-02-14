@@ -61,8 +61,7 @@ public class TrafficModelPanel{
 		iterations = (int) (simTime*60 / timestamp);
 		int repartition = (int) (partitionTime >= simTime? 1: simTime/partitionTime);
 
-		//JavaRDD<IDMVehicle> rawVehicles = world.getRoadVehicles();
-		JavaRDD<IDMVehicle> rawVehicles = world.getVehicle();
+		JavaRDD<IDMVehicle> rawVehicles = world.getRoadVehicles();
 		
 		int shuffleSlot = (int) (partitionTime*60);
 

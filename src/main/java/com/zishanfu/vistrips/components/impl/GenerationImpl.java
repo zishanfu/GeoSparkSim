@@ -1,4 +1,4 @@
-package com.zishanfu.vistrips.impl;
+package com.zishanfu.vistrips.components.impl;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,7 +38,7 @@ public class GenerationImpl implements Serializable{
 	private static final long serialVersionUID = -3340548967515954862L;
 	private final static Logger LOG = Logger.getLogger(GenerationImpl.class);
 	private SparkSession spark;
-//	private String path;
+	private String path;
 	private HDFSUtil hdfs;
 	private int partition;
 	
@@ -51,13 +51,13 @@ public class GenerationImpl implements Serializable{
 	}
 	
 
-//	public String getPath() {
-//		return path;
-//	}
+	public String getPath() {
+		return path;
+	}
 
 
 	public JavaRDD<IDMVehicle> apply(GeoPosition geo1, GeoPosition geo2, String generationType, int total, String local) {
-		//long t1 = System.currentTimeMillis();
+		long t1 = System.currentTimeMillis();
 		//scale the length of trip, same with the scale in trip generation
 		double maxLen = new Distance().euclidean(geo1, geo2) / 10; 
 		
@@ -67,25 +67,24 @@ public class GenerationImpl implements Serializable{
 		//System.out.println(String.format("Selected rectangle, p1: %s, p2: %s", newGeo1, newGeo2));
 
 		//String path = OsmParser.run(newGeo1, newGeo2);
-		//LOG.warn("Processing OSM data in GraphX");
+		LOG.warn("Processing OSM data in GraphX");
 		
 		//Parser osm to parquet on hdfs
 		//mapPath = new OsmParser().runInLocal(newGeo1, newGeo2);
-		
-		//path = new OsmParser(hdfs).runInHDFS(newGeo1, newGeo2);
+		path = new OsmParser(hdfs).runInHDFS(newGeo1, newGeo2);
 		
 		//Download osm pn disk 
 		//String local = osmDownloader(newGeo1, newGeo2);
-		//long t2 = System.currentTimeMillis();
+		long t2 = System.currentTimeMillis();
 		
 		//String osmPath = HDFSUtil.uploadLocalFile2HDFS(local, hdfs);
 		
-		//LOG.warn(String.format("Finished OSM graph construction! Time: %s . Processing graphhopper ...", (t2-t1) / 1000));
+		LOG.warn(String.format("Finished OSM graph construction! Time: %s . Processing graphhopper ...", (t2-t1) / 1000));
 		
 		GraphInit gi = new GraphInit(local);
 		//OsmGraph graph = new OsmGraph(spark, path);
 		long t3 = System.currentTimeMillis();
-		//LOG.warn(String.format("Finished graphhopper construction. Time: %s.", (t3-t2) / 1000));
+		LOG.warn(String.format("Finished graphhopper construction. Time: %s.", (t3-t2) / 1000));
 		
 		LOG.warn(String.format("Begin generate %s trips.", total));
 		JavaRDD<IDMVehicle> vRDD = vehicleGeneration(geo1, geo2, gi, maxLen, generationType, total);

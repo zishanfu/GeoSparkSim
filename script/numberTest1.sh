@@ -7,63 +7,12 @@ osm_path="/hdd2/code/zishanfu/map.osm"
 
 sleepinterval=60
 
-number=300000
+number=50000
 timestamp=1
 simulation=10
 partition=5
 partitionNum=1000
 
-echo "vehicle number "$number" #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-
-number=400000
-echo "vehicle number "$number" #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-
-number=500000
 echo "vehicle number "$number" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum

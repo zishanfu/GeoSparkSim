@@ -23,7 +23,7 @@ class OsmGraph (sparkSession: SparkSession, path: String){
   val gf = new GeometryFactory()
   val graph: Graph[Point, Link] = OsmConverter.convertToNetwork(sparkSession, path)
   println("graph vertex count: " + graph.vertices.count())
-  println("graph edges count: " + graph.edges.count())
+  println("graph vertex count: " + graph.edges.count())
   val vertexRDD = new PointRDD(graph.vertices.map(r => r._2))
   vertexRDD.buildIndex(IndexType.RTREE, false)
   
