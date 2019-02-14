@@ -33,8 +33,8 @@ public class App
     			  .getOrCreate();
     	int total = Integer.parseInt(args[0]);
     	double timestamp = Double.parseDouble(args[1]);
-    	int simTime = Integer.parseInt(args[2]);
-    	int parTime = Integer.parseInt(args[3]);
+    	double simTime = Double.parseDouble(args[2]);
+    	double parTime = Double.parseDouble(args[3]);
     	String str = args[4];
     	String osm = args[5];
     	int partition = Integer.parseInt(args[6]);
