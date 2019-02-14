@@ -101,7 +101,7 @@ public class TrafficModelPanel{
 			vehicleRDD.analyze();
 			vehicleRDD.spatialPartitioning(GridType.QUADTREE, partition);
 			
-			long scount = shuffledVehicles.count();
+			long scount = vehicleRDD.spatialPartitionedRDD.count();
 			long t3 = System.currentTimeMillis();
 			//repartition
 			LOG.warn("Repartition shuffledVehicles " + scount + " Time: " + (t3-t2) / 1000);
