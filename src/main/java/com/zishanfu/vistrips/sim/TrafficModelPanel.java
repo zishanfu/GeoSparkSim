@@ -69,7 +69,7 @@ public class TrafficModelPanel{
 		SpatialRDD<IDMVehicle> vehicleRDD = new SpatialRDD<IDMVehicle>();
 		vehicleRDD.setRawSpatialRDD(rawVehicles);
 		vehicleRDD.analyze();
-		vehicleRDD.spatialPartitioning(GridType.QUADTREE, partition);
+		vehicleRDD.spatialPartitioning(GridType.KDBTREE, partition);
 		
 		long t2 = System.currentTimeMillis();
 		LOG.warn("Partition iteration begin...");
@@ -99,7 +99,7 @@ public class TrafficModelPanel{
 
 			vehicleRDD.setRawSpatialRDD(shuffledVehicles);
 			vehicleRDD.analyze();
-			vehicleRDD.spatialPartitioning(GridType.QUADTREE, partition);
+			vehicleRDD.spatialPartitioning(GridType.KDBTREE, partition);
 			
 			long scount = vehicleRDD.spatialPartitionedRDD.count();
 			long t3 = System.currentTimeMillis();

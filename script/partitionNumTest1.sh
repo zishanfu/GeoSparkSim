@@ -10,7 +10,7 @@ sleepinterval=60
 number=100000
 timestamp=1
 simulation=10
-partition=5
+partition=1
 partitionNum=200
 
 echo "Spark partitionNum "$partitionNum" #####################################"
