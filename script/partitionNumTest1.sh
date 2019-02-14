@@ -11,56 +11,8 @@ number=100000
 timestamp=1
 simulation=10
 partition=1
-partitionNum=200
-
-echo "Spark partitionNum "$partitionNum" #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-partitionNum=300
-echo "Spark partitionNum "$partitionNum" #####################################"
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
 partitionNum=400
+
 echo "Spark partitionNum "$partitionNum" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
@@ -70,12 +22,27 @@ sleep $sleepinterval
 sh restart-spark.sh
 sleep 10
 
+
+partitionNum=600
+echo "Spark partitionNum "$partitionNum" #####################################"
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
+$checksize
+sleep $sleepinterval
+
+
+partitionNum=800
+echo "Spark partitionNum "$partitionNum" #####################################"
+
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 sleep 10
+
+partitionNum=1000
+echo "Spark partitionNum "$partitionNum" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
 $checksize
