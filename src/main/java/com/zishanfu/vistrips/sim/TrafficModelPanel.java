@@ -69,9 +69,10 @@ public class TrafficModelPanel{
 		SpatialRDD<IDMVehicle> vehicleRDD = new SpatialRDD<IDMVehicle>();
 		vehicleRDD.setRawSpatialRDD(rawVehicles);
 		vehicleRDD.analyze();
-		vehicleRDD.spatialPartitioning(GridType.KDBTREE, partition);
+		vehicleRDD.spatialPartitioning(GridType.VORONOI, partition);
 		
 		long t2 = System.currentTimeMillis();
+		long repartTime = 0;
 		LOG.warn("Partition iteration begin...");
 		
 		for(int part = 0; part < repartition; part++) {
@@ -101,13 +102,13 @@ public class TrafficModelPanel{
 
 			vehicleRDD.setRawSpatialRDD(shuffledVehicles);
 			vehicleRDD.analyze();
-			vehicleRDD.spatialPartitioning(GridType.KDBTREE, partition);
+			vehicleRDD.spatialPartitioning(GridType.VORONOI, partition);
 			
 			long scount = vehicleRDD.spatialPartitionedRDD.count();
 			long t4 = System.currentTimeMillis();
 			//repartition
-			LOG.warn("Repartition shuffledVehicles " + scount + " Time: " + (t4-t3) / 1000);
-
+			LOG.warn("Repartition shuffledVehicles " + scount);
+			repartTime += (t4-t3) / 1000;
 			
 			JavaRDD<Report> reportRDD = vehicleRDD.spatialPartitionedRDD.mapPartitions(vehicles -> {
 				List<Report> reports = new ArrayList<>();
@@ -164,7 +165,7 @@ public class TrafficModelPanel{
 		}
 		
 		long t5 = System.currentTimeMillis();
-		LOG.warn(String.format("Finished Simulation! Time: %s seconds", (t5-t2) / 1000));
+		LOG.warn(String.format("Finished Simulation! Simulation Total: %s seconds, Repartition Total: %s seconds", (t5-t2) / 1000, repartTime));
 		
     }
 
