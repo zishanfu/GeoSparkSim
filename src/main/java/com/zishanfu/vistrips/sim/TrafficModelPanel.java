@@ -76,6 +76,8 @@ public class TrafficModelPanel{
 		
 		for(int part = 0; part < repartition; part++) {
 			
+			long t3 = System.currentTimeMillis();
+			
 			JavaRDD<IDMVehicle> shuffledVehicles = part == 0?
 			vehicleRDD.getRawSpatialRDD().map(vehicle -> {
 				long time = vehicle.getTime();
@@ -102,9 +104,9 @@ public class TrafficModelPanel{
 			vehicleRDD.spatialPartitioning(GridType.KDBTREE, partition);
 			
 			long scount = vehicleRDD.spatialPartitionedRDD.count();
-			long t3 = System.currentTimeMillis();
+			long t4 = System.currentTimeMillis();
 			//repartition
-			LOG.warn("Repartition shuffledVehicles " + scount + " Time: " + (t3-t2) / 1000);
+			LOG.warn("Repartition shuffledVehicles " + scount + " Time: " + (t4-t3) / 1000);
 
 			
 			JavaRDD<Report> reportRDD = vehicleRDD.spatialPartitionedRDD.mapPartitions(vehicles -> {
@@ -159,10 +161,10 @@ public class TrafficModelPanel{
 			});
 
 			reportRDD.saveAsTextFile(hdfs.getHDFSUrl() + "/vistrips/reports_" + part);
-			long t4 = System.currentTimeMillis();
-			LOG.warn(String.format("Finished Partition %s Simulation! Time: %s seconds", part, (t4-t3) / 1000));
 		}
-
+		
+		long t5 = System.currentTimeMillis();
+		LOG.warn(String.format("Finished Simulation! Time: %s seconds", (t5-t2) / 1000));
 		
     }
 
