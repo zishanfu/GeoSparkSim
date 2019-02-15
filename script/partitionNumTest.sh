@@ -10,8 +10,8 @@ sleepinterval=60
 number=100000
 timestamp=1
 simulation=10
-partition=5
-partitionNum=1000
+partition=1
+partitionNum=192
 
 echo "Spark partitionNum "$partitionNum" #####################################"
 
@@ -36,7 +36,7 @@ sleep $sleepinterval
 sh restart-spark.sh
 sleep 10
 
-partitionNum=1500
+partitionNum=384
 echo "Spark partitionNum "$partitionNum" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
@@ -60,7 +60,34 @@ sleep $sleepinterval
 sh restart-spark.sh
 sleep 10
 
-partitionNum=2000
+
+number=200000
+partitionNum=384
+echo "Spark partitionNum "$partitionNum" #####################################"
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+sleep 10
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+sleep 10
+
+$sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum
+$checksize
+sleep $sleepinterval
+
+sh restart-spark.sh
+sleep 10
+
+number=300000
+partitionNum=576
 echo "Spark partitionNum "$partitionNum" #####################################"
 
 $sparkcommand $number $timestamp $simulation $partition $hdfs_path $osm_path $partitionNum

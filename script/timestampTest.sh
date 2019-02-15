@@ -10,8 +10,8 @@ sleepinterval=60
 number=100000
 timestamp=0.2
 simulation=10
-partition=5
-partitionNum=1000
+partition=1
+partitionNum=192
 
 echo "vehicle timestamp "$timestamp" seconds #####################################"
 

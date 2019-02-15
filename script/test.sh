@@ -8,7 +8,7 @@ osm_path="/hdd2/code/zishanfu/map.osm"
 sleepinterval=60
 
 number=100000
-timestamp=1
+timestamp=0.2
 simulation=10
 repartition=1
 partitionNum=192
@@ -22,7 +22,7 @@ sleep $sleepinterval
 sh restart-spark.sh
 sleep 10
 
-repartition=2
+repartition=0.5
 echo "##########################################################################"
 
 $sparkcommand $number $timestamp $simulation $repartition $hdfs_path $osm_path $partitionNum
@@ -32,24 +32,3 @@ sleep $sleepinterval
 sh restart-spark.sh
 sleep 10
 
-number=200000
-repartition=1
-echo "##########################################################################"
-
-$sparkcommand $number $timestamp $simulation $repartition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
-
-number=200000
-partitionNum=384
-echo "##########################################################################"
-
-$sparkcommand $number $timestamp $simulation $repartition $hdfs_path $osm_path $partitionNum
-$checksize
-sleep $sleepinterval
-
-sh restart-spark.sh
-sleep 10
