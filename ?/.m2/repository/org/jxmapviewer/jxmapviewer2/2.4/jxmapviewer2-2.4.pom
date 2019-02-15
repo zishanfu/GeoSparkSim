@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jxmapviewer</groupId>
+  <artifactId>jxmapviewer2</artifactId>
+  <version>2.4</version>
+  <name>jxmapviewer2</name>
+  <description>A MapViewer based on the JXMapViewer component of SwingX-WS.</description>
+  <url>https://github.com/msteiger/jxmapviewer2</url>
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License</name>
+      <url>http://www.gnu.org/licenses/lgpl-3.0-standalone.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>msteiger</id>
+      <name>Martin Steiger</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git@github.com:msteiger/jxmapviewer2.git</connection>
+    <developerConnection>scm:git@github.com:msteiger/jxmapviewer2.git</developerConnection>
+    <url>git@github.com:msteiger/jxmapviewer2.git</url>
+  </scm>
+  <issueManagement>
+    <url>https://github.com/msteiger/jxmapviewer2/issues</url>
+  </issueManagement>
+  <dependencies>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
