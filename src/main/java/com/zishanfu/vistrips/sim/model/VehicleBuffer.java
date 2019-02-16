@@ -3,7 +3,6 @@ package com.zishanfu.vistrips.sim.model;
 import com.vividsolutions.jts.algorithm.Angle;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Polygon;
 
 import scala.Serializable;
 
@@ -21,8 +20,8 @@ public class VehicleBuffer implements Serializable{
 	private final double backWidth = 0.00002317;
 	private final double selfWidth = 0.0000021;
 	private GeometryFactory gf = new GeometryFactory();
-	private Polygon head;
-	private Polygon back;
+	private double[] head;
+	private double[] back; //left, right, top, bottom
 	
 	public VehicleBuffer(Coordinate current, Coordinate next) {
 		this.location = current;
@@ -33,35 +32,42 @@ public class VehicleBuffer implements Serializable{
 		this.next = next;
 	}
 	
-	public Polygon getSelf() {
+	public double[] getSelf() {
 		double selfLength = location.distance(next);
 		double dx = Math.cos(headAngle)*selfLength;
 		double dy = Math.sin(headAngle)*selfLength;
 		double x = dx + location.x;
 		double y = dy + location.y;
 		Coordinate head = new Coordinate(x, y);
-		Coordinate[] coordinates = new Coordinate[5];
+		double[] results = new double[4];
 		if(dx < dy) {
-			coordinates[0] = new Coordinate(head.x + selfWidth, head.y);
-			coordinates[1] = new Coordinate(head.x - selfWidth, head.y);
-			coordinates[2] = new Coordinate(location.x + selfWidth, location.y);
-			coordinates[3] = new Coordinate(location.x - selfWidth, location.y);
+//			Coordinate(head.x + selfWidth, head.y);
+//			Coordinate(head.x - selfWidth, head.y);
+//			Coordinate(location.x + selfWidth, location.y);
+//			Coordinate(location.x - selfWidth, location.y);
+			results[0] = Math.min(head.x - selfWidth, location.x - selfWidth);
+			results[1] = Math.max(head.x + selfWidth, location.x + selfWidth);
+			results[2] = Math.max(head.y, location.y);
+			results[3] = Math.min(head.y, location.y);
 		}else {
-			coordinates[0] = new Coordinate(head.x, head.y + selfWidth);
-			coordinates[1] = new Coordinate(head.x, head.y - selfWidth);
-			coordinates[2] = new Coordinate(location.x, location.y + selfWidth);
-			coordinates[3] = new Coordinate(location.x, location.y - selfWidth);
+//			Coordinate(head.x, head.y + selfWidth);
+//			Coordinate(head.x, head.y - selfWidth);
+//			Coordinate(location.x, location.y + selfWidth);
+//			Coordinate(location.x, location.y - selfWidth);
+			results[0] = Math.min(head.x, location.x);
+			results[1] = Math.max(head.x, location.x);
+			results[2] = Math.max(head.y - selfWidth, location.y - selfWidth);
+			results[3] = Math.min(head.y + selfWidth, location.y + selfWidth);
 		}
-		coordinates[4] = coordinates[0];
-		return gf.createPolygon(coordinates);
+		return results;
 	}
 	
 
-	public Polygon getHead() {
+	public double[] getHead() {
 		return head;
 	}
 
-	public Polygon getBack() {
+	public double[] getBack() {
 		return back;
 	}
 	
@@ -74,47 +80,61 @@ public class VehicleBuffer implements Serializable{
 	}
 
 
-	private Polygon headBuffer() {
+	private double[] headBuffer() {
 		double dx = Math.cos(headAngle)*length;
 		double dy = Math.sin(headAngle)*length;
 		double x = dx + location.x;
 		double y = dy + location.y;
 		Coordinate head = new Coordinate(x, y);
-		Coordinate[] coordinates = new Coordinate[5];
+		double[] results = new double[4];
 		if(dx < dy) {
-			coordinates[0] = new Coordinate(head.x + headWidth, head.y);
-			coordinates[1] = new Coordinate(head.x - headWidth, head.y);
-			coordinates[2] = new Coordinate(location.x + headWidth, location.y);
-			coordinates[3] = new Coordinate(location.x - headWidth, location.y);
+//			Coordinate(head.x + headWidth, head.y);
+//			Coordinate(head.x - headWidth, head.y);
+//			Coordinate(location.x + headWidth, location.y);
+//			Coordinate(location.x - headWidth, location.y);
+			results[0] = Math.min(head.x - headWidth, location.x - headWidth);
+			results[1] = Math.max(head.x + headWidth, location.x + headWidth);
+			results[2] = Math.max(head.y, location.y);
+			results[3] = Math.min(head.y, location.y);
 		}else {
-			coordinates[0] = new Coordinate(head.x, head.y + headWidth);
-			coordinates[1] = new Coordinate(head.x, head.y - headWidth);
-			coordinates[2] = new Coordinate(location.x, location.y + headWidth);
-			coordinates[3] = new Coordinate(location.x, location.y - headWidth);
+//			Coordinate(head.x, head.y + headWidth);
+//			Coordinate(head.x, head.y - headWidth);
+//			Coordinate(location.x, location.y + headWidth);
+//			Coordinate(location.x, location.y - headWidth);
+			results[0] = Math.min(head.x, location.x);
+			results[1] = Math.max(head.x, location.x);
+			results[2] = Math.max(head.y - headWidth, location.y - headWidth);
+			results[3] = Math.min(head.y + headWidth, location.y + headWidth);
 		}
-		coordinates[4] = coordinates[0];
-		return gf.createPolygon(coordinates);
+		return results;
 	}
 	
-	private Polygon backBuffer() {
+	private double[] backBuffer() {
 		double dx = Math.cos(backAngle)*length;
 		double dy = Math.sin(backAngle)*length;
 		double x = dx + location.x;
 		double y = dy + location.y;
 		Coordinate back = new Coordinate(x, y);
-		Coordinate[] coordinates = new Coordinate[5];
+		double[] results = new double[4];
 		if(dx > dy) {
-			coordinates[0] = new Coordinate(back.x + backWidth, back.y);
-			coordinates[1] = new Coordinate(back.x - backWidth, back.y);
-			coordinates[2] = new Coordinate(location.x + backWidth, location.y);
-			coordinates[3] = new Coordinate(location.x - backWidth, location.y);
+//			Coordinate(back.x + backWidth, back.y);
+//			Coordinate(back.x - backWidth, back.y);
+//			Coordinate(location.x + backWidth, location.y);
+//			Coordinate(location.x - backWidth, location.y);
+			results[0] = Math.min(back.x - backWidth, location.x - backWidth);
+			results[1] = Math.max(back.x + backWidth, location.x + backWidth);
+			results[2] = Math.max(back.y, location.y);
+			results[3] = Math.min(back.y, location.y);
 		}else {
-			coordinates[0] = new Coordinate(back.x, back.y + backWidth);
-			coordinates[1] = new Coordinate(back.x, back.y - backWidth);
-			coordinates[2] = new Coordinate(location.x, location.y + backWidth);
-			coordinates[3] = new Coordinate(location.x, location.y - backWidth);
+//			Coordinate(back.x, back.y + backWidth);
+//			Coordinate(back.x, back.y - backWidth);
+//			Coordinate(location.x, location.y + backWidth);
+//			Coordinate(location.x, location.y - backWidth);
+			results[0] = Math.min(back.x, location.x);
+			results[1] = Math.max(back.x, location.x);
+			results[2] = Math.max(back.y - backWidth, location.y - backWidth);
+			results[3] = Math.min(back.y + backWidth, location.y + backWidth);
 		}
-		coordinates[4] = coordinates[0];
-		return gf.createPolygon(coordinates);
+		return results;
 	}
 }

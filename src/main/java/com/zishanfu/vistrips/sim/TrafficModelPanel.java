@@ -2,9 +2,11 @@ package com.zishanfu.vistrips.sim;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -17,6 +19,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 import com.zishanfu.vistrips.sim.model.IDMVehicle;
 import com.zishanfu.vistrips.sim.model.Report;
+import com.zishanfu.vistrips.sim.model.VehicleRectangle;
 import com.zishanfu.vistrips.sim.model.World;
 import com.zishanfu.vistrips.tools.HDFSUtil;
 
@@ -106,42 +109,39 @@ public class TrafficModelPanel{
 			
 			long scount = vehicleRDD.spatialPartitionedRDD.count();
 			long t4 = System.currentTimeMillis();
-			//repartition
-			LOG.warn("Repartition shuffledVehicles " + scount);
+
+			LOG.warn("Repartition Vehicles " + scount);
 			repartTime += (t4-t3) / 1000;
 			
 			JavaRDD<Report> reportRDD = vehicleRDD.spatialPartitionedRDD.mapPartitions(vehicles -> {
 				List<Report> reports = new ArrayList<>();
 				Iterator<IDMVehicle> iterator = vehicles;
 				
-//				LOG.warn("Begin iteration" + (shuffleSlot/timestamp));
-				
 				for(int i = 0; i<shuffleSlot/timestamp; i++) {
+					List<VehicleRectangle> vBuffers = new ArrayList<>();
+					Map<Coordinate, IDMVehicle> map = new HashMap<>();
 					
-					List<Polygon> vBuffers = new ArrayList<>();
-					List<com.vividsolutions.jts.geom.Point> curVehicles = new ArrayList<>();
 					while(iterator.hasNext()) {
 						IDMVehicle veh = iterator.next();
 						//find buffer
-						Polygon headBuffer = veh.getvBuffer() == null ? veh.getSelf():veh.getvBuffer().getHead();
-						headBuffer.setUserData(veh);
-						vBuffers.add(headBuffer);
-						com.vividsolutions.jts.geom.Point location = gf.createPoint(veh.getLocation());
-						location.setUserData(veh);
-						curVehicles.add(location);
+						double[] headBuffer = veh.getvBuffer() == null ? veh.getSelf():veh.getvBuffer().getHead();
+						VehicleRectangle rect = new VehicleRectangle(headBuffer);
+						rect.setVehicle(veh);
+						vBuffers.add(rect);
+						map.put(veh.getLocation(), veh);
 					}
+					
 					List<IDMVehicle> bufferedVehicles = new ArrayList<>();
 					
-//					LOG.warn("Created Vehicles and Vehicle Buffers. Begin check...");
-					
-					for(Polygon buffer: vBuffers) {
+					for(VehicleRectangle buffer: vBuffers) {
 						Set<IDMVehicle> set = new HashSet<>();
-						for(com.vividsolutions.jts.geom.Point cur: curVehicles) {
-							if(cur.within(buffer)) {
-								set.add((IDMVehicle)cur.getUserData());
+						for(Coordinate cur: map.keySet()) {
+							double[] rect = buffer.getRectangle(); //left, right, top, bottom
+							if(cur.x > rect[0] && cur.x < rect[1] && cur.y < rect[2] && cur.y > rect[3]) {
+								set.add(map.get(cur));
 							}
 						}
-						IDMVehicle bVeh = (IDMVehicle)buffer.getUserData();
+						IDMVehicle bVeh = buffer.getVehicle();
 						bVeh.setAheadVehicles(set);
 						Coordinate next = bVeh.moveNext();
 						//true -> didn't arrive
@@ -155,7 +155,6 @@ public class TrafficModelPanel{
 						}
 						bufferedVehicles.add(bVeh);
 					}
-//					LOG.warn("Finished all vehicle checks and move forward...");
 					iterator = bufferedVehicles.iterator();
 				}
 				return reports.iterator();

@@ -21,7 +21,7 @@ public class Vehicle extends LineString{
 	//create a looking ahead rectangle and looking back rectangle by current position
 	private Set<IDMVehicle> aheadVehicles;
 	private VehicleBuffer vBuffer;
-	private Polygon self;
+	private double[] self;
 	private Coordinate location;
 	private Coordinate next;
 	private int nextIdx;
@@ -88,11 +88,11 @@ public class Vehicle extends LineString{
 		return true;
 	}
 
-	public Polygon getSelf() {
+	public double[] getSelf() {
 		return self;
 	}
 
-	public void setSelf(Polygon self) {
+	public void setSelf(double[] self) {
 		this.self = self;
 	}
 
