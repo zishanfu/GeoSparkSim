@@ -1,6 +1,5 @@
 /target/
-/script/src/test/resources/
-/src/test/resources/vistrips/
+/script/src/
 /.idea
 /*.iml
 /.settings/
