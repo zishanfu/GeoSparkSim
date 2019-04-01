@@ -61,7 +61,7 @@ class ReportHandler (sparkSession: SparkSession, path: String, numPartition: Int
           Row(report.getSignalLocation.x, report.getSignalLocation.y)
         )
       }
-    }).repartition(numPartition)
+    })
 
     val df = sparkSession.createDataFrame(map, Define.reportSchema)
     df.write.format("json").save(path + "/reports" + id)
