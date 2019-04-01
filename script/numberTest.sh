@@ -14,21 +14,21 @@ repartition=120
 
 echo "Spark numberTest "$number" #####################################"
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 sleep $sleepinterval
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 sleep $sleepinterval
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
@@ -39,21 +39,21 @@ sleep $sleepinterval
 number=200000
 echo "Spark numberTest "$number" #####################################"
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 sleep $sleepinterval
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 sleep $sleepinterval
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
@@ -64,21 +64,21 @@ sleep $sleepinterval
 number=300000
 echo "Spark numberTest "$number" #####################################"
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 sleep $sleepinterval
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
 sh restart-spark.sh
 sleep $sleepinterval
 
-$sparkcommand -c -d -n number -p partition -r repartition -s steps -t timestep -f hdfs_path
+$sparkcommand -c -d -n $number -p $partition -r $repartition -s $steps -t $timestep -f $hdfs_path
 $checksize
 sleep $sleepinterval
 
