@@ -190,11 +190,14 @@ object Microscopic {
 
     val reportHandler = new ReportHandler(sparkSession, path, numPartition)
     reportHandler.writeReportJson(reportRDD0, 0)
-    val iteration = steps / repartition + (if (steps % repartition == 0) 0 else 1)
 
-    var execTime = 0.0;
+    val newSteps = (steps / timestep).toInt
 
-    val t1 = System.currentTimeMillis();
+    val iteration = newSteps / repartition + (if (newSteps % repartition == 0) 0 else 1)
+
+    var execTime = 0.0
+
+    val t1 = System.currentTimeMillis()
     val recoverTuple = recovery(vehicleRDD.getRawSpatialRDD.rdd, signalRDD.getRawSpatialRDD.rdd, reportRDD0, 0, numPartition)
 
     vehicleRDD.setRawSpatialRDD(recoverTuple._1)
@@ -202,7 +205,7 @@ object Microscopic {
     vehicleRDD.spatialPartitioning(GridType.KDBTREE, numPartition)
     edgeRDD.spatialPartitioning(vehicleRDD.getPartitioner)
     signalRDD.spatialPartitioning(vehicleRDD.getPartitioner)
-    val t2 = System.currentTimeMillis();
+    val t2 = System.currentTimeMillis()
     execTime = execTime + t2 - t1
 
     for(n <- 1 to iteration){
@@ -256,9 +259,12 @@ object Microscopic {
                 }else{
                   if(!vehicle.isArrive){
                     val head = vehicle.headwayCheck(edgeMap, signalWayMap)
-                    edgeMap = vehicle.basicMovement(head, 1, edgeMap)
+                    edgeMap = vehicle.basicMovement(head, timestep, edgeMap)
                     stepReports = stepReports:+ new StepReport(i, vehicle.getId, vehicle.getFront, vehicle.getRear, vehicle.getSource, vehicle.getTarget,  vehicle.getEdgePath, vehicle.getCosts, vehicle.getFullPath,
                       vehicle.getEdgeIndex, vehicle.getCurrentLane, vehicle.getPosition, vehicle.getVelocity, vehicle.getCurrentLink, vehicle.getHeadSignal)
+                  }else{
+                    vehicle.initVehicle()
+                    edgeMap = vehicle.born(edgeMap, "Baby")
                   }
                 }
               })
@@ -292,7 +298,7 @@ object Microscopic {
 
     val lastReportRDD = reportRDD.filter(report => {
       report.getStep == stepCount
-    }).repartition(numPartition)
+    })
 
     //construct vehicle report
     val lastVehicle = lastReportRDD.filter(report => report.getVehicleFront != null).map(report => {

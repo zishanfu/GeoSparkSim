@@ -1,6 +1,6 @@
 java -jar --class com.zishanfu.geosparksim.GeoSparkSim GeoSparkSim-single-1.0-SNAPSHOT-jar-with-dependencies.jar
 
-java -cp GeoSparkSim-single-1.0-SNAPSHOT-jar-with-dependencies.jar com.zishanfu.geosparksim.GeoSparkSim
+java -cp target/GeoSparkSim-1.0-SNAPSHOT-jar-with-dependencies.jar com.zishanfu.geosparksim.GeoSparkSim
 
 hdfs://en4119507l.cidse.dhcp.asu.edu:54310 
 

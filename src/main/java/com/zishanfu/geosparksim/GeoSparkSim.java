@@ -213,6 +213,7 @@ public class GeoSparkSim implements Runnable{
         Dataset<TrafficLight> signals = networkReader.readSignalJson();
         Dataset<Intersect> intersects = networkReader.readIntersectJson();
         Dataset<MOBILVehicle> vehicles = vehicleHandler.readVehicleTrajectoryJson();
+        LOG.warn("Read: edge: " + edges.count() + ", signals: " + signals.count() + ", intersects: " + intersects.count() + ", vehicles: " + vehicles.count());
 
         long t1 = System.currentTimeMillis();
         Microscopic.sim(spark, edges, signals, intersects, vehicles, path, step, timestep, repartition, partition);

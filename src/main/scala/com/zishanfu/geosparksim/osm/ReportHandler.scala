@@ -35,7 +35,7 @@ class ReportHandler (sparkSession: SparkSession, path: String, numPartition: Int
 
       //(step: Int, signalLocation: Coordinate, signal: Int, vehicleId: String, vehicleFront: Coordinate, vehicleRear: Coordinate)
 
-    })(Define.reportEncoder).repartition(numPartition)
+    })(Define.reportEncoder)
 
     reportDS
   }

@@ -85,6 +85,7 @@ public class Vehicle extends Point {
     public void initVehicle(){
         this.edgeIndex = 0;
         this.currentLane = 0;
+        this.isArrive = false;
     }
 
     public boolean isArrive() {

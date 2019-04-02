@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class ResultController {
 
-    private int txtRow = 23;
+    private int txtRow = 25;
     public JScrollPane resultPanel;
     public JTextArea textArea;
 
