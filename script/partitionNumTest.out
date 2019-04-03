@@ -1,0 +1,396 @@
+Spark partitionNumTest 1200 #####################################
+19/04/01 18:55:49 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 18:55:50 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 18:55:52 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1200
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 18:57:38 WARN TaskSetManager: Stage 22 contains a task of very large size (21524 KB). The maximum recommended task size is 100 KB.
+19/04/01 18:57:49 WARN GeoSparkSim: Read: edge: 239678, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 19:13:17 WARN Microscopic$: Repartition Time: 448.435
+19/04/01 19:13:17 WARN GeoSparkSim: Finished Simulation: 927
+19/04/01 19:13:21 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.4 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+19/04/01 19:15:41 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 19:15:42 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 19:15:43 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1200
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 19:17:01 WARN TaskSetManager: Stage 22 contains a task of very large size (21443 KB). The maximum recommended task size is 100 KB.
+19/04/01 19:17:14 WARN GeoSparkSim: Read: edge: 239678, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 19:30:31 WARN Microscopic$: Repartition Time: 358.315
+19/04/01 19:30:31 WARN GeoSparkSim: Finished Simulation: 796
+19/04/01 19:30:35 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.6 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/04/01 19:32:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 19:32:54 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 19:32:56 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1200
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 19:34:42 WARN TaskSetManager: Stage 22 contains a task of very large size (21525 KB). The maximum recommended task size is 100 KB.
+19/04/01 19:34:52 WARN GeoSparkSim: Read: edge: 239678, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 19:47:18 WARN Microscopic$: Repartition Time: 309.491
+19/04/01 19:47:18 WARN GeoSparkSim: Finished Simulation: 745
+19/04/01 19:47:23 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.4 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+Spark partitionNumTest 1300 #####################################
+19/04/01 19:49:41 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 19:49:42 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 19:49:44 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1300
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 19:51:12 WARN TaskSetManager: Stage 22 contains a task of very large size (21924 KB). The maximum recommended task size is 100 KB.
+19/04/01 19:51:23 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 20:06:29 WARN Microscopic$: Repartition Time: 425.577
+19/04/01 20:06:29 WARN GeoSparkSim: Finished Simulation: 905
+19/04/01 20:06:34 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.5 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+19/04/01 20:08:52 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 20:08:53 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 20:08:55 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1300
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 20:11:04 WARN TaskSetManager: Stage 22 contains a task of very large size (21808 KB). The maximum recommended task size is 100 KB.
+19/04/01 20:11:16 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 20:23:37 WARN Microscopic$: Repartition Time: 302.355
+19/04/01 20:23:37 WARN GeoSparkSim: Finished Simulation: 741
+19/04/01 20:23:43 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.5 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/04/01 20:26:01 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 20:26:02 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 20:26:04 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1300
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 20:27:29 WARN TaskSetManager: Stage 22 contains a task of very large size (21814 KB). The maximum recommended task size is 100 KB.
+19/04/01 20:27:41 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 20:39:16 WARN Microscopic$: Repartition Time: 275.648
+19/04/01 20:39:16 WARN GeoSparkSim: Finished Simulation: 694
+19/04/01 20:39:21 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.3 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+Spark partitionNumTest 1400 #####################################
+19/04/01 20:41:38 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 20:41:39 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 20:41:41 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1400
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 20:43:09 WARN TaskSetManager: Stage 22 contains a task of very large size (21500 KB). The maximum recommended task size is 100 KB.
+19/04/01 20:43:26 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 20:54:05 WARN Microscopic$: Repartition Time: 232.47
+19/04/01 20:54:05 WARN GeoSparkSim: Finished Simulation: 638
+19/04/01 20:54:09 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.2 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/04/01 20:56:26 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 20:56:27 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 20:56:28 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1400
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 20:57:50 WARN TaskSetManager: Stage 22 contains a task of very large size (21418 KB). The maximum recommended task size is 100 KB.
+19/04/01 20:58:03 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 21:12:03 WARN Microscopic$: Repartition Time: 358.124
+19/04/01 21:12:03 WARN GeoSparkSim: Finished Simulation: 840
+19/04/01 21:12:08 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.4 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+19/04/01 21:14:28 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 21:14:29 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 21:14:31 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1400
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 21:15:56 WARN TaskSetManager: Stage 22 contains a task of very large size (21869 KB). The maximum recommended task size is 100 KB.
+19/04/01 21:16:08 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 21:29:36 WARN Microscopic$: Repartition Time: 355.25
+19/04/01 21:29:36 WARN GeoSparkSim: Finished Simulation: 807
+19/04/01 21:29:42 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.1 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+Spark partitionNumTest 1500 #####################################
+19/04/01 21:31:59 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 21:32:00 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 21:32:02 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1500
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 21:33:41 WARN TaskSetManager: Stage 22 contains a task of very large size (21680 KB). The maximum recommended task size is 100 KB.
+19/04/01 21:33:53 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 21:46:06 WARN Microscopic$: Repartition Time: 270.438
+19/04/01 21:46:06 WARN GeoSparkSim: Finished Simulation: 732
+19/04/01 21:46:10 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.4 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+19/04/01 21:48:26 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 21:48:27 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 21:48:29 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1500
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 21:50:10 WARN TaskSetManager: Stage 22 contains a task of very large size (21489 KB). The maximum recommended task size is 100 KB.
+19/04/01 21:50:21 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 22:02:44 WARN Microscopic$: Repartition Time: 296.611
+19/04/01 22:02:44 WARN GeoSparkSim: Finished Simulation: 742
+19/04/01 22:02:50 ERROR GeoSparkSim: Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, GeoSparkSim will not show the traffic visualization! Please check output in hdfs://en4119507l.cidse.dhcp.asu.edu:54310/geosparksim
+14.3 M  /geosparksim/reports0
+1.7 G  /geosparksim/reports1
+1.7 G  /geosparksim/reports2
+1.7 G  /geosparksim/reports3
+1.7 G  /geosparksim/reports4
+1.7 G  /geosparksim/reports5
+en4119508l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119509l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119510l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+en4119507l.cidse.dhcp.asu.edu: stopping org.apache.spark.deploy.worker.Worker
+stopping org.apache.spark.deploy.master.Master
+starting org.apache.spark.deploy.master.Master, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.master.Master-1-en4119507l.out
+en4119510l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119510l.out
+en4119509l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119509l.out
+en4119507l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119507l.out
+en4119508l.cidse.dhcp.asu.edu: starting org.apache.spark.deploy.worker.Worker, logging to /hdd2/code/spark-2.3.2-bin-hadoop2.6/logs/spark-zishanfu-org.apache.spark.deploy.worker.Worker-1-en4119508l.out
+19/04/01 22:05:07 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+19/04/01 22:05:08 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+19/04/01 22:05:09 WARN GeoSparkSim: 
+P1: 33.48998, -112.10964
+P2: 33.38827, -111.79722
+Total: 100000
+Steps: 600
+Timestep: 1.0
+Generation Type: DSO
+Repartition Time: 120
+Partition: 1500
+Output: hdfs://en4119507l.cidse.dhcp.asu.edu:54310
+
+19/04/01 22:06:32 WARN TaskSetManager: Stage 22 contains a task of very large size (21593 KB). The maximum recommended task size is 100 KB.
+19/04/01 22:06:45 WARN GeoSparkSim: Read: edge: 239710, signals: 4374, intersects: 24190, vehicles: 100000
+19/04/01 22:16:01 WARN StandaloneAppClient$ClientEndpoint: Connection to en4119507l.cidse.dhcp.asu.edu:7077 failed; waiting for master to reconnect...
+19/04/01 22:16:01 WARN StandaloneSchedulerBackend: Disconnected from Spark cluster! Waiting for reconnection...
+19/04/01 22:16:01 WARN StandaloneAppClient$ClientEndpoint: Connection to en4119507l.cidse.dhcp.asu.edu:7077 failed; waiting for master to reconnect...
