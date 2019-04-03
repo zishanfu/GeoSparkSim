@@ -164,7 +164,6 @@ public class GeoSparkSim implements Runnable{
         CommandLine.run(new GeoSparkSim(), System.err, args);
     }
 
-
     private void run(SparkSession spark, double lat1, double lon1, double lat2, double lon2,
                      int total, String outputPath, int step, double timestep, String type, int repartition, int partition) throws ExecutionException, InterruptedException {
         String str = "\nP1: " + lat1 + ", " + lon1 + "\n" + "P2: " + lat2 + ", " + lon2 + "\n" + "Total: " + total + "\n" + "Steps: " + step + "\n" + "Timestep: " + timestep

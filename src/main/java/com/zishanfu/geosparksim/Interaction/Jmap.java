@@ -36,7 +36,9 @@ public class Jmap {
         JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.add(ic.inputPanel, BorderLayout.NORTH);
         rightPanel.add(rc.resultPanel, BorderLayout.SOUTH);
-        frame.add(rightPanel, BorderLayout.EAST);
+        JScrollPane scrollRight = new JScrollPane(rightPanel);
+
+        frame.add(scrollRight, BorderLayout.EAST);
 
         frame.setSize(width, height);
         frame.setLocationRelativeTo(null);

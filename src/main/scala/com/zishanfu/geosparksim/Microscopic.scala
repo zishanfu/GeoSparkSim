@@ -298,7 +298,7 @@ object Microscopic {
 
     val lastReportRDD = reportRDD.filter(report => {
       report.getStep == stepCount
-    }).repartition(numPartition)
+    }).repartition(numPartition).cache()
 
     //construct vehicle report
     val lastVehicle = lastReportRDD.filter(report => report.getVehicleFront != null).map(report => {
