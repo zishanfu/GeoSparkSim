@@ -35,6 +35,18 @@
             <artifactId>spark-sql_${scala.compat.version}</artifactId>
             <version>${spark.version}</version>
         </dependency>
+	<dependency>
+ 	    <groupId>org.apache.hadoop</groupId>
+  	    <artifactId>hadoop-client</artifactId>
+	</dependency>
+	<dependency>
+ 	    <groupId>org.apache.hadoop</groupId>
+ 	    <artifactId>hadoop-common</artifactId>
+	</dependency>
+	<dependency>
+  	   <groupId>org.apache.hadoop</groupId>
+     	   <artifactId>hadoop-hdfs</artifactId>
+	</dependency>
         <dependency>
             <groupId>org.openstreetmap.osmosis</groupId>
             <artifactId>osmosis-core</artifactId>
