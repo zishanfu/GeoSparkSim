@@ -17,9 +17,11 @@ import org.jxmapviewer.JXMapViewer;
 public class Jmap {
     private final static Logger LOG = Logger.getLogger(Jmap.class);
     private final String appTitle;
+    private boolean distributed;
 
-    public Jmap(String appTitle){
+    public Jmap(String appTitle, boolean distributed){
         this.appTitle = appTitle;
+        this.distributed = distributed;
     }
 
     public void runUI(SparkSession spark) {
@@ -28,7 +30,7 @@ public class Jmap {
         CompController cc = new CompController(width, height);
         final JXMapViewer jXMapViewer = cc.mapViewer;
         ResultController rc = new ResultController();
-        InputController ic = new InputController(cc, rc, spark, appTitle);
+        InputController ic = new InputController(cc, rc, spark, appTitle, distributed);
 
         final JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());

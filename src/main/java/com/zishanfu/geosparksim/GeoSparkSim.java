@@ -110,14 +110,14 @@ public class GeoSparkSim implements Runnable{
         }
 
         if(only){
-            Jmap jmap = new Jmap(appTitle);
+            Jmap jmap = new Jmap(appTitle, dist);
             jmap.runUI(spark);
         }else if(command){
             if(output == null){
                 LOG.error("Please enter the output path and rerun the command.");
             }else{
                 try {
-                    run(spark, lat1, lon1, lat2, lon2, num, output, step, timestep, type, rep, partition);
+                    run(spark, lat1, lon1, lat2, lon2, num, output, dist, step, timestep, type, rep, partition);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -147,14 +147,14 @@ public class GeoSparkSim implements Runnable{
             int repartition = Integer.parseInt(prop.getProperty("simulation.repartition"));
             String simOutput = prop.getProperty("simulation.output");
             try {
-                run(spark, geo1Lat, geo1Lon, geo2Lat, geo2Lon, total, simOutput, steps, timestep, selectedType, repartition, partition);
+                run(spark, geo1Lat, geo1Lon, geo2Lat, geo2Lon, total, simOutput, dist, steps, timestep, selectedType, repartition, partition);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         }else{
             System.getProperty("user.dir");
             try {
-                run(spark, lat1, lon1, lat2, lon2, num, output, step, timestep, type, rep, partition);
+                run(spark, lat1, lon1, lat2, lon2, num, output, dist, step, timestep, type, rep, partition);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -166,12 +166,12 @@ public class GeoSparkSim implements Runnable{
     }
 
     private void run(SparkSession spark, double lat1, double lon1, double lat2, double lon2,
-                     int total, String outputPath, int step, double timestep, String type, int repartition, int partition) throws ExecutionException, InterruptedException {
+                     int total, String outputPath, boolean distributed, int step, double timestep, String type, int repartition, int partition) throws ExecutionException, InterruptedException {
         String str = "\nP1: " + lat1 + ", " + lon1 + "\n" + "P2: " + lat2 + ", " + lon2 + "\n" + "Total: " + total + "\n" + "Steps: " + step + "\n" + "Timestep: " + timestep
-                + "\n" + "Generation Type: " + type + "\n" + "Repartition Time: " + repartition + "\n" + "Partition: " + partition + "\n" + "Output: " + output + "\n";
+                + "\n" + "Generation Type: " + type + "\n" + "Repartition Time: " + repartition + "\n" + "Partition: " + partition + "\n" + "Output: " + outputPath + "\n";
         LOG.warn(str);
 
-        HDFSUtil hdfs = new HDFSUtil(outputPath);
+        HDFSUtil hdfs = new HDFSUtil(outputPath, distributed);
         String name = "/geosparksim";
         hdfs.deleteDir(name);
         hdfs.mkdir(name);
