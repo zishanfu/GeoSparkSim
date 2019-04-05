@@ -94,7 +94,7 @@ public class GeoSparkSim implements Runnable{
         if (dist){
             spark = SparkSession
                     .builder()
-		    .master("spark://en4119507l.cidse.dhcp.asu.edu:7077")
+		            .master("spark://en4119507l.cidse.dhcp.asu.edu:7077")
                     .appName("GeoSparkSim")
                     .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
                     .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
