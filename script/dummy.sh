@@ -9,7 +9,7 @@ sleepinterval=60
 number=100000
 timestep=1
 steps=600
-partition=1500
+partition=4500
 repartition=120
 
 echo "Spark partitionNumTest "$partition" #####################################"
