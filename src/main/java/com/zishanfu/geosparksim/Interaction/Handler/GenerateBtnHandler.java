@@ -40,9 +40,10 @@ public class GenerateBtnHandler implements ActionListener {
     private JComboBox genList;
     private SparkSession spark;
     private boolean runSpark;
+    private boolean distributed;
 
     public GenerateBtnHandler(SelectionAdapter sa, TextField numTxt, TextField simTxt, TextField stepTxt, TextField pathTxt, SimulationBtnHandler sbHandler,
-                              JTextArea textArea, JComboBox genList, SparkSession spark) {
+                              JTextArea textArea, JComboBox genList, SparkSession spark, boolean distributed) {
         this.sa = sa;
         this.numTxt = numTxt;
         this.simTxt = simTxt;
@@ -53,6 +54,7 @@ public class GenerateBtnHandler implements ActionListener {
         this.genList = genList;
         this.spark = spark;
         this.runSpark = false;
+        this.distributed = distributed;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -104,7 +106,7 @@ public class GenerateBtnHandler implements ActionListener {
                     OsmParser osmParser = new OsmParser();
                     String output = "";
 
-                    HDFSUtil hdfs = new HDFSUtil(outputPath);
+                    HDFSUtil hdfs = new HDFSUtil(outputPath, distributed);
                     String name = "/geosparksim";
                     hdfs.deleteDir(name);
                     hdfs.mkdir(name);
