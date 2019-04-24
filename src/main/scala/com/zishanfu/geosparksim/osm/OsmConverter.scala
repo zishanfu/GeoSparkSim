@@ -21,7 +21,7 @@ import scala.collection.mutable
 import scala.collection.mutable.WrappedArray
 
 
-case class RoadNetwork(nodes: Dataset[Point], links: Dataset[Link], lights: Dataset[TrafficLight], intersects: Dataset[Intersect])
+case class RoadNetwork(nodes: RDD[Point], links: RDD[Link], lights: RDD[TrafficLight], intersects: RDD[Intersect])
 
 object OsmConverter {
   
@@ -41,8 +41,8 @@ object OsmConverter {
     val nodesDF = convertNodes(sparkSession, nodesPath)
     val network = convertLinks(sparkSession, nodesDF, waysPath)
     
-    val nodeDS : RDD[Point] = network._1.rdd
-    val linkDS : RDD[Link] = network._2.rdd
+    val nodeDS : RDD[Point] = network._1
+    val linkDS : RDD[Link] = network._2
 
     // Set each partition of nodeDS RDD contain 1000 links by default. We may need a smarter choice here to determine the partition size.
     //val partitionNum= math.ceil(nodeDS.count()/1000.0).toInt
@@ -68,7 +68,7 @@ object OsmConverter {
 
     RoadNetwork(network._1, network._2, network._3, network._4)
   }
-  
+
   def convertNodes(sparkSession : SparkSession, nodesPath : String) : DataFrame = {
     var nodesDF = sparkSession.read.parquet(nodesPath)
     import sparkSession.implicits._
@@ -105,7 +105,6 @@ object OsmConverter {
   def convertLinks(sparkSession : SparkSession, nodeDF : DataFrame, waysPath : String) = {
     val segmentEncoder = Encoders.kryo[SegmentLink]
 
-
     val defaultSpeed = 40 //40mph
     val waysDF = sparkSession.read.parquet(waysPath).toDF("id", "tags", "nodes")
 
@@ -114,7 +113,6 @@ object OsmConverter {
 
     var nodeSegmentJoinDF = nodeDF.join(wayNodesDF, col("indexedNode.nodeId") === nodeDF("id"))
         nodeSegmentJoinDF.cache()
-
     val nodeCount = nodeSegmentJoinDF.groupBy(col("indexedNode.nodeId").as("id"), col("latitude"), col("longitude")).count()
 
     val intersectNode = nodeCount.withColumnRenamed("count", "n")
@@ -134,7 +132,8 @@ object OsmConverter {
         .agg(collect_list(struct(col("indexedNode.index"), col("indexedNode"), col("latitude"), col("longitude"), col("signals"), col("n"))).as("nodes")
         , collect_list(col("segmentId")).as("segmentIds"))
 
-    var segmentDS :Dataset[SegmentLink] = wayDF.flatMap((row : Row) => {
+
+    var segmentRDD :RDD[SegmentLink] = wayDF.flatMap((row : Row) => {
       val id = row.getAs[Long](0)
       val tags = row.getAs[mutable.WrappedArray[Row]](1)
 
@@ -172,18 +171,18 @@ object OsmConverter {
 
       segments
             
-   })(segmentEncoder)
+   })(segmentEncoder).rdd
 
 
-   val nodeDS = nodesInSegmentsDF.map((r:Row) =>{
+   val nodeRDD : RDD[Point] = nodesInSegmentsDF.map((r:Row) =>{
       val point = gf.createPoint(coorParserByCRS(r.getDouble(1), r.getDouble(2), DefaultGeographicCRS.WGS84))
       point.setUserData(r.getLong(0))
       point
-   })(Define.PointEncoder)
+   })(Define.PointEncoder).rdd
 
     // 0 -> forward
     // 1 -> backward
-    segmentDS = segmentDS.flatMap(segment => {
+    val directSegmentRDD = segmentRDD.flatMap(segment => {
      if(segment.driveDirection == 1){
         List(segment)
       }else{
@@ -192,9 +191,9 @@ object OsmConverter {
           SegmentLink(segment.id, segment.tail, segment.head, segment.distance, segment.speed, 0, segment.lanes/2)
         )
       }
-   })(segmentEncoder)
+   })
 
-    val linkDS = segmentDS.map(segment => {
+    val linkRDD : RDD[Link]= segmentRDD.map(segment => {
       val angle = Angle.angle(segment.head.coordinate, segment.tail.coordinate)
       val lanes : Int = segment.lanes
       var laneArray: String = ""
@@ -206,10 +205,10 @@ object OsmConverter {
       val path : Array[Coordinate]= Array(head, tail)
       new Link(segment.id, segment.head, segment.tail, segment.distance, segment.speed, segment.driveDirection, lanes, angle, laneArray, path)
       //(segment.id, segment.head, segment.tail, segment.distance, segment.speed, direction, lanes, angle, laneArray)
-    })(Define.linkEncoder)
+    })
 
     //(Coordinate coordinate, int SRID, long wid, Coordinate location)
-    val signalDS : Dataset[TrafficLight] = linkDS.filter(link => {
+    val signalRDD : RDD[TrafficLight] = linkRDD.filter(link => {
       val direction = if(link.getDriveDirection == 1) true else false
       direction && (link.getHead.signal || link.getTail.signal)
       //link.head.signal || link.tail.signal
@@ -220,19 +219,19 @@ object OsmConverter {
       val node = if(headNode.signal) headNode else tailNode
       val location = calculateLocation(node.coordinate, reverse_angle, 1)
       new TrafficLight(node.coordinate, node.id.toInt, link.getId, location)
-    })(Define.signalEncoder)
+    })
 
 
-    val intersectDS = linkDS.filter(link => {
+    val intersectRDD = linkRDD.filter(link => {
       !link.getHead.signal && !link.getTail.signal && (link.getHead.intersect || link.getTail.intersect)
     }).map(link => {
       val headNode = link.getHead
       val tailNode = link.getTail
       val node = if(headNode.intersect) headNode else tailNode
       new Intersect(node.coordinate, node.id.toInt, link.getId)
-    })(Define.intersectEncoder)
+    })
 
-   (nodeDS, linkDS, signalDS, intersectDS)
+   (nodeRDD, linkRDD, signalRDD, intersectRDD)
   }
 
   /**

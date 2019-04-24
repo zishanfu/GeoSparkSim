@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class MOBILVehicle extends IDMVehicle implements MOBIL {
+public class MOBILVehicle extends LaneChangeBase implements MOBIL {
     private double p = politenessFactor;
     private double b = maximumSafeDeceleration;
     private double a = thresholdAcceleration;
@@ -21,28 +21,12 @@ public class MOBILVehicle extends IDMVehicle implements MOBIL {
         super(id, source, target, edgePath, costs, fullPath);
     }
 
-    public void recoverStatus(Coordinate front, Coordinate rear, int edgeIdx, int currentLane, double currentPois, double velocity, Link currentLink, TrafficLight light){
-        this.setFront(front);
-        this.setRear(rear);
-        this.setEdgeIndex(edgeIdx);
-        this.setCurrentLane(currentLane);
-        this.setPosition(currentPois);
-        this.setVelocity(velocity);
-        this.setCurrentLink(currentLink);
-        this.setHeadSignal(light);
-    }
-
-    @Override
-    public Vehicle backVehicle(int lane) {
-        return null;
-    }
-
     @Override
     public MOBILVehicle headwayCheck(Map<Long, List<Link>> edgeMap, Map<Long, TrafficLight> signalWayMap) {
         return super.headwayCheck(edgeMap, signalWayMap);
     }
 
-    public Map<Long, List<Link>> basicMovement(MOBILVehicle head, double interval, Map<Long, List<Link>> edgeMap){
+    public Map<Long, List<Link>> basicMovement(IDMVehicle head, double interval, Map<Long, List<Link>> edgeMap){
         //check intersection and light
         //check this and next edge light and vehicle
         TrafficLight headLight = this.getHeadSignal();

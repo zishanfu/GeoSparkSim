@@ -12,7 +12,5 @@ public interface IDM {
     double normalAcceleration = 2.5;
     double brakeDeceleration = 3;
     double reactionTime = 1;
-    double startPosition = 0;
     double safeDistance = 3;
-    MOBILVehicle headwayCheck(Map<Long, List<Link>> edgeMap, Map<Long, TrafficLight> signalWayMap);
 }

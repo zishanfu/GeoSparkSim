@@ -83,6 +83,7 @@ class MapPanel extends JPanel {
 
         }
 
+        if(signals.size() == 0) return;
         for (GeoPoint s: signals.get(idx)){
             g.setColor(s.getColor());
             int x = convertX(s.getEasting());
@@ -90,6 +91,7 @@ class MapPanel extends JPanel {
             g.fillOval(x-1, y-1, 10, 10);
         }
 
+        if(vehicles.size() == 0) return;
         for (Segment v: vehicles.get(idx)){
             Point pA = v.getPointA();
             Point pB = v.getPointB();

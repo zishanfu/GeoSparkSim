@@ -4,6 +4,8 @@ import com.zishanfu.geosparksim.Interaction.Handler.GenerateBtnHandler;
 import com.zishanfu.geosparksim.Interaction.Handler.SimulationBtnHandler;
 import org.apache.spark.sql.SparkSession;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
@@ -154,6 +156,13 @@ public class InputController {
 //        topPanel.add(genList);
 //        topPanel.add(gBtn);
 //        topPanel.add(sBtn);
+
+        genList.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                genList.showPopup();
+            }
+        });
 
         chkArea.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {

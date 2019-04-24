@@ -191,10 +191,6 @@ object Microscopic {
     val reportHandler = new ReportHandler(sparkSession, path, numPartition)
     reportHandler.writeReportJson(reportRDD0, 0)
 
-    val newSteps = (steps / timestep).toInt
-
-    val iteration = newSteps / repartition + (if (newSteps % repartition == 0) 0 else 1)
-
     var execTime = 0.0
 
     val t1 = System.currentTimeMillis()
@@ -208,7 +204,16 @@ object Microscopic {
     val t2 = System.currentTimeMillis()
     execTime = execTime + t2 - t1
 
+    val bestRepartition = if(vehicleRDD.getRawSpatialRDD.count() < 100000) repartition else repartitionCriterion(vehicleRDD, signalRDD, edgeRDD, steps, timestep, numPartition)
+
+    val newSteps = (steps / timestep).toInt
+
+    val iteration = newSteps / bestRepartition + (if (newSteps % bestRepartition == 0) 0 else 1)
+
+    println("best repartition: " + bestRepartition + ", repartition: " + repartition)
+
     for(n <- 1 to iteration){
+
       val reportRDD : RDD[StepReport] = vehicleRDD.spatialPartitionedRDD.rdd.zipPartitions(edgeRDD.spatialPartitionedRDD.rdd, signalRDD.spatialPartitionedRDD.rdd, true){
         (vehicleIt, edgeIt, signalIt) => {
           val edgeList = edgeIt.toList
@@ -284,6 +289,7 @@ object Microscopic {
         edgeRDD.spatialPartitioning(vehicleRDD.getPartitioner)
         signalRDD.spatialPartitioning(vehicleRDD.getPartitioner)
       }
+
       val t4 = System.currentTimeMillis()
       execTime = execTime + t4 - t3
 
@@ -316,4 +322,110 @@ object Microscopic {
 
     (lastVehicle, lastSignal)
   }
+
+
+  def repartitionCriterion(vehicleRDD: SpatialRDD[MOBILVehicle], signalRDD: SpatialRDD[TrafficLight], edgeRDD: SpatialRDD[Link], steps: Int, timestep: Double, numPartition: Int): Int = {
+    // 1/10 to 1/2 sample
+    var bestRepartition = Int.MaxValue
+    var minTime = Double.PositiveInfinity
+
+
+    for(repartition <- steps/10 until steps/2 by (2*steps/25)){
+      var time: Double = 0.0
+      val newSteps = (steps / timestep).toInt
+      val iteration = newSteps / repartition + (if (newSteps % repartition == 0) 0 else 1)
+      val t1 = System.currentTimeMillis()
+
+      for(n <- 1 to iteration){
+        val reportRDD : RDD[StepReport] = vehicleRDD.spatialPartitionedRDD.sample(false, 0.01).rdd
+          .zipPartitions(edgeRDD.spatialPartitionedRDD.sample(false, 0.01).rdd,
+            signalRDD.spatialPartitionedRDD.sample(false, 0.01).rdd, true){
+
+            (vehicleIt, edgeIt, signalIt) => {
+              val edgeList = edgeIt.toList
+              val signalList = signalIt.toList
+              var stepReports = scala.List.empty[StepReport]
+
+              var edgeMap = scala.collection.mutable.Map.empty[java.lang.Long, java.util.List[Link]].asJava
+              var edge_minLat = Double.PositiveInfinity
+              var edge_maxLat = Double.NegativeInfinity
+              var edge_minLon = Double.PositiveInfinity
+              var edge_maxLon = Double.NegativeInfinity
+
+              for(edge <- edgeList){
+                if(!edgeMap.containsKey(edge.getId)) edgeMap.put(edge.getId, new util.ArrayList[Link])
+                edge_minLat = Math.min(edge.getMinLat, edge_minLat)
+                edge_maxLat = Math.max(edge.getMaxLat, edge_maxLat)
+                edge_minLon = Math.min(edge.getMinLon, edge_minLon)
+                edge_maxLon = Math.max(edge.getMaxLon, edge_maxLon)
+                edgeMap.get(edge.getId).add(edge)
+              }
+
+              //initialize traffic signals
+              val signalWayMap = scala.collection.mutable.Map.empty[java.lang.Long, TrafficLight].asJava
+              for(signal <- signalList){
+                signalWayMap.put(signal.getWid, signal)
+              }
+              //initialize vehicle position
+              val vehicleList = vehicleIt.toList
+
+              vehicleList.foreach(vehicle => {
+                edgeMap = vehicle.born(edgeMap, "Sync")
+              })
+
+              for(i <- repartition*(n-1)+1 to repartition*n){
+                if(i <= steps){
+                  for (wid <- signalWayMap.keySet().asScala){
+                    val light = signalWayMap.get(wid)
+                    light.next(1)
+                    signalWayMap.put(wid, light)
+                    stepReports = stepReports:+ new StepReport(i, light.getLocation, light.getWid, light.getSignal, light.getTime)
+                  }
+
+                  // Coordinate source, Coordinate target, Long[] edgePath, Double[] costs, List<Coordinate> fullPath
+                  vehicleList.foreach(vehicle => {
+                    if(vehicle.getFront.x < edge_minLat || vehicle.getFront.x > edge_maxLat || vehicle.getFront.y < edge_minLon || vehicle.getFront.y > edge_maxLon){
+                      stepReports = stepReports:+ new StepReport(i, vehicle.getId, vehicle.getFront, vehicle.getRear, vehicle.getSource, vehicle.getTarget, vehicle.getEdgePath, vehicle.getCosts, vehicle.getFullPath,
+                        vehicle.getEdgeIndex, vehicle.getCurrentLane, vehicle.getPosition, vehicle.getVelocity, vehicle.getCurrentLink, vehicle.getHeadSignal)
+                    }else{
+                      if(!vehicle.isArrive){
+                        val head = vehicle.headwayCheck(edgeMap, signalWayMap)
+                        edgeMap = vehicle.basicMovement(head, timestep, edgeMap)
+                        stepReports = stepReports:+ new StepReport(i, vehicle.getId, vehicle.getFront, vehicle.getRear, vehicle.getSource, vehicle.getTarget,  vehicle.getEdgePath, vehicle.getCosts, vehicle.getFullPath,
+                          vehicle.getEdgeIndex, vehicle.getCurrentLane, vehicle.getPosition, vehicle.getVelocity, vehicle.getCurrentLink, vehicle.getHeadSignal)
+                      }else{
+                        vehicle.initVehicle()
+                        edgeMap = vehicle.born(edgeMap, "Baby")
+                      }
+                    }
+                  })
+                }
+              }
+
+              stepReports.iterator
+            }
+          }
+
+        if(n != iteration){
+          val recoverTuple = recovery(vehicleRDD.getRawSpatialRDD.rdd, signalRDD.getRawSpatialRDD.rdd, reportRDD, n*repartition, numPartition)
+          vehicleRDD.setRawSpatialRDD(recoverTuple._1)
+          signalRDD.setRawSpatialRDD(recoverTuple._2)
+          vehicleRDD.spatialPartitioning(GridType.KDBTREE, numPartition)
+          edgeRDD.spatialPartitioning(vehicleRDD.getPartitioner)
+          signalRDD.spatialPartitioning(vehicleRDD.getPartitioner)
+        }
+      }
+
+      val t2 = System.currentTimeMillis()
+      time = time + t2 - t1
+      if(time < minTime){
+        minTime = time
+        bestRepartition = repartition
+      }
+    }
+
+    bestRepartition
+  }
+
+
 }

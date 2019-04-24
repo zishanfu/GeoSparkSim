@@ -9,28 +9,18 @@ import com.zishanfu.geosparksim.Exception.VehicleOutExceptedPathException;
 import com.zishanfu.geosparksim.Model.parameters.IDM;
 import org.apache.log4j.Logger;
 
-public class IDMVehicle extends Vehicle implements IDM {
+public class IDMVehicle extends CarFollowBase implements IDM {
     private final static Logger LOG = Logger.getLogger(IDMVehicle.class);
     private double a = normalAcceleration;
     private double b = brakeDeceleration;
     private double t = reactionTime;
     private double s0 = safeDistance;
-    private double v = 0;
-    private double p = startPosition;
     private double speedLimit = 17.88;
-    private TrafficLight headSignal;
+
 
     //Vehicle(String id, Coordinate source, Coordinate target, Long[] edgePath, Double[] costs, List<Coordinate> fullPath)
     public IDMVehicle(String id, Coordinate source, Coordinate target, Long[] edgePath, Double[] costs, List<Coordinate> fullPath) {
         super(id, source, target, edgePath, costs, fullPath);
-    }
-
-    public double getVelocity(){
-        return v;
-    }
-
-    public void setVelocity(double v){
-        this.v = v;
     }
 
     public double getAcceleration(){
@@ -41,37 +31,15 @@ public class IDMVehicle extends Vehicle implements IDM {
         return b;
     }
 
-    public double getReactionDistance(){
-        return v*t;
-    }
-
-    public double getPosition(){
-        return p;
-    }
-
     public double getMinDistance(){
         return s0;
     }
 
-
-    public void setPosition(double posi) {
-        p = posi;
-    }
-
-    public void stop() {
-        v = 0;
-    }
-
-    public TrafficLight getHeadSignal() {
-        return headSignal;
-    }
-
-    public void setHeadSignal(TrafficLight headSignal) {
-        this.headSignal = headSignal;
+    public double getReactionDistance(){
+        return this.getVelocity()*t;
     }
 
     //check current lane and next lane
-    @Override
     public MOBILVehicle headwayCheck(Map<Long, List<Link>> edgeMap, Map<Long, TrafficLight> signalWayMap) {
 
         int edgeIndex = this.getEdgeIndex();
@@ -102,9 +70,9 @@ public class IDMVehicle extends Vehicle implements IDM {
             MOBILVehicle head2 = checkClosetVehicle(nextLink);
 
             if(light2 != null && light1 == null){
-                headSignal = light2;
+                this.setHeadSignal(light2);
             }else{
-                headSignal = light1;
+                this.setHeadSignal(light1);
             }
 
             if(head2 == null) return head1;
@@ -123,10 +91,9 @@ public class IDMVehicle extends Vehicle implements IDM {
             this.setArrive(true);
         }
 
-        headSignal = light1;
+        this.setHeadSignal(light1);
         return head1;
     }
-
 
     private MOBILVehicle checkClosetVehicle(Link link){
         if(link == null) return null;
@@ -154,30 +121,31 @@ public class IDMVehicle extends Vehicle implements IDM {
     public void updateVelocity(TrafficLight signal, double interval){
         double aTemp = signalDerivative(this, signal);
 
-        double pTemp = p + (v + (0.5*aTemp*interval)) * interval;
-        if(pTemp>p) p = pTemp;
+        double pTemp = this.getPosition() + (this.getVelocity() + (0.5*aTemp*interval)) * interval;
+        if(pTemp>this.getPosition()) this.setPosition(pTemp);
 
-        v = v + interval *aTemp;
-        if(v<=0) v = 0;
+        this.setVelocity(this.getVelocity() + interval *aTemp);
+        if(this.getVelocity()<=0) this.setVelocity(0);
     }
 
     //update velocity and position by head vehicle
     public void updateVelocity(IDMVehicle headVeh, double interval){
         double aTemp = derivative(this, headVeh);
 
-        double pTemp = p + (v + (0.5*aTemp*interval)) * interval;
-        if(pTemp>p) p = pTemp;
+        double pTemp = this.getPosition() + (this.getVelocity() + (0.5*aTemp*interval)) * interval;
+        if(pTemp>this.getPosition()) this.setPosition(pTemp);
 
-        v = v + interval *aTemp;
-        if(v<=0) v = 0;
+        this.setVelocity(this.getVelocity() + interval *aTemp);
+        if(this.getVelocity()<=0) this.setVelocity(0);
     }
 
     public void updateVelocity(double interval){
         double aTemp =  leaderDerivative(this);
-        double pTemp = p + (v + (0.5*aTemp*interval)) * interval;
-        if(pTemp>p) p = pTemp;
-        v = v + interval *aTemp;
-        if(v<0) v = 0;
+        double pTemp = this.getPosition() + (this.getVelocity() + (0.5*aTemp*interval)) * interval;
+        if(pTemp>this.getPosition()) this.setPosition(pTemp);
+
+        this.setVelocity(this.getVelocity() + interval *aTemp);
+        if(this.getVelocity()<=0) this.setVelocity(0);
     }
 
     private double signalDerivative(IDMVehicle veh, TrafficLight signal) {

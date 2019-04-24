@@ -2,14 +2,15 @@ package com.zishanfu.geosparksim.osm
 
 
 import com.zishanfu.geosparksim.Model.{Intersect, Link, TrafficLight}
+import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 
 class RoadNetworkWriter(sparkSession: SparkSession, roadNetwork: RoadNetwork, path: String){
 
   def writeEdgeJson(): Unit = {
-    val edges : Dataset[Link] = roadNetwork.links
-    val map = edges.rdd.map((edge: Link) => Row(
+    val edges : RDD[Link] = roadNetwork.links
+    val map = edges.map((edge: Link) => Row(
       edge.getId,
       Row(edge.getHead.id, Row(edge.getHead.coordinate.x, edge.getHead.coordinate.y), edge.getHead.signal, edge.getHead.intersect),
       Row(edge.getTail.id, Row(edge.getTail.coordinate.x, edge.getTail.coordinate.y), edge.getTail.signal, edge.getTail.intersect),
@@ -26,8 +27,8 @@ class RoadNetworkWriter(sparkSession: SparkSession, roadNetwork: RoadNetwork, pa
 
 
   def writeSignalJson(): Unit = {
-    val signals : Dataset[TrafficLight] = roadNetwork.lights
-    val map = signals.rdd.map((signal: TrafficLight) => Row(
+    val signals : RDD[TrafficLight] = roadNetwork.lights
+    val map = signals.map((signal: TrafficLight) => Row(
       Row(signal.getCoordinate.x, signal.getCoordinate.y),
       signal.getSRID,
       signal.getWid,
@@ -39,8 +40,8 @@ class RoadNetworkWriter(sparkSession: SparkSession, roadNetwork: RoadNetwork, pa
 
 
   def writeIntersectJson(): Unit = {
-    val intersects : Dataset[Intersect] = roadNetwork.intersects
-    val map = intersects.rdd.map((intersect: Intersect) => Row(
+    val intersects : RDD[Intersect] = roadNetwork.intersects
+    val map = intersects.map((intersect: Intersect) => Row(
       Row(intersect.getCoordinate.x, intersect.getCoordinate.y),
       intersect.getSRID,
       intersect.getWid
