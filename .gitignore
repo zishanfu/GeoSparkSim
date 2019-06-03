@@ -1,8 +1,5 @@
 /target/
-/script/src/
-/script/map-gh/
-/script/map.osm
-/script/geosparksim/
+/script/
 /.idea
 /*.iml
 /.settings/
