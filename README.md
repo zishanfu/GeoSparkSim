@@ -1,4 +1,4 @@
-# ![GeoSparkSim](/docs/images/GeoSparkSim.png){:height="50%" width="50%"}
+# <img src="https://github.com/zishanfu/GeoSparkSim/blob/dev/docs/images/GeoSparkSim.png" width="50">
 [GeoSparkSim](http://www.public.asu.edu/~jiayu2/geospark/publication/geosparksim-mdm-2019.pdf) is a scalable microscopic traffic simulator, which extends Apache Spark to generate large-scale road network traffic data and help data scientists to simulate, analyze and visualize large-scale traffic data. GeoSparkSim converts road networks into Spark graphs, simulates vehicles to Vehicle Resilient Distributed Datasets (VehicleRDDs) and provides a simulation-aware vehicle paratitioning method to parallelize simulation steps, balance workload and handle the dynamic spatial distribution.
 
 It is mainly developed by the contributors from [Data Systems Lab](https://www.datasyslab.net/)
