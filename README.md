@@ -3,16 +3,16 @@
 
 It is mainly developed by the contributors from [Data Systems Lab](https://www.datasyslab.net/)
 
-### Installation and Get Start
+### Installation
 * Download GeoSparkSim repository or `git clone https://github.com/zishanfu/GeoSparkSim.git`
 * Run `cd GeoSparkSim`
 * Run `mvn clean install` under GeoSparkSim folder
 
 ### Get Start
-* Run command line `java -cp target/GeoSparkSim-1.0-SNAPSHOT-jar-with-dependencies.jar com.zishanfu.geosparksim.GeoSparkSim -h`
-<p align="center">
-<img src="https://github.com/zishanfu/GeoSparkSim/blob/dev/docs/images/helper.png" width="700">
-</p>
+* Run command `java -cp target/GeoSparkSim-1.0-SNAPSHOT-jar-with-dependencies.jar com.zishanfu.geosparksim.GeoSparkSim -h`
+<p align="center"><img src="https://github.com/zishanfu/GeoSparkSim/blob/dev/docs/images/helper.png" width="500"></p>
+* Run GeoSparkSim with `-o` to show the user interface
+<p align="center"><img src="https://github.com/zishanfu/GeoSparkSim/blob/dev/docs/images/ui.png" width="500"></p>
 * Details from [GeoSparkSim Wiki](https://github.com/zishanfu/GeoSparkSim/wiki)
 
 ### Questions
