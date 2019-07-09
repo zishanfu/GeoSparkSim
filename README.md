@@ -10,8 +10,10 @@ It is mainly developed by the contributors from [Data Systems Lab](https://www.d
 
 ### Get Start
 * Run command line `java -cp target/GeoSparkSim-1.0-SNAPSHOT-jar-with-dependencies.jar com.zishanfu.geosparksim.GeoSparkSim -h`
-<img src="https://github.com/zishanfu/GeoSparkSim/blob/dev/docs/images/helper.png" align="center" width="700">
+<p align="center">
+<img src="https://github.com/zishanfu/GeoSparkSim/blob/dev/docs/images/helper.png" width="700">
+</p>
+* Details from [GeoSparkSim Wiki](https://github.com/zishanfu/GeoSparkSim/wiki)
 
 ### Questions
 Please contact ZishanFu@asu.edu
-
