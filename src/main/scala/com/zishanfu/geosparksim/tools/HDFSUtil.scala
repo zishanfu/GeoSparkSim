@@ -6,13 +6,13 @@ import org.apache.commons.lang3.StringUtils
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs._
 
-class HDFSUtil (hdfsUrl: String, distributed: Boolean){
+class HDFSUtil (hdfsUrl: String){
   var targetUrl = ""
   val config = new Configuration()
   config.setBoolean("fs.hdfs.impl.disable.cache", true)
-  if(distributed){
-    config.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
-  }
+//  if(distributed){
+//    config.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
+//  }
 
   def getHDFSUrl() : String = hdfsUrl
 
@@ -104,8 +104,5 @@ class HDFSUtil (hdfsUrl: String, distributed: Boolean){
     }
     result
   }
-
-
-
 
 }

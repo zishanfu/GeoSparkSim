@@ -7,7 +7,9 @@ import com.zishanfu.geosparksim.ShortestPath.Graph;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+/**
+ * Random initialize vehicle by spatial data
+ */
 public class SpatialRandom{
 
     private Random rand = new Random();
@@ -29,15 +31,24 @@ public class SpatialRandom{
         this.graph = graph;
     }
 
-    public double randomRange(double low, double high) {
+    private double randomRange(double low, double high) {
         return rand.nextDouble()*(high - low) + low;
     }
 
+    /**
+     * Random generate a node based on the boundary
+     *
+     * @return node
+     */
     public Coordinate spatialRandomNode() {
         Coordinate node = new Coordinate(randomRange(minLat, maxLat), randomRange(minLon, maxLon));
         return node;
     }
 
+    /**
+     * Random generate travel length
+     * @return length
+     */
     public double spatialRandomLen() {
         double r = Math.abs(rand.nextGaussian());
         double lenDiff = maxLen - minLen;
@@ -45,6 +56,13 @@ public class SpatialRandom{
         return len;
     }
 
+    /**
+     * Compute destination by Data-space oriented approach(DSO)
+     *
+     * @param src the source of vehicle
+     * @param len the travel length of vehicle
+     * @return destination
+     */
     public Coordinate computeDestDSO(Coordinate src, double len) {
         double angle = ThreadLocalRandom.current().nextDouble(360);
         double lon = src.y + len * Math.sin(angle);
@@ -52,11 +70,23 @@ public class SpatialRandom{
         return new Coordinate(lat, lon);
     }
 
+    /**
+     * Compute source by Network-based approach(NB)
+     *
+     * @return source
+     */
     public Coordinate computeSourceNB() {
         Coordinate src = spatialRandomNode();
         return graph.getClosestNode(src);
     }
 
+    /**
+     * Compute destination by Network-based approach(NB)
+     *
+     * @param src the source of vehicle
+     * @param len the travel length of vehicle
+     * @return destination
+     */
     public Coordinate computeDestinationNB(Coordinate src, double len) {
         Coordinate dest = computeDestDSO(src, len);
         return graph.getClosestNode(dest);

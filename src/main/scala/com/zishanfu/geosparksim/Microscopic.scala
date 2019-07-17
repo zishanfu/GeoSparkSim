@@ -18,6 +18,12 @@ import scala.util.control.Breaks._
 object Microscopic {
   @transient lazy val logger = Logger.getLogger(getClass.getName)
 
+  /**
+    * Initialize edges to simulation links, for example, dividing lanes, defining lane center and boundary.
+    *
+    * @param edges the road network edges
+    * @return simulation links
+    */
   def init(edges: Dataset[Link]): Dataset[Link] = {
     //initial edge
     val newEdges = edges.map(edge => {
@@ -68,6 +74,19 @@ object Microscopic {
     newEdges
   }
 
+  /**
+    *
+    * @param sparkSession
+    * @param edges
+    * @param signals
+    * @param intersects
+    * @param vehicles
+    * @param path
+    * @param steps
+    * @param timestep
+    * @param repartition
+    * @param numPartition
+    */
   def sim(sparkSession: SparkSession, edges: Dataset[Link], signals: Dataset[TrafficLight], intersects: Dataset[Intersect], vehicles: Dataset[MOBILVehicle],
           path: String, steps: Int, timestep: Double, repartition: Int, numPartition: Int): Unit = {
     val rand = new Random
@@ -300,6 +319,15 @@ object Microscopic {
     logger.warn("Repartition Time: " + execTime/1000)
   }
 
+  /**
+    *
+    * @param vehicleRDD
+    * @param signalRDD
+    * @param reportRDD
+    * @param stepCount
+    * @param numPartition
+    * @return
+    */
   def recovery(vehicleRDD: RDD[MOBILVehicle], signalRDD: RDD[TrafficLight], reportRDD: RDD[StepReport], stepCount: Int, numPartition: Int) :(RDD[MOBILVehicle], RDD[TrafficLight]) = {
 
     val lastReportRDD = reportRDD.filter(report => {
@@ -323,12 +351,20 @@ object Microscopic {
     (lastVehicle, lastSignal)
   }
 
-
+  /**
+    *
+    * @param vehicleRDD
+    * @param signalRDD
+    * @param edgeRDD
+    * @param steps
+    * @param timestep
+    * @param numPartition
+    * @return
+    */
   def repartitionCriterion(vehicleRDD: SpatialRDD[MOBILVehicle], signalRDD: SpatialRDD[TrafficLight], edgeRDD: SpatialRDD[Link], steps: Int, timestep: Double, numPartition: Int): Int = {
     // 1/10 to 1/2 sample
     var bestRepartition = Int.MaxValue
     var minTime = Double.PositiveInfinity
-
 
     for(repartition <- steps/10 until steps/2 by (2*steps/25)){
       var time: Double = 0.0

@@ -18,11 +18,9 @@ public class InputController {
     private int top = 5, left = 4, bottom = 5, right = 4;
     private Insets i = new Insets(top, left, bottom, right);
     private String appTitle;
-    private boolean distributed;
 
-    public InputController(CompController cc, ResultController rc, SparkSession spark, String appTitle, boolean distributed) {
+    public InputController(CompController cc, ResultController rc, SparkSession spark, String appTitle) {
         this.inputPanel = inputPanel(cc, rc, spark, appTitle);
-        this.distributed = distributed;
     }
 
     private JPanel inputPanel(final CompController cc, ResultController rc, SparkSession spark, String appTitle) {
@@ -66,7 +64,7 @@ public class InputController {
         JButton vBtn = new JButton("Show Visualization");
 
         SimulationBtnHandler sbHandler = new SimulationBtnHandler(appTitle);
-        GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, sim, timestep, file, sbHandler, rc.textArea, genList, spark, distributed);
+        GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, sim, timestep, file, sbHandler, rc.textArea, genList, spark);
         sBtn.addActionListener(gbHandler);
         vBtn.addActionListener(sbHandler);
 

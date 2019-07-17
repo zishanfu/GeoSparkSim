@@ -10,6 +10,10 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+/**
+ * Road network parser
+ * Download road network data and reformat it
+ */
 public class OsmParser {
     public void runInHDFS(Coordinate geo1, Coordinate geo2, String hdfs, String local) {
         String osmUrl = "http://overpass-api.de/api";
@@ -20,14 +24,14 @@ public class OsmParser {
         xmlDownloader.run();
     }
 
-    public void runInLocal(Coordinate geo1, Coordinate geo2, String local) {
-        String osmUrl = "http://overpass-api.de/api";
-        XmlDownloader xmlDownloader = new XmlDownloader(geo1.y, geo2.y, geo1.x, geo2.x, osmUrl);
-        osmDownloader(geo1, geo2, local);
-
-        xmlDownloader.setSink(new OsmParquetSink(local));
-        xmlDownloader.run();
-    }
+//    public void runInLocal(Coordinate geo1, Coordinate geo2, String local) {
+//        String osmUrl = "http://overpass-api.de/api";
+//        XmlDownloader xmlDownloader = new XmlDownloader(geo1.y, geo2.y, geo1.x, geo2.x, osmUrl);
+//        osmDownloader(geo1, geo2, local);
+//
+//        xmlDownloader.setSink(new OsmParquetSink(local));
+//        xmlDownloader.run();
+//    }
 
     private void osmDownloader(Coordinate geo1, Coordinate geo2, String path) {
         String OSM_URL = "http://overpass-api.de/api/map?bbox=";

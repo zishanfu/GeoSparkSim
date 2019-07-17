@@ -23,6 +23,7 @@ import scala.collection.mutable.WrappedArray
 
 case class RoadNetwork(nodes: RDD[Point], links: RDD[Link], lights: RDD[TrafficLight], intersects: RDD[Intersect])
 
+
 object OsmConverter {
   
   private val LOG = LoggerFactory.getLogger(getClass)
@@ -30,10 +31,12 @@ object OsmConverter {
   val gf = new GeometryFactory()
 
   /**
-   * @param SparkSession: sparkSession
-   * @param String path
-   * @return Graph[Point, Link] graph
-   */
+    * Convert road network to graph in GraphX
+    *
+    * @param sparkSession the spark session
+    * @param path road network source
+    * @return the network graph
+    */
   def convertToNetwork(sparkSession : SparkSession, path : String) : Graph[Point, Link]= {
     val nodesPath = path + "/node.parquet"
     val waysPath = path + "/way.parquet"
@@ -44,9 +47,7 @@ object OsmConverter {
     val nodeDS : RDD[Point] = network._1
     val linkDS : RDD[Link] = network._2
 
-    // Set each partition of nodeDS RDD contain 1000 links by default. We may need a smarter choice here to determine the partition size.
-    //val partitionNum= math.ceil(nodeDS.count()/1000.0).toInt
-    val partitionNum= 8
+    val partitionNum= math.ceil(nodeDS.count()/1000.0).toInt
 
     val nodesRDD = nodeDS.map(node => (node.getUserData.asInstanceOf[Long], node)).coalesce(partitionNum, false)
     val edgesRDD = linkDS.map(link => {
@@ -58,7 +59,13 @@ object OsmConverter {
     graph
   }
 
-
+  /**
+    * Convert road network to simulation type of road network in GeoSparkSim
+    *
+    * @param sparkSession the spark session
+    * @param path road network source
+    * @return the simulation network
+    */
   def convertToRoadNetwork(sparkSession : SparkSession, path : String): RoadNetwork = {
     val nodesPath = path + "/node.parquet"
     val waysPath = path + "/way.parquet"
@@ -69,6 +76,14 @@ object OsmConverter {
     RoadNetwork(network._1, network._2, network._3, network._4)
   }
 
+  /**
+    * Format intersection in road network
+    * The method marks intersection node with traffic light
+    *
+    * @param sparkSession the spark session
+    * @param nodesPath the node source
+    * @return nodes
+    */
   def convertNodes(sparkSession : SparkSession, nodesPath : String) : DataFrame = {
     var nodesDF = sparkSession.read.parquet(nodesPath)
     import sparkSession.implicits._
@@ -95,13 +110,16 @@ object OsmConverter {
 
     newLightNodes
   }
-  
+
   /**
-   * @param SparkSession sparkSession
-   * @param DataFrame nodeDF
-   * @param String waysPath
-   * @return Tuple (Dataset[Point], Dataset[Link])
-   */
+    * Convert nodes and ways into simulation network
+    * The method will return four type of RDDs, nodeRDD, linkRDD, signalRDD, intersectRDD
+    *
+    * @param sparkSession the spark session
+    * @param nodeDF nodes dataframe
+    * @param waysPath ways source
+    * @return network tuples
+    */
   def convertLinks(sparkSession : SparkSession, nodeDF : DataFrame, waysPath : String) = {
     val segmentEncoder = Encoders.kryo[SegmentLink]
 
@@ -122,9 +140,6 @@ object OsmConverter {
 
     nodeSegmentJoinDF = intersectNode.join(nodeSegmentJoinDF, col("indexedNode.nodeId") === intersectNode("Iid"), "full")
 
-      //.select("indexedNode.nodeId", "latitude", "longitude", "signals", "n")
-    //val signal_count = nodeSegmentJoinDF.filter("signals is not null").count()
-    //val intersect_count = nodeSegmentJoinDF.filter("signals is null and n is not null").count()
 
     val nodesInSegmentsDF = nodeSegmentJoinDF.select(col("indexedNode.nodeId").as("id"), col("latitude"), col("longitude")).dropDuplicates()
 
@@ -133,7 +148,7 @@ object OsmConverter {
         , collect_list(col("segmentId")).as("segmentIds"))
 
 
-    var segmentRDD :RDD[SegmentLink] = wayDF.flatMap((row : Row) => {
+    val segmentRDD :RDD[SegmentLink] = wayDF.flatMap((row : Row) => {
       val id = row.getAs[Long](0)
       val tags = row.getAs[mutable.WrappedArray[Row]](1)
 
@@ -204,14 +219,12 @@ object OsmConverter {
       }
       val path : Array[Coordinate]= Array(head, tail)
       new Link(segment.id, segment.head, segment.tail, segment.distance, segment.speed, segment.driveDirection, lanes, angle, laneArray, path)
-      //(segment.id, segment.head, segment.tail, segment.distance, segment.speed, direction, lanes, angle, laneArray)
     })
 
     //(Coordinate coordinate, int SRID, long wid, Coordinate location)
     val signalRDD : RDD[TrafficLight] = linkRDD.filter(link => {
       val direction = if(link.getDriveDirection == 1) true else false
       direction && (link.getHead.signal || link.getTail.signal)
-      //link.head.signal || link.tail.signal
     }).map(link => {
       val headNode = link.getHead
       val tailNode = link.getTail
@@ -234,15 +247,7 @@ object OsmConverter {
    (nodeRDD, linkRDD, signalRDD, intersectRDD)
   }
 
-  /**
-    * @param id
-    * @param tail
-    * @param head
-    * @param speed
-    * @param driveDirection
-    * @param lanes
-    * @return
-    */
+
   private def createSegment(id : Long, head :(Int, Long, Double, Double, Map[String, String], String), tail : (Int, Long, Double, Double, Map[String, String], String),
                          speed : Int, driveDirection :Int, lanes : Int) :SegmentLink = {
     val tailNode = formatSegmentNode(tail)
@@ -261,7 +266,6 @@ object OsmConverter {
     SegmentNode(node._2, new Coordinate(node._3, node._4), signal, intersect)
   }
 
-  //  0      1          2           3            4
   // id | headline | tailline | headcenter | tailcenter
   private def defineLane(id: Int, head: Coordinate, tail: Coordinate, angle: Double): String = {
     String.format("%s|%s|%s|%s|%s", id.toString, calculateCoordinate(head, angle, 1, id), calculateCoordinate(tail, angle, 1, id),
@@ -277,13 +281,6 @@ object OsmConverter {
   private def calculateLocation(point: Coordinate, angle: Double, id: Int): Coordinate ={
     new Coordinate(point.x + Math.cos(angle)*lane_width*id, point.y + Math.sin(angle)*lane_width*id)
   }
-
-  /**
-    * @param Double lat
-    * @param Double lon
-    * @param DefaultGeographicCRS crs
-    * @return Coordinate coordinate
-    */
 
   def coorParserByCRS(lat : Double, lon: Double, crs: DefaultGeographicCRS) : Coordinate = {
     val sourceCRS = DefaultGeographicCRS.WGS84;

@@ -30,7 +30,7 @@ import java.util.concurrent.ExecutionException;
 @Command(version = "GeoSparkSim v0.0.1", header = "%nGeoSparkSim Command Help%n",
         description = "Prints usage help and version help when requested.%n")
 public class GeoSparkSim implements Runnable{
-    //hdfs://localhost:9000
+
     private final static Logger LOG = Logger.getLogger(GeoSparkSim.class);
 
     @Option(names = {"-lt1", "--lat1"}, type = double.class, description = "Latitude 1. Default value: ${DEFAULT-VALUE}", defaultValue = "33.48998")
@@ -72,9 +72,6 @@ public class GeoSparkSim implements Runnable{
     @Option(names = {"-c", "--command"}, description = "Run all parameters in command line (experiment).")
     private boolean command;
 
-    @Option(names = {"-d", "--distributed"}, description = "Run in distributed mode.")
-    private boolean dist;
-
     @Option(names = {"-m", "--manuscript"}, description = "Manuscript path.")
     private String manuscript;
 
@@ -89,39 +86,32 @@ public class GeoSparkSim implements Runnable{
 
     @Override
     public void run() {
-        SparkSession spark;
 
-        if (dist){
-            spark = SparkSession
-                    .builder()
-		            .master("spark://en4119507l.cidse.dhcp.asu.edu:7077")
-                    .appName("GeoSparkSim")
-                    .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-                    .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
-                    .getOrCreate();
-        }else{
-            spark = SparkSession
-                    .builder()
-                    .master("local[*]")
-                    .appName("GeoSparkSim")
-                    .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-                    .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
-                    .getOrCreate();
-        }
+        SparkSession spark = SparkSession
+                .builder()
+                .appName("GeoSparkSim")
+                .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+                .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
+                .getOrCreate();
 
+        //User interface
         if(only){
-            Jmap jmap = new Jmap(appTitle, dist);
+            Jmap jmap = new Jmap(appTitle);
             jmap.runUI(spark);
+
+        //Command
         }else if(command){
             if(output == null){
                 LOG.error("Please enter the output path and rerun the command.");
             }else{
                 try {
-                    run(spark, lat1, lon1, lat2, lon2, num, output, dist, step, timestep, type, rep, partition);
+                    preprocess(spark, lat1, lon1, lat2, lon2, num, output, step, timestep, type, rep, partition);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+
+        //Manuscript
         }else if(manuscript != null){
             InputStream is = null;
             try {
@@ -130,6 +120,7 @@ public class GeoSparkSim implements Runnable{
                 e.printStackTrace();
             }
 
+            //Load properties from manuscript
             try {
                 prop.load(is);
             } catch (IOException e) {
@@ -147,35 +138,58 @@ public class GeoSparkSim implements Runnable{
             int repartition = Integer.parseInt(prop.getProperty("simulation.repartition"));
             String simOutput = prop.getProperty("simulation.output");
             try {
-                run(spark, geo1Lat, geo1Lon, geo2Lat, geo2Lon, total, simOutput, dist, steps, timestep, selectedType, repartition, partition);
+                preprocess(spark, geo1Lat, geo1Lon, geo2Lat, geo2Lon, total, simOutput, steps, timestep, selectedType, repartition, partition);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
+
+        //Default setting
         }else{
             System.getProperty("user.dir");
             try {
-                run(spark, lat1, lon1, lat2, lon2, num, output, dist, step, timestep, type, rep, partition);
+                preprocess(spark, lat1, lon1, lat2, lon2, num, output, step, timestep, type, rep, partition);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
+
     public static void main(String[] args){
         CommandLine.run(new GeoSparkSim(), System.err, args);
     }
 
-    private void run(SparkSession spark, double lat1, double lon1, double lat2, double lon2,
-                     int total, String outputPath, boolean distributed, int step, double timestep, String type, int repartition, int partition) throws ExecutionException, InterruptedException {
+    /**
+     * Entrance of GeoSparkSim
+     * Preprocess road network and generate vehicles
+     *
+     * @param spark the spark session
+     * @param lat1 the boundary latitude 1
+     * @param lon1 the boundary longitude 1
+     * @param lat2 the boundary latitude 2
+     * @param lon2 the boundary longitude 2
+     * @param total the total number of vehicles
+     * @param outputPath the result path
+     * @param step the number of simulation steps
+     * @param timestep time per step
+     * @param type vehicle generation type
+     * @param repartition the repartition steps
+     * @param partition the number of partitions
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    private void preprocess(SparkSession spark, double lat1, double lon1, double lat2, double lon2,
+                     int total, String outputPath, int step, double timestep, String type, int repartition, int partition) throws ExecutionException, InterruptedException {
         String str = "\nP1: " + lat1 + ", " + lon1 + "\n" + "P2: " + lat2 + ", " + lon2 + "\n" + "Total: " + total + "\n" + "Steps: " + step + "\n" + "Timestep: " + timestep
                 + "\n" + "Generation Type: " + type + "\n" + "Repartition Time: " + repartition + "\n" + "Partition: " + partition + "\n" + "Output: " + outputPath + "\n";
         LOG.warn(str);
 
-        HDFSUtil hdfs = new HDFSUtil(outputPath, distributed);
+        HDFSUtil hdfs = new HDFSUtil(outputPath);
         String name = "/geosparksim";
         hdfs.deleteDir(name);
         hdfs.mkdir(name);
         output = outputPath + name;
+
         OsmParser osmParser = new OsmParser();
         Coordinate coor1 = new Coordinate(lat1, lon1);
         Coordinate coor2 = new Coordinate(lat2, lon2);
@@ -207,8 +221,8 @@ public class GeoSparkSim implements Runnable{
 
     private void simulation(SparkSession spark, int total, String path, int step, double timestep, int repartition, int partition, double area){
         VehicleHandler vehicleHandler = new VehicleHandler(spark, path);
-
         RoadNetworkReader networkReader = new RoadNetworkReader(spark, path);
+
         Dataset<Link> edges = networkReader.readEdgeJson();
         Dataset<TrafficLight> signals = networkReader.readSignalJson();
         Dataset<Intersect> intersects = networkReader.readIntersectJson();
@@ -223,6 +237,7 @@ public class GeoSparkSim implements Runnable{
         ReportHandler reportHandler = new ReportHandler(spark, path, partition);
         Dataset<StepReport> reports = reportHandler.readReportJson();
 
+        //Visualization restriction
         if(total < 5000 && area < 8000000){
             TrafficPanel traffic = new TrafficPanel(appTitle);
             traffic.run(edges, reports.collectAsList());

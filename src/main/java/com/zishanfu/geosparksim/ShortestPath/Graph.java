@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The graph class leverage the APIs and index from GraphHopper to calculate the route with the minimum travel length.
+ * GraphHopper is a route planning engine. To see more details about GraphHopper, https://www.graphhopper.com/
+ */
 public class Graph {
     private MyGraphHopper hopper;
 
@@ -25,6 +29,12 @@ public class Graph {
         this.hopper.importOrLoad(); 
     }
 
+    /**
+     *
+     * @param from the source coordinate
+     * @param to the destination coordinate
+     * @return vehicle
+     */
     public Vehicle request(Coordinate from, Coordinate to) {
         GHResponse rsp = new GHResponse();
         List<Path> paths = hopper.calcPaths(new GHRequest(from.x, from.y, to.x, to.y).
@@ -69,7 +79,7 @@ public class Graph {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
-        while (salt.length() < 5) { // length of the random string.
+        while (salt.length() < 5) { // length of the random ID.
             int index = (int) (rnd.nextFloat() * SALTCHARS.length());
             salt.append(SALTCHARS.charAt(index));
         }
@@ -84,9 +94,11 @@ public class Graph {
         return this.hopper.getGraphHopperStorage().getBaseGraph().getNodes();
     }
 
+
     /**
-     * @param Coordinate node
-     * @return Coordinate closetNode
+     *
+     * @param node the node coordinate
+     * @return the closest node coordinate
      */
     public Coordinate getClosestNode(Coordinate node) {
         GHPoint res = hopper.getLocationIndex().findClosest(node.x, node.y, EdgeFilter.ALL_EDGES).getQueryPoint();

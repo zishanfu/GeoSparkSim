@@ -14,17 +14,30 @@ public class CreateVehicles {
     private final static Logger LOG = Logger.getLogger(CreateVehicles.class);
 
     private double maxLen;
-    private Coordinate coor1;
-    private Coordinate coor2;
+    private double minLat;
+    private double maxLat;
+    private double minLon;
+    private double maxLon;
     private Graph graph;
 
     public CreateVehicles(String[] args, Coordinate coor1, Coordinate coor2, double maxLen){
         this.graph = new Graph(args);
         this.maxLen = maxLen;
-        this.coor1 = coor1;
-        this.coor2 = coor2;
+        minLat = Math.min(coor1.x, coor2.x);
+        maxLat = Math.max(coor1.x, coor2.x);
+        minLon = Math.min(coor1.y, coor2.y);
+        maxLon = Math.max(coor1.y, coor2.y);
     }
 
+    /**
+     * Generate vehicles in 8 threads
+     *
+     * @param total the number of vehicles
+     * @param type the vehicle generation type
+     * @return a list of vehicles
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
     public List<Vehicle> multiple(int total, String type) throws InterruptedException, ExecutionException {
         int thread_num = 8;
         ExecutorService executor = Executors.newFixedThreadPool(thread_num);
@@ -32,7 +45,7 @@ public class CreateVehicles {
 
         for (int i=0; i<thread_num; i++)
         {
-            GenThread thread = new GenThread( coor1,coor2, graph, maxLen, total/thread_num, type);
+            GenThread thread = new GenThread( minLon, minLat, maxLon, maxLat, graph, maxLen, total/thread_num, type);
             tasks.add(thread);
         }
 
