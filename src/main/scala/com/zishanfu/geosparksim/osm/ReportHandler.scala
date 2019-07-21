@@ -32,9 +32,6 @@ class ReportHandler (sparkSession: SparkSession, path: String, numPartition: Int
         new StepReport(step, new Coordinate(signal_coordinate_latitude, signal_coordinate_longitude), signal,
           vehicleId, null, null)
       }
-
-      //(step: Int, signalLocation: Coordinate, signal: Int, vehicleId: String, vehicleFront: Coordinate, vehicleRear: Coordinate)
-
     })(Define.reportEncoder)
 
     reportDS

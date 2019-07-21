@@ -9,7 +9,6 @@ import com.zishanfu.geosparksim.TrafficUI.Model.Point;
 import com.zishanfu.geosparksim.model.SegmentNode;
 import org.apache.spark.sql.Dataset;
 
-
 import java.awt.*;
 import java.util.List;
 

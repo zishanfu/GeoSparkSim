@@ -3,14 +3,6 @@ package com.zishanfu.geosparksim.osm
 object Haversine {
   val RADIUS_OF_EARTH = 6371;
 
-  /**
-    *
-    * @param lat1
-    * @param long1
-    * @param lat2
-    * @param long2
-    * @return
-    */
   def haversine(lat1: Double, long1: Double, lat2: Double, long2: Double): Double = {
     val latitude1 = Math.toRadians(lat1);
 		val latitude2 = Math.toRadians(lat2);

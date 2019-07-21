@@ -76,16 +76,16 @@ object Microscopic {
 
   /**
     *
-    * @param sparkSession
-    * @param edges
-    * @param signals
-    * @param intersects
-    * @param vehicles
-    * @param path
-    * @param steps
-    * @param timestep
-    * @param repartition
-    * @param numPartition
+    * @param sparkSession the spark session
+    * @param edges edges
+    * @param signals traffic signals
+    * @param intersects intersects
+    * @param vehicles simulation vehicles
+    * @param path the result path
+    * @param steps simulation steps
+    * @param timestep time per step
+    * @param repartition the repartition period
+    * @param numPartition the number of partitions
     */
   def sim(sparkSession: SparkSession, edges: Dataset[Link], signals: Dataset[TrafficLight], intersects: Dataset[Intersect], vehicles: Dataset[MOBILVehicle],
           path: String, steps: Int, timestep: Double, repartition: Int, numPartition: Int): Unit = {
@@ -112,6 +112,7 @@ object Microscopic {
     signalRDD.spatialPartitioning(vehicleRDD.getPartitioner)
     intersectRDD.spatialPartitioning(vehicleRDD.getPartitioner)
 
+    //landing simulation objects
     val reportRDD0 = vehicleRDD.spatialPartitionedRDD.rdd.zipPartitions(edgeRDD.spatialPartitionedRDD.rdd, signalRDD.spatialPartitionedRDD.rdd, true){
       (vehicleIt, edgeIt, signalIt) => {
         val edgeList = edgeIt.toList
@@ -223,13 +224,15 @@ object Microscopic {
     val t2 = System.currentTimeMillis()
     execTime = execTime + t2 - t1
 
+    //if the number of vehicles is larger than 100k,
+    // GeoSparkSim will do sample simulation to find the best repartition period with minimum time cost
     val bestRepartition = if(vehicleRDD.getRawSpatialRDD.count() < 100000) repartition else repartitionCriterion(vehicleRDD, signalRDD, edgeRDD, steps, timestep, numPartition)
 
     val newSteps = (steps / timestep).toInt
 
     val iteration = newSteps / bestRepartition + (if (newSteps % bestRepartition == 0) 0 else 1)
 
-    println("best repartition: " + bestRepartition + ", repartition: " + repartition)
+    logger.warn("best repartition: " + bestRepartition + ", repartition: " + repartition)
 
     for(n <- 1 to iteration){
 
@@ -313,7 +316,6 @@ object Microscopic {
       execTime = execTime + t4 - t3
 
       reportHandler.writeReportJson(reportRDD, n)
-
     }
 
     logger.warn("Repartition Time: " + execTime/1000)
@@ -321,12 +323,12 @@ object Microscopic {
 
   /**
     *
-    * @param vehicleRDD
-    * @param signalRDD
-    * @param reportRDD
-    * @param stepCount
-    * @param numPartition
-    * @return
+    * @param vehicleRDD the vehicle RDDs
+    * @param signalRDD the signal RDDs
+    * @param reportRDD the simulation report RDDs
+    * @param stepCount current step
+    * @param numPartition the number of partitions
+    * @return signal and vehicle RDDs
     */
   def recovery(vehicleRDD: RDD[MOBILVehicle], signalRDD: RDD[TrafficLight], reportRDD: RDD[StepReport], stepCount: Int, numPartition: Int) :(RDD[MOBILVehicle], RDD[TrafficLight]) = {
 
@@ -353,12 +355,12 @@ object Microscopic {
 
   /**
     *
-    * @param vehicleRDD
-    * @param signalRDD
-    * @param edgeRDD
-    * @param steps
-    * @param timestep
-    * @param numPartition
+    * @param vehicleRDD the vehicle RDDs
+    * @param signalRDD the signal RDDs
+    * @param edgeRDD the edge RDDs
+    * @param steps simulation steps
+    * @param timestep time per step
+    * @param numPartition the number of partitions
     * @return
     */
   def repartitionCriterion(vehicleRDD: SpatialRDD[MOBILVehicle], signalRDD: SpatialRDD[TrafficLight], edgeRDD: SpatialRDD[Link], steps: Int, timestep: Double, numPartition: Int): Int = {

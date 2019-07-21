@@ -60,11 +60,6 @@ public class MOBILVehicle extends LaneChangeBase implements MOBIL {
             }
         }
 
-//        else{
-//            System.out.println("head speed: " + head.getVelocity());
-//            updateVelocity(head, interval);
-//        }
-
 
         //remove vehicle from last lane
         currentLink.removeVehicleFromLane(this, this.getCurrentLane());

@@ -153,8 +153,6 @@ public class Link extends LineString {
     }
 
     public boolean isThisLinkLane(Coordinate coordinate){
-//        System.out.println("minlat: " + minLat + ", maxlat:" + maxLat + ", minlon: " + minLon + ", maxLon: " + maxLon);
-//        System.out.println(coordinate);
         if (coordinate.x >= minLat && coordinate.x <= maxLat && coordinate.y >= minLon && coordinate.y <= maxLon){
             return true;
         }

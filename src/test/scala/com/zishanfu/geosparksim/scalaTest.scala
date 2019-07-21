@@ -1,5 +1,6 @@
 package com.zishanfu.geosparksim
 
+import com.zishanfu.geosparksim.tools.HDFSUtil
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.serializer.KryoSerializer
 import org.apache.spark.{SparkConf, SparkContext}
@@ -28,8 +29,12 @@ class scalaTest extends FunSpec with BeforeAndAfterAll {
 
     val resourceFolder = System.getProperty("user.dir") + "/src/test/resources/"
 
-    it("should load openstreetmap") {
-
+    it("HDFS operations") {
+      val outputPath = "geosparksim"
+      val hdfs = "hdfs://localhost:9000"
+      val hdfsUtil = new HDFSUtil(hdfs)
+      hdfsUtil.mkdir("/usr/" + outputPath)
+      assert(hdfsUtil.checkHDFS("/usr/" + outputPath))
     }
 
   }

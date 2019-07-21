@@ -28,7 +28,7 @@ public class SimulationBtnHandler implements ActionListener{
                     "Simulation is not ready, please check!");
         }else if(!ui){
             AttentionDialog dialog = new AttentionDialog("Attention",
-                    "Area too larger or too many vehicle, disabled traffic visualization!");
+                    "Area too larger or too many vehicles, disabled traffic visualization!");
         } else {
             TrafficPanel traffic = new TrafficPanel(appTitle);
             traffic.run(edges, reports);

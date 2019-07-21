@@ -2,7 +2,6 @@ package com.zishanfu.geosparksim.OSM;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import org.openstreetmap.osmosis.xml.v0_6.XmlDownloader;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -15,25 +14,16 @@ import java.nio.channels.ReadableByteChannel;
  * Download road network data and reformat it
  */
 public class OsmParser {
-    public void runInHDFS(Coordinate geo1, Coordinate geo2, String hdfs, String local) {
+    public void runInHDFS(Coordinate geo1, Coordinate geo2, String hdfs) {
         String osmUrl = "http://overpass-api.de/api";
         XmlDownloader xmlDownloader = new XmlDownloader(geo1.y, geo2.y, geo1.x, geo2.x, osmUrl);
         xmlDownloader.setSink(new OsmParquetSink(hdfs));
-        osmDownloader(geo1, geo2, local);
+        osmDownloader(geo1, geo2);
 
         xmlDownloader.run();
     }
 
-//    public void runInLocal(Coordinate geo1, Coordinate geo2, String local) {
-//        String osmUrl = "http://overpass-api.de/api";
-//        XmlDownloader xmlDownloader = new XmlDownloader(geo1.y, geo2.y, geo1.x, geo2.x, osmUrl);
-//        osmDownloader(geo1, geo2, local);
-//
-//        xmlDownloader.setSink(new OsmParquetSink(local));
-//        xmlDownloader.run();
-//    }
-
-    private void osmDownloader(Coordinate geo1, Coordinate geo2, String path) {
+    private void osmDownloader(Coordinate geo1, Coordinate geo2) {
         String OSM_URL = "http://overpass-api.de/api/map?bbox=";
         URL url = null;
 
@@ -50,7 +40,7 @@ public class OsmParser {
             e.printStackTrace();
         }
 
-        String newFileName = String.format("%s/%s.osm", path, "map");
+        String newFileName = String.format("%s/%s.osm", System.getProperty("user.dir"), "map");
 
         try {
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());
@@ -58,9 +48,9 @@ public class OsmParser {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
             fos.close();
             rbc.close();
-            File osm = new File(newFileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }

@@ -11,7 +11,7 @@ public class SelectionPainter implements Painter<Object>
 
     private SelectionAdapter adapter;
 
-    /**O
+    /**
      * @param adapter the selection adapter
      */
     public SelectionPainter(SelectionAdapter adapter)

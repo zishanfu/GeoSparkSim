@@ -45,21 +45,9 @@ public class Jmap {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
 
-        jXMapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
-        {
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                updateWindowTitle(frame, jXMapViewer);
-            }
-        });
+        jXMapViewer.addPropertyChangeListener("zoom", evt -> updateWindowTitle(frame, jXMapViewer));
 
-        jXMapViewer.addPropertyChangeListener("center", new PropertyChangeListener()
-        {
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                updateWindowTitle(frame, jXMapViewer);
-            }
-        });
+        jXMapViewer.addPropertyChangeListener("center", evt -> updateWindowTitle(frame, jXMapViewer));
 
         updateWindowTitle(frame, jXMapViewer);
     }

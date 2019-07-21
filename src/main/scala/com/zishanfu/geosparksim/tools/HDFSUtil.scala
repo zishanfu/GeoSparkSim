@@ -105,4 +105,16 @@ class HDFSUtil (hdfsUrl: String){
     result
   }
 
+  def checkHDFS(hdfsFile: String) : Boolean = {
+    var result = false
+    if(StringUtils.isNoneBlank(hdfsFile)){
+      targetUrl = hdfsUrl + hdfsFile
+      val hdfs = FileSystem.get(URI.create(targetUrl), config)
+      if(hdfs.exists(new Path(targetUrl))){
+        result = true
+      }
+    }
+    result
+  }
+
 }
