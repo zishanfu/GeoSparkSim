@@ -20,5 +20,19 @@ public class FileOps {
         }
     }
 
+    public boolean deleteDirectory(String directory){
+        File f = new File(directory);
+        if(f.isDirectory()) {
+            try {
+                FileUtils.cleanDirectory(f);
+                FileUtils.forceDelete(f);
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 

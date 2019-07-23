@@ -2,13 +2,14 @@ package com.zishanfu.geosparksim.Interaction.Controller;
 
 import com.zishanfu.geosparksim.Interaction.Handler.GenerateBtnHandler;
 import com.zishanfu.geosparksim.Interaction.Handler.SimulationBtnHandler;
+import org.apache.log4j.Logger;
 import org.apache.spark.sql.SparkSession;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import javax.swing.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 public class InputController {
@@ -17,6 +18,7 @@ public class InputController {
     private String[] genTypes = { "Data-space oriented approach(DSO)", "Network-based approach(NB)"};
     private int top = 5, left = 4, bottom = 5, right = 4;
     private Insets i = new Insets(top, left, bottom, right);
+    private final Logger LOG = Logger.getLogger(GenerateBtnHandler.class);
 
     public InputController(CompController cc, ResultController rc, SparkSession spark, String appTitle) {
         this.inputPanel = inputPanel(cc, rc, spark, appTitle);
@@ -30,7 +32,15 @@ public class InputController {
         JLabel label = new JLabel("GeoSparkSim");
         label.setFont(new Font("Bookman", Font.BOLD, 20));
 
-        ImageIcon imageIcon = new ImageIcon(this.getClass().getResource("/icon/traffic.png")); // load the image to a imageIcon
+        String resources = System.getProperty("user.dir") + "/src/test/resources";
+
+        ImageIcon imageIcon = null; // load the image to a imageIcon
+        try {
+            imageIcon = new ImageIcon(new URL("file://" + resources + "/icon/traffic.png"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         Image image = imageIcon.getImage(); // transform it
         Image newimg = image.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         imageIcon = new ImageIcon(newimg);  // transform it back
@@ -79,16 +89,10 @@ public class InputController {
         gbc.gridwidth = 1;
         topPanel.add(imageLabel, gbc);
 
-
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         topPanel.add(chkArea, gbc);
-
-//        gbc.gridx = 0;
-//        gbc.gridy = 4;
-//        gbc.gridwidth = 2;
-//        topPanel.add(chkSpark, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;

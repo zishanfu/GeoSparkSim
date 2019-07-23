@@ -6,7 +6,7 @@ import com.zishanfu.geosparksim.Interaction.Components.AttentionDialog;
 import com.zishanfu.geosparksim.Interaction.Components.SelectionAdapter;
 import com.zishanfu.geosparksim.Microscopic;
 import com.zishanfu.geosparksim.Model.*;
-import com.zishanfu.geosparksim.OSM.OsmParser;
+import com.zishanfu.geosparksim.OSM.OsmLoader;
 import com.zishanfu.geosparksim.Tools.Distance;
 import com.zishanfu.geosparksim.osm.*;
 import com.zishanfu.geosparksim.tools.HDFSUtil;
@@ -98,7 +98,7 @@ public class GenerateBtnHandler implements ActionListener {
                 Coordinate newCoor2 = new Coordinate(coor2.x + maxLen, coor2.y - maxLen);
 
                 textArea.append("Downloaded OSM file...\n");
-                OsmParser osmParser = new OsmParser();
+                OsmLoader osmLoader = new OsmLoader();
                 String output = "";
 
                 HDFSUtil hdfs = new HDFSUtil(outputPath);
@@ -106,7 +106,8 @@ public class GenerateBtnHandler implements ActionListener {
                 hdfs.deleteDir(name);
                 hdfs.mkdir(name);
                 output = outputPath + name;
-                osmParser.runInHDFS(newCoor1, newCoor2, output);
+                osmLoader.parquet(newCoor1, newCoor2, output);
+                osmLoader.osm(newCoor1, newCoor2);
 
                 textArea.append("Output Path: " + output + "\n");
 

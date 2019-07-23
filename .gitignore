@@ -1,5 +1,6 @@
 /target/
 /script/
+/
 /.idea
 /*.iml
 /.settings/
@@ -7,9 +8,14 @@
 /.project
 /dependency-reduced-pom.xml
 /bin/
-/doc/
 /conf/
 /log/
 /site/
 /.cache-main
 /.cache-tests
+/.DS_Store
+/docs/images/.DS_Store
+/src/test/resources/.DS_Store
+/src/test/resources/geosparksim/
+/src/test/resources/java-test/
+/src/test/resources/scala-test/

@@ -79,12 +79,13 @@ public class GeoSparkSim implements Runnable{
 
         SparkSession spark = SparkSession
                 .builder()
+                .master("local[*]") //Developing mode
                 .appName("GeoSparkSim")
                 .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
                 .config("spark.kryo.registrator", "org.datasyslab.geospark.serde.GeoSparkKryoRegistrator")
                 .getOrCreate();
 
-        Entry entry = new Entry(lat1, lon1, lat2, lon2, num, output, step, timestep, type);
+        Entry entry = new Entry();
 
         //User interface
         if(only){
@@ -95,6 +96,8 @@ public class GeoSparkSim implements Runnable{
             if(output == null){
                 LOG.error("Please enter the output path and rerun the command.");
             }else{
+                entry = new Entry(lat1, lon1, lat2, lon2, num, output, step, timestep, type);
+
                 try {
                     start(spark, entry);
                 } catch (ExecutionException | InterruptedException e) {

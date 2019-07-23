@@ -140,13 +140,11 @@ object OsmConverter {
 
     nodeSegmentJoinDF = intersectNode.join(nodeSegmentJoinDF, col("indexedNode.nodeId") === intersectNode("Iid"), "full")
 
-
     val nodesInSegmentsDF = nodeSegmentJoinDF.select(col("indexedNode.nodeId").as("id"), col("latitude"), col("longitude")).dropDuplicates()
 
     val wayDF = nodeSegmentJoinDF.groupBy(col("wayId"), col("tags"))
         .agg(collect_list(struct(col("indexedNode.index"), col("indexedNode"), col("latitude"), col("longitude"), col("signals"), col("n"))).as("nodes")
         , collect_list(col("segmentId")).as("segmentIds"))
-
 
     val segmentRDD :RDD[SegmentLink] = wayDF.flatMap((row : Row) => {
       val id = row.getAs[Long](0)

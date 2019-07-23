@@ -4,7 +4,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.zishanfu.geosparksim.Generation.CreateVehicles;
 import com.zishanfu.geosparksim.Microscopic;
 import com.zishanfu.geosparksim.Model.*;
-import com.zishanfu.geosparksim.OSM.OsmParser;
+import com.zishanfu.geosparksim.OSM.OsmLoader;
 import com.zishanfu.geosparksim.Tools.Distance;
 import com.zishanfu.geosparksim.TrafficUI.TrafficPanel;
 import com.zishanfu.geosparksim.osm.*;
@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class Core {
 
     private final static Logger LOG = Logger.getLogger(Core.class);
+    private final String resources = System.getProperty("user.dir") + "/src/test/resources";
 
     /**
      * Preprocess road network and generate vehicles
@@ -39,14 +40,15 @@ public class Core {
         hdfs.mkdir(name);
         String output = entry.getOutputPath() + name;
 
-        OsmParser osmParser = new OsmParser();
+        OsmLoader osmLoader = new OsmLoader();
         Coordinate coor1 = new Coordinate(entry.getLat1(), entry.getLon1());
         Coordinate coor2 = new Coordinate(entry.getLat2(), entry.getLon2());
         double maxLen = new Distance().euclidean(coor1.x, coor2.x, coor1.y, coor2.y) / 10;
         Coordinate newCoor1 = new Coordinate(entry.getLat1() + maxLen, entry.getLon1() - maxLen);
         Coordinate newCoor2 = new Coordinate(entry.getLat2() + maxLen, entry.getLon2() - maxLen);
 
-        osmParser.runInHDFS(newCoor1, newCoor2, output);
+        osmLoader.parquet(newCoor1, newCoor2, output);
+        osmLoader.osm(newCoor1, newCoor2);
 
         RoadNetwork roadNetwork = OsmConverter.convertToRoadNetwork(spark, output);
         RoadNetworkWriter networkWriter = new RoadNetworkWriter(spark, roadNetwork, output);
@@ -54,8 +56,8 @@ public class Core {
         networkWriter.writeSignalJson();
         networkWriter.writeIntersectJson();
 
-        String osmPath = "datareader.file=" + System.getProperty("user.dir") + "/map.osm";
-        String[] vehParameters = new String[]{"config=" + System.getProperty("user.dir") + "/config.properties", osmPath};
+        String osmPath = "datareader.file=" + resources + "/geosparksim/map.osm";
+        String[] vehParameters = new String[]{"config=" + resources + "/graphhopper/config.properties", osmPath};
 
         CreateVehicles createVehicles = new CreateVehicles(vehParameters, coor1, coor2, maxLen);
         List<Vehicle> vehicleList = createVehicles.multiple(entry.getTotal(), entry.getType());

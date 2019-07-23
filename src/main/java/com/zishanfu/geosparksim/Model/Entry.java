@@ -13,6 +13,8 @@ public class Entry {
     private int repartition;
     private int partition;
 
+    public Entry(){}
+
     public Entry(double lat1, double lon1, double lat2, double lon2, int total,
                  String outputPath, int step, double timestep, String type){
         this.lat1 = lat1;

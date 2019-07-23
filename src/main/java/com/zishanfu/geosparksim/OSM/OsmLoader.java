@@ -1,6 +1,7 @@
 package com.zishanfu.geosparksim.OSM;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import com.zishanfu.geosparksim.Tools.FileOps;
 import org.openstreetmap.osmosis.xml.v0_6.XmlDownloader;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,17 +14,16 @@ import java.nio.channels.ReadableByteChannel;
  * Road network parser
  * Download road network data and reformat it
  */
-public class OsmParser {
-    public void runInHDFS(Coordinate geo1, Coordinate geo2, String hdfs) {
+public class OsmLoader {
+
+    public void parquet(Coordinate geo1, Coordinate geo2, String path) {
         String osmUrl = "http://overpass-api.de/api";
         XmlDownloader xmlDownloader = new XmlDownloader(geo1.y, geo2.y, geo1.x, geo2.x, osmUrl);
-        xmlDownloader.setSink(new OsmParquetSink(hdfs));
-        osmDownloader(geo1, geo2);
-
+        xmlDownloader.setSink(new OsmParquetSink(path));
         xmlDownloader.run();
     }
 
-    private void osmDownloader(Coordinate geo1, Coordinate geo2) {
+    public void osm(Coordinate geo1, Coordinate geo2) {
         String OSM_URL = "http://overpass-api.de/api/map?bbox=";
         URL url = null;
 
@@ -40,7 +40,11 @@ public class OsmParser {
             e.printStackTrace();
         }
 
-        String newFileName = String.format("%s/%s.osm", System.getProperty("user.dir"), "map");
+        String resources = System.getProperty("user.dir") + "/src/test/resources";
+        String path = resources + "/geosparksim";
+        FileOps fileOps = new FileOps();
+        fileOps.createDirectory(path);
+        String newFileName = String.format("%s/%s.osm", path, "map");
 
         try {
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());

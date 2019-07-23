@@ -12,6 +12,16 @@ import java.util.*;
 
 public class TemporalSim {
 
+    /**
+     * Simulation without Spark
+     *
+     * @param edges the edges dataset
+     * @param signals the signals dataset
+     * @param vehicles the vehicles dataset
+     * @param steps the steps dataset
+     * @param timestep the timestep
+     * @return a list of step report
+     */
     public List<StepReport> sim(Dataset<Link> edges, Dataset<TrafficLight> signals, Dataset<MOBILVehicle> vehicles,
                                 int steps, double timestep){
 

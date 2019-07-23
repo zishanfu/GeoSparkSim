@@ -9,6 +9,9 @@ import org.datasyslab.geospark.serde.GeoSparkKryoRegistrator;
 public class GeoSparkSimTestBase {
     protected static SparkConf conf;
     protected static JavaSparkContext sc;
+    //ASU boundary
+    //top-left 33.429165, -111.942323
+    //bottom-right 33.413572, -111.924442
 
     protected static void initialize(final String testSuiteName)
     {
