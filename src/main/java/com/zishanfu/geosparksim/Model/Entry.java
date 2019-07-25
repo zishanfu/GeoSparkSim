@@ -10,7 +10,6 @@ public class Entry {
     private int step;
     private double timestep;
     private String type;
-    private int repartition;
     private int partition;
 
     public Entry(){}
@@ -26,8 +25,7 @@ public class Entry {
         this.step = step;
         this.timestep = timestep;
         this.type = type;
-//        this.repartition = repartition;
-//        this.partition = partition;
+        this.partition = total/70;
     }
 
     public double getLat1() {
@@ -68,6 +66,7 @@ public class Entry {
 
     public void setTotal(int total) {
         this.total = total;
+        this.partition = total/70;
     }
 
     public String getOutputPath() {
@@ -102,14 +101,6 @@ public class Entry {
         this.type = type;
     }
 
-    public int getRepartition() {
-        return repartition;
-    }
-
-    public void setRepartition(int repartition) {
-        this.repartition = repartition;
-    }
-
     public int getPartition() {
         return partition;
     }
@@ -122,7 +113,7 @@ public class Entry {
     public String toString() {
         return "\nP1: " + lat1 + ", " + lon1 + "\n" + "P2: " + lat2 + ", " + lon2 + "\n" +
                 "Total: " + total + "\n" + "Steps: " + step + "\n" + "Timestep: " + timestep +
-                "\n" + "Generation Type: " + type + "\n" + "Repartition Time: " + repartition +
-                "\n" + "Partition: " + partition + "\n" + "Output: " + outputPath + "\n";
+                "\n" + "Generation Type: " + type + "\n" + "Repartition Time: " +
+                "Partition: " + partition + "\n" + "Output: " + outputPath + "\n";
     }
 }

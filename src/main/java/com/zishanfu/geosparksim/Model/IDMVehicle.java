@@ -7,6 +7,7 @@ import java.util.Map;
 import com.zishanfu.geosparksim.Exception.EdgeOutBoundaryException;
 import com.zishanfu.geosparksim.Exception.VehicleOutExceptedPathException;
 import com.zishanfu.geosparksim.Model.parameters.IDM;
+import com.zishanfu.geosparksim.Tools.Distance;
 import org.apache.log4j.Logger;
 
 public class IDMVehicle extends CarFollowBase implements IDM {
@@ -16,7 +17,7 @@ public class IDMVehicle extends CarFollowBase implements IDM {
     private double t = reactionTime;
     private double s0 = safeDistance;
     private double speedLimit = 17.88;
-
+    public Distance distance = new Distance();
 
     //Vehicle(String id, Coordinate source, Coordinate target, Long[] edgePath, Double[] costs, List<Coordinate> fullPath)
     public IDMVehicle(String id, Coordinate source, Coordinate target, Long[] edgePath, Double[] costs, List<Coordinate> fullPath) {
@@ -78,8 +79,8 @@ public class IDMVehicle extends CarFollowBase implements IDM {
             if(head2 == null) return head1;
             if(head1 == null) return null;
 
-            double distance1 = haversine(head1.getFront(), this.getFront());
-            double distance2 = haversine(head2.getFront(), this.getFront());
+            double distance1 = distance.haversine(head1.getFront(), this.getFront());
+            double distance2 = distance.haversine(head2.getFront(), this.getFront());
 
             if(distance1 <= distance2){
                 return head1;
@@ -109,8 +110,8 @@ public class IDMVehicle extends CarFollowBase implements IDM {
         double min = Double.POSITIVE_INFINITY;
 
         for(MOBILVehicle vehicle: laneVehicles){
-            double distance = haversine(vehicle.getFront(), this.getFront());
-            if(distance < min && distance >= 0){
+            double dist = distance.haversine(vehicle.getFront(), this.getFront());
+            if(dist < min && dist >= 0){
                 closet = vehicle;
             }
         }
@@ -160,7 +161,7 @@ public class IDMVehicle extends CarFollowBase implements IDM {
         double v0 = speedLimit;
 
         double deltaV = v - 0;
-        double s = haversine(signal.getLocation(), veh.getFront());
+        double s = distance.haversine(signal.getLocation(), veh.getFront());
 
         sStar = r+((v*deltaV)/(2*Math.sqrt(a+b)));
         if (sStar<0) sStar = 0;
@@ -218,8 +219,8 @@ public class IDMVehicle extends CarFollowBase implements IDM {
         return mph* mile2meter /3600;
     }
 
-    public Coordinate distance2Coordinate(double distance, Coordinate head, Coordinate tail){
-        double k = distance / haversine(head, tail);
+    public Coordinate distance2Coordinate(double dist, Coordinate head, Coordinate tail){
+        double k = dist / distance.haversine(head, tail);
         double x = head.x + k * (tail.x - head.x);
         double y = head.y + k * (tail.y - head.y);
         return new Coordinate(x, y);

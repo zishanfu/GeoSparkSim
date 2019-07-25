@@ -46,14 +46,14 @@ public class MOBILVehicle extends LaneChangeBase implements MOBIL {
         }else if (head != null && headLight == null){
             updateVelocity(head, interval);
         }else if (head == null && headLight.getSignal() == 2){
-            if (haversine(headLight.getLocation(), this.getFront()) <= this.getCarLength()){
+            if (distance.haversine(headLight.getLocation(), this.getFront()) <= this.getCarLength()){
                 this.stop();
                 return edgeMap;
             }else{
                 updateVelocity(headLight, interval);
             }
         }else if (head != null && headLight.getSignal() == 2){
-            if (haversine(head.getRear(), this.getFront()) >= haversine(headLight.getLocation(), this.getFront())){
+            if (distance.haversine(head.getRear(), this.getFront()) >= distance.haversine(headLight.getLocation(), this.getFront())){
                 updateVelocity(headLight, interval);
             }else{
                 updateVelocity(head, interval);

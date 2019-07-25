@@ -41,17 +41,11 @@ public class GeoSparkSim implements Runnable{
     @Option(names = {"-s", "--step"}, type = int.class, description = "The simulation steps. Default value: ${DEFAULT-VALUE}", defaultValue = "600")
     private int step;
 
-//    @Option(names = {"-r", "--rep"}, type = int.class, description = "The repartition steps. Default value: ${DEFAULT-VALUE}", defaultValue = "120")
-//    private int rep;
-
     @Option(names = {"-t", "--timestep"}, type = double.class, description = "Time per step. Default value: ${DEFAULT-VALUE}", defaultValue = "1")
     private double timestep;
 
     @Option(names = {"-f", "--fileoutput"}, description = "Output file path.")
     private String output;
-
-//    @Option(names = {"-p", "--partition"}, type = int.class, description = "The number of data partitions. Default value: ${DEFAULT-VALUE}", defaultValue = "100")
-//    private int partition;
 
     @Option(names = {"-y", "--type"}, description = "Vehicle generation type. (DSO or NB) Default value: ${DEFAULT-VALUE}", defaultValue = "DSO")
     private String type;
@@ -74,6 +68,10 @@ public class GeoSparkSim implements Runnable{
     private final Properties prop = new Properties();
     private final String appTitle = "GeoSparkSim v0.0.1";
 
+    //ASU boundary
+    //top-left 33.429165, -111.942323
+    //bottom-right 33.413572, -111.924442
+
     @Override
     public void run() {
 
@@ -95,6 +93,8 @@ public class GeoSparkSim implements Runnable{
         }else if(command){
             if(output == null){
                 LOG.error("Please enter the output path and rerun the command.");
+            }else if(num < 1000){
+                LOG.error("Please enter a larger vehicle number.");
             }else{
                 entry = new Entry(lat1, lon1, lat2, lon2, num, output, step, timestep, type);
 
@@ -139,7 +139,6 @@ public class GeoSparkSim implements Runnable{
 
         //Default setting
         }else{
-            System.getProperty("user.dir");
             try {
                 start(spark, entry);
             } catch (ExecutionException | InterruptedException e) {

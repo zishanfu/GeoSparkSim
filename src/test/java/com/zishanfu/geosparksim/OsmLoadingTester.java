@@ -2,6 +2,7 @@ package com.zishanfu.geosparksim;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.zishanfu.geosparksim.OSM.OsmLoader;
+import com.zishanfu.geosparksim.Tools.Distance;
 import com.zishanfu.geosparksim.Tools.FileOps;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -23,6 +24,7 @@ public class OsmLoadingTester extends GeoSparkSimTestBase{
     static Coordinate coor2;
     static int total;
     static String type;
+    static String path = "";
     //ASU boundary
     //top-left 33.429165, -111.942323
     //bottom-right 33.413572, -111.924442
@@ -31,15 +33,20 @@ public class OsmLoadingTester extends GeoSparkSimTestBase{
 
     public static void onceExecutedBeforeAll()
     {
-        SparkConf conf = new SparkConf().setAppName("EarthdataHDFTest").setMaster("local[2]");
+        SparkConf conf = new SparkConf().setAppName("OpenStreetMapData").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
         Logger.getLogger("akka").setLevel(Level.WARN);
         resources = System.getProperty("user.dir") + "/src/test/resources";
-        fileOps.createDirectory(resources + "/java-test");
+        path = resources + "/java-test";
+        fileOps.createDirectory(path);
 
-        coor1 = new Coordinate(33.429165, -111.942323);
-        coor2 = new Coordinate(33.413572, -111.924442);
+        Coordinate c1 = new Coordinate(33.429165, -111.942323);
+        Coordinate c2 = new Coordinate(33.413572, -111.924442);
+        double maxLen = new Distance().euclidean(c1.x, c2.x, c1.y, c2.y) / 10;
+        coor1 = new Coordinate(c1.x + maxLen, c1.y - maxLen);
+        coor2 = new Coordinate(c2.x + maxLen, c2.y - maxLen);
+
         total = 1000;
         type = "DSO";
     }
@@ -47,21 +54,19 @@ public class OsmLoadingTester extends GeoSparkSimTestBase{
     @AfterClass
     public static void tearDown()
     {
-        fileOps.deleteDirectory(resources + "/java-test");
-        fileOps.deleteDirectory(resources + "/geosparksim");
+        fileOps.deleteDirectory(path);
         sc.stop();
     }
 
     @Test
     public void testOSMLoading()
     {
-        //String hdfs = "hdfs://localhost:9000/geosparksim";
-        OsmLoader osmLoader = new OsmLoader();
-        osmLoader.osm(coor1, coor2);
-        osmLoader.parquet(coor1, coor2, resources + "/java-test");
-        File osm = new File(resources + "/geosparksim" + "/map.osm");
-        File node = new File(resources + "/java-test" + "/node.parquet");
-        File way = new File(resources + "/java-test" + "/way.parquet");
+        OsmLoader osmLoader = new OsmLoader(coor1, coor2, path);
+        osmLoader.osm();
+        osmLoader.parquet();
+        File osm = new File(path + "/map.osm");
+        File node = new File(path + "/node.parquet");
+        File way = new File(path + "/way.parquet");
         Assert.assertTrue(osm.exists());
         Assert.assertTrue(node.exists());
         Assert.assertTrue(way.exists());

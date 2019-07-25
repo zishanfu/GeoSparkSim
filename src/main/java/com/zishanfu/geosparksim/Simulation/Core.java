@@ -40,15 +40,17 @@ public class Core {
         hdfs.mkdir(name);
         String output = entry.getOutputPath() + name;
 
-        OsmLoader osmLoader = new OsmLoader();
+
         Coordinate coor1 = new Coordinate(entry.getLat1(), entry.getLon1());
         Coordinate coor2 = new Coordinate(entry.getLat2(), entry.getLon2());
         double maxLen = new Distance().euclidean(coor1.x, coor2.x, coor1.y, coor2.y) / 10;
-        Coordinate newCoor1 = new Coordinate(entry.getLat1() + maxLen, entry.getLon1() - maxLen);
-        Coordinate newCoor2 = new Coordinate(entry.getLat2() + maxLen, entry.getLon2() - maxLen);
+        Coordinate newCoor1 = new Coordinate(coor1.x + maxLen, coor1.y - maxLen);
+        Coordinate newCoor2 = new Coordinate(coor2.x + maxLen, coor2.y - maxLen);
 
-        osmLoader.parquet(newCoor1, newCoor2, output);
-        osmLoader.osm(newCoor1, newCoor2);
+        OsmLoader osmLoader = new OsmLoader(newCoor1, newCoor2, output);
+
+        osmLoader.parquet();
+        osmLoader.osm();
 
         RoadNetwork roadNetwork = OsmConverter.convertToRoadNetwork(spark, output);
         RoadNetworkWriter networkWriter = new RoadNetworkWriter(spark, roadNetwork, output);
@@ -56,7 +58,7 @@ public class Core {
         networkWriter.writeSignalJson();
         networkWriter.writeIntersectJson();
 
-        String osmPath = "datareader.file=" + resources + "/geosparksim/map.osm";
+        String osmPath = "datareader.file=" + output + "/map.osm";
         String[] vehParameters = new String[]{"config=" + resources + "/graphhopper/config.properties", osmPath};
 
         CreateVehicles createVehicles = new CreateVehicles(vehParameters, coor1, coor2, maxLen);
@@ -66,10 +68,11 @@ public class Core {
         vehicleHandler.writeVehicleTrajectoryJson(convertListToSeq(vehicleList));
     }
 
-    //public void simulation(SparkSession spark, int total, String path, int step, double timestep, int repartition, int partition, double area)
+
     public void simulation(SparkSession spark, Entry entry, String appTitle){
-        VehicleHandler vehicleHandler = new VehicleHandler(spark, entry.getOutputPath());
-        RoadNetworkReader networkReader = new RoadNetworkReader(spark, entry.getOutputPath());
+        String path = entry.getOutputPath() + "/geosparksim";
+        VehicleHandler vehicleHandler = new VehicleHandler(spark, path);
+        RoadNetworkReader networkReader = new RoadNetworkReader(spark, path);
 
         Dataset<Link> edges = networkReader.readEdgeJson();
         Dataset<TrafficLight> signals = networkReader.readSignalJson();
@@ -79,11 +82,11 @@ public class Core {
 
         long t1 = System.currentTimeMillis();
         Microscopic.sim(spark, edges, signals, intersects, vehicles,
-                entry.getOutputPath(), entry.getStep(), entry.getTimestep(), entry.getRepartition(), entry.getPartition());
+                path, entry.getStep(), entry.getTimestep(), entry.getPartition());
         long t2 = System.currentTimeMillis();
         LOG.warn("Finished Simulation: " + (t2- t1) / 1000);
 
-        ReportHandler reportHandler = new ReportHandler(spark, entry.getOutputPath(), entry.getPartition());
+        ReportHandler reportHandler = new ReportHandler(spark, path, entry.getPartition());
         Dataset<StepReport> reports = reportHandler.readReportJson();
 
         double area = new Distance().rectArea(entry.getLat1(), entry.getLon1(), entry.getLat2(), entry.getLon2());

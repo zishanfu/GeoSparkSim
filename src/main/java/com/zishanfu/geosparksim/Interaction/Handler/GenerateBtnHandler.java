@@ -98,16 +98,16 @@ public class GenerateBtnHandler implements ActionListener {
                 Coordinate newCoor2 = new Coordinate(coor2.x + maxLen, coor2.y - maxLen);
 
                 textArea.append("Downloaded OSM file...\n");
-                OsmLoader osmLoader = new OsmLoader();
-                String output = "";
 
                 HDFSUtil hdfs = new HDFSUtil(outputPath);
                 String name = "/geosparksim";
                 hdfs.deleteDir(name);
                 hdfs.mkdir(name);
-                output = outputPath + name;
-                osmLoader.parquet(newCoor1, newCoor2, output);
-                osmLoader.osm(newCoor1, newCoor2);
+                String output = outputPath + name;
+
+                OsmLoader osmLoader = new OsmLoader(newCoor1, newCoor2, output);
+                osmLoader.parquet();
+                osmLoader.osm();
 
                 textArea.append("Output Path: " + output + "\n");
 
@@ -121,8 +121,8 @@ public class GenerateBtnHandler implements ActionListener {
                 networkWriter.writeIntersectJson();
                 textArea.append("Write intersection into json. \n");
 
-                String osmPath = "datareader.file=" + System.getProperty("user.dir") + "/map.osm";
-                String ghConfig = "config=" + System.getProperty("user.dir") + "/config.properties";
+                String osmPath = "datareader.file=" + output + "/map.osm";
+                String ghConfig = "config=" + System.getProperty("user.dir") + "/src/test/resources/graphhopper/config.properties";
                 String[] vehParameters = new String[]{ghConfig, osmPath};
 
                 textArea.append("Generating vehicles...\n");
@@ -152,12 +152,12 @@ public class GenerateBtnHandler implements ActionListener {
                 long simBegin = System.currentTimeMillis();
 
                 LOG.warn("Running in spark");
-                Microscopic.sim(spark, edges, signals, intersects, vehicles, output, step, timestep, step/5, total/100);
+                Microscopic.sim(spark, edges, signals, intersects, vehicles, output, step, timestep, total/70);
                 ReportHandler reportHandler = new ReportHandler(spark, output, 50);
                 Dataset<StepReport> reports = reportHandler.readReportJson();
                 res = reports.collectAsList();
 
-//                    TemporalSim temporalSim = new TemporalSim();
+//                    LocalSim temporalSim = new LocalSim();
 //                    res = temporalSim.sim(edges, signals, vehicles, step, timestep);
 //                    RDD<StepReport> resRDD = sc.parallelize(res).rdd();
 //                    ReportHandler reportHandler = new ReportHandler(spark, output, 0);

@@ -84,11 +84,10 @@ object Microscopic {
     * @param path the result path
     * @param steps simulation steps
     * @param timestep time per step
-    * @param repartition the repartition period
     * @param numPartition the number of partitions
     */
   def sim(sparkSession: SparkSession, edges: Dataset[Link], signals: Dataset[TrafficLight], intersects: Dataset[Intersect], vehicles: Dataset[MOBILVehicle],
-          path: String, steps: Int, timestep: Double, repartition: Int, numPartition: Int): Unit = {
+          path: String, steps: Int, timestep: Double, numPartition: Int): Unit = {
     val rand = new Random
     val vehicleRDD = new SpatialRDD[MOBILVehicle]
     vehicleRDD.setRawSpatialRDD(vehicles.rdd)
@@ -226,13 +225,13 @@ object Microscopic {
 
     //if the number of vehicles is larger than 100k,
     // GeoSparkSim will do sample simulation to find the best repartition period with minimum time cost
-    val bestRepartition = if(vehicleRDD.getRawSpatialRDD.count() < 100000) repartition else repartitionCriterion(vehicleRDD, signalRDD, edgeRDD, steps, timestep, numPartition)
+    val bestRepartition = if(vehicleRDD.getRawSpatialRDD.count() < 100000) steps/5 else repartitionCriterion(vehicleRDD, signalRDD, edgeRDD, steps, timestep, numPartition)
 
     val newSteps = (steps / timestep).toInt
 
     val iteration = newSteps / bestRepartition + (if (newSteps % bestRepartition == 0) 0 else 1)
 
-    logger.warn("best repartition: " + bestRepartition + ", repartition: " + repartition)
+    logger.warn("best repartition: " + bestRepartition)
 
     for(n <- 1 to iteration){
 
@@ -269,7 +268,7 @@ object Microscopic {
             edgeMap = vehicle.born(edgeMap, "Sync")
           })
 
-          for(i <- repartition*(n-1)+1 to repartition*n){
+          for(i <- bestRepartition*(n-1)+1 to bestRepartition*n){
             if(i <= steps){
               for (wid <- signalWayMap.keySet().asScala){
                 val light = signalWayMap.get(wid)
@@ -304,7 +303,7 @@ object Microscopic {
 
       val t3 = System.currentTimeMillis()
       if(n != iteration){
-        val recoverTuple = recovery(vehicleRDD.getRawSpatialRDD.rdd, signalRDD.getRawSpatialRDD.rdd, reportRDD, n*repartition, numPartition)
+        val recoverTuple = recovery(vehicleRDD.getRawSpatialRDD.rdd, signalRDD.getRawSpatialRDD.rdd, reportRDD, n*bestRepartition, numPartition)
         vehicleRDD.setRawSpatialRDD(recoverTuple._1)
         signalRDD.setRawSpatialRDD(recoverTuple._2)
         vehicleRDD.spatialPartitioning(GridType.KDBTREE, numPartition)

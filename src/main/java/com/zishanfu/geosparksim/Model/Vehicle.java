@@ -172,17 +172,6 @@ public class Vehicle extends Point {
         return currentLink;
     }
 
-    public double haversine(Coordinate coor1, Coordinate coor2) {
-        double latitude1 = Math.toRadians(coor1.x);
-        double latitude2 = Math.toRadians(coor2.x);
-        double longitude1 = Math.toRadians(coor1.y);
-        double longitude2 = Math.toRadians(coor2.y);
-
-        return (1000 * 2 * 6371 * Math.asin(Math.sqrt(
-                Math.sin((latitude2 - latitude1)/2) * Math.sin((latitude2 - latitude1)/2) +
-                        Math.cos(latitude1) * Math.cos(latitude2) *
-                                Math.sin((longitude2 - longitude1)/2) * Math.sin((longitude2 - longitude1) / 2))));
-    }
 
     @Override
     public String toString() {

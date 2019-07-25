@@ -11,19 +11,28 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 /**
- * Road network parser
- * Download road network data and reformat it
+ * Road network loader
+ * Download road network data and compress it
  */
 public class OsmLoader {
+    private Coordinate geo1;
+    private Coordinate geo2;
+    private String path;
 
-    public void parquet(Coordinate geo1, Coordinate geo2, String path) {
+    public OsmLoader(Coordinate geo1, Coordinate geo2, String path){
+        this.geo1 = geo1;
+        this.geo2 = geo2;
+        this.path = path;
+    }
+
+    public void parquet() {
         String osmUrl = "http://overpass-api.de/api";
         XmlDownloader xmlDownloader = new XmlDownloader(geo1.y, geo2.y, geo1.x, geo2.x, osmUrl);
         xmlDownloader.setSink(new OsmParquetSink(path));
         xmlDownloader.run();
     }
 
-    public void osm(Coordinate geo1, Coordinate geo2) {
+    public void osm() {
         String OSM_URL = "http://overpass-api.de/api/map?bbox=";
         URL url = null;
 
@@ -40,10 +49,6 @@ public class OsmLoader {
             e.printStackTrace();
         }
 
-        String resources = System.getProperty("user.dir") + "/src/test/resources";
-        String path = resources + "/geosparksim";
-        FileOps fileOps = new FileOps();
-        fileOps.createDirectory(path);
         String newFileName = String.format("%s/%s.osm", path, "map");
 
         try {

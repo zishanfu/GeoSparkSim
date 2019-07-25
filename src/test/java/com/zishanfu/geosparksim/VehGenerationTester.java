@@ -6,14 +6,18 @@ import com.zishanfu.geosparksim.Model.Vehicle;
 import com.zishanfu.geosparksim.OSM.OsmLoader;
 import com.zishanfu.geosparksim.Tools.Distance;
 import com.zishanfu.geosparksim.Tools.FileOps;
+import com.zishanfu.geosparksim.osm.VehicleHandler;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.SparkSession;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import scala.collection.JavaConverters;
+import scala.collection.Seq;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -27,20 +31,20 @@ public class VehGenerationTester extends GeoSparkSimTestBase {
     static Coordinate coor2;
     static int total;
     static String type;
+    static SparkSession ss;
 
     @BeforeClass
 
     public static void onceExecutedBeforeAll()
     {
-        SparkConf conf = new SparkConf().setAppName("EarthdataHDFTest").setMaster("local[2]");
+        SparkConf conf = new SparkConf().setAppName("VehGeneration").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
         Logger.getLogger("akka").setLevel(Level.WARN);
+        ss = SparkSession.builder().config(sc.getConf()).getOrCreate();
         resources = System.getProperty("user.dir") + "/src/test/resources";
-        fileOps.createDirectory(resources + "/java-test");
-
-        coor1 = new Coordinate(38.924281, -94.659155);
-        coor2 = new Coordinate(38.905553, -94.615693);
+        coor1 = new Coordinate(33.429165, -111.942323);
+        coor2 = new Coordinate(33.413572, -111.924442);
         total = 1000;
         type = "DSO";
     }
@@ -48,29 +52,23 @@ public class VehGenerationTester extends GeoSparkSimTestBase {
     @AfterClass
     public static void tearDown()
     {
-        fileOps.deleteDirectory(resources + "/java-test");
-        fileOps.deleteDirectory(resources + "/geosparksim");
+        fileOps.deleteDirectory(resources + "/samples/map-gh");
         sc.stop();
     }
 
     @Test
     public void vehicleGeneration()
     {
-        OsmLoader osmLoader = new OsmLoader();
-        osmLoader.osm(coor1, coor2);
 
         double maxLen = new Distance().euclidean(coor1.x, coor2.x, coor1.y, coor2.y) / 10;
-        String osmPath = "datareader.file=" + resources + "/geosparksim/map.osm";
+        String osmPath = "datareader.file=" + resources + "/samples/map.osm";
 
-        System.out.println(resources);
         String[] vehParameters = new String[]{"config=" + resources + "/graphhopper/config.properties", osmPath};
         CreateVehicles createVehicles = new CreateVehicles(vehParameters, coor1, coor2, maxLen);
         try {
             List<Vehicle> vehicleList = createVehicles.multiple(total, type);
             Assert.assertEquals(vehicleList.size(), total);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
