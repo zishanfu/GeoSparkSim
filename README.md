@@ -40,7 +40,7 @@ To appear in proceedings of the IEEE International Conference on Mobile Data Man
 * [Demonstrating GeoSparkSim: A Scalable Microscopic Road Network Traffic Simulator Based on Apache Spark](https://dl.acm.org/citation.cfm?id=3340984)
 Zishan Fu, Jia Yu, and Mohamed Sarwat.
 To appear in proceedings of the International Symposium on Spatial and SpatioTemporal Databases, in Vienna, Austria August 2019 (Demo Track).
-<span style="color:red"> Best Demonstration Paper Award Runner-Up </span>
+<span style="color:red">**Best Demonstration Paper Award Runner-Up.**</span>
 * [GeoSpark: A Cluster Computing Framework for Processing Large-Scale Spatial Data](https://dl.acm.org/citation.cfm?id=2820860)[[Project Website](https://datasystemslab.github.io/GeoSpark/)]
 Jia Yu, Jinxuan Wu and Mohamed Sarwat.
 In proceedings of the ACM International Conference on Advances in Geographic Information Systems, Seattle, WA, USA November 2015  (Short Paper)
