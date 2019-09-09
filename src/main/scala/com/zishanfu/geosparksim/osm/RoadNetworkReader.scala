@@ -2,7 +2,7 @@ package com.zishanfu.geosparksim.osm
 
 
 import com.vividsolutions.jts.geom.Coordinate
-import com.zishanfu.geosparksim.Model.{Intersect, Link, TrafficLight}
+import com.zishanfu.geosparksim.model.{Intersect, Link, TrafficLight}
 import com.zishanfu.geosparksim.model.SegmentNode
 import org.apache.spark.sql.{Dataset, SparkSession}
 

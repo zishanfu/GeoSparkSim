@@ -1,8 +1,8 @@
 package com.zishanfu.geosparksim;
 
-import com.zishanfu.geosparksim.Model.Link;
-import com.zishanfu.geosparksim.Model.StepReport;
-import com.zishanfu.geosparksim.TrafficUI.TrafficPanel;
+import com.zishanfu.geosparksim.model.Link;
+import com.zishanfu.geosparksim.model.StepReport;
+import com.zishanfu.geosparksim.trafficUI.TrafficPanel;
 import com.zishanfu.geosparksim.osm.ReportHandler;
 import com.zishanfu.geosparksim.osm.RoadNetworkReader;
 import org.apache.log4j.Level;

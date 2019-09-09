@@ -1,9 +1,9 @@
 package com.zishanfu.geosparksim;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.zishanfu.geosparksim.OSM.OsmLoader;
-import com.zishanfu.geosparksim.Tools.Distance;
-import com.zishanfu.geosparksim.Tools.FileOps;
+import com.zishanfu.geosparksim.osm.OsmLoader;
+import com.zishanfu.geosparksim.tools.Distance;
+import com.zishanfu.geosparksim.tools.FileOps;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;

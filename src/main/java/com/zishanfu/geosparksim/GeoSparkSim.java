@@ -1,8 +1,8 @@
 package com.zishanfu.geosparksim;
 
-import com.zishanfu.geosparksim.Interaction.Jmap;
-import com.zishanfu.geosparksim.Model.Entry;
-import com.zishanfu.geosparksim.Simulation.Core;
+import com.zishanfu.geosparksim.interaction.Jmap;
+import com.zishanfu.geosparksim.model.Entry;
+import com.zishanfu.geosparksim.simulation.Core;
 import org.apache.log4j.Logger;
 import org.apache.spark.sql.SparkSession;
 import picocli.CommandLine;

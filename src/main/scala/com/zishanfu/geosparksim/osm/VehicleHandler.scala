@@ -1,7 +1,7 @@
 package com.zishanfu.geosparksim.osm
 
 import com.vividsolutions.jts.geom.Coordinate
-import com.zishanfu.geosparksim.Model.{MOBILVehicle, Vehicle}
+import com.zishanfu.geosparksim.model.{MOBILVehicle, Vehicle}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 

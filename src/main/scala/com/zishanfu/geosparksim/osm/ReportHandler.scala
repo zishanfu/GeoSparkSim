@@ -1,7 +1,7 @@
 package com.zishanfu.geosparksim.osm
 
 import com.vividsolutions.jts.geom.Coordinate
-import com.zishanfu.geosparksim.Model.StepReport
+import com.zishanfu.geosparksim.model.StepReport
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 

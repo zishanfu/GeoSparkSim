@@ -4,7 +4,7 @@ import java.util
 import java.util.Random
 
 import com.vividsolutions.jts.geom.Coordinate
-import com.zishanfu.geosparksim.Model._
+import com.zishanfu.geosparksim.model._
 import com.zishanfu.geosparksim.osm.{Define, ReportHandler}
 import org.apache.log4j.Logger
 import org.apache.spark.rdd.RDD
@@ -162,7 +162,7 @@ object Microscopic {
             w4.setTime(0)
             val select_signal = if (select == 1) 2 else 0
             val other_signal = if ((select + 1) % 2 == 1) 2 else 0
-            import Model.StepReport
+            import model.StepReport
             if (Math.abs(w3_angle - w1_angle) < 0.1) {
               w1.setSignal(select_signal)
               w3.setSignal(select_signal)

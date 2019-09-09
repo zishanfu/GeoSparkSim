@@ -1,12 +1,10 @@
 package com.zishanfu.geosparksim;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.zishanfu.geosparksim.Generation.CreateVehicles;
-import com.zishanfu.geosparksim.Model.Vehicle;
-import com.zishanfu.geosparksim.OSM.OsmLoader;
-import com.zishanfu.geosparksim.Tools.Distance;
-import com.zishanfu.geosparksim.Tools.FileOps;
-import com.zishanfu.geosparksim.osm.VehicleHandler;
+import com.zishanfu.geosparksim.generation.CreateVehicles;
+import com.zishanfu.geosparksim.model.Vehicle;
+import com.zishanfu.geosparksim.tools.Distance;
+import com.zishanfu.geosparksim.tools.FileOps;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -16,8 +14,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import scala.collection.JavaConverters;
-import scala.collection.Seq;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

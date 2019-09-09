@@ -1,7 +1,7 @@
 package com.zishanfu.geosparksim.osm
 
 import com.vividsolutions.jts.geom.Point
-import com.zishanfu.geosparksim.Model._
+import com.zishanfu.geosparksim.model._
 import org.apache.spark.sql.{Encoder, Encoders}
 import org.apache.spark.sql.types._
 

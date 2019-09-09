@@ -1,7 +1,7 @@
 package com.zishanfu.geosparksim.osm
 
 
-import com.zishanfu.geosparksim.Model.{Intersect, Link, TrafficLight}
+import com.zishanfu.geosparksim.model.{Intersect, Link, TrafficLight}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 

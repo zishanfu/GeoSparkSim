@@ -2,7 +2,7 @@ package com.zishanfu.geosparksim.osm
 
 import com.vividsolutions.jts.algorithm.Angle
 import com.vividsolutions.jts.geom.{Coordinate, GeometryFactory, Point}
-import com.zishanfu.geosparksim.Model.{Intersect, Link, TrafficLight}
+import com.zishanfu.geosparksim.model.{Intersect, Link, TrafficLight}
 import com.zishanfu.geosparksim.model.SegmentLink
 import com.zishanfu.geosparksim.model.SegmentNode
 import org.apache.spark.graphx.{Edge, Graph}

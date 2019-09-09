@@ -1,7 +1,7 @@
 package com.zishanfu.geosparksim;
 
-import com.zishanfu.geosparksim.Model.*;
-import com.zishanfu.geosparksim.Tools.FileOps;
+import com.zishanfu.geosparksim.model.*;
+import com.zishanfu.geosparksim.tools.FileOps;
 import com.zishanfu.geosparksim.osm.*;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
