@@ -39,5 +39,4 @@ class scalaTest extends FunSpec with BeforeAndAfterAll {
   describe("GeoSparkSim in Scala") {
 
   }
-
 }

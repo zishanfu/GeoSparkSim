@@ -31,7 +31,7 @@ It is mainly developed by the contributors from [Data Systems Lab](https://www.d
   --class com.zishanfu.geosparksim.GeoSparkSim
   target/GeoSparkSim-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
-* More details from [GeoSparkSim Wiki](https://github.com/zishanfu/GeoSparkSim/wiki)
+* More details from [GeoSparkSim Wiki](https://github.com/zishanfu/GeoSparkSim/wiki) and [Demonstration Video](http://www.public.asu.edu/~jiayu2/video/geosparksim-demo.mp4).
 
 ### References
 * [Building a Large-Scale Microscopic Road Network Traffic Simulator in Apache Spark](https://ieeexplore.ieee.org/document/8788796)

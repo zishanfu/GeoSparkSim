@@ -30,7 +30,6 @@ public class OsmLoadingTester extends GeoSparkSimTestBase{
     //bottom-right 33.413572, -111.924442
 
     @BeforeClass
-
     public static void onceExecutedBeforeAll()
     {
         SparkConf conf = new SparkConf().setAppName("OpenStreetMapData").setMaster("local[2]");
@@ -71,6 +70,5 @@ public class OsmLoadingTester extends GeoSparkSimTestBase{
         Assert.assertTrue(node.exists());
         Assert.assertTrue(way.exists());
     }
-
 }
 

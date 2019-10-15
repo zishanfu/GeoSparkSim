@@ -20,7 +20,6 @@ public class SimulationTester extends GeoSparkSimTestBase{
     static FileOps fileOps = new FileOps();
 
     @BeforeClass
-
     public static void onceExecutedBeforeAll()
     {
         SparkConf conf = new SparkConf().setAppName("Simulation").setMaster("local[2]");

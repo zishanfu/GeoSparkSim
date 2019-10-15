@@ -14,8 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
-
 
 @Command(version = "GeoSparkSim v0.0.1", header = "%nGeoSparkSim Command Help%n",
         description = "Prints usage help and version help when requested.%n")
@@ -92,17 +90,12 @@ public class GeoSparkSim implements Runnable{
         //Command
         }else if(command){
             if(output == null){
-                LOG.error("Please enter the output path and rerun the command.");
+                LOG.warn("Please enter the output path and rerun the command.");
             }else if(num < 1000){
-                LOG.error("Please enter a larger vehicle number.");
+                LOG.warn("Please enter a vehicle number not smaller than 1000.");
             }else{
                 entry = new Entry(lat1, lon1, lat2, lon2, num, output, step, timestep, type);
-
-                try {
-                    start(spark, entry);
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+                start(spark, entry);
             }
 
         //Manuscript
@@ -111,14 +104,14 @@ public class GeoSparkSim implements Runnable{
             try {
                 is = new FileInputStream(manuscript);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                LOG.warn("Manuscript can't be found.", e);
             }
 
             //Load properties from manuscript
             try {
                 prop.load(is);
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.warn("Error happens when loading properties from manuscript.", e);
             }
 
             entry.setLat1(Double.parseDouble(prop.getProperty("geo1.lat")));
@@ -131,19 +124,11 @@ public class GeoSparkSim implements Runnable{
             entry.setStep(Integer.parseInt(prop.getProperty("simulation.step")));
             entry.setOutputPath(prop.getProperty("simulation.output"));
 
-            try {
-                start(spark, entry);
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
+            start(spark, entry);
 
         //Default setting
         }else{
-            try {
-                start(spark, entry);
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
+            start(spark, entry);
         }
     }
 
@@ -151,10 +136,9 @@ public class GeoSparkSim implements Runnable{
         CommandLine.run(new GeoSparkSim(), System.err, args);
     }
 
-    private void start(SparkSession spark, Entry entry) throws ExecutionException, InterruptedException {
+    private void start(SparkSession spark, Entry entry){
         Core core = new Core();
         core.preprocess(spark, entry);
         core.simulation(spark, entry, appTitle);
     }
-
 }

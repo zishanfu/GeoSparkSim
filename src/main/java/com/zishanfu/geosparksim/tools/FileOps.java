@@ -1,11 +1,13 @@
 package com.zishanfu.geosparksim.tools;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 
 public class FileOps {
+    private final static Logger LOG = Logger.getLogger(FileOps.class);
 
     public void createDirectory(String directory) {
         try {
@@ -16,7 +18,7 @@ public class FileOps {
             }
             FileUtils.forceMkdir(f);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.warn("Error happens when creating geosparksim output folder.", e);
         }
     }
 
@@ -33,6 +35,5 @@ public class FileOps {
         }
         return true;
     }
-
 }
 

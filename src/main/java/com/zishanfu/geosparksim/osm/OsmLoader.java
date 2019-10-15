@@ -1,6 +1,7 @@
 package com.zishanfu.geosparksim.osm;
 
 import com.vividsolutions.jts.geom.Coordinate;
+import org.apache.log4j.Logger;
 import org.openstreetmap.osmosis.xml.v0_6.XmlDownloader;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class OsmLoader {
     private Coordinate geo1;
     private Coordinate geo2;
     private String path;
+    private final static Logger LOG = Logger.getLogger(OsmLoader.class);
 
     public OsmLoader(Coordinate geo1, Coordinate geo2, String path){
         this.geo1 = geo1;
@@ -45,7 +47,7 @@ public class OsmLoader {
         try {
             url = new URL(OSM_URL);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOG.warn("The OSM download URL is incorrect.", e);
         }
 
         String newFileName = String.format("%s/%s.osm", path, "map");
@@ -57,8 +59,7 @@ public class OsmLoader {
             fos.close();
             rbc.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.warn("Error happens when downloading OSM.", e);
         }
-
     }
 }

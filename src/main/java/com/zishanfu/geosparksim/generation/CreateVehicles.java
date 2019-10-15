@@ -35,8 +35,9 @@ public class CreateVehicles {
      * @param total the number of vehicles
      * @param type the vehicle generation type
      * @return a list of vehicles
-     * @throws InterruptedException
-     * @throws ExecutionException
+     * @throws InterruptedException if the current thread was interrupted
+     *         while waiting
+     * @throws ExecutionException if the vehicle computation has error
      */
     public List<Vehicle> multiple(int total, String type) throws InterruptedException, ExecutionException {
         int thread_num = 8;
@@ -53,18 +54,16 @@ public class CreateVehicles {
         awaitTerminationAfterShutdown(executor);
         List<Vehicle> trajectories = new ArrayList<>();
 
-        for (int i = 0; i<results.size(); i++){
-            Future<Vehicle[]> vehicles = results.get(i);
-            if(!vehicles.isCancelled() && vehicles.isDone()){
+        for (Future<Vehicle[]> vehicles : results) {
+            if (!vehicles.isCancelled() && vehicles.isDone()) {
                 trajectories.addAll(Arrays.asList(vehicles.get()));
             }
         }
 
         return trajectories;
-
     }
 
-    public void awaitTerminationAfterShutdown(ExecutorService threadPool) {
+    private void awaitTerminationAfterShutdown(ExecutorService threadPool) {
         threadPool.shutdown();
         try {
             if (!threadPool.awaitTermination(60, TimeUnit.SECONDS)) {
@@ -75,7 +74,5 @@ public class CreateVehicles {
             Thread.currentThread().interrupt();
         }
     }
-
-
 }
 

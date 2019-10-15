@@ -176,7 +176,7 @@ public class GenerateBtnHandler implements ActionListener {
                     sbHandler.setUi(true);
                 }else{
                     sbHandler.setUi(false);
-                    LOG.error("Because the number of vehicle is larger than 5000 or the area is larger than 15,000,000, " +
+                    LOG.warn("Because the number of vehicle is larger than 5000 or the area is larger than 15,000,000, " +
                             "GeoSparkSim will not show the traffic visualization! Please check output in " + output);
                 }
             });

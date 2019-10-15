@@ -16,7 +16,6 @@ class HDFSUtil (hdfsUrl: String){
 
   def getHDFSUrl() : String = hdfsUrl
 
-
   def mkdir(dir : String) : Boolean = {
     var result = false
     if (StringUtils.isNoneBlank(dir)) {
@@ -43,7 +42,6 @@ class HDFSUtil (hdfsUrl: String){
     }
     result
   }
-
 
   def uploadLocalFile2HDFS(localFile : String, hdfsFile : String) : String = {
     if (StringUtils.isNoneBlank(localFile) && StringUtils.isNoneBlank(hdfsFile)) {

@@ -17,7 +17,6 @@ public class RoadNetworkTester extends GeoSparkSimTestBase{
     static String resources;
 
     @BeforeClass
-
     public static void onceExecutedBeforeAll()
     {
         SparkConf conf = new SparkConf().setAppName("RoadNetwork").setMaster("local[2]");

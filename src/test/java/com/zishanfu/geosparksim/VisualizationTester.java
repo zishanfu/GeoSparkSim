@@ -21,7 +21,6 @@ public class VisualizationTester extends GeoSparkSimTestBase{
     static String resources;
 
     @BeforeClass
-
     public static void onceExecutedBeforeAll()
     {
         SparkConf conf = new SparkConf().setAppName("Visualization").setMaster("local[2]");
@@ -53,6 +52,5 @@ public class VisualizationTester extends GeoSparkSimTestBase{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 }

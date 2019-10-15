@@ -30,7 +30,6 @@ public class VehGenerationTester extends GeoSparkSimTestBase {
     static SparkSession ss;
 
     @BeforeClass
-
     public static void onceExecutedBeforeAll()
     {
         SparkConf conf = new SparkConf().setAppName("VehGeneration").setMaster("local[2]");
@@ -55,7 +54,6 @@ public class VehGenerationTester extends GeoSparkSimTestBase {
     @Test
     public void vehicleGeneration()
     {
-
         double maxLen = new Distance().euclidean(coor1.x, coor2.x, coor1.y, coor2.y) / 10;
         String osmPath = "datareader.file=" + resources + "/samples/map.osm";
 

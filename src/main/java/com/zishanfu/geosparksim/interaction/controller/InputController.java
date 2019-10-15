@@ -11,7 +11,6 @@ import java.awt.event.FocusEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
 public class InputController {
 
     public JPanel inputPanel;
@@ -38,7 +37,7 @@ public class InputController {
         try {
             imageIcon = new ImageIcon(new URL("file://" + resources + "/icon/traffic.png"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOG.warn("GeoSparkSim logo can't be load", e);
         }
 
         Image image = imageIcon.getImage(); // transform it
@@ -144,16 +143,13 @@ public class InputController {
         gbc.gridwidth = 1;
         topPanel.add(vBtn, gbc);
 
-
         genList.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 genList.showPopup();
             }
         });
-
         chkArea.addItemListener(e -> {
-            // TODO Auto-generated method stub
             if (e.getStateChange() == 1) {
                 cc.mapViewer.setOverlayPainter(cc.selPainter);
             } else {
@@ -163,5 +159,4 @@ public class InputController {
 
         return topPanel;
     }
-
 }

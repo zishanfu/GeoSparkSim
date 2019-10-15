@@ -29,10 +29,8 @@ public class Core {
      *
      * @param spark the spark session
      * @param entry the program entry
-     * @throws ExecutionException
-     * @throws InterruptedException
      */
-    public void preprocess(SparkSession spark, Entry entry) throws ExecutionException, InterruptedException {
+    public void preprocess(SparkSession spark, Entry entry) {
         LOG.warn(entry.toString());
 
         HDFSUtil hdfs = new HDFSUtil(entry.getOutputPath());
@@ -40,7 +38,6 @@ public class Core {
         hdfs.deleteDir(name);
         hdfs.mkdir(name);
         String output = entry.getOutputPath() + name;
-
 
         Coordinate coor1 = new Coordinate(entry.getLat1(), entry.getLon1());
         Coordinate coor2 = new Coordinate(entry.getLat2(), entry.getLon2());
@@ -63,12 +60,16 @@ public class Core {
         String[] vehParameters = new String[]{"config=" + resources + "/graphhopper/config.properties", osmPath};
 
         CreateVehicles createVehicles = new CreateVehicles(vehParameters, coor1, coor2, maxLen);
-        List<Vehicle> vehicleList = createVehicles.multiple(entry.getTotal(), entry.getType());
+        List<Vehicle> vehicleList = null;
+        try {
+            vehicleList = createVehicles.multiple(entry.getTotal(), entry.getType());
+        } catch (InterruptedException | ExecutionException e) {
+            LOG.warn("Bad thing happens when generating vehicle list, try again!", e);
+        }
 
         VehicleHandler vehicleHandler = new VehicleHandler(spark, output);
         vehicleHandler.writeVehicleTrajectoryJson(convertListToSeq(vehicleList));
     }
-
 
     public void simulation(SparkSession spark, Entry entry, String appTitle){
         String path = entry.getOutputPath() + "/geosparksim";
@@ -97,7 +98,7 @@ public class Core {
             TrafficPanel traffic = new TrafficPanel(appTitle);
             traffic.run(edges, reports.collectAsList());
         }else{
-            LOG.error("Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, " +
+            LOG.warn("Because the number of vehicle is larger than 5000 or the area is larger than 800,0000, " +
                     "GeoSparkSim will not show the traffic visualization! Please check output in " + entry.getOutputPath());
         }
     }
@@ -105,5 +106,4 @@ public class Core {
     private static Seq<Vehicle> convertListToSeq(List<Vehicle> inputList) {
         return JavaConverters.asScalaIteratorConverter(inputList.iterator()).asScala().toSeq();
     }
-
 }
