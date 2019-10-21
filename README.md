@@ -34,14 +34,14 @@ It is mainly developed by the contributors from [Data Systems Lab](https://www.d
 * More details from [GeoSparkSim Wiki](https://github.com/zishanfu/GeoSparkSim/wiki) and [Demonstration Video](http://www.public.asu.edu/~jiayu2/video/geosparksim-demo.mp4).
 
 ### References
-* [Building a Large-Scale Microscopic Road Network Traffic Simulator in Apache Spark](https://ieeexplore.ieee.org/document/8788796)
+* [Building a Large-Scale Microscopic Road Network Traffic Simulator in Apache Spark](http://www.public.asu.edu/~jiayu2/geospark/publication/geosparksim-mdm-2019.pdf)
 Zishan Fu, Jia Yu, Mohamed Sarwat.
 To appear in proceedings of the IEEE International Conference on Mobile Data Management, in Hong Kong, China June 2019.
-* [Demonstrating GeoSparkSim: A Scalable Microscopic Road Network Traffic Simulator Based on Apache Spark](https://dl.acm.org/citation.cfm?id=3340984)
+* [Demonstrating GeoSparkSim: A Scalable Microscopic Road Network Traffic Simulator Based on Apache Spark](https://jiayuasu.github.io/files/paper/geosparksim_sstd2019_demopaper.pdf)
 Zishan Fu, Jia Yu, and Mohamed Sarwat.
 To appear in proceedings of the International Symposium on Spatial and SpatioTemporal Databases, in Vienna, Austria August 2019 (Demo Track).
 <span style="color:red">**Best Demonstration Paper Award Runner-Up.**</span>
-* [GeoSpark: A Cluster Computing Framework for Processing Large-Scale Spatial Data](https://dl.acm.org/citation.cfm?id=2820860)[[Project Website](https://datasystemslab.github.io/GeoSpark/)]
+* [GeoSpark: A Cluster Computing Framework for Processing Large-Scale Spatial Data](https://jiayuasu.github.io/files/paper/GeoSpark_ShortPaper.pdf)[[Project Website](https://datasystemslab.github.io/GeoSpark/)]
 Jia Yu, Jinxuan Wu and Mohamed Sarwat.
 In proceedings of the ACM International Conference on Advances in Geographic Information Systems, Seattle, WA, USA November 2015  (Short Paper)
 
