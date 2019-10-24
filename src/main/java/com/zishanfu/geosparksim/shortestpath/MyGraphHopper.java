@@ -10,7 +10,6 @@ import com.graphhopper.storage.DataAccess;
 import com.graphhopper.storage.Directory;
 import com.graphhopper.storage.GraphHopperStorage;
 import com.graphhopper.util.BitUtil;
-
 import java.util.List;
 
 public class MyGraphHopper extends GraphHopper {
@@ -36,38 +35,40 @@ public class MyGraphHopper extends GraphHopper {
 
     @Override
     protected DataReader createReader(GraphHopperStorage ghStorage) {
-        OSMReader reader = new OSMReader(ghStorage) {
+        OSMReader reader =
+                new OSMReader(ghStorage) {
 
-            {
-                edgeMapping.create(1000);
-            }
+                    {
+                        edgeMapping.create(1000);
+                    }
 
-            // this method is only in >0.6 protected, before it was private
-            @Override
-            protected void storeOsmWayID(int edgeId, long osmWayId) {
-                super.storeOsmWayID(edgeId, osmWayId);
+                    // this method is only in >0.6 protected, before it was private
+                    @Override
+                    protected void storeOsmWayID(int edgeId, long osmWayId) {
+                        super.storeOsmWayID(edgeId, osmWayId);
 
-                long pointer = 8L * edgeId;
-                edgeMapping.ensureCapacity(pointer + 8L);
+                        long pointer = 8L * edgeId;
+                        edgeMapping.ensureCapacity(pointer + 8L);
 
-                edgeMapping.setInt(pointer, bitUtil.getIntLow(osmWayId));
-                edgeMapping.setInt(pointer + 4, bitUtil.getIntHigh(osmWayId));
-            }
+                        edgeMapping.setInt(pointer, bitUtil.getIntLow(osmWayId));
+                        edgeMapping.setInt(pointer + 4, bitUtil.getIntHigh(osmWayId));
+                    }
 
-            @Override
-            protected void finishedReading() {
-                super.finishedReading();
+                    @Override
+                    protected void finishedReading() {
+                        super.finishedReading();
 
-                edgeMapping.flush();
-            }
-        };
+                        edgeMapping.flush();
+                    }
+                };
 
         return initDataReader(reader);
     }
 
     public long getOSMWay(int internalEdgeId) {
         long pointer = 8L * internalEdgeId;
-        return bitUtil.combineIntsToLong(edgeMapping.getInt(pointer), edgeMapping.getInt(pointer + 4L));
+        return bitUtil.combineIntsToLong(
+                edgeMapping.getInt(pointer), edgeMapping.getInt(pointer + 4L));
     }
 
     @Override

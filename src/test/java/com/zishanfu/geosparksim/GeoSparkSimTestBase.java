@@ -1,4 +1,5 @@
 package com.zishanfu.geosparksim;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -9,12 +10,11 @@ import org.datasyslab.geospark.serde.GeoSparkKryoRegistrator;
 public class GeoSparkSimTestBase {
     protected static SparkConf conf;
     protected static JavaSparkContext sc;
-    //ASU boundary
-    //top-left 33.429165, -111.942323
-    //bottom-right 33.413572, -111.924442
+    // ASU boundary
+    // top-left 33.429165, -111.942323
+    // bottom-right 33.413572, -111.924442
 
-    protected static void initialize(final String testSuiteName)
-    {
+    protected static void initialize(final String testSuiteName) {
         conf = new SparkConf().setAppName(testSuiteName).setMaster("local[2]");
         conf.set("spark.serializer", KryoSerializer.class.getName());
         conf.set("spark.kryo.registrator", GeoSparkKryoRegistrator.class.getName());

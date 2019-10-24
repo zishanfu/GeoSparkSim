@@ -1,20 +1,19 @@
 package com.zishanfu.geosparksim.interaction;
 
-import java.awt.BorderLayout;
-import javax.swing.*;
-
 import com.zishanfu.geosparksim.interaction.controller.CompController;
 import com.zishanfu.geosparksim.interaction.controller.InputController;
 import com.zishanfu.geosparksim.interaction.controller.ResultController;
+import java.awt.BorderLayout;
+import javax.swing.*;
 import org.apache.log4j.Logger;
 import org.apache.spark.sql.SparkSession;
 import org.jxmapviewer.JXMapViewer;
 
 public class Jmap {
-    private final static Logger LOG = Logger.getLogger(Jmap.class);
+    private static final Logger LOG = Logger.getLogger(Jmap.class);
     private final String appTitle;
 
-    public Jmap(String appTitle){
+    public Jmap(String appTitle) {
         this.appTitle = appTitle;
     }
 
@@ -43,18 +42,17 @@ public class Jmap {
 
         jXMapViewer.addPropertyChangeListener("zoom", evt -> updateWindowTitle(frame, jXMapViewer));
 
-        jXMapViewer.addPropertyChangeListener("center", evt -> updateWindowTitle(frame, jXMapViewer));
+        jXMapViewer.addPropertyChangeListener(
+                "center", evt -> updateWindowTitle(frame, jXMapViewer));
 
         updateWindowTitle(frame, jXMapViewer);
     }
 
-    protected void updateWindowTitle(JFrame frame, JXMapViewer jXMapViewer)
-    {
+    protected void updateWindowTitle(JFrame frame, JXMapViewer jXMapViewer) {
         double lat = jXMapViewer.getCenterPosition().getLatitude();
         double lon = jXMapViewer.getCenterPosition().getLongitude();
         int zoom = jXMapViewer.getZoom();
 
         frame.setTitle(String.format(appTitle + " (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
     }
-
 }

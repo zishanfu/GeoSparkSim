@@ -4,6 +4,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.zishanfu.geosparksim.osm.OsmLoader;
 import com.zishanfu.geosparksim.tools.Distance;
 import com.zishanfu.geosparksim.tools.FileOps;
+import java.io.File;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -13,9 +14,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.File;
-
-public class OsmLoadingTester extends GeoSparkSimTestBase{
+public class OsmLoadingTester extends GeoSparkSimTestBase {
 
     static JavaSparkContext sc;
     static String resources;
@@ -25,13 +24,12 @@ public class OsmLoadingTester extends GeoSparkSimTestBase{
     static int total;
     static String type;
     static String path = "";
-    //ASU boundary
-    //top-left 33.429165, -111.942323
-    //bottom-right 33.413572, -111.924442
+    // ASU boundary
+    // top-left 33.429165, -111.942323
+    // bottom-right 33.413572, -111.924442
 
     @BeforeClass
-    public static void onceExecutedBeforeAll()
-    {
+    public static void onceExecutedBeforeAll() {
         SparkConf conf = new SparkConf().setAppName("OpenStreetMapData").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
@@ -51,15 +49,13 @@ public class OsmLoadingTester extends GeoSparkSimTestBase{
     }
 
     @AfterClass
-    public static void tearDown()
-    {
+    public static void tearDown() {
         fileOps.deleteDirectory(path);
         sc.stop();
     }
 
     @Test
-    public void testOSMLoading()
-    {
+    public void testOSMLoading() {
         OsmLoader osmLoader = new OsmLoader(coor1, coor2, path);
         osmLoader.osm();
         osmLoader.parquet();
@@ -71,4 +67,3 @@ public class OsmLoadingTester extends GeoSparkSimTestBase{
         Assert.assertTrue(way.exists());
     }
 }
-

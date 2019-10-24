@@ -1,26 +1,23 @@
 package com.zishanfu.geosparksim.osm;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import org.apache.log4j.Logger;
-import org.openstreetmap.osmosis.xml.v0_6.XmlDownloader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import org.apache.log4j.Logger;
+import org.openstreetmap.osmosis.xml.v0_6.XmlDownloader;
 
-/**
- * Road network loader
- * Download road network data and compress it
- */
+/** Road network loader Download road network data and compress it */
 public class OsmLoader {
     private Coordinate geo1;
     private Coordinate geo2;
     private String path;
-    private final static Logger LOG = Logger.getLogger(OsmLoader.class);
+    private static final Logger LOG = Logger.getLogger(OsmLoader.class);
 
-    public OsmLoader(Coordinate geo1, Coordinate geo2, String path){
+    public OsmLoader(Coordinate geo1, Coordinate geo2, String path) {
         this.geo1 = geo1;
         this.geo2 = geo2;
         this.path = path;

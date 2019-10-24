@@ -1,8 +1,8 @@
 package com.zishanfu.geosparksim;
 
 import com.zishanfu.geosparksim.model.*;
-import com.zishanfu.geosparksim.tools.FileOps;
 import com.zishanfu.geosparksim.osm.*;
+import com.zishanfu.geosparksim.tools.FileOps;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -13,15 +13,14 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class SimulationTester extends GeoSparkSimTestBase{
+public class SimulationTester extends GeoSparkSimTestBase {
     static JavaSparkContext sc;
     static SparkSession ss;
     static String resources;
     static FileOps fileOps = new FileOps();
 
     @BeforeClass
-    public static void onceExecutedBeforeAll()
-    {
+    public static void onceExecutedBeforeAll() {
         SparkConf conf = new SparkConf().setAppName("Simulation").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
@@ -32,15 +31,13 @@ public class SimulationTester extends GeoSparkSimTestBase{
     }
 
     @AfterClass
-    public static void tearDown()
-    {
+    public static void tearDown() {
         fileOps.deleteDirectory(resources + "/java-test");
         sc.stop();
     }
 
     @Test
-    public void simulation()
-    {
+    public void simulation() {
         String path = resources + "/samples";
         VehicleHandler vehicleHandler = new VehicleHandler(ss, path);
         RoadNetworkReader networkReader = new RoadNetworkReader(ss, path);
@@ -50,8 +47,8 @@ public class SimulationTester extends GeoSparkSimTestBase{
         Dataset<Intersect> intersects = networkReader.readIntersectJson();
         Dataset<MOBILVehicle> vehicles = vehicleHandler.readVehicleTrajectoryJson();
 
-        Microscopic.sim(ss, edges, signals, intersects, vehicles,
-                resources + "/java-test", 600, 1,  10);
+        Microscopic.sim(
+                ss, edges, signals, intersects, vehicles, resources + "/java-test", 600, 1, 10);
 
         ReportHandler reportHandler = new ReportHandler(ss, resources + "/java-test", 1);
         Dataset<StepReport> reports = reportHandler.readReportJson();

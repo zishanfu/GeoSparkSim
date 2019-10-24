@@ -3,7 +3,7 @@ package com.zishanfu.geosparksim.trafficUI.model;
 import java.awt.*;
 
 public class Segment {
-    private final static int DEFAULT_LANE = 1;
+    private static final int DEFAULT_LANE = 1;
     private final Point pointA, pointB;
     private final Color color;
     private Stroke stroke;
@@ -68,4 +68,3 @@ public class Segment {
         return lanes;
     }
 }
-

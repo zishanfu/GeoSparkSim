@@ -1,6 +1,5 @@
 package com.zishanfu.geosparksim.osm.parquet;
 
-
 import static java.util.stream.IntStream.range;
 import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.INT32;
 import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.INT64;
@@ -11,14 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.parquet.schema.GroupType;
 import org.apache.parquet.schema.MessageType;
 import org.apache.parquet.schema.PrimitiveType;
 import org.apache.parquet.schema.Type;
 import org.openstreetmap.osmosis.core.domain.v0_6.Way;
 import org.openstreetmap.osmosis.core.domain.v0_6.WayNode;
-
 
 public class WayWriteSupport extends OsmEntityWriteSupport<Way> {
 
@@ -43,25 +40,26 @@ public class WayWriteSupport extends OsmEntityWriteSupport<Way> {
     protected void writeSpecificFields(Way record, int nextAvailableIndex) {
         final List<WayNode> wayNodes = record.getWayNodes();
         final Map<Integer, Long> indexedNodes = new HashMap<>();
-        range(0, wayNodes.size()).forEach(index -> indexedNodes.put(index, wayNodes.get(index).getNodeId()));
+        range(0, wayNodes.size())
+                .forEach(index -> indexedNodes.put(index, wayNodes.get(index).getNodeId()));
 
         if (!indexedNodes.isEmpty()) {
             recordConsumer.startField(nodes.getName(), nextAvailableIndex);
-            indexedNodes.forEach((index, nodeId) -> {
-                recordConsumer.startGroup();
+            indexedNodes.forEach(
+                    (index, nodeId) -> {
+                        recordConsumer.startGroup();
 
-                recordConsumer.startField(nodeIndexType.getName(), 0);
-                recordConsumer.addInteger(index);
-                recordConsumer.endField(nodeIndexType.getName(), 0);
+                        recordConsumer.startField(nodeIndexType.getName(), 0);
+                        recordConsumer.addInteger(index);
+                        recordConsumer.endField(nodeIndexType.getName(), 0);
 
-                recordConsumer.startField(nodeIdType.getName(), 1);
-                recordConsumer.addLong(nodeId);
-                recordConsumer.endField(nodeIdType.getName(), 1);
+                        recordConsumer.startField(nodeIdType.getName(), 1);
+                        recordConsumer.addLong(nodeId);
+                        recordConsumer.endField(nodeIdType.getName(), 1);
 
-                recordConsumer.endGroup();
-            });
+                        recordConsumer.endGroup();
+                    });
             recordConsumer.endField(nodes.getName(), nextAvailableIndex);
         }
     }
 }
-

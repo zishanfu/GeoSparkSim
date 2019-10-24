@@ -1,6 +1,5 @@
 package com.zishanfu.geosparksim.trafficUI.model;
 
-
 import java.awt.*;
 
 public class GeoPoint extends Point {
@@ -22,6 +21,4 @@ public class GeoPoint extends Point {
     public GeoPoint(Point point) {
         this(point.getLatitude(), point.getLongitude());
     }
-
 }
-

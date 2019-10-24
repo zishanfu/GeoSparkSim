@@ -1,6 +1,7 @@
 package com.zishanfu.geosparksim.model;
 
-public class Entry {
+/** A POJO model representing the simulation configuration. */
+public class SimConfig {
     private double lat1;
     private double lon1;
     private double lat2;
@@ -12,10 +13,18 @@ public class Entry {
     private String type;
     private int partition;
 
-    public Entry(){}
+    public SimConfig() {}
 
-    public Entry(double lat1, double lon1, double lat2, double lon2, int total,
-                 String outputPath, int step, double timestep, String type){
+    public SimConfig(
+            double lat1,
+            double lon1,
+            double lat2,
+            double lon2,
+            int total,
+            String outputPath,
+            int step,
+            double timestep,
+            String type) {
         this.lat1 = lat1;
         this.lon1 = lon1;
         this.lat2 = lat2;
@@ -25,7 +34,7 @@ public class Entry {
         this.step = step;
         this.timestep = timestep;
         this.type = type;
-        this.partition = total/70;
+        this.partition = total / 70;
     }
 
     public double getLat1() {
@@ -66,7 +75,7 @@ public class Entry {
 
     public void setTotal(int total) {
         this.total = total;
-        this.partition = total/70;
+        this.partition = total / 70;
     }
 
     public String getOutputPath() {
@@ -111,9 +120,34 @@ public class Entry {
 
     @Override
     public String toString() {
-        return "\nP1: " + lat1 + ", " + lon1 + "\n" + "P2: " + lat2 + ", " + lon2 + "\n" +
-                "Total: " + total + "\n" + "Steps: " + step + "\n" + "Timestep: " + timestep +
-                "\n" + "Generation Type: " + type + "\n" + "Repartition Time: " +
-                "Partition: " + partition + "\n" + "Output: " + outputPath + "\n";
+        return "\nP1: "
+                + lat1
+                + ", "
+                + lon1
+                + "\n"
+                + "P2: "
+                + lat2
+                + ", "
+                + lon2
+                + "\n"
+                + "Total: "
+                + total
+                + "\n"
+                + "Steps: "
+                + step
+                + "\n"
+                + "Timestep: "
+                + timestep
+                + "\n"
+                + "Generation Type: "
+                + type
+                + "\n"
+                + "Repartition Time: "
+                + "Partition: "
+                + partition
+                + "\n"
+                + "Output: "
+                + outputPath
+                + "\n";
     }
 }

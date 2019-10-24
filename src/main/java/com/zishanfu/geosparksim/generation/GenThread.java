@@ -4,7 +4,6 @@ import com.zishanfu.geosparksim.model.Vehicle;
 import com.zishanfu.geosparksim.shortestpath.Graph;
 import java.util.concurrent.Callable;
 
-
 public class GenThread implements Callable<Vehicle[]> {
     private double minLat;
     private double maxLat;
@@ -16,7 +15,15 @@ public class GenThread implements Callable<Vehicle[]> {
     private int num;
     private String type;
 
-    public GenThread(double minLon, double minLat, double maxLon, double maxLat, Graph graph, double maxLen, int num, String type){
+    public GenThread(
+            double minLon,
+            double minLat,
+            double maxLon,
+            double maxLat,
+            Graph graph,
+            double maxLen,
+            int num,
+            String type) {
         this.minLat = minLat;
         this.maxLat = maxLat;
         this.minLon = minLon;
@@ -29,8 +36,9 @@ public class GenThread implements Callable<Vehicle[]> {
 
     @Override
     public Vehicle[] call() throws Exception {
-        Vehicle[] vehicles = generation.vehicleGeneration(minLon, minLat, maxLon, maxLat, graph, maxLen, type, num);
+        Vehicle[] vehicles =
+                generation.vehicleGeneration(
+                        minLon, minLat, maxLon, maxLat, graph, maxLen, type, num);
         return vehicles;
     }
-
 }

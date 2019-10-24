@@ -2,9 +2,9 @@ package com.zishanfu.geosparksim;
 
 import com.zishanfu.geosparksim.model.Link;
 import com.zishanfu.geosparksim.model.StepReport;
-import com.zishanfu.geosparksim.trafficUI.TrafficPanel;
 import com.zishanfu.geosparksim.osm.ReportHandler;
 import com.zishanfu.geosparksim.osm.RoadNetworkReader;
+import com.zishanfu.geosparksim.trafficUI.TrafficPanel;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -15,14 +15,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class VisualizationTester extends GeoSparkSimTestBase{
+public class VisualizationTester extends GeoSparkSimTestBase {
     static JavaSparkContext sc;
     static SparkSession ss;
     static String resources;
 
     @BeforeClass
-    public static void onceExecutedBeforeAll()
-    {
+    public static void onceExecutedBeforeAll() {
         SparkConf conf = new SparkConf().setAppName("Visualization").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
@@ -32,14 +31,12 @@ public class VisualizationTester extends GeoSparkSimTestBase{
     }
 
     @AfterClass
-    public static void tearDown()
-    {
+    public static void tearDown() {
         sc.stop();
     }
 
     @Test
-    public void visualization()
-    {
+    public void visualization() {
         String path = resources + "/samples";
         RoadNetworkReader networkReader = new RoadNetworkReader(ss, path);
         Dataset<Link> edges = networkReader.readEdgeJson();

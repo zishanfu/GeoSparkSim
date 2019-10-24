@@ -6,34 +6,27 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import org.jxmapviewer.JXMapViewer;
 
-public class SelectionAdapter extends MouseAdapter
-{
+public class SelectionAdapter extends MouseAdapter {
     private JXMapViewer viewer;
     private int SIZE = 10;
     private Rectangle2D[] points = new Rectangle2D[2];
 
     private int pos = -1;
 
-    /**
-     * @param viewer the jxmapviewer
-     */
-    public SelectionAdapter(JXMapViewer viewer, int width, int height)
-    {
+    /** @param viewer the jxmapviewer */
+    public SelectionAdapter(JXMapViewer viewer, int width, int height) {
         this.viewer = viewer;
-        points[0] = new Rectangle2D.Double(width/6, height/8,SIZE, SIZE);
-        points[1] = new Rectangle2D.Double(width/1.5, height/1.3,SIZE, SIZE);
+        points[0] = new Rectangle2D.Double(width / 6, height / 8, SIZE, SIZE);
+        points[1] = new Rectangle2D.Double(width / 1.5, height / 1.3, SIZE, SIZE);
     }
-
 
     public Rectangle2D[] getPoints() {
         return points;
     }
 
-
     public JXMapViewer getViewer() {
         return viewer;
     }
-
 
     public void mousePressed(MouseEvent event) {
         Point p = event.getPoint();
@@ -50,17 +43,19 @@ public class SelectionAdapter extends MouseAdapter
         pos = -1;
     }
 
-
     public void mouseDragged(MouseEvent event) {
         if (pos == -1) {
             return;
         }
 
-        if(points[1].getX() < points[0].getX()) {
+        if (points[1].getX() < points[0].getX()) {
             return;
         }
 
-        points[pos].setRect(event.getPoint().x,event.getPoint().y,points[pos].getWidth(),
+        points[pos].setRect(
+                event.getPoint().x,
+                event.getPoint().y,
+                points[pos].getWidth(),
                 points[pos].getHeight());
 
         viewer.repaint();

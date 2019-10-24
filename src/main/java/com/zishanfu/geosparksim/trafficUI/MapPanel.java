@@ -1,15 +1,14 @@
 package com.zishanfu.geosparksim.trafficUI;
 
 import com.zishanfu.geosparksim.trafficUI.model.GeoPoint;
-import com.zishanfu.geosparksim.trafficUI.model.Segment;
 import com.zishanfu.geosparksim.trafficUI.model.Point;
-import javax.swing.*;
+import com.zishanfu.geosparksim.trafficUI.model.Segment;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 class MapPanel extends JPanel {
@@ -17,7 +16,7 @@ class MapPanel extends JPanel {
     private final List<List<Segment>> vehicles = new ArrayList<>();
     private final List<List<GeoPoint>> signals = new ArrayList<>();
     private double minEasting, maxEasting, minNorthing, maxNorthing;
-    private double oEasting, oNorthing;		// coordinates of the origin
+    private double oEasting, oNorthing; // coordinates of the origin
     private double scale = -1;
     private int idx = 0;
 
@@ -34,17 +33,21 @@ class MapPanel extends JPanel {
         addMouseMotionListener(mousePanner);
     }
 
-
-    public void run(){
-        Thread animationThread = new Thread(new Runnable() {
-            public void run() {
-                while (idx < vehicles.size() - 1) {
-                    idx++;
-                    repaint();
-                    try {Thread.sleep(500);} catch (Exception ex) {}
-                }
-            }
-        });
+    public void run() {
+        Thread animationThread =
+                new Thread(
+                        new Runnable() {
+                            public void run() {
+                                while (idx < vehicles.size() - 1) {
+                                    idx++;
+                                    repaint();
+                                    try {
+                                        Thread.sleep(500);
+                                    } catch (Exception ex) {
+                                    }
+                                }
+                            }
+                        });
 
         animationThread.start();
     }
@@ -55,8 +58,7 @@ class MapPanel extends JPanel {
 
         Graphics2D g = (Graphics2D) g_;
 
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         int w = getWidth();
         int h = getHeight();
@@ -64,10 +66,10 @@ class MapPanel extends JPanel {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, w, h);
 
-        if(segments.size() == 0) return;
-        if(this.scale == -1) scale();
+        if (segments.size() == 0) return;
+        if (this.scale == -1) scale();
 
-        for(Segment seg : segments) {
+        for (Segment seg : segments) {
             Point pA = seg.getPointA();
             Point pB = seg.getPointB();
 
@@ -80,16 +82,16 @@ class MapPanel extends JPanel {
             g.drawLine(pA_x, pA_y, pB_x, pB_y);
         }
 
-        if(signals.size() == 0) return;
-        for (GeoPoint s: signals.get(idx)){
+        if (signals.size() == 0) return;
+        for (GeoPoint s : signals.get(idx)) {
             g.setColor(s.getColor());
             int x = convertX(s.getEasting());
             int y = convertY(s.getNorthing(), h);
-            g.fillOval(x-1, y-1, 10, 10);
+            g.fillOval(x - 1, y - 1, 10, 10);
         }
 
-        if(vehicles.size() == 0) return;
-        for (Segment v: vehicles.get(idx)){
+        if (vehicles.size() == 0) return;
+        for (Segment v : vehicles.get(idx)) {
             Point pA = v.getPointA();
             Point pB = v.getPointB();
 
@@ -105,15 +107,19 @@ class MapPanel extends JPanel {
 
         g.setColor(Color.BLACK);
 
-        // unit is the unit of the scale. It must be a power of ten, such that unit * scale in [25, 250]
-        double unit = Math.pow(10, Math.ceil(Math.log10(25/scale)));
+        // unit is the unit of the scale. It must be a power of ten, such that unit * scale in [25,
+        // 250]
+        double unit = Math.pow(10, Math.ceil(Math.log10(25 / scale)));
         String strUnit;
-        if(unit >= 1) strUnit = ((int) unit) + " km";
-        else strUnit = ((int) (1000*unit)) + " m";
-        g.drawString(strUnit + " \u2194 " + ((int)(unit * scale)) + " px", 10, 10+g.getFontMetrics().getHeight());
+        if (unit >= 1) strUnit = ((int) unit) + " km";
+        else strUnit = ((int) (1000 * unit)) + " m";
+        g.drawString(
+                strUnit + " \u2194 " + ((int) (unit * scale)) + " px",
+                10,
+                10 + g.getFontMetrics().getHeight());
         // draw a 1-kilometer segment
-        for(int i=6; i<=9; i++) {
-            g.drawLine(10, i, 10+(int)(unit*scale*(i<8 ? 1 : .5)), i);
+        for (int i = 6; i <= 9; i++) {
+            g.drawLine(10, i, 10 + (int) (unit * scale * (i < 8 ? 1 : .5)), i);
         }
     }
 
@@ -130,18 +136,18 @@ class MapPanel extends JPanel {
     }
 
     public void addSegments(Collection<Segment> segments) {
-        for(Segment seg : segments) addSegment(seg);
+        for (Segment seg : segments) addSegment(seg);
     }
 
     public void addSignal(GeoPoint signal, int step) {
-        while (this.signals.size() <= step){
+        while (this.signals.size() <= step) {
             this.signals.add(new ArrayList<>());
         }
         this.signals.get(step).add(signal);
     }
 
-    public void addVehicle(Segment vehicle, int step){
-        while (this.vehicles.size() <= step){
+    public void addVehicle(Segment vehicle, int step) {
+        while (this.vehicles.size() <= step) {
             this.vehicles.add(new ArrayList<>());
         }
         this.vehicles.get(step).add(vehicle);
@@ -149,12 +155,12 @@ class MapPanel extends JPanel {
 
     private synchronized void updateMinMaxEastingNorthing(Point point) {
         double easting = point.getEasting();
-        if(easting > maxEasting) maxEasting = easting;
-        if(easting < minEasting) minEasting = easting;
+        if (easting > maxEasting) maxEasting = easting;
+        if (easting < minEasting) minEasting = easting;
 
         double northing = point.getNorthing();
-        if(northing > maxNorthing) maxNorthing = northing;
-        if(northing < minNorthing) minNorthing = northing;
+        if (northing > maxNorthing) maxNorthing = northing;
+        if (northing < minNorthing) minNorthing = northing;
     }
 
     private synchronized void resetMinMaxEastingNorthing() {
@@ -170,16 +176,14 @@ class MapPanel extends JPanel {
         int w = getWidth();
         int h = getHeight();
 
-        this.scale = Math.min(
-                w / (maxEasting - minEasting),
-                h / (maxNorthing - minNorthing));
+        this.scale = Math.min(w / (maxEasting - minEasting), h / (maxNorthing - minNorthing));
 
         oEasting = minEasting;
         oNorthing = minNorthing;
     }
 
     private int applyScale(double km) {
-        return (int)(km*scale);
+        return (int) (km * scale);
     }
 
     private int convertX(double easting) {
@@ -198,7 +202,7 @@ class MapPanel extends JPanel {
             double oldScale = scale;
 
             int rotation = e.getWheelRotation();
-            if(rotation > 0) {
+            if (rotation > 0) {
                 scale /= (1 + rotation * zoomFactor);
             } else {
                 scale *= (1 - rotation * zoomFactor);
@@ -220,8 +224,8 @@ class MapPanel extends JPanel {
             int y = e.getY();
             int h = getHeight();
 
-            oEasting = oEasting + x * (1/oldScale - 1/scale);
-            oNorthing = oNorthing + (h - y) * (1/oldScale - 1/scale);
+            oEasting = oEasting + x * (1 / oldScale - 1 / scale);
+            oNorthing = oNorthing + (h - y) * (1 / oldScale - 1 / scale);
 
             repaint();
         }
@@ -251,24 +255,18 @@ class MapPanel extends JPanel {
         }
 
         @Override
-        public void mouseMoved(MouseEvent e) {
-        }
+        public void mouseMoved(MouseEvent e) {}
 
         @Override
-        public void mouseClicked(MouseEvent e) {
-        }
+        public void mouseClicked(MouseEvent e) {}
 
         @Override
-        public void mouseReleased(MouseEvent e) {
-        }
+        public void mouseReleased(MouseEvent e) {}
 
         @Override
-        public void mouseEntered(MouseEvent e) {
-        }
+        public void mouseEntered(MouseEvent e) {}
 
         @Override
-        public void mouseExited(MouseEvent e) {
-        }
-
+        public void mouseExited(MouseEvent e) {}
     }
 }

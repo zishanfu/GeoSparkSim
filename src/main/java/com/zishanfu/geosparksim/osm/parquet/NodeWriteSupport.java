@@ -1,17 +1,14 @@
 package com.zishanfu.geosparksim.osm.parquet;
 
-
 import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.DOUBLE;
 import static org.apache.parquet.schema.Type.Repetition.REQUIRED;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.parquet.schema.MessageType;
 import org.apache.parquet.schema.PrimitiveType;
 import org.apache.parquet.schema.Type;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
-
 
 public class NodeWriteSupport extends OsmEntityWriteSupport<Node> {
 

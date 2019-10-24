@@ -1,7 +1,6 @@
 package com.zishanfu.geosparksim.model;
 
 import com.vividsolutions.jts.geom.Coordinate;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,16 +25,22 @@ public class StepReport implements Serializable {
     private Link currentLink;
     private TrafficLight headSignal;
 
-    public StepReport(int step, Coordinate signalLocation, int signal, String vehicleId, Coordinate vehicleFront, Coordinate vehicleRear){
+    public StepReport(
+            int step,
+            Coordinate signalLocation,
+            int signal,
+            String vehicleId,
+            Coordinate vehicleFront,
+            Coordinate vehicleRear) {
         this.step = step;
         this.signalLocation = signalLocation;
         this.signal = signal;
-        this.vehicleId =vehicleId;
+        this.vehicleId = vehicleId;
         this.vehicleFront = vehicleFront;
         this.vehicleRear = vehicleRear;
     }
 
-    public StepReport(int step, Coordinate signalLocation, long wid, int signal, double time){
+    public StepReport(int step, Coordinate signalLocation, long wid, int signal, double time) {
         this.step = step;
         this.signalLocation = signalLocation;
         this.wid = wid;
@@ -43,9 +48,24 @@ public class StepReport implements Serializable {
         this.time = time;
     }
 
-    public StepReport(int step, String vehicleId, Coordinate vehicleFront, Coordinate vehicleRear, Coordinate source, Coordinate target, Long[] edgePath, Double[] costs, List<Coordinate> fullPath, int edgeIdx, int currentLane, double position, double velocity, Link currentLink, TrafficLight headLight){
+    public StepReport(
+            int step,
+            String vehicleId,
+            Coordinate vehicleFront,
+            Coordinate vehicleRear,
+            Coordinate source,
+            Coordinate target,
+            Long[] edgePath,
+            Double[] costs,
+            List<Coordinate> fullPath,
+            int edgeIdx,
+            int currentLane,
+            double position,
+            double velocity,
+            Link currentLink,
+            TrafficLight headLight) {
         this.step = step;
-        this.vehicleId =vehicleId;
+        this.vehicleId = vehicleId;
         this.vehicleFront = vehicleFront;
         this.vehicleRear = vehicleRear;
         this.source = source;
@@ -139,7 +159,32 @@ public class StepReport implements Serializable {
 
     @Override
     public String toString() {
-        return step + ", " + vehicleId + ", " + vehicleFront + ", " + vehicleRear + ", " + signalLocation + ", " + signal +
-                ", " + wid + ", " + time + ", " + edgeIdx + ", " + currentLane + ", " + position + ", " + velocity + ", " + currentLink + ", " + headSignal;
+        return step
+                + ", "
+                + vehicleId
+                + ", "
+                + vehicleFront
+                + ", "
+                + vehicleRear
+                + ", "
+                + signalLocation
+                + ", "
+                + signal
+                + ", "
+                + wid
+                + ", "
+                + time
+                + ", "
+                + edgeIdx
+                + ", "
+                + currentLane
+                + ", "
+                + position
+                + ", "
+                + velocity
+                + ", "
+                + currentLink
+                + ", "
+                + headSignal;
     }
 }

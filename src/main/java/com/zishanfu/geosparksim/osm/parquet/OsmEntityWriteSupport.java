@@ -1,6 +1,5 @@
 package com.zishanfu.geosparksim.osm.parquet;
 
-
 import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.BINARY;
 import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.INT64;
 import static org.apache.parquet.schema.Type.Repetition.OPTIONAL;
@@ -10,7 +9,6 @@ import static org.apache.parquet.schema.Type.Repetition.REQUIRED;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.hadoop.api.WriteSupport;
 import org.apache.parquet.io.api.Binary;

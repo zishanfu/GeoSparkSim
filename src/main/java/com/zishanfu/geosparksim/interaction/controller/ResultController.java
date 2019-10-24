@@ -21,12 +21,12 @@ public class ResultController {
     }
 
     private JScrollPane resultPanel() {
-        //Result Panel
+        // Result Panel
         this.textArea = new JTextArea();
         textArea.setRows(txtRow);
         textArea.setText("This text area shows geosparksim updates!\n");
         JScrollPane bottomPanel = new JScrollPane(textArea);
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10,10,20,10));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
         return bottomPanel;
     }
 }

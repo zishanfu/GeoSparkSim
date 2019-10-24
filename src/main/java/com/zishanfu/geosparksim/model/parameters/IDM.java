@@ -1,6 +1,5 @@
 package com.zishanfu.geosparksim.model.parameters;
 
-
 public interface IDM {
     double normalAcceleration = 2.5;
     double brakeDeceleration = 3;

@@ -1,28 +1,29 @@
 package com.zishanfu.geosparksim.tools;
 
-
 import com.vividsolutions.jts.geom.Coordinate;
 import com.zishanfu.geosparksim.shortestpath.Graph;
-
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Random initialize vehicle by spatial data
- */
-public class SpatialRandom{
+/** Random initialize vehicle by spatial data */
+public class SpatialRandom {
 
     private Random rand = new Random();
     private double minLon;
     private double minLat;
     private double maxLon;
     private double maxLat;
-    private double minLen = 0.004; //1.9km
+    private double minLen = 0.004; // 1.9km
     private double maxLen;
     private Graph graph;
 
-    public SpatialRandom(double minLon, double minLat, double maxLon, double maxLat,
-                         double maxLen, Graph graph) {
+    public SpatialRandom(
+            double minLon,
+            double minLat,
+            double maxLon,
+            double maxLat,
+            double maxLen,
+            Graph graph) {
         this.minLon = minLon;
         this.minLat = minLat;
         this.maxLon = maxLon;
@@ -32,7 +33,7 @@ public class SpatialRandom{
     }
 
     private double randomRange(double low, double high) {
-        return rand.nextDouble()*(high - low) + low;
+        return rand.nextDouble() * (high - low) + low;
     }
 
     /**
@@ -47,12 +48,13 @@ public class SpatialRandom{
 
     /**
      * Random generate travel length
+     *
      * @return length
      */
     public double spatialRandomLen() {
         double r = Math.abs(rand.nextGaussian());
         double lenDiff = maxLen - minLen;
-        double len = lenDiff <= 0? minLen: (r * (maxLen - minLen) + minLen);
+        double len = lenDiff <= 0 ? minLen : (r * (maxLen - minLen) + minLen);
         return len;
     }
 
@@ -91,7 +93,4 @@ public class SpatialRandom{
         Coordinate dest = computeDestDSO(src, len);
         return graph.getClosestNode(dest);
     }
-
 }
-
-

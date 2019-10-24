@@ -1,20 +1,33 @@
 package com.zishanfu.geosparksim.model;
 
 import com.vividsolutions.jts.geom.Coordinate;
-
 import java.util.List;
 import java.util.Map;
 
-public abstract class CarFollowBase extends Vehicle{
+public abstract class CarFollowBase extends Vehicle {
     private double v = 0;
     private double p = 0;
     private TrafficLight headSignal;
 
-    public CarFollowBase(String id, Coordinate source, Coordinate target, Long[] edgePath, Double[] costs, List<Coordinate> fullPath) {
+    public CarFollowBase(
+            String id,
+            Coordinate source,
+            Coordinate target,
+            Long[] edgePath,
+            Double[] costs,
+            List<Coordinate> fullPath) {
         super(id, source, target, edgePath, costs, fullPath);
     }
 
-    public void recoverStatus(Coordinate front, Coordinate rear, int edgeIdx, int currentLane, double currentPois, double velocity, Link currentLink, TrafficLight light){
+    public void recoverStatus(
+            Coordinate front,
+            Coordinate rear,
+            int edgeIdx,
+            int currentLane,
+            double currentPois,
+            double velocity,
+            Link currentLink,
+            TrafficLight light) {
         this.setFront(front);
         this.setRear(rear);
         this.setEdgeIndex(edgeIdx);
@@ -25,15 +38,15 @@ public abstract class CarFollowBase extends Vehicle{
         this.setHeadSignal(light);
     }
 
-    public double getVelocity(){
+    public double getVelocity() {
         return v;
     }
 
-    public void setVelocity(double v){
+    public void setVelocity(double v) {
         this.v = v;
     }
 
-    public double getPosition(){
+    public double getPosition() {
         return p;
     }
 
@@ -53,6 +66,6 @@ public abstract class CarFollowBase extends Vehicle{
         this.headSignal = headSignal;
     }
 
-    public abstract Vehicle headwayCheck(Map<Long, List<Link>> edgeMap, Map<Long, TrafficLight> signalWayMap);
-
+    public abstract Vehicle headwayCheck(
+            Map<Long, List<Link>> edgeMap, Map<Long, TrafficLight> signalWayMap);
 }

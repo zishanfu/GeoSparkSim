@@ -4,8 +4,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
-
-public class TrafficLight extends Point{
+public class TrafficLight extends Point {
     private long wid;
     private double time;
     private int signal; // 0 green 1 yellow 2 red
@@ -18,7 +17,6 @@ public class TrafficLight extends Point{
         this.wid = wid;
         this.location = location;
     }
-
 
     public Coordinate getLocation() {
         return location;
@@ -44,12 +42,12 @@ public class TrafficLight extends Point{
         this.signal = signal;
     }
 
-    public void next(double dt){
-        int duration = this.getSignal() == 0? 55: this.getSignal() == 1? 5: 60;
+    public void next(double dt) {
+        int duration = this.getSignal() == 0 ? 55 : this.getSignal() == 1 ? 5 : 60;
         double time = this.getTime() + dt;
-        if (time < duration){
+        if (time < duration) {
             this.setTime(time);
-        }else{
+        } else {
             this.setSignal((this.getSignal() + 1) % 3);
             this.setTime(0);
         }

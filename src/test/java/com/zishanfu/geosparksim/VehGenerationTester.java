@@ -5,6 +5,8 @@ import com.zishanfu.geosparksim.generation.CreateVehicles;
 import com.zishanfu.geosparksim.model.Vehicle;
 import com.zishanfu.geosparksim.tools.Distance;
 import com.zishanfu.geosparksim.tools.FileOps;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -14,9 +16,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class VehGenerationTester extends GeoSparkSimTestBase {
 
@@ -30,8 +29,7 @@ public class VehGenerationTester extends GeoSparkSimTestBase {
     static SparkSession ss;
 
     @BeforeClass
-    public static void onceExecutedBeforeAll()
-    {
+    public static void onceExecutedBeforeAll() {
         SparkConf conf = new SparkConf().setAppName("VehGeneration").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
@@ -45,25 +43,20 @@ public class VehGenerationTester extends GeoSparkSimTestBase {
     }
 
     @AfterClass
-    public static void tearDown()
-    {
+    public static void tearDown() {
         fileOps.deleteDirectory(resources + "/samples/map-gh");
         sc.stop();
     }
 
     @Test
-    public void vehicleGeneration()
-    {
+    public void vehicleGeneration() throws ExecutionException, InterruptedException {
         double maxLen = new Distance().euclidean(coor1.x, coor2.x, coor1.y, coor2.y) / 10;
         String osmPath = "datareader.file=" + resources + "/samples/map.osm";
 
-        String[] vehParameters = new String[]{"config=" + resources + "/graphhopper/config.properties", osmPath};
+        String[] vehParameters =
+                new String[] {"config=" + resources + "/graphhopper/config.properties", osmPath};
         CreateVehicles createVehicles = new CreateVehicles(vehParameters, coor1, coor2, maxLen);
-        try {
-            List<Vehicle> vehicleList = createVehicles.multiple(total, type);
-            Assert.assertEquals(vehicleList.size(), total);
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        List<Vehicle> vehicleList = createVehicles.multiple(total, type);
+        Assert.assertEquals(vehicleList.size(), total);
     }
 }

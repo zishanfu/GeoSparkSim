@@ -1,10 +1,9 @@
 package com.zishanfu.geosparksim.interaction.controller;
 
-import java.io.File;
-import javax.swing.event.MouseInputListener;
-
 import com.zishanfu.geosparksim.interaction.components.SelectionAdapter;
 import com.zishanfu.geosparksim.interaction.components.SelectionPainter;
+import java.io.File;
+import javax.swing.event.MouseInputListener;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.cache.FileBasedLocalCache;
@@ -16,7 +15,7 @@ import org.jxmapviewer.viewer.DefaultTileFactory;
 import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.TileFactoryInfo;
 
-public class CompController{
+public class CompController {
     private GeoPosition center = new GeoPosition(33.388414, -111.931782);
     private int zoom = 7;
     private int width;
@@ -46,7 +45,8 @@ public class CompController{
         DefaultTileFactory tileFactory = new DefaultTileFactory(info);
 
         // Setup local file cache
-        File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
+        File cacheDir =
+                new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
         tileFactory.setLocalCache(new FileBasedLocalCache(cacheDir, false));
 
         // Setup JXMapViewer

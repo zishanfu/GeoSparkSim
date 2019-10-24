@@ -3,7 +3,6 @@ package com.zishanfu.geosparksim.model;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.PrecisionModel;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -17,12 +16,12 @@ public class Intersect extends Point {
         this.wid = wid;
     }
 
-    private void addVehicle(Vehicle vehicle){
+    private void addVehicle(Vehicle vehicle) {
         queue.add(vehicle);
     }
 
-    private Vehicle pollVehicle(Vehicle vehicle){
-        if(queue.isEmpty()) return null;
+    private Vehicle pollVehicle(Vehicle vehicle) {
+        if (queue.isEmpty()) return null;
         else return queue.poll();
     }
 

@@ -2,31 +2,33 @@ package com.zishanfu.geosparksim.interaction.controller;
 
 import com.zishanfu.geosparksim.interaction.handler.GenerateBtnHandler;
 import com.zishanfu.geosparksim.interaction.handler.SimulationBtnHandler;
-import org.apache.log4j.Logger;
-import org.apache.spark.sql.SparkSession;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.swing.*;
+import org.apache.log4j.Logger;
+import org.apache.spark.sql.SparkSession;
 
 public class InputController {
 
     public JPanel inputPanel;
-    private String[] genTypes = { "Data-space oriented approach(DSO)", "Network-based approach(NB)"};
+    private String[] genTypes = {"Data-space oriented approach(DSO)", "Network-based approach(NB)"};
     private int top = 5, left = 4, bottom = 5, right = 4;
     private Insets i = new Insets(top, left, bottom, right);
     private final Logger LOG = Logger.getLogger(InputController.class);
 
-    public InputController(CompController cc, ResultController rc, SparkSession spark, String appTitle) {
+    public InputController(
+            CompController cc, ResultController rc, SparkSession spark, String appTitle) {
         this.inputPanel = inputPanel(cc, rc, spark, appTitle);
     }
 
-    private JPanel inputPanel(final CompController cc, ResultController rc, SparkSession spark, String appTitle) {
-        //Top panel
+    private JPanel inputPanel(
+            final CompController cc, ResultController rc, SparkSession spark, String appTitle) {
+        // Top panel
         JPanel topPanel = new JPanel();
-        topPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JLabel label = new JLabel("GeoSparkSim");
         label.setFont(new Font("Bookman", Font.BOLD, 20));
@@ -41,8 +43,10 @@ public class InputController {
         }
 
         Image image = imageIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        imageIcon = new ImageIcon(newimg);  // transform it back
+        Image newimg =
+                image.getScaledInstance(
+                        40, 40, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imageIcon = new ImageIcon(newimg); // transform it back
         JLabel imageLabel = new JLabel(imageIcon);
 
         JLabel numLabel = new JLabel("Number of Vehicles: ");
@@ -66,7 +70,17 @@ public class InputController {
         JButton vBtn = new JButton("Show Visualization");
 
         SimulationBtnHandler sbHandler = new SimulationBtnHandler(appTitle);
-        GenerateBtnHandler gbHandler = new GenerateBtnHandler(cc.selAdaper, num, sim, timestep, file, sbHandler, rc.textArea, genList, spark);
+        GenerateBtnHandler gbHandler =
+                new GenerateBtnHandler(
+                        cc.selAdaper,
+                        num,
+                        sim,
+                        timestep,
+                        file,
+                        sbHandler,
+                        rc.textArea,
+                        genList,
+                        spark);
         sBtn.addActionListener(gbHandler);
         vBtn.addActionListener(sbHandler);
 
@@ -80,8 +94,8 @@ public class InputController {
         gbc.gridy = 0;
         gbc.gridwidth = 1;
         gbc.insets = i;
-        gbc.weightx=0.5;
-        gbc.weighty=0.5;
+        gbc.weightx = 0.5;
+        gbc.weighty = 0.5;
         topPanel.add(label, gbc);
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -143,19 +157,21 @@ public class InputController {
         gbc.gridwidth = 1;
         topPanel.add(vBtn, gbc);
 
-        genList.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                genList.showPopup();
-            }
-        });
-        chkArea.addItemListener(e -> {
-            if (e.getStateChange() == 1) {
-                cc.mapViewer.setOverlayPainter(cc.selPainter);
-            } else {
-                cc.mapViewer.setOverlayPainter(null);
-            }
-        });
+        genList.addFocusListener(
+                new FocusAdapter() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        genList.showPopup();
+                    }
+                });
+        chkArea.addItemListener(
+                e -> {
+                    if (e.getStateChange() == 1) {
+                        cc.mapViewer.setOverlayPainter(cc.selPainter);
+                    } else {
+                        cc.mapViewer.setOverlayPainter(null);
+                    }
+                });
 
         return topPanel;
     }

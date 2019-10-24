@@ -1,18 +1,17 @@
 package com.zishanfu.geosparksim.tools;
 
+import java.io.File;
+import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
-
 public class FileOps {
-    private final static Logger LOG = Logger.getLogger(FileOps.class);
+    private static final Logger LOG = Logger.getLogger(FileOps.class);
 
     public void createDirectory(String directory) {
         try {
             File f = new File(directory);
-            if(f.isDirectory()) {
+            if (f.isDirectory()) {
                 FileUtils.cleanDirectory(f);
                 FileUtils.forceDelete(f);
             }
@@ -22,9 +21,9 @@ public class FileOps {
         }
     }
 
-    public boolean deleteDirectory(String directory){
+    public boolean deleteDirectory(String directory) {
         File f = new File(directory);
-        if(f.isDirectory()) {
+        if (f.isDirectory()) {
             try {
                 FileUtils.cleanDirectory(f);
                 FileUtils.forceDelete(f);
@@ -36,4 +35,3 @@ public class FileOps {
         return true;
     }
 }
-
