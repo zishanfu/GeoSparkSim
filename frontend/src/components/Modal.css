@@ -1,0 +1,79 @@
+.modal-backdrop-geosparksim {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-geosparksim {
+  background: whitesmoke;
+  box-shadow: 2px 2px 20px 1px;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  min-width: 15%;
+  border-radius: 3px;
+  position: absolute;
+  top: 2em;
+  max-width: 80%;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px;
+  display: flex;
+}
+
+.modal-header {
+  border-bottom: 1px solid #eeeeee;
+  justify-content: space-between;
+  position: relative;
+  padding-right: 1.5em;
+}
+
+.modal-footer {
+  border-top: 1px solid #eeeeee;
+  font-size: 0.75em;
+  justify-content: flex-end;
+}
+
+.modal-body {
+  position: relative;
+  padding: 20px 10px;
+}
+
+.btn-close {
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  font-weight: bold;
+  color: black;
+  background: transparent;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.btn-accept {
+  color: white;
+  background: #4a7eae;
+  border: 1px solid #4a7eae;
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+.modal-fade-enter,
+.modal-fade-leave-active {
+  opacity: 0;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.5s ease;
+}

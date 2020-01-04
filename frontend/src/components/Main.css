@@ -1,0 +1,21 @@
+#panel{
+  width: 30%;
+  float: left;
+  padding: 1% 2%;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+  width: 70%;
+}
+
+#show-vis{
+  float: right;
+}
+
+#updates{
+  margin-top: 1em;
+}

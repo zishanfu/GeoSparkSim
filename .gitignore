@@ -22,3 +22,13 @@
 /module-main/src/test/resources/java-test/
 /module-main/src/test/resources/scala-test/
 /module-main/src/test/resources/samples/map-gh/
+
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+src/_drafts
+package-lock.json
