@@ -15,8 +15,10 @@
 /.cache-tests
 /.DS_Store
 /docs/images/.DS_Store
-/src/test/resources/.DS_Store
-/src/test/resources/geosparksim/
-/src/test/resources/java-test/
-/src/test/resources/scala-test/
-/src/test/resources/samples/map-gh/
+/module-main/target/
+/module-web/target/
+/module-main/src/test/resources/.DS_Store
+/module-main/src/test/resources/geosparksim/
+/module-main/src/test/resources/java-test/
+/module-main/src/test/resources/scala-test/
+/module-main/src/test/resources/samples/map-gh/
