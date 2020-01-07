@@ -9,32 +9,36 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 public class OsmLoadingTester extends GeoSparkSimTestBase {
 
-    static JavaSparkContext sc;
-    static String resources;
-    static FileOps fileOps = new FileOps();
-    static Coordinate coor1;
-    static Coordinate coor2;
-    static int total;
-    static String type;
-    static String path = "";
+    private JavaSparkContext sc;
+    private String resources;
+    private FileOps fileOps = new FileOps();
+    private Coordinate coor1;
+    private Coordinate coor2;
+    private int total;
+    private String type;
+    private String path = "";
     // ASU boundary
     // top-left 33.429165, -111.942323
     // bottom-right 33.413572, -111.924442
 
-    @BeforeClass
-    public static void onceExecutedBeforeAll() {
+    @Before
+    public void onceExecutedBeforeAll() {
         SparkConf conf = new SparkConf().setAppName("OpenStreetMapData").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
         Logger.getLogger("akka").setLevel(Level.WARN);
-        resources = System.getProperty("user.dir") + "/src/test/resources";
+        String path =
+                OsmLoadingTester.class
+                        .getProtectionDomain()
+                        .getCodeSource()
+                        .getLocation()
+                        .getPath();
+        int idx = path.indexOf("/target");
+        resources = path.substring(0, idx) + "/src/test/resources";
         path = resources + "/java-test";
         fileOps.createDirectory(path);
 
@@ -48,8 +52,8 @@ public class OsmLoadingTester extends GeoSparkSimTestBase {
         type = "DSO";
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @After
+    public void tearDown() {
         fileOps.deleteDirectory(path);
         sc.stop();
     }

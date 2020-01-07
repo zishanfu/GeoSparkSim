@@ -21,7 +21,6 @@ import scala.collection.Seq;
 /** Core class to do data pre-processing and simulation. */
 public class Core {
     private static final Logger LOG = Logger.getLogger(Core.class);
-    private static final String resources = System.getProperty("user.dir") + "/src/test/resources";
 
     /**
      * Pre-process road network and generate vehicles.
@@ -30,13 +29,18 @@ public class Core {
      * @param simConfig the simulation configuration
      */
     public void preprocess(SparkSession spark, SimConfig simConfig) {
-        LOG.info(simConfig.toString());
+        String path = Core.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        int idx = path.indexOf("/target");
+        String resources = path.substring(0, idx) + "/src/test/resources";
+
+        LOG.warn(simConfig.toString());
 
         HDFSUtil hdfs = new HDFSUtil(simConfig.getOutputPath());
         String name = "/geosparksim";
         hdfs.deleteDir(name);
         hdfs.mkdir(name);
         String output = simConfig.getOutputPath() + name;
+        LOG.warn("output: " + output);
 
         Coordinate coor1 = new Coordinate(simConfig.getLat1(), simConfig.getLon1());
         Coordinate coor2 = new Coordinate(simConfig.getLat2(), simConfig.getLon2());
@@ -57,13 +61,14 @@ public class Core {
         String osmPath = "datareader.file=" + output + "/map.osm";
         String[] vehParameters =
                 new String[] {"config=" + resources + "/graphhopper/config.properties", osmPath};
+        LOG.warn("vehParameters: " + vehParameters);
 
         CreateVehicles createVehicles = new CreateVehicles(vehParameters, coor1, coor2, maxLen);
         List<Vehicle> vehicleList = null;
         try {
             vehicleList = createVehicles.multiple(simConfig.getTotal(), simConfig.getType());
         } catch (InterruptedException | ExecutionException e) {
-            LOG.error("Bad thing happens when generating vehicle list, try again!", e);
+            LOG.warn("Bad thing happens when generating vehicle list, try again!", e);
         }
 
         VehicleHandler vehicleHandler = new VehicleHandler(spark, output);

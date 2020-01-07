@@ -112,7 +112,7 @@ import Modal from './components/Modal';
 import axios from './utils/http-common';
 import $ from "jquery";
 
-const URI = 'geosparksim';
+const URI = 'simulation';
 
 export default {
   name: 'App',
@@ -138,14 +138,23 @@ export default {
             topleft_lng = bounds.topleft.lng,
             bottomright_lat = bounds.bottomright.lat,
             bottomright_lng = bounds.bottomright.lng;
-      console.log(`vehicles: ${this.vehicles}, vehicleGeneration: ${this.vehicleGeneration},
-      topleft_lat: ${topleft_lat}, topleft_lng: ${topleft_lng},
-      bottomright_lat: ${bottomright_lat}, bottomright_lng: ${bottomright_lng}`);
 
-      const formData = new FormData();
-      formData.append('param', 'abc');
+      const simConfig = {
+        'lat1': topleft_lat,
+        'lon1': topleft_lng,
+        'lat2': bottomright_lat,
+        'lon2': bottomright_lng,
+        'total': this.vehicles,
+        'outputPath': this.output,
+        'step': this.steps,
+        'timestep': this.tps,
+        'type': this.vehicleGeneration
+      };
+
+      console.log(simConfig);
+
       return axios
-        .post(URI, formData, { headers: { 'content-type': 'multipart/form-data' } })
+        .post(URI, JSON.stringify(simConfig), { headers: { 'content-type': 'application/json' } })
         .catch(error => this.errorHandler(error));
     },
     errorHandler(error) {

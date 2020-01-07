@@ -12,38 +12,42 @@ import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 public class VehGenerationTester extends GeoSparkSimTestBase {
 
-    static JavaSparkContext sc;
-    static String resources;
-    static FileOps fileOps = new FileOps();
-    static Coordinate coor1;
-    static Coordinate coor2;
-    static int total;
-    static String type;
-    static SparkSession ss;
+    private JavaSparkContext sc;
+    private String resources;
+    private FileOps fileOps = new FileOps();
+    private Coordinate coor1;
+    private Coordinate coor2;
+    private int total;
+    private String type;
+    private SparkSession ss;
 
-    @BeforeClass
-    public static void onceExecutedBeforeAll() {
+    @Before
+    public void onceExecutedBeforeAll() {
         SparkConf conf = new SparkConf().setAppName("VehGeneration").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
         Logger.getLogger("akka").setLevel(Level.WARN);
         ss = SparkSession.builder().config(sc.getConf()).getOrCreate();
-        resources = System.getProperty("user.dir") + "/src/test/resources";
+        String path =
+                VehGenerationTester.class
+                        .getProtectionDomain()
+                        .getCodeSource()
+                        .getLocation()
+                        .getPath();
+        int idx = path.indexOf("/target");
+        resources = path.substring(0, idx) + "/src/test/resources";
         coor1 = new Coordinate(33.429165, -111.942323);
         coor2 = new Coordinate(33.413572, -111.924442);
         total = 1000;
         type = "DSO";
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @After
+    public void tearDown() {
         fileOps.deleteDirectory(resources + "/samples/map-gh");
         sc.stop();
     }

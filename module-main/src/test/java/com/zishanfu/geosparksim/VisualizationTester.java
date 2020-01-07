@@ -11,27 +11,32 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.SparkSession;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 public class VisualizationTester extends GeoSparkSimTestBase {
-    static JavaSparkContext sc;
-    static SparkSession ss;
-    static String resources;
+    private JavaSparkContext sc;
+    private SparkSession ss;
+    private String resources;
 
-    @BeforeClass
-    public static void onceExecutedBeforeAll() {
+    @Before
+    public void onceExecutedBeforeAll() {
         SparkConf conf = new SparkConf().setAppName("Visualization").setMaster("local[2]");
         sc = new JavaSparkContext(conf);
         Logger.getLogger("org").setLevel(Level.WARN);
         Logger.getLogger("akka").setLevel(Level.WARN);
         ss = SparkSession.builder().config(sc.getConf()).getOrCreate();
-        resources = System.getProperty("user.dir") + "/src/test/resources";
+        String path =
+                VisualizationTester.class
+                        .getProtectionDomain()
+                        .getCodeSource()
+                        .getLocation()
+                        .getPath();
+        int idx = path.indexOf("/target");
+        resources = path.substring(0, idx) + "/src/test/resources";
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @After
+    public void tearDown() {
         sc.stop();
     }
 

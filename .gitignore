@@ -22,9 +22,7 @@
 /module-main/src/test/resources/java-test/
 /module-main/src/test/resources/scala-test/
 /module-main/src/test/resources/samples/map-gh/
-
-.DS_Store
-Thumbs.db
+/module-web/src/main/java/com/zishanfu/geosparksim/.DS_Store
 db.json
 *.log
 node_modules/

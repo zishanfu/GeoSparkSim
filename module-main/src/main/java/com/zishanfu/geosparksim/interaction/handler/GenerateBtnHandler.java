@@ -148,10 +148,19 @@ public class GenerateBtnHandler implements ActionListener {
                                 textArea.append("Write intersection into json. \n");
 
                                 String osmPath = "datareader.file=" + output + "/map.osm";
+                                String path =
+                                        GenerateBtnHandler.class
+                                                .getProtectionDomain()
+                                                .getCodeSource()
+                                                .getLocation()
+                                                .getPath();
+                                int idx = path.indexOf("/target");
+                                String resources = path.substring(0, idx) + "/src/test/resources";
+
                                 String ghConfig =
                                         "config="
-                                                + System.getProperty("user.dir")
-                                                + "/src/test/resources/graphhopper/config.properties";
+                                                + resources
+                                                + "/module-main/src/test/resources/graphhopper/config.properties";
                                 String[] vehParameters = new String[] {ghConfig, osmPath};
 
                                 textArea.append("Generating vehicles...\n");

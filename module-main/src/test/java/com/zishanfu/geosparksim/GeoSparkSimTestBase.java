@@ -8,13 +8,13 @@ import org.apache.spark.serializer.KryoSerializer;
 import org.datasyslab.geospark.serde.GeoSparkKryoRegistrator;
 
 public class GeoSparkSimTestBase {
-    protected static SparkConf conf;
-    protected static JavaSparkContext sc;
+    protected SparkConf conf;
+    protected JavaSparkContext sc;
     // ASU boundary
     // top-left 33.429165, -111.942323
     // bottom-right 33.413572, -111.924442
 
-    protected static void initialize(final String testSuiteName) {
+    protected void initialize(final String testSuiteName) {
         conf = new SparkConf().setAppName(testSuiteName).setMaster("local[2]");
         conf.set("spark.serializer", KryoSerializer.class.getName());
         conf.set("spark.kryo.registrator", GeoSparkKryoRegistrator.class.getName());

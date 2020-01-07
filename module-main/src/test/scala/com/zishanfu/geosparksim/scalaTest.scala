@@ -1,6 +1,8 @@
 package com.zishanfu.geosparksim
 
 import java.io.File
+import java.nio.file.Paths
+
 import org.apache.commons.io.FileUtils
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.serializer.KryoSerializer
@@ -22,10 +24,11 @@ class scalaTest extends FunSpec with BeforeAndAfterAll {
     sc
   }
 
-  val resources: String = System.getProperty("user.dir") + "/src/test/resources"
+  val resources: String = Paths.get(".").toAbsolutePath + "/module-main/src/test/resources"
   val f = new File(resources + "/scala-test")
 
   def deleteDirectory(): Unit = {
+    println("resources: " + resources)
     if (f.isDirectory) {
       FileUtils.cleanDirectory(f)
       FileUtils.forceDelete(f)

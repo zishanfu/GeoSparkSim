@@ -33,7 +33,10 @@ public class InputController {
         JLabel label = new JLabel("GeoSparkSim");
         label.setFont(new Font("Bookman", Font.BOLD, 20));
 
-        String resources = System.getProperty("user.dir") + "/src/test/resources";
+        String path =
+                InputController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        int idx = path.indexOf("/target");
+        String resources = path.substring(0, idx) + "/src/test/resources";
 
         ImageIcon imageIcon = null; // load the image to a imageIcon
         try {
