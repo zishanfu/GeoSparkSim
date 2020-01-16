@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.sql.SparkSession;
 import picocli.CommandLine;
@@ -138,6 +139,8 @@ public class GeoSparkSim implements Runnable {
 
     @Override
     public void run() {
+        Logger.getLogger("org").setLevel(Level.WARN);
+        Logger.getLogger("akka").setLevel(Level.WARN);
 
         SparkSession spark =
                 SparkSession.builder()

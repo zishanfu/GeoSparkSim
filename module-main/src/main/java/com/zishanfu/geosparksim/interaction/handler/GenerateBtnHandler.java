@@ -5,18 +5,30 @@ import com.zishanfu.geosparksim.Microscopic;
 import com.zishanfu.geosparksim.generation.CreateVehicles;
 import com.zishanfu.geosparksim.interaction.components.AttentionDialog;
 import com.zishanfu.geosparksim.interaction.components.SelectionAdapter;
-import com.zishanfu.geosparksim.model.*;
-import com.zishanfu.geosparksim.osm.*;
+import com.zishanfu.geosparksim.model.Intersect;
+import com.zishanfu.geosparksim.model.Link;
+import com.zishanfu.geosparksim.model.MOBILVehicle;
+import com.zishanfu.geosparksim.model.StepReport;
+import com.zishanfu.geosparksim.model.TrafficLight;
+import com.zishanfu.geosparksim.model.Vehicle;
+import com.zishanfu.geosparksim.osm.OsmConverter;
 import com.zishanfu.geosparksim.osm.OsmLoader;
+import com.zishanfu.geosparksim.osm.ReportHandler;
+import com.zishanfu.geosparksim.osm.RoadNetwork;
+import com.zishanfu.geosparksim.osm.RoadNetworkReader;
+import com.zishanfu.geosparksim.osm.RoadNetworkWriter;
+import com.zishanfu.geosparksim.osm.VehicleHandler;
 import com.zishanfu.geosparksim.tools.Distance;
 import com.zishanfu.geosparksim.tools.HDFSUtil;
-import java.awt.*;
+import java.awt.Point;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
@@ -56,6 +68,10 @@ public class GenerateBtnHandler implements ActionListener {
         this.textArea = textArea;
         this.genList = genList;
         this.spark = spark;
+    }
+
+    private static Seq<Vehicle> convertListToSeq(List<Vehicle> inputList) {
+        return JavaConverters.asScalaIteratorConverter(inputList.iterator()).asScala().toSeq();
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -146,21 +162,12 @@ public class GenerateBtnHandler implements ActionListener {
                                 textArea.append("Write signal into json. \n");
                                 networkWriter.writeIntersectJson();
                                 textArea.append("Write intersection into json. \n");
-
                                 String osmPath = "datareader.file=" + output + "/map.osm";
-                                String path =
-                                        GenerateBtnHandler.class
-                                                .getProtectionDomain()
-                                                .getCodeSource()
-                                                .getLocation()
-                                                .getPath();
-                                int idx = path.indexOf("/target");
-                                String resources = path.substring(0, idx) + "/src/test/resources";
-
                                 String ghConfig =
-                                        "config="
-                                                + resources
-                                                + "/module-main/src/test/resources/graphhopper/config.properties";
+                                        getClass()
+                                                .getResource("/graphhopper/config.properties")
+                                                .getPath();
+                                System.out.println(ghConfig);
                                 String[] vehParameters = new String[] {ghConfig, osmPath};
 
                                 textArea.append("Generating vehicles...\n");
@@ -245,9 +252,5 @@ public class GenerateBtnHandler implements ActionListener {
 
             t.start();
         }
-    }
-
-    private static Seq<Vehicle> convertListToSeq(List<Vehicle> inputList) {
-        return JavaConverters.asScalaIteratorConverter(inputList.iterator()).asScala().toSeq();
     }
 }

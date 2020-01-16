@@ -15,11 +15,13 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-graphx_${scala.compat.version}</artifactId>
             <version>${spark.version}</version>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-hdfs</artifactId>
             <version>${hadoop.version}</version>
+            <scope>${dependency.scope}</scope>
         </dependency>
         <dependency>
             <groupId>org.openstreetmap.osmosis</groupId>
@@ -79,6 +81,12 @@
         </dependency>
     </dependencies>
     <build>
+        <resources>
+            <!-- regular resource processsing for everything except logback.xml -->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
@@ -128,7 +136,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>GeoSparkSim</mainClass>
+                            <mainClass>com.zishanfu.geosparksim.GeoSparkSim</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
