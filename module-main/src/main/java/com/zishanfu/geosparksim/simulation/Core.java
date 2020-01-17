@@ -31,12 +31,10 @@ public class Core {
     public void preprocess(SparkSession spark, SimConfig simConfig) {
         String path = Core.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         int idx = path.indexOf("/target");
-        String resources = path.substring(0, idx) + "/src/test/resources";
-
         LOG.warn(simConfig.toString());
 
         HDFSUtil hdfs = new HDFSUtil(simConfig.getOutputPath());
-        String name = "/geosparksim";
+        String name = "geosparksim";
         hdfs.deleteDir(name);
         hdfs.mkdir(name);
         String output = simConfig.getOutputPath() + name;
@@ -58,12 +56,9 @@ public class Core {
         networkWriter.writeSignalJson();
         networkWriter.writeIntersectJson();
 
-        String osmPath = "datareader.file=" + output + "/map.osm";
-        String[] vehParameters =
-                new String[] {"config=" + resources + "/graphhopper/config.properties", osmPath};
-        LOG.warn("vehParameters: " + vehParameters);
+        String osmPath = output + "/map.osm";
 
-        CreateVehicles createVehicles = new CreateVehicles(vehParameters, coor1, coor2, maxLen);
+        CreateVehicles createVehicles = new CreateVehicles(osmPath, coor1, coor2, maxLen);
         List<Vehicle> vehicleList = null;
         try {
             vehicleList = createVehicles.multiple(simConfig.getTotal(), simConfig.getType());
@@ -84,7 +79,7 @@ public class Core {
      * @param appTitle the app title
      */
     public void simulation(SparkSession spark, SimConfig simConfig, String appTitle) {
-        String path = simConfig.getOutputPath() + "/geosparksim";
+        String path = simConfig.getOutputPath() + "geosparksim";
         VehicleHandler vehicleHandler = new VehicleHandler(spark, path);
         RoadNetworkReader networkReader = new RoadNetworkReader(spark, path);
 

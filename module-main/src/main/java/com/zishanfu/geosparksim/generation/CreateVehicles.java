@@ -20,8 +20,8 @@ public class CreateVehicles {
     private double maxLon;
     private Graph graph;
 
-    public CreateVehicles(String[] args, Coordinate coor1, Coordinate coor2, double maxLen) {
-        this.graph = new Graph(args);
+    public CreateVehicles(String osmFilePath, Coordinate coor1, Coordinate coor2, double maxLen) {
+        this.graph = new Graph(osmFilePath);
         this.maxLen = maxLen;
         minLat = Math.min(coor1.x, coor2.x);
         maxLat = Math.max(coor1.x, coor2.x);

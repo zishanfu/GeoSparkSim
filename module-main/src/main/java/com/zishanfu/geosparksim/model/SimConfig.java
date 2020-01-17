@@ -7,7 +7,7 @@ public class SimConfig {
     private double lat2;
     private double lon2;
     private int total;
-    private String outputPath;
+    private String outputPath = "";
     private int step;
     private double timestep;
     private String type;

@@ -5,8 +5,6 @@ import com.zishanfu.geosparksim.interaction.handler.SimulationBtnHandler;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
 import javax.swing.*;
 import org.apache.log4j.Logger;
 import org.apache.spark.sql.SparkSession;
@@ -33,17 +31,7 @@ public class InputController {
         JLabel label = new JLabel("GeoSparkSim");
         label.setFont(new Font("Bookman", Font.BOLD, 20));
 
-        String path =
-                InputController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        int idx = path.indexOf("/target");
-        String resources = path.substring(0, idx) + "/src/test/resources";
-
-        ImageIcon imageIcon = null; // load the image to a imageIcon
-        try {
-            imageIcon = new ImageIcon(new URL("file://" + resources + "/icon/traffic.png"));
-        } catch (MalformedURLException e) {
-            LOG.warn("GeoSparkSim logo can't be load", e);
-        }
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/icon/traffic.png").getPath());
 
         Image image = imageIcon.getImage(); // transform it
         Image newimg =

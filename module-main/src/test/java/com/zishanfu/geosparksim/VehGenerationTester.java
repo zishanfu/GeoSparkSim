@@ -55,11 +55,8 @@ public class VehGenerationTester extends GeoSparkSimTestBase {
     @Test
     public void vehicleGeneration() throws ExecutionException, InterruptedException {
         double maxLen = new Distance().euclidean(coor1.x, coor2.x, coor1.y, coor2.y) / 10;
-        String osmPath = "datareader.file=" + resources + "/samples/map.osm";
-
-        String[] vehParameters =
-                new String[] {"config=" + resources + "/graphhopper/config.properties", osmPath};
-        CreateVehicles createVehicles = new CreateVehicles(vehParameters, coor1, coor2, maxLen);
+        String osmPath = resources + "/samples/map.osm";
+        CreateVehicles createVehicles = new CreateVehicles(osmPath, coor1, coor2, maxLen);
         List<Vehicle> vehicleList = createVehicles.multiple(total, type);
         Assert.assertEquals(vehicleList.size(), total);
     }

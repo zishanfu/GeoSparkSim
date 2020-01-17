@@ -140,7 +140,7 @@ public class GenerateBtnHandler implements ActionListener {
                                 textArea.append("Downloaded OSM file...\n");
 
                                 HDFSUtil hdfs = new HDFSUtil(outputPath);
-                                String name = "/geosparksim";
+                                String name = "geosparksim";
                                 hdfs.deleteDir(name);
                                 hdfs.mkdir(name);
                                 String output = outputPath + name;
@@ -162,17 +162,10 @@ public class GenerateBtnHandler implements ActionListener {
                                 textArea.append("Write signal into json. \n");
                                 networkWriter.writeIntersectJson();
                                 textArea.append("Write intersection into json. \n");
-                                String osmPath = "datareader.file=" + output + "/map.osm";
-                                String ghConfig =
-                                        getClass()
-                                                .getResource("/graphhopper/config.properties")
-                                                .getPath();
-                                System.out.println(ghConfig);
-                                String[] vehParameters = new String[] {ghConfig, osmPath};
-
+                                String osmPath = output + "/map.osm";
                                 textArea.append("Generating vehicles...\n");
                                 CreateVehicles createVehicles =
-                                        new CreateVehicles(vehParameters, coor1, coor2, maxLen);
+                                        new CreateVehicles(osmPath, coor1, coor2, maxLen);
                                 List<Vehicle> vehicleList = null;
                                 try {
                                     vehicleList = createVehicles.multiple(total, type);

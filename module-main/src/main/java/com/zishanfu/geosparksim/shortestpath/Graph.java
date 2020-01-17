@@ -5,7 +5,7 @@ import com.graphhopper.GHResponse;
 import com.graphhopper.routing.Path;
 import com.graphhopper.routing.VirtualEdgeIteratorState;
 import com.graphhopper.routing.util.EdgeFilter;
-import com.graphhopper.util.CmdArgs;
+import com.graphhopper.routing.util.EncodingManager;
 import com.graphhopper.util.EdgeIteratorState;
 import com.graphhopper.util.PointList;
 import com.graphhopper.util.shapes.GHPoint;
@@ -23,9 +23,12 @@ import java.util.Random;
 public class Graph {
     private MyGraphHopper hopper;
 
-    public Graph(String[] args) {
+    public Graph(String osmFilePath) {
         this.hopper = new MyGraphHopper();
-        this.hopper.init(CmdArgs.read(args));
+        this.hopper.init(GraphHooperConf.produceCmgArgs(osmFilePath));
+        // The EncodingManager has to be explicitly set here for some unknown reason
+        // The GraphHooperConf does not work for the EncodingManager
+        this.hopper.setEncodingManager(new EncodingManager("car"));
         this.hopper.importOrLoad();
     }
 
