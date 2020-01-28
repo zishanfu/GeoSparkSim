@@ -85,9 +85,10 @@ object Microscopic {
     * @param steps simulation steps
     * @param timestep time per step
     * @param numPartition the number of partitions
+    * @param outputSignal if true, output signal information per step
     */
   def sim(sparkSession: SparkSession, edges: Dataset[Link], signals: Dataset[TrafficLight], intersects: Dataset[Intersect], vehicles: Dataset[MOBILVehicle],
-          path: String, steps: Int, timestep: Double, numPartition: Int): Unit = {
+          path: String, steps: Int, timestep: Double, numPartition: Int, outputSignal: Boolean): Unit = {
     val rand = new Random
     val vehicleRDD = new SpatialRDD[MOBILVehicle]
     vehicleRDD.setRawSpatialRDD(vehicles.rdd)
@@ -208,7 +209,7 @@ object Microscopic {
     }
 
     val reportHandler = new ReportHandler(sparkSession, path, numPartition)
-    reportHandler.writeReportJson(reportRDD0, 0)
+    reportHandler.writeReportJson(reportRDD0, 0, outputSignal)
 
     var execTime = 0.0
 
@@ -314,7 +315,7 @@ object Microscopic {
       val t4 = System.currentTimeMillis()
       execTime = execTime + t4 - t3
 
-      reportHandler.writeReportJson(reportRDD, n)
+      reportHandler.writeReportJson(reportRDD, n, outputSignal)
     }
 
     logger.warn("Repartition Time: " + execTime/1000)

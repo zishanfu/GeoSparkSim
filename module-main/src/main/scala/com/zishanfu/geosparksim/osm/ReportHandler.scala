@@ -37,9 +37,37 @@ class ReportHandler (sparkSession: SparkSession, path: String, numPartition: Int
     reportDS
   }
 
-  def writeReportJson(reports: RDD[StepReport], id: Int): Unit ={
-    val map = reports.filter(r => r.getVehicleFront != null || r.getSignalLocation != null).map((report: StepReport) => {
-      if (report.getVehicleFront != null){
+  def writeReportJson(reports: RDD[StepReport], id: Int, outputSignal: Boolean): Unit ={
+    val map = reports.filter(r => {
+      if (outputSignal) {
+        r.getVehicleFront != null || r.getSignalLocation != null
+      }
+      else {
+        r.getVehicleFront != null
+      }
+    }).map((report: StepReport) => {
+      if (outputSignal) {
+        if (report.getVehicleFront != null){
+          Row(
+            report.getStep,
+            report.getVehicleId,
+            Row(report.getVehicleFront.x, report.getVehicleFront.y),
+            Row(report.getVehicleRear.x, report.getVehicleRear.y),
+            null,
+            null
+          )
+        }else{
+          Row(
+            report.getStep,
+            null,
+            null,
+            null,
+            report.getSignal,
+            Row(report.getSignalLocation.x, report.getSignalLocation.y)
+          )
+        }
+      }
+      else {
         Row(
           report.getStep,
           report.getVehicleId,
@@ -47,15 +75,6 @@ class ReportHandler (sparkSession: SparkSession, path: String, numPartition: Int
           Row(report.getVehicleRear.x, report.getVehicleRear.y),
           null,
           null
-        )
-      }else{
-        Row(
-          report.getStep,
-          null,
-          null,
-          null,
-          report.getSignal,
-          Row(report.getSignalLocation.x, report.getSignalLocation.y)
         )
       }
     })

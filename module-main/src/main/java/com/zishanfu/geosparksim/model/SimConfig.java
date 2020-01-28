@@ -12,6 +12,7 @@ public class SimConfig {
     private double timestep;
     private String type;
     private int partition;
+    private boolean outputSignal;
 
     public SimConfig() {}
 
@@ -24,7 +25,8 @@ public class SimConfig {
             String outputPath,
             int step,
             double timestep,
-            String type) {
+            String type,
+            boolean outputSignal) {
         this.lat1 = lat1;
         this.lon1 = lon1;
         this.lat2 = lat2;
@@ -35,6 +37,7 @@ public class SimConfig {
         this.timestep = timestep;
         this.type = type;
         this.partition = total / 70;
+        this.outputSignal = outputSignal;
     }
 
     public double getLat1() {
@@ -118,6 +121,16 @@ public class SimConfig {
         this.partition = partition;
     }
 
+    public boolean isOutputSignal()
+    {
+        return outputSignal;
+    }
+
+    public void setOutputSignal(boolean noSignal)
+    {
+        this.outputSignal = outputSignal;
+    }
+
     @Override
     public String toString() {
         return "\nP1: "
@@ -148,6 +161,9 @@ public class SimConfig {
                 + "\n"
                 + "Output: "
                 + outputPath
+                + "\n"
+                + "Output signal: "
+                + outputSignal
                 + "\n";
     }
 }

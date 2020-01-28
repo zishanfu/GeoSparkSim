@@ -53,7 +53,7 @@ public class SimulationTester extends GeoSparkSimTestBase {
         Dataset<MOBILVehicle> vehicles = vehicleHandler.readVehicleTrajectoryJson();
 
         Microscopic.sim(
-                ss, edges, signals, intersects, vehicles, resources + "/java-test", 600, 1, 10);
+                ss, edges, signals, intersects, vehicles, resources + "/java-test", 600, 1, 10, true);
 
         ReportHandler reportHandler = new ReportHandler(ss, resources + "/java-test", 1);
         Dataset<StepReport> reports = reportHandler.readReportJson();

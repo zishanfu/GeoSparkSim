@@ -53,6 +53,8 @@ public class InputController {
         TextField sim = new TextField(10);
         TextField timestep = new TextField(10);
         TextField file = new TextField(15);
+        JCheckBox outputSignal = new JCheckBox("Output traffic signal locations");
+        outputSignal.setSelected(true);
 
         JComboBox<String> genList = new JComboBox<>(genTypes);
         genList.setSelectedIndex(0);
@@ -68,6 +70,7 @@ public class InputController {
                         sim,
                         timestep,
                         file,
+                        outputSignal,
                         sbHandler,
                         rc.textArea,
                         genList,
@@ -142,9 +145,14 @@ public class InputController {
         gbc.gridx = 0;
         gbc.gridy = 14;
         gbc.gridwidth = 1;
+        topPanel.add(outputSignal, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 16;
+        gbc.gridwidth = 1;
         topPanel.add(sBtn, gbc);
         gbc.gridx = 1;
-        gbc.gridy = 14;
+        gbc.gridy = 16;
         gbc.gridwidth = 1;
         topPanel.add(vBtn, gbc);
 

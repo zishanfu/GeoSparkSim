@@ -27,6 +27,8 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import org.apache.log4j.Logger;
@@ -45,6 +47,7 @@ public class GenerateBtnHandler implements ActionListener {
     private TextField simTxt;
     private TextField stepTxt;
     private TextField pathTxt;
+    private JCheckBox outputSignal;
     private JTextArea textArea;
     private JComboBox genList;
     private SparkSession spark;
@@ -55,6 +58,7 @@ public class GenerateBtnHandler implements ActionListener {
             TextField simTxt,
             TextField stepTxt,
             TextField pathTxt,
+            JCheckBox outputSignal,
             SimulationBtnHandler sbHandler,
             JTextArea textArea,
             JComboBox genList,
@@ -64,6 +68,7 @@ public class GenerateBtnHandler implements ActionListener {
         this.simTxt = simTxt;
         this.stepTxt = stepTxt;
         this.pathTxt = pathTxt;
+        this.outputSignal = outputSignal;
         this.sbHandler = sbHandler;
         this.textArea = textArea;
         this.genList = genList;
@@ -206,7 +211,8 @@ public class GenerateBtnHandler implements ActionListener {
                                         output,
                                         step,
                                         timestep,
-                                        total / 70);
+                                        total / 70,
+                                        outputSignal.isSelected());
                                 ReportHandler reportHandler = new ReportHandler(spark, output, 50);
                                 Dataset<StepReport> reports = reportHandler.readReportJson();
                                 res = reports.collectAsList();

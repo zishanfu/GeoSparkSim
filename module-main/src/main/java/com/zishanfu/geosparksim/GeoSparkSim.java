@@ -133,6 +133,11 @@ public class GeoSparkSim implements Runnable {
             description = "Print version information and exit.")
     private boolean versionHelpRequested;
 
+    @Option(
+            names = {"-os", "--outputSignal"},
+            description = "Output signal data in the output.")
+    private boolean outputSignal;
+
     private static final Logger LOG = Logger.getLogger(GeoSparkSim.class);
     private static final Properties prop = new Properties();
     private static final String appTitle = "GeoSparkSim v0.0.1";
@@ -166,7 +171,7 @@ public class GeoSparkSim implements Runnable {
                 LOG.warn("Please enter a vehicle number not smaller than 1000.");
             } else {
                 simConfig =
-                        new SimConfig(lat1, lon1, lat2, lon2, num, output, step, timestep, type);
+                        new SimConfig(lat1, lon1, lat2, lon2, num, output, step, timestep, type, outputSignal);
                 start(spark, simConfig);
             }
 
