@@ -3,6 +3,9 @@
 
 It is mainly developed by the contributors from [Data Systems Lab](https://www.datasyslab.net/)
 
+### Note
+GeoSparkSim team is developing new feature under dev. Please use the version in stable branch to generate your data.
+
 ### Installation
 * Download GeoSparkSim repository or run command
 
